@@ -16,23 +16,17 @@ namespace RepoLibrary
         public RepoLibrary()
         {
             const string connectionString = "mongodb://localhost/?safe=true";
-            var client = new MongoClient(connectionString);
-            db = client.GetServer().GetDatabase("repo");
-            collection = db.GetCollection<ProjectData>("projects");
+            db = new DatabaseHandler(connectionString);
         }
 
-        public ProjectData GetProject(int id)
+        public Project GetProject(int id)
         {
-            return collection.FindOne(Query.EQ("_id", id));
+            return db.GetProject(id);
         }
 
-        public string SaveProject(ProjectData data)
+        public string SaveProject(Project data)
         {
-            var result = collection.Save(data);
-            if (result.Ok)
-                return "ok";
-
-            return result.Response.ToString();
+            return db.SaveProject(data);
         }
 
         public string ToString()
@@ -40,7 +34,11 @@ namespace RepoLibrary
             return "ololo";
         }
 
-        private MongoDatabase db;
-        private MongoCollection<ProjectData> collection;
+        public void SetDbHandler(IDatabaseHander dbHandler)
+        {
+            db = dbHandler;
+        }
+
+        private IDatabaseHander db;
     }
 }

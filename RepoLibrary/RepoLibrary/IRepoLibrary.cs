@@ -10,14 +10,14 @@ namespace RepoLibrary
     public interface IRepoLibrary
     {
         [OperationContract]
-        ProjectData GetProject(int id);
+        Project GetProject(int id);
 
         [OperationContract]
-        string SaveProject(ProjectData data);
+        string SaveProject(Project data);
     }
 
     [DataContract]
-    public class ProjectData
+    public class Project
     {
         [DataMember]
         public int Id { get; set; }
