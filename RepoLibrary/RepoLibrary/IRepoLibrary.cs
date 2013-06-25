@@ -13,14 +13,14 @@ namespace RepoLibrary
         ProjectData GetProject(int id);
 
         [OperationContract]
-        void SaveProject(ProjectData data);
+        string SaveProject(ProjectData data);
     }
 
     [DataContract]
     public class ProjectData
     {
         [DataMember]
-        public int ProjectId { get; set; }
+        public int Id { get; set; }
 
         [DataMember]
         public string Name { get; set; }
