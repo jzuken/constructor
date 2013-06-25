@@ -35,6 +35,11 @@ namespace RepoLibrary
             return result.Response.ToString();
         }
 
+        public string ToString()
+        {
+            return "ololo";
+        }
+
         private MongoDatabase db;
         private MongoCollection<ProjectData> collection;
     }
