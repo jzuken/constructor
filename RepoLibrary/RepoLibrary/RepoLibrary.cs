@@ -16,29 +16,29 @@ namespace RepoLibrary
         public RepoLibrary()
         {
             const string connectionString = "mongodb://localhost/?safe=true";
-            db = new DatabaseHandler(connectionString);
+            Db = new DatabaseGateway(connectionString);
         }
+
+        public RepoLibrary(IDatabaseGateway db)
+        {
+            Db = db;
+        }
+
+        public IDatabaseGateway Db { get; set; }
 
         public Project GetProject(int id)
         {
-            return db.GetProject(id);
+            return Db.GetProject(id);
         }
 
         public string SaveProject(Project data)
         {
-            return db.SaveProject(data);
+            return Db.SaveProject(data);
         }
 
         public string ToString()
         {
             return "ololo";
         }
-
-        public void SetDbHandler(IDatabaseHander dbHandler)
-        {
-            db = dbHandler;
-        }
-
-        private IDatabaseHander db;
     }
 }

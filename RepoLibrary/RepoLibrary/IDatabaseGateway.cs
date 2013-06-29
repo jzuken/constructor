@@ -1,6 +1,6 @@
 ﻿namespace RepoLibrary
 {
-    public interface IDatabaseHander
+    public interface IDatabaseGateway
     {
         Project GetProject(int id);
 

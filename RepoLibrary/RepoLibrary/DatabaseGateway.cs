@@ -4,9 +4,9 @@ using MongoDB.Driver.Builders;
 
 namespace RepoLibrary
 {
-    class DatabaseHandler : IDatabaseHander
+    class DatabaseGateway : IDatabaseGateway
     {
-        public DatabaseHandler(string connectionString)
+        public DatabaseGateway(string connectionString)
         {
             var client = new MongoClient(connectionString);
             db = client.GetServer().GetDatabase("repo");
