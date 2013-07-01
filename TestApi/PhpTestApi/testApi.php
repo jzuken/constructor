@@ -22,7 +22,7 @@ while ($r = mysql_fetch_array($q)) {
     $xml .= "</variant>\n";
 }
 $xml .= "</variants>";
-$sxe = new SimpleXMLElement($xml);
-echo $sxe
+header('Content-type: text/xml');
+echo $xml
 
 ?>
