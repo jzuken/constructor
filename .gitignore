@@ -2,3 +2,4 @@ bin
 obj
 *.suo
 *.user
+/TestApi/PhpTestApi/.idea
