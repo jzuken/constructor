@@ -13,7 +13,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 public class Sale extends Activity {
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -22,29 +22,30 @@ public class Sale extends Activity {
 		itemParams.setMargins(1, 1, 1, 1);
 		table = (TableLayout) findViewById(R.id.saleTable);
 		TableRow title = new TableRow(this);
-		LayoutParams rowParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+		LayoutParams rowParams = new LayoutParams(LayoutParams.WRAP_CONTENT,
+				LayoutParams.WRAP_CONTENT);
 		title.setLayoutParams(rowParams);
 		addTextView(title, "Order subtotal");
 		addTextView(title, "Discount");
 		addTextView(title, "Discount type");
 		addTextView(title, "Membership");
 		table.addView(title);
-		
-		//для проверки сделаем одну строку
+
+		// для проверки сделаем одну строку
 		TableRow row = new TableRow(this);
 		row.setLayoutParams(rowParams);
-		
+
 		addTextView(row, "100.00");
 		addTextView(row, "30.00");
 		addTextView(row, "Percents, %");
 		addTextView(row, "Premium");
-		
+
 		Button editButton = new Button(this);
 		editButton.setLayoutParams(itemParams);
 		editButton.setText("Edit");
 		final Sale thisObj = this;
 		editButton.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(thisObj, EditSale.class);
@@ -57,10 +58,10 @@ public class Sale extends Activity {
 			}
 		});
 		row.addView(editButton);
-		
+
 		table.addView(row);
-	}	
-	
+	}
+
 	public void addTextView(TableRow row, CharSequence text) {
 		TextView textView = new TextView(this);
 		textView.setText(text);
@@ -69,12 +70,12 @@ public class Sale extends Activity {
 		textView.setLayoutParams(itemParams);
 		row.addView(textView);
 	}
-	
+
 	public void addSaleClick(View v) {
 		Intent intent = new Intent(this, SaleAdder.class);
 		startActivity(intent);
 	}
-	
+
 	private TableLayout table;
 	private TableRow.LayoutParams itemParams;
 }

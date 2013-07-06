@@ -9,22 +9,22 @@ import android.view.View;
 import android.widget.EditText;
 
 public class Authorization extends Activity {
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.authorization);
 	}
-	
+
 	public void okButtonClick(View v) {
 		Intent intent = new Intent(this, MainActivity.class);
 		SharedPreferences authorizationData = getSharedPreferences("AuthorizationData", MODE_PRIVATE);
 		Editor editor = authorizationData.edit();
 		editor.putBoolean("logged", true);
-	    EditText siteName = (EditText) findViewById(R.id.authorizationLogin);
-	    editor.putString("loggedSiteName", siteName.getText().toString());
-	    editor.commit();
+		EditText siteName = (EditText) findViewById(R.id.authorizationLogin);
+		editor.putString("loggedSiteName", siteName.getText().toString());
+		editor.commit();
 		startActivity(intent);
 	}
-	
+
 }

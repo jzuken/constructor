@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.RadioButton;
 
 public class Orders extends Activity {
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -17,11 +17,11 @@ public class Orders extends Activity {
 		thisWeekButton = (RadioButton) findViewById(R.id.this_week_button);
 		todayButton = (RadioButton) findViewById(R.id.today_button);
 	}
-	
+
 	public void ordersSearchClick(View v) {
-		
+
 	}
-	
+
 	private RadioButton allDatesButton;
 	private RadioButton thisMonthButton;
 	private RadioButton thisWeekButton;

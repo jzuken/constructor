@@ -11,16 +11,16 @@ public class ProductAdder extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.add_product);
 	}
-	
+
 	public void applyChangesClick(View v) {
-		
+
 	}
-	
+
 	public void uploadImageClick(View v) {
-		
+
 	}
-	
+
 	public void uploadThumbnailClick(View v) {
-		
+
 	}
 }
