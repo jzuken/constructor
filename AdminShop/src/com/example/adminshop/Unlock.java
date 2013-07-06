@@ -9,14 +9,14 @@ import android.view.View;
 import android.widget.EditText;
 
 public class Unlock extends Activity {
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.unlock);
 		settingsData = PreferenceManager.getDefaultSharedPreferences(this);
 	}
-	
+
 	public void okButtonClick(View v) {
 		EditText password = (EditText) findViewById(R.id.unlockPassword);
 		if (password.getText().toString().equals(settingsData.getString("password", ""))) {
@@ -25,6 +25,6 @@ public class Unlock extends Activity {
 			this.finish();
 		}
 	}
-	
+
 	private SharedPreferences settingsData;
 }

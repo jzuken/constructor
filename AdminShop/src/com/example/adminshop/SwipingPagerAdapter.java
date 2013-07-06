@@ -51,6 +51,6 @@ public class SwipingPagerAdapter extends PagerAdapter {
 	@Override
 	public void startUpdate(View arg0) {
 	}
-	
+
 	private List<View> pages = null;
 }

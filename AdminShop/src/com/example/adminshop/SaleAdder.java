@@ -24,32 +24,34 @@ public class SaleAdder extends Activity {
 		orderSubtotalEditor = (EditText) findViewById(R.id.orderSubtotalEditor);
 		discountEditor = (EditText) findViewById(R.id.discountEditor);
 		discountTypeSpinner = (Spinner) findViewById(R.id.discountTypeEditor);
-		
-		String[] data = {"Percent, %", "Absolute, $"};
-		
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, data);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        
-        discountTypeSpinner.setAdapter(adapter);
-        discountTypeSpinner.setPrompt("Title");
-        discountTypeSpinner.setSelection(0);
-        discountTypeSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-        	@Override
-        	public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        		discountType = position;
-        	}
-        	@Override
-        	public void onNothingSelected(AdapterView<?> arg0) {
-        	}
-        });
+
+		String[] data = { "Percent, %", "Absolute, $" };
+
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+				android.R.layout.simple_spinner_item, data);
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+		discountTypeSpinner.setAdapter(adapter);
+		discountTypeSpinner.setPrompt("Title");
+		discountTypeSpinner.setSelection(0);
+		discountTypeSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+				discountType = position;
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+			}
+		});
 	}
-	
+
 	public void addSaleOkClick(View v) {
 		if (Float.valueOf(discountEditor.getText().toString()) > 100.0 && discountType == 0) {
-			Toast.makeText(getBaseContext(), "Скидка не может быть больше 100%", Toast.LENGTH_SHORT).show();
+			Toast.makeText(getBaseContext(),"Скидка не может быть больше 100%", Toast.LENGTH_SHORT).show();
 		}
 	}
-	
+
 	private RadioButton allButton;
 	private RadioButton premiumButton;
 	private RadioButton wholesaleButton;
