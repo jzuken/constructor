@@ -3,6 +3,6 @@
  	<EditTextPreference
 	    android:key="password"
 	    android:defaultValue="1234"
-	    android:title="Пароль" />
+	    android:title="Password" />
 
 </PreferenceScreen>

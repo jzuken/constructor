@@ -16,6 +16,7 @@
         android:inputType="text" />
 
     <Button
+        android:id="@+id/productsSearchButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
@@ -64,6 +65,7 @@
     </LinearLayout>
 
     <Button
+        android:id="@+id/addProductButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="addProductClick"
