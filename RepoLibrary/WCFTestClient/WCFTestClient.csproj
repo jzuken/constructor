@@ -148,6 +148,8 @@
     <Content Include="Service References\WCFTestReference\WCFTestClient.WCFTestReference.Project.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
+    <Content Include="Views\WCFTestClient\GetProject.cshtml" />
+    <Content Include="Views\WCFTestClient\AddProject.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

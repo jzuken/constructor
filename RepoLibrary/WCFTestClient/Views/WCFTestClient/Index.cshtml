@@ -1,6 +1,14 @@
 ﻿@{
     ViewBag.Title = "Index";
 }
-
-<h2>Index</h2>
-@ViewData["projectName"] 
+<form action="/WCFTestClient/GetProject">
+  <h2>Find project by id:</h2> 
+  <input type="text" name="projectId" />
+  <input type="submit" value="Find!" />
+</form>
+<form action="/WCFTestClient/AddProject">
+  <h2>Add project:</h2> 
+  Id:<input type="text" name="projectId" /><br />
+  Name:<input type="text" name="projectName" />
+  <input type="submit" value="Add!" />
+</form>
