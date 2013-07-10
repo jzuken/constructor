@@ -69,8 +69,8 @@ public class Unlock extends Activity {
 	}
 
 	private SharedPreferences settingsData;
-	WheelView pin1;
-	WheelView pin2;
-	WheelView pin3;
-	WheelView pin4;
+	private WheelView pin1;
+	private WheelView pin2;
+	private WheelView pin3;
+	private WheelView pin4;
 }

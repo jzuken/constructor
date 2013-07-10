@@ -117,5 +117,7 @@
     <string name="date_period">Date period:</string>
     <string name="pin">PIN</string>
     <string name="unlock">Unlock</string>
+    <string name="topProducts">Top 10 products</string>
+    <string name="sold">Sold</string>
 
 </resources>

@@ -7,13 +7,17 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemSelectedListener;
 
 public class Dashboard extends Activity {
 
@@ -64,12 +68,43 @@ public class Dashboard extends Activity {
 		View page3 = inflater.inflate(R.layout.sales_growth, null);
 		pages.add(page3);
 		View page4 = inflater.inflate(R.layout.top_sellers, null);
+		topSellersTable = (TableLayout) page4.findViewById(R.id.top_sellers_table);
+		rowParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+		itemParams = new TableRow.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+		itemParams.weight = 1;
 		pages.add(page4);
 
 		SwipingPagerAdapter pagerAdapter = new SwipingPagerAdapter(pages);
 		ViewPager viewPager = (ViewPager) findViewById(R.id.dashbroad_view_pager);
 		viewPager.setAdapter(pagerAdapter);
 		viewPager.setCurrentItem(0);
+
+		//example
+		addPositionToTable("first", 300);
+		addPositionToTable("second", 100);
+	}
+
+	private void addPositionToTable(String name, int quantity) {
+		TableRow newRow = new TableRow(this);
+		newRow.setLayoutParams(rowParams);
+		TextView newItem = newTableTextView(String.valueOf(position) + ". " + name);
+		TextView newItemQuantity = newTableTextView(String.valueOf(quantity));
+		newRow.addView(newItem);
+		newRow.addView(newItemQuantity);
+		topSellersTable.addView(newRow);
+		position++;
+	}
+	
+	private TextView newTableTextView(CharSequence text) {
+		TextView textView = new TextView(this);
+		textView.setText(text);
+		textView.setGravity(Gravity.CENTER);
+		textView.setLayoutParams(itemParams);
+		return textView;
+	}
+	
+	private void clearTable() {
+		topSellersTable.removeViews(1, position - 1);
 	}
 
 	public void settingsClick(View v) {
@@ -81,17 +116,21 @@ public class Dashboard extends Activity {
 		this.finish();
 	}
 
-	TextView id;
-	TextView date;
-	TextView product;
-	TextView quantity;
-	TextView totalPrice;
-	TextView user;
-	TextView status;
-	TextView totalOrders;
-	TextView completeOrders;
-	TextView inProcessOrders;
-	TextView totalPaid;
-	Spinner datePeriodSpinner;
-	int datePeriod;
+	private TextView id;
+	private TextView date;
+	private TextView product;
+	private TextView quantity;
+	private TextView totalPrice;
+	private TextView user;
+	private TextView status;
+	private TextView totalOrders;
+	private TextView completeOrders;
+	private TextView inProcessOrders;
+	private TextView totalPaid;
+	private Spinner datePeriodSpinner;
+	private TableLayout topSellersTable;
+	private LayoutParams rowParams;
+	private TableRow.LayoutParams itemParams;
+	private int datePeriod;
+	private int position = 1;
 }
