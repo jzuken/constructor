@@ -11,7 +11,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/product_images" />
+            android:text="@string/product_images"
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -68,17 +69,31 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/product_owner" />
+            android:text="@string/product_owner"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/provider" />
+
+            <TextView
+                android:id="@+id/providerName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp" />
+        </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/provider" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/classification" />
+            android:text="@string/classification"
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -103,7 +118,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/details" />
+            android:text="@string/details"
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -397,10 +413,40 @@
             android:layout_height="wrap_content"
             android:inputType="number" />
 
-        <TextView
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/membership" />
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/membership_text" />
+
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <RadioButton
+                    android:id="@+id/allRadioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/all" />
+
+                <RadioButton
+                    android:id="@+id/premiumRadioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/premium" />
+
+                <RadioButton
+                    android:id="@+id/wholesaleRadioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/wholesale" />
+            </RadioGroup>
+        </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"

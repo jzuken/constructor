@@ -16,7 +16,7 @@ public class StartActivity extends Activity {
 		SharedPreferences settingsData = PreferenceManager.getDefaultSharedPreferences(this);
 		if (!settingsData.contains("password")) {
 			Editor editor = settingsData.edit();
-			editor.putString("password", "1234");
+			editor.putString("password", "0000");
 			editor.commit();
 		}
 		if (!(authorizationData.getBoolean("logged", false))) {

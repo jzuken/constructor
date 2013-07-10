@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="@string/users"
+            android:text="@string/discounts"
             android:textColor="@color/white"
             android:textSize="30dp" />
 
@@ -39,7 +39,7 @@
     </RelativeLayout>
 
     <android.support.v4.view.ViewPager
-        android:id="@+id/users_view_pager"
+        android:id="@+id/discounts_view_pager"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" >
     </android.support.v4.view.ViewPager>

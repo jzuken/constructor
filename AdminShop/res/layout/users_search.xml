@@ -10,17 +10,17 @@
         android:text="@string/search_for" />
 
     <EditText
-        android:id="@+id/productsSearchLine"
+        android:id="@+id/usersSearchLine"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:inputType="text" />
 
     <Button
-        android:id="@+id/productsSearchButton"
+        android:id="@+id/usersSearchButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
-        android:onClick="productsSearchClick"
+        android:onClick="usersSearchClick"
         android:text="@string/search" />
 
     <LinearLayout
@@ -39,36 +39,35 @@
             android:orientation="vertical" >
 
             <CheckBox
-                android:id="@+id/product_title_checkBox"
+                android:id="@+id/username_checkBox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/product_title" />
+                android:text="@string/username" />
 
             <CheckBox
-                android:id="@+id/short_descript_checkBox"
+                android:id="@+id/first_name_checkBox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/short_descript" />
+                android:text="@string/first_name" />
 
             <CheckBox
-                android:id="@+id/detailed_descript_checkBox"
+                android:id="@+id/last_name_checkBox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/detailed_descript" />
+                android:text="@string/last_name" />
 
             <CheckBox
-                android:id="@+id/search_keywords_checkBox"
+                android:id="@+id/email_checkBox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/search_keywordsText" />
+                android:text="@string/email" />
+
+            <CheckBox
+                android:id="@+id/company_checkBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/company" />
         </LinearLayout>
     </LinearLayout>
-
-    <Button
-        android:id="@+id/addProductButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="addProductClick"
-        android:text="@string/add" />
 
 </LinearLayout>

@@ -17,10 +17,6 @@ public class MainActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-		TextView siteName = (TextView) findViewById(R.id.loggedNameText);
-		authorizationData = getSharedPreferences("AuthorizationData", MODE_PRIVATE);
-		String name = authorizationData.getString("loggedSiteName", "");
-		siteName.setText(name.toCharArray(), 0, name.length());
 	}
 
 	public void productsButtonClick(View v) {
@@ -28,22 +24,18 @@ public class MainActivity extends Activity {
 		startActivity(intent);
 	}
 
-	public void ordersButtonClick(View v) {
-		Intent intent = new Intent(this, Orders.class);
+	public void discountsButtonClick(View v) {
+		Intent intent = new Intent(this, Discounts.class);
 		startActivity(intent);
 	}
 
-	public void saleButtonClick(View v) {
-		Intent intent = new Intent(this, Sale.class);
-		startActivity(intent);
-	}
-
-	public void statisticButtonClick(View v) {
-		Intent intent = new Intent(this, Statistic.class);
+	public void dashboardButtonClick(View v) {
+		Intent intent = new Intent(this, Dashboard.class);
 		startActivity(intent);
 	}
 
 	public void logoutClick(View v) {
+		SharedPreferences authorizationData = getSharedPreferences("AuthorizationData", MODE_PRIVATE);
 		Editor editor = authorizationData.edit();
 		editor.remove("logged");
 		editor.commit();
@@ -53,13 +45,18 @@ public class MainActivity extends Activity {
 		startActivity(intent);
 	}
 
+	public void settingsClick(View v) {
+		Intent intent = new Intent(this, Settings.class);
+		startActivity(intent);
+	}
+
 	public void usersButtonClick(View v) {
 		Intent intent = new Intent(this, Users.class);
 		startActivity(intent);
 	}
 
-	public void commentsButtonClick(View v) {
-		Intent intent = new Intent(this, Comments.class);
+	public void reviewsButtonClick(View v) {
+		Intent intent = new Intent(this, Reviews.class);
 		startActivity(intent);
 	}
 
@@ -80,6 +77,4 @@ public class MainActivity extends Activity {
 		}
 		return false;
 	}
-
-	private SharedPreferences authorizationData;
 }

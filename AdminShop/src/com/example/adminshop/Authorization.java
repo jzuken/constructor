@@ -24,6 +24,8 @@ public class Authorization extends Activity {
 		EditText siteName = (EditText) findViewById(R.id.authorizationLogin);
 		editor.putString("loggedSiteName", siteName.getText().toString());
 		editor.commit();
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		startActivity(intent);
 	}
 
