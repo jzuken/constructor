@@ -105,6 +105,7 @@ public class Dashboard extends Activity {
 	
 	private void clearTable() {
 		topSellersTable.removeViews(1, position - 1);
+		position = 1;
 	}
 
 	public void settingsClick(View v) {
