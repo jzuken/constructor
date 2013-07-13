@@ -14,29 +14,30 @@ require './xcart/init.php';
 header('Content-type: text/xml');
 
 $request = $_GET['request'];
-mysql_connect($sql_host, $sql_user, $sql_password);
-mysql_select_db($sql_db);
+mysql_connect($sql_host, $sql_user, $sql_password)  or die(mysql_error());
+mysql_select_db($sql_db) or die(mysql_error());
 
-$xml = new SimpleXMLElement('<error/>');
+$users_fields = array(id, login, username, usertype, password, signature, invalid_login_attempts, title, firstname, lastname, company, email, url, last_login, first_login, status, activation_key, autolock, suspend_date, referer, ssn, language, cart, change_password, change_password_date, parent, pending_plan_id, activity, membershipid, pending_membershipid, tax_number, tax_exempt, trusted_provider, cookie_access);
+$orders_fields = array(orderid, userid, membership, total, giftcert_discount, giftcert_ids, subtotal, discount, coupon, coupon_discount, shippingid, shipping, tracking, shipping_cost, tax, taxes_applied, date, status, payment_method, flag, notes, details, customer_notes, customer, title, firstname, lastname, company, url, email, language, clickid, membershipid, paymentid, payment_surcharge, tax_number, tax_exempt, init_total, access_key, klarna_order_status);
+
 switch ($request) {
     case 'users_count':
         $xml = get_users_count();
         break;
     case 'users':
-        $xml = get_users();
+        $xml = get_users($users_fields);
         break;
     case 'orders':
-        if ($_REQUEST['from'] && $_REQUEST['to']) {
-            $xml = get_orders($_REQUEST['from'], $_REQUEST['to']);
-        } else {
-            $xml = get_orders();
-        }
+        $xml = get_orders($orders_fields, $_REQUEST['from'], $_REQUEST['to']);
         break;
     case 'last_order':
-        $xml = get_last_order();
+        $xml = get_last_order($orders_fields);
         break;
     case 'discounts':
         $xml = get_discounts();
+        break;
+    default:
+        $xml = new SimpleXMLElement('<error/>');
         break;
 }
 echo $xml->asXML();
@@ -47,13 +48,12 @@ function get_users_count()
     $sql = "SELECT * FROM $sql_tbl[customers];";
     $query = mysql_query($sql) or die(mysql_error());
     $count = mysql_num_rows($query);
-
     $xml = new SimpleXMLElement('<users/>');
     $xml->addAttribute('count', $count);
     return $xml;
 }
 
-function get_users()
+function get_users($fields)
 {
     global $sql_tbl;
     $sql = "SELECT * FROM $sql_tbl[customers];";
@@ -63,7 +63,6 @@ function get_users()
     $xml->addAttribute('count', $count);
     while ($row = mysql_fetch_array($query)) {
         $user = $xml->addChild('user');
-        $fields = array(id, login, username, usertype, password, signature, invalid_login_attempts, title, firstname, lastname, company, email, url, last_login, first_login, status, activation_key, autolock, suspend_date, referer, ssn, language, cart, change_password, change_password_date, parent, pending_plan_id, activity, membershipid, pending_membershipid, tax_number, tax_exempt, trusted_provider, cookie_access);
         foreach ($fields as &$value) {
             $user->addChild($value, $row[$value]);
         }
@@ -72,18 +71,21 @@ function get_users()
     return $xml;
 }
 
-function get_orders($from = 0, $to = PHP_INT_MAX)
+function get_orders($fields, $from, $to)
 {
+    if(is_null($from)){
+        $from = 0;
+    }
+    if(is_null($to)){
+        $to = XC_TIME;
+    }
     global $sql_tbl;
     $date_condition = "date BETWEEN $from AND $to";
     $sql_orders = "SELECT * FROM $sql_tbl[orders] WHERE $date_condition;";
-    //$total_gross = "SELECT SUM(total) FROM $sql_tbl[orders] WHERE $date_condition;";
     $query = mysql_query($sql_orders) or die(mysql_error());
     $xml = new SimpleXMLElement('<orders/>');
-    //$xml->addAttribute('total_gross', $total_gross);
     while ($row = mysql_fetch_array($query)) {
         $order = $xml->addChild('order');
-        $fields = array(orderid, userid, membership, total, giftcert_discount, giftcert_ids, subtotal, discount, coupon, coupon_discount, shippingid, shipping, tracking, shipping_cost, tax, taxes_applied, date, status, payment_method, flag, notes, details, customer_notes, customer, title, firstname, lastname, company, b_title, b_firstname, b_lastname, b_address, b_city, b_county, b_state, b_country, b_zipcode, b_zip4, b_phone, b_fax, s_title, s_firstname, s_lastname, s_address, s_city, s_county, s_state, s_country, s_zipcode, s_phone, s_fax, s_zip4, url, email, language, clickid, extra, membershipid, paymentid, payment_surcharge, tax_number, tax_exempt, init_total, access_key, klarna_order_status);
         foreach ($fields as &$value) {
             $order->addChild($value, $row[$value]);
         }
@@ -91,7 +93,7 @@ function get_orders($from = 0, $to = PHP_INT_MAX)
     return $xml;
 }
 
-function get_last_order()
+function get_last_order($fields)
 {
     global $sql_tbl;
     $sql = "SELECT * FROM $sql_tbl[orders] ORDER BY date DESC LIMIT 1";
@@ -99,7 +101,6 @@ function get_last_order()
     $xml = new SimpleXMLElement('<orders/>');
     while ($row = mysql_fetch_array($query)) {
         $order = $xml->addChild('order');
-        $fields = array(orderid, userid, membership, total, giftcert_discount, giftcert_ids, subtotal, discount, coupon, coupon_discount, shippingid, shipping, tracking, shipping_cost, tax, taxes_applied, date, status, payment_method, flag, notes, details, customer_notes, customer, title, firstname, lastname, company, b_title, b_firstname, b_lastname, b_address, b_city, b_county, b_state, b_country, b_zipcode, b_zip4, b_phone, b_fax, s_title, s_firstname, s_lastname, s_address, s_city, s_county, s_state, s_country, s_zipcode, s_phone, s_fax, s_zip4, url, email, language, clickid, extra, membershipid, paymentid, payment_surcharge, tax_number, tax_exempt, init_total, access_key, klarna_order_status);
         foreach ($fields as &$value) {
             $order->addChild($value, $row[$value]);
         }
