@@ -1,13 +1,22 @@
 <?php
 
-require_once './api_settings.php';
+/*
+ * Development imports
+ */
+require './xcart/top.inc.php';
+require './xcart/init.php';
+/*
+ * Production imports
+ */
+//require '../top.inc.php';
+//require '../init.php';
 
 header('Content-type: text/xml');
 
-mysql_connect(DATABASE_HOST, DATABASE_USERNAME, DATABASE_PASSWORD) or die("<p>" . mysql_error() . "</p>");
-mysql_select_db(DATABASE_NAME);
+$request = $_GET['request'];
+mysql_connect($sql_host, $sql_user, $sql_password);
+mysql_select_db($sql_db);
 
-$request = $_REQUEST['request'];
 $xml = new SimpleXMLElement('<error/>');
 switch ($request) {
     case 'users_count':
