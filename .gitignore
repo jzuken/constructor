@@ -4,3 +4,4 @@ obj
 *.user
 /TestApi/PhpTestApi/.idea
 .idea
+/XCartApi/xcart
