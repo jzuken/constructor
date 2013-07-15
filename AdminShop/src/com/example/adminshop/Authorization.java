@@ -17,16 +17,13 @@ public class Authorization extends Activity {
 	}
 
 	public void okButtonClick(View v) {
-		Intent intent = new Intent(this, MainActivity.class);
 		SharedPreferences authorizationData = getSharedPreferences("AuthorizationData", MODE_PRIVATE);
 		Editor editor = authorizationData.edit();
 		editor.putBoolean("logged", true);
 		EditText siteName = (EditText) findViewById(R.id.authorizationLogin);
 		editor.putString("loggedSiteName", siteName.getText().toString());
 		editor.commit();
-		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		Intent intent = new Intent(this, MainActivity.class);
 		startActivity(intent);
 	}
-
 }

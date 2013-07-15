@@ -26,6 +26,5 @@ public class StartActivity extends Activity {
 			Intent intent = new Intent(this, Unlock.class);
 			startActivity(intent);
 		}
-		this.finish();
 	}
 }

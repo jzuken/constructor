@@ -51,7 +51,7 @@ public class Dashboard extends Activity {
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
 		datePeriodSpinner.setAdapter(adapter);
-		datePeriodSpinner.setPrompt("Title");
+		datePeriodSpinner.setPrompt("Date period");
 		datePeriodSpinner.setSelection(0);
 		datePeriodSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 			@Override

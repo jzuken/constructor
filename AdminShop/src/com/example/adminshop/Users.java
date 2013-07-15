@@ -28,6 +28,10 @@ public class Users extends Activity {
 		viewPager.setAdapter(pagerAdapter);
 		viewPager.setCurrentItem(0);
 	}
+	
+	public void usersSearchClick(View v) {
+		
+	}
 
 	public void settingsClick(View v) {
 		Intent intent = new Intent(this, Settings.class);

@@ -7,15 +7,20 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.text.InputType;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,45 +36,9 @@ public class Discounts extends Activity {
 		List<View> pages = new ArrayList<View>();
 
 		View page1 = inflater.inflate(R.layout.discounts_list, null);
-		LinearLayout layout = (LinearLayout) page1.findViewById(R.id.discountsLinearLayout);
-
-		addTitle(layout, 1);
-
-		RelativeLayout rl = new RelativeLayout(this);
-		RelativeLayout.LayoutParams rpLeft = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
-				LayoutParams.WRAP_CONTENT);
-		rpLeft.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-		rpLeft.addRule(RelativeLayout.CENTER_VERTICAL);
-		rpLeft.setMargins(tenDp, 0, 0, 0);
-		RelativeLayout.LayoutParams rpRight = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
-				LayoutParams.WRAP_CONTENT);
-		rpRight.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-		rpRight.setMargins(0, 0, tenDp, 0);
-
-		TextView textView1 = new TextView(this);
-		textView1.setText("Order subtotal:");
-		textView1.setTextSize(12f);
-		textView1.setLayoutParams(rpLeft);
-		rl.addView(textView1);
-
-		EditText textEdit1 = new EditText(this);
-		textEdit1.setMinimumWidth(convertPixelsToDip(100));
-		textEdit1.setTextSize(12f);
-		textEdit1.setText("0.00");
-		textEdit1.setLayoutParams(rpRight);
-		textEdit1.setFocusable(false);
-		textEdit1.setClickable(false);
-		textEdit1.setFocusableInTouchMode(false);
-		textEdit1.setCursorVisible(false);
-		rl.addView(textEdit1);
-
-		layout.addView(rl);
-
-		addText(layout, "Discount:");
-		addText(layout, "Discount type:");
-		addText(layout, "Membership:");
-
+		discountsList = (LinearLayout) page1.findViewById(R.id.discountsLinearLayout);
 		pages.add(page1);
+
 		View page2 = inflater.inflate(R.layout.add_discount, null);
 		allButton = (RadioButton) page2.findViewById(R.id.allRadioButton);
 		allButton.setChecked(true);
@@ -86,20 +55,95 @@ public class Discounts extends Activity {
 		ViewPager viewPager = (ViewPager) findViewById(R.id.discounts_view_pager);
 		viewPager.setAdapter(pagerAdapter);
 		viewPager.setCurrentItem(0);
+
+		// example
+		addDiscountToList(30.0f, 10.0f, "Percent,  %", "All");
+		addDiscountToList(50.0f, 20.0f, "Percent,  %", "All");
+		addDiscountToList(20.0f, 5.0f, "Percent,  %", "All");
+		addDiscountToList(100.0f, 30.0f, "Percent,  %", "All");
 	}
 
-	public void addText(ViewGroup view, CharSequence text) {
+	private void addTextToLeft(RelativeLayout rl, CharSequence text) {
+		RelativeLayout.LayoutParams rpToLeft = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
+				LayoutParams.WRAP_CONTENT);
+		rpToLeft.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+		rpToLeft.addRule(RelativeLayout.CENTER_VERTICAL);
+		rpToLeft.setMargins(tenDp, 0, 0, 0);
+
 		TextView textView = new TextView(this);
 		textView.setText(text);
 		textView.setTextSize(12f);
-		LinearLayout.LayoutParams textParams = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
+		textView.setLayoutParams(rpToLeft);
+		rl.addView(textView);
+	}
+	
+	
+	private void addTextToRight(RelativeLayout rl, CharSequence text) {
+		RelativeLayout.LayoutParams rpToRight = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
 				LayoutParams.WRAP_CONTENT);
-		textParams.setMargins(tenDp, 0, 0, 0);
-		textView.setLayoutParams(textParams);
-		view.addView(textView);
+		rpToRight.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+		rpToRight.addRule(RelativeLayout.CENTER_VERTICAL);
+		rpToRight.setMargins(0, 0, tenDp, 0);
+
+		TextView textView = new TextView(this);
+		textView.setText(text);
+		textView.setTextSize(12f);
+		textView.setLayoutParams(rpToRight);
+		rl.addView(textView);
+	}
+	
+	
+	private void addNotEnableNumberToRight(RelativeLayout rl, CharSequence text) {
+		RelativeLayout.LayoutParams rpToRight = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
+				LayoutParams.WRAP_CONTENT);
+		rpToRight.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+		rpToRight.setMargins(0, 0, tenDp, 0);
+		EditText textEdit = new EditText(this);
+		textEdit.setMinimumWidth(convertPixelsToDip(100));
+		textEdit.setTextSize(12f);
+		textEdit.setText(text);
+		textEdit.setLayoutParams(rpToRight);
+		textEdit.setFocusable(false);
+		textEdit.setClickable(false);
+		textEdit.setLongClickable(false);
+		textEdit.setFocusableInTouchMode(false);
+		textEdit.setCursorVisible(false);
+		textEdit.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
+		rl.addView(textEdit);
+	}
+	
+	private void addDiscountTypeSpinnerToRight(RelativeLayout rl) {
+		RelativeLayout.LayoutParams rpToRight = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
+				LayoutParams.WRAP_CONTENT);
+		rpToRight.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+		rpToRight.setMargins(0, 0, tenDp, 0);
+		Spinner discountTypeSpinner = new Spinner(this);
+		String[] data = { "Percent, %", "Absolute, $" };
+
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, data);
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+		discountTypeSpinner.setAdapter(adapter);
+		discountTypeSpinner.setPrompt("Date period");
+		discountTypeSpinner.setSelection(0);
+		discountTypeSpinner.setLayoutParams(rpToRight);
+		discountTypeSpinner.setFocusable(false);
+		discountTypeSpinner.setClickable(false);
+		discountTypeSpinner.setLongClickable(false);
+		discountTypeSpinner.setFocusableInTouchMode(false);
+		discountTypeSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+			}
+		});
+		rl.addView(discountTypeSpinner);
 	}
 
-	public void addTitle(ViewGroup view, int number) {
+	private void addTitle(ViewGroup view, int number) {
 		TextView discount = new TextView(this);
 		discount.setText("Discount" + String.valueOf(number));
 		discount.setBackgroundColor(getResources().getColor(R.color.orange));
@@ -111,7 +155,52 @@ public class Discounts extends Activity {
 		view.addView(discount);
 	}
 
-	public int convertPixelsToDip(int px) {
+	private void addDiscountToList(float subtotal, float discount, String discountType, String membership) {
+		addTitle(discountsList, position);
+		RelativeLayout subtotalLayout = new RelativeLayout(this);
+		addTextToLeft(subtotalLayout, "Order subtotal:");
+		//addNotEnableNumberToRight(subtotalLayout, String.valueOf(subtotal));
+		
+		addTextToRight(subtotalLayout, "0.00");
+		
+		discountsList.addView(subtotalLayout);
+		RelativeLayout discountLayout = new RelativeLayout(this);
+		addTextToLeft(discountLayout, "Discount:");
+		//addNotEnableNumberToRight(discountLayout, String.valueOf(discount));
+		
+		addTextToRight(discountLayout, "0.00");
+		
+		discountsList.addView(discountLayout);
+		RelativeLayout discountTypeLayout = new RelativeLayout(this);
+		addTextToLeft(discountTypeLayout, "Discount type:");
+		//addDiscountTypeSpinnerToRight(discountTypeLayout);
+		
+		addTextToRight(discountTypeLayout, "Percent, %");
+		
+		discountsList.addView(discountTypeLayout);
+		RelativeLayout membershipLayout = new RelativeLayout(this);
+		addTextToLeft(membershipLayout, "Membership:");
+		
+		addTextToRight(membershipLayout, "All");
+		
+		discountsList.addView(membershipLayout);
+		position++;
+	}
+
+	private void enableNumber(EditText textEdit) {
+		textEdit.setFocusable(true);
+		textEdit.setClickable(true);
+		textEdit.setLongClickable(true);
+		textEdit.setFocusableInTouchMode(true);
+		textEdit.setCursorVisible(true);
+	}
+
+	private void clearList() {
+		discountsList.removeAllViews();
+		position = 1;
+	}
+
+	private int convertPixelsToDip(int px) {
 		return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, px, getResources().getDisplayMetrics());
 	}
 
@@ -139,4 +228,6 @@ public class Discounts extends Activity {
 	private EditText orderSubtotalEditor;
 	private EditText discountEditor;
 	private int tenDp;
+	private LinearLayout discountsList;
+	private int position = 1;
 }
