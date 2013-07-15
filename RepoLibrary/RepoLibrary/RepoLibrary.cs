@@ -10,13 +10,15 @@ using MongoDB.Driver.Builders;
 
 namespace RepoLibrary
 {
-    [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode=ConcurrencyMode.Reentrant)]
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Reentrant)]
     public class RepoLibrary : IRepoLibrary
     {
         public RepoLibrary()
         {
-            const string connectionString = "mongodb://localhost/?safe=true";
-            Db = new DatabaseGateway(connectionString);
+            //const string connectionString = "mongodb://localhost/?safe=true";
+            const string connectionString = @"Data Source=localhost\SQLExpress;Initial Catalog=repo;User ID=repoClient;Password=4WqLF69E";
+            Db = new MSSQLDatabaseGateway(connectionString);
+            //Db = new MongoDBDatabaseGateway(connectionString);
         }
 
         public RepoLibrary(IDatabaseGateway db)
