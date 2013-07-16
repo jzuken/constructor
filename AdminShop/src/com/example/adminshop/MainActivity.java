@@ -9,7 +9,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 
 public class MainActivity extends Activity {
 
@@ -40,9 +39,8 @@ public class MainActivity extends Activity {
 		editor.remove("logged");
 		editor.commit();
 		Intent intent = new Intent(this, Authorization.class);
-		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		startActivity(intent);
+		finish();
 	}
 
 	public void settingsClick(View v) {

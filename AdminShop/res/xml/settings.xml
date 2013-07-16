@@ -4,6 +4,7 @@
     <EditTextPreference
         android:defaultValue="0000"
         android:key="password"
-        android:title="Password" />
+        android:title="Password"
+        android:inputType="number" />
 
 </PreferenceScreen>

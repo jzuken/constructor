@@ -1,6 +1,5 @@
 package com.example.adminshop;
 
-import kankan.wheel.R;
 import kankan.wheel.widget.OnWheelChangedListener;
 import kankan.wheel.widget.OnWheelScrollListener;
 import kankan.wheel.widget.WheelView;
@@ -34,7 +33,6 @@ public class Unlock extends Activity {
 		if (getPassword().equals(settingsData.getString("password", ""))) {
 			Intent intent = new Intent(this, MainActivity.class);
 			startActivity(intent);
-			this.finish();
 		}
 	}
 
