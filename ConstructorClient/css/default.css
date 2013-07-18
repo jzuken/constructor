@@ -1,0 +1,76 @@
+#controls {
+    width: 500px;
+    height: 540px;
+}
+
+#phone {
+    border: 1px solid #000;
+    border-radius: 11px;
+    background-color: #232323;
+    box-shadow: 0 0 15px rgba(0,0,0,.28), inset 0 1px 1px rgba(255,255,255,.45), inset 0 0 2px rgba(255,255,255,.2);
+    width: 320px;
+    height: 540px;
+    padding: 15px;
+}
+
+#phone-screen {
+    background-color: white;
+    width: 100%;
+    height: 100%;
+}
+
+#steps {
+    width: 100%;
+}
+
+#screens {
+    width: 200px;
+    float: left;
+}
+
+#editors {
+    width: 300px;
+    float: left;
+}
+
+.main-button {
+    width: 155px;
+    height: 155px;
+    float: left;
+    background-color: black;
+    color: white;
+    text-align: center;
+    border: 1px solid #FFF;
+    font-size: 20pt;
+}
+
+.main-button img {
+    height: 100px;
+    width: 155px;
+}
+
+#screens div {
+    width: 100%;
+}
+
+.remove-screen .remove-screen-image {
+    display: block;
+}
+
+.remove-screen .add-screen-image {
+    display: none;
+}
+
+.add-screen .remove-screen-image {
+    display: none;
+}
+
+.add-screen .add-screen-image {
+    display: block;
+}
+
+#phone-screen .screen-name {
+    border: 1px solid #000000;
+    text-align: center;
+    font-size: 18pt;
+}
