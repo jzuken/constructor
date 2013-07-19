@@ -7,6 +7,7 @@ using System.ServiceModel;
 using System.Text;
 using MongoDB.Driver;
 using MongoDB.Driver.Builders;
+using System.Data.SqlClient;
 
 namespace RepoLibrary
 {
@@ -15,10 +16,20 @@ namespace RepoLibrary
     {
         public RepoLibrary()
         {
+            // MongoDB obsolete database (WILL BE REMOVED SOON)
             //const string connectionString = "mongodb://localhost/?safe=true";
-            const string connectionString = @"Data Source=localhost\SQLExpress;Initial Catalog=repo;User ID=repoClient;Password=4WqLF69E";
-            Db = new MSSQLDatabaseGateway(connectionString);
             //Db = new MongoDBDatabaseGateway(connectionString);
+
+
+            SqlConnectionStringBuilder connString2Builder;
+            connString2Builder = new SqlConnectionStringBuilder();
+            connString2Builder.DataSource = "tcp:e59bs4vft9.database.windows.net,1433";
+            connString2Builder.InitialCatalog = "repo";
+            connString2Builder.Encrypt = true;
+            connString2Builder.TrustServerCertificate = true;
+            connString2Builder.UserID = "repoLogin@e59bs4vft9";
+            connString2Builder.Password = "4WqLF69E";
+            Db = new MSSQLDatabaseGateway(connString2Builder.ToString());
         }
 
         public RepoLibrary(IDatabaseGateway db)

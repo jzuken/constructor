@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/dark_grey" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/menu"
+            android:textColor="@color/white"
+            android:textSize="30dp" />
+
+        <Button
+            android:id="@+id/settingsButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:onClick="settingsClick"
+            android:background="@drawable/settings_button" />
+    </RelativeLayout>
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/gray"
+        android:gravity="center" >
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center" >
+
+            <Button
+                android:id="@+id/dashboardButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                android:minHeight="100dp"
+                android:minWidth="100dp"
+                android:onClick="dashboardButtonClick"
+                android:background="@drawable/dashboard_button" />
+
+            <Button
+                android:id="@+id/usersButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                android:minHeight="100dp"
+                android:minWidth="100dp"
+                android:onClick="usersButtonClick"
+                android:background="@drawable/users_button" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center" >
+
+            <Button
+                android:id="@+id/discountsButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                android:minHeight="100dp"
+                android:minWidth="100dp"
+                android:onClick="discountsButtonClick"
+                android:background="@drawable/discounts_button" />
+
+            <Button
+                android:id="@+id/productsButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                android:minHeight="100dp"
+                android:minWidth="100dp"
+                android:onClick="productsButtonClick"
+                android:background="@drawable/products_button" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center" >
+
+            <Button
+                android:id="@+id/reviewsButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                android:minHeight="100dp"
+                android:minWidth="100dp"
+                android:onClick="reviewsButtonClick"
+                android:background="@drawable/reviews_button" />
+
+            <Button
+                android:id="@+id/logoutButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                android:minHeight="100dp"
+                android:minWidth="100dp"
+                android:onClick="logoutClick"
+                android:background="@drawable/logout_button"/>
+        </TableRow>
+    </TableLayout>
+
+</LinearLayout>
