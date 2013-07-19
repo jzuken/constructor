@@ -16,7 +16,7 @@ mysql_connect($sql_host, $sql_user, $sql_password)  or die(mysql_error());
 mysql_select_db($sql_db) or die(mysql_error());
 
 header('Content-Type: application/json; charset=utf-8');
-$users_fields = array(id, username, usertype, invalid_login_attempts, title, firstname, lastname, company, email, url, last_login, first_login, status, activation_key, autolock, suspend_date, referer, ssn, language, cart, change_password, change_password_date, parent, pending_plan_id, activity, membershipid, pending_membershipid, tax_number, tax_exempt, trusted_provider, cookie_access);
+$users_fields = array(id, username, usertype, invalid_login_attempts, title, firstname, lastname, company, email, url, last_login, first_login, status, activation_key, autolock, suspend_date, referer, ssn, language, change_password, change_password_date, parent, pending_plan_id, activity, membershipid, pending_membershipid, tax_number, tax_exempt, trusted_provider, cookie_access);
 $orders_fields = array(orderid, userid, membership, total, giftcert_discount, giftcert_ids, subtotal, discount, coupon, coupon_discount, shippingid, shipping, tracking, shipping_cost, tax, taxes_applied, date, status, payment_method, flag, notes, details, customer_notes, customer, title, firstname, lastname, company, url, email, language, clickid, membershipid, paymentid, payment_surcharge, tax_number, tax_exempt, init_total, access_key, klarna_order_status);
 $discounts_fields = array(discountid, minprice, discount, discount_type, provider);
 
@@ -42,6 +42,13 @@ function get_response()
         case 'discounts':
             $response = get_discounts($discounts_fields);
             break;
+        case 'create_discount':
+            $response = create_discount($_GET['minprice'], $_GET['discount'], $_GET['discount_type'], $_GET['provider']);
+            break;
+        case 'update_discount':
+            $response = update_discount($discounts_fields);
+            break;
+
         default:
             $response = "error";
             break;
@@ -91,6 +98,17 @@ function get_discounts($fields)
     global $sql_tbl;
     $query = mysql_query("SELECT * FROM $sql_tbl[discounts]") or die(mysql_error());
     return get_json($fields, $query);
+}
+
+function create_discount($minprice, $discount, $discount_type, $provider)
+{
+    global $sql_tbl;
+    if (is_null($minprice) || is_null($discount) || is_null($discount_type) || is_null($provider)) {
+        return "error";
+    }
+    $query = mysql_query("INSERT INTO $sql_tbl[discounts] (minprice, discount, discount_type, provider) VALUES ($minprice, $discount, $discount_type, $provider)") or die(mysql_error());
+    echo db_query($query);
+    return "success";
 }
 
 function get_json($fields, $query)
