@@ -1,20 +1,26 @@
 package com.example.adminshop;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Activity;
-import android.content.Intent;
+import android.content.Context;
+import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
+import android.widget.TabHost;
+import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -43,31 +49,39 @@ public class Dashboard extends Activity {
 		completeOrders = (TextView) page2.findViewById(R.id.complete_orders);
 		inProcessOrders = (TextView) page2.findViewById(R.id.in_process_orders);
 		totalPaid = (TextView) page2.findViewById(R.id.total_paid);
-		datePeriodSpinner = (Spinner) page2.findViewById(R.id.date_period_spinner);
 
-		String[] data = { "All dates", "This month", "This week", "Today" };
+		TabHost ordersTabHost = (TabHost) page2.findViewById(android.R.id.tabhost);
+		newPeriodTabHost(ordersTabHost);
 
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, data);
-		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-		datePeriodSpinner.setAdapter(adapter);
-		datePeriodSpinner.setPrompt("Date period");
-		datePeriodSpinner.setSelection(0);
-		datePeriodSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-			@Override
-			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-				datePeriod = position;
-			}
-
-			@Override
-			public void onNothingSelected(AdapterView<?> arg0) {
+		ordersTabHost.setOnTabChangedListener(new OnTabChangeListener() {
+			public void onTabChanged(String tabId) {
 			}
 		});
 
 		pages.add(page2);
+
 		View page3 = inflater.inflate(R.layout.sales_growth, null);
+
+		TabHost growthTabHost = (TabHost) page3.findViewById(android.R.id.tabhost);
+		newPeriodTabHost(growthTabHost);
+
+		growthTabHost.setOnTabChangedListener(new OnTabChangeListener() {
+			public void onTabChanged(String tabId) {
+			}
+		});
+
 		pages.add(page3);
+
 		View page4 = inflater.inflate(R.layout.top_sellers, null);
+
+		TabHost sellersTabHost = (TabHost) page4.findViewById(android.R.id.tabhost);
+		newPeriodTabHost(sellersTabHost);
+
+		sellersTabHost.setOnTabChangedListener(new OnTabChangeListener() {
+			public void onTabChanged(String tabId) {
+			}
+		});
+
 		topSellersTable = (TableLayout) page4.findViewById(R.id.top_sellers_table);
 		rowParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 		itemParams = new TableRow.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
@@ -79,9 +93,33 @@ public class Dashboard extends Activity {
 		viewPager.setAdapter(pagerAdapter);
 		viewPager.setCurrentItem(0);
 
-		//example
+		// example
 		addPositionToTable("first", 300);
 		addPositionToTable("second", 100);
+
+		getRequester = new GetRequester();
+		if (isOnline()) {
+			initLastOrderData();
+		}
+	}
+
+	private void addEmptyTab(TabHost tabHost, String tag, String indicator) {
+		TabHost.TabSpec tabSpec = tabHost.newTabSpec(tag);
+		View indicatorView = getLayoutInflater().inflate(R.layout.tab_indicator, null);
+		TextView tabIndicator = (TextView) indicatorView.findViewById(R.id.tab_text);
+		tabIndicator.setText(indicator);
+		tabIndicator.setTextColor(Color.WHITE);
+		tabSpec.setIndicator(indicatorView);
+		tabSpec.setContent(R.id.emptyContent);
+		tabHost.addTab(tabSpec);
+	}
+
+	private void newPeriodTabHost(TabHost tabHost) {
+		tabHost.setup();
+		addEmptyTab(tabHost, "tag1", "Since last login");
+		addEmptyTab(tabHost, "tag2", "Today");
+		addEmptyTab(tabHost, "tag3", "This week");
+		addEmptyTab(tabHost, "tag4", "This month");
 	}
 
 	private void addPositionToTable(String name, int quantity) {
@@ -94,7 +132,7 @@ public class Dashboard extends Activity {
 		topSellersTable.addView(newRow);
 		position++;
 	}
-	
+
 	private TextView newTableTextView(CharSequence text) {
 		TextView textView = new TextView(this);
 		textView.setText(text);
@@ -102,15 +140,82 @@ public class Dashboard extends Activity {
 		textView.setLayoutParams(itemParams);
 		return textView;
 	}
-	
+
 	private void clearTable() {
 		topSellersTable.removeViews(1, position - 1);
 		position = 1;
 	}
 
-	public void settingsClick(View v) {
-		Intent intent = new Intent(this, Settings.class);
-		startActivity(intent);
+	private enum statusSymbols {
+		N, Q, P, B, D, F, C
+	}
+
+	private void initLastOrderData() {
+		String data = getRequester.getResponse("http://54.213.38.9/xcart/api.php?request=last_order");
+		try {
+			JSONArray array = new JSONArray(data);
+			JSONObject obj = array.getJSONObject(0);
+			id.setText(obj.getString("orderid"));
+			Long dateInSeconds = Long.parseLong(obj.getString("date"));
+			date.setText(getFormatDate(dateInSeconds));
+			totalPrice.setText("$" + obj.getString("total"));
+			user.setText(obj.getString("title") + " " + obj.getString("firstname") + " " + obj.getString("lastname"));
+
+			statusSymbols statusSymbol = statusSymbols.valueOf(obj.getString("status"));
+			switch (statusSymbol) {
+			case N:
+				status.setText("Not finished");
+				break;
+			case Q:
+				status.setText("Queued");
+				break;
+			case P:
+				status.setText("Processed");
+				break;
+			case B:
+				status.setText("Backordered");
+				break;
+			case D:
+				status.setText("Declined");
+				break;
+			case F:
+				status.setText("Failed");
+				break;
+			case C:
+				status.setText("Comlete");
+				break;
+			default:
+				break;
+			}
+
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private String getFormatDate(Long seconds) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTimeInMillis(seconds * 1000L);
+		return dateNumber(calendar.get(Calendar.DAY_OF_MONTH)) + "/" + dateNumber(calendar.get(Calendar.MONTH)) + "/"
+				+ calendar.get(Calendar.YEAR) + " " + dateNumber(calendar.get(Calendar.HOUR_OF_DAY)) + ":"
+				+ dateNumber(calendar.get(Calendar.MINUTE));
+	}
+
+	private String dateNumber(int number) {
+		if (number < 10) {
+			return "0" + String.valueOf(number);
+		} else {
+			return String.valueOf(number);
+		}
+	}
+
+	private boolean isOnline() {
+		ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo netInfo = cm.getActiveNetworkInfo();
+		if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+			return true;
+		}
+		return false;
 	}
 
 	private TextView id;
@@ -124,10 +229,9 @@ public class Dashboard extends Activity {
 	private TextView completeOrders;
 	private TextView inProcessOrders;
 	private TextView totalPaid;
-	private Spinner datePeriodSpinner;
 	private TableLayout topSellersTable;
 	private LayoutParams rowParams;
 	private TableRow.LayoutParams itemParams;
-	private int datePeriod;
 	private int position = 1;
+	private GetRequester getRequester;
 }

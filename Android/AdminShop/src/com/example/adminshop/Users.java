@@ -7,8 +7,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnKeyListener;
+import android.widget.EditText;
 
 public class Users extends Activity {
 
@@ -27,14 +30,15 @@ public class Users extends Activity {
 		ViewPager viewPager = (ViewPager) findViewById(R.id.users_view_pager);
 		viewPager.setAdapter(pagerAdapter);
 		viewPager.setCurrentItem(0);
-	}
-	
-	public void usersSearchClick(View v) {
-		
-	}
 
-	public void settingsClick(View v) {
-		Intent intent = new Intent(this, Settings.class);
-		startActivity(intent);
+		final EditText searchLine = (EditText) page.findViewById(R.id.usersSearchLine);
+		searchLine.setOnKeyListener(new OnKeyListener() {
+			public boolean onKey(View v, int keyCode, KeyEvent event) {
+				if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+					return true;
+				}
+				return false;
+			}
+		});
 	}
 }

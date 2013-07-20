@@ -76,8 +76,7 @@ public class Discounts extends Activity {
 		textView.setLayoutParams(rpToLeft);
 		rl.addView(textView);
 	}
-	
-	
+
 	private void addTextToRight(RelativeLayout rl, CharSequence text) {
 		RelativeLayout.LayoutParams rpToRight = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
 				LayoutParams.WRAP_CONTENT);
@@ -91,8 +90,7 @@ public class Discounts extends Activity {
 		textView.setLayoutParams(rpToRight);
 		rl.addView(textView);
 	}
-	
-	
+
 	private void addNotEnableNumberToRight(RelativeLayout rl, CharSequence text) {
 		RelativeLayout.LayoutParams rpToRight = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
 				LayoutParams.WRAP_CONTENT);
@@ -111,7 +109,7 @@ public class Discounts extends Activity {
 		textEdit.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
 		rl.addView(textEdit);
 	}
-	
+
 	private void addDiscountTypeSpinnerToRight(RelativeLayout rl) {
 		RelativeLayout.LayoutParams rpToRight = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
 				LayoutParams.WRAP_CONTENT);
@@ -159,30 +157,30 @@ public class Discounts extends Activity {
 		addTitle(discountsList, position);
 		RelativeLayout subtotalLayout = new RelativeLayout(this);
 		addTextToLeft(subtotalLayout, "Order subtotal:");
-		//addNotEnableNumberToRight(subtotalLayout, String.valueOf(subtotal));
-		
+		// addNotEnableNumberToRight(subtotalLayout, String.valueOf(subtotal));
+
 		addTextToRight(subtotalLayout, "0.00");
-		
+
 		discountsList.addView(subtotalLayout);
 		RelativeLayout discountLayout = new RelativeLayout(this);
 		addTextToLeft(discountLayout, "Discount:");
-		//addNotEnableNumberToRight(discountLayout, String.valueOf(discount));
-		
+		// addNotEnableNumberToRight(discountLayout, String.valueOf(discount));
+
 		addTextToRight(discountLayout, "0.00");
-		
+
 		discountsList.addView(discountLayout);
 		RelativeLayout discountTypeLayout = new RelativeLayout(this);
 		addTextToLeft(discountTypeLayout, "Discount type:");
-		//addDiscountTypeSpinnerToRight(discountTypeLayout);
-		
+		// addDiscountTypeSpinnerToRight(discountTypeLayout);
+
 		addTextToRight(discountTypeLayout, "Percent, %");
-		
+
 		discountsList.addView(discountTypeLayout);
 		RelativeLayout membershipLayout = new RelativeLayout(this);
 		addTextToLeft(membershipLayout, "Membership:");
-		
+
 		addTextToRight(membershipLayout, "All");
-		
+
 		discountsList.addView(membershipLayout);
 		position++;
 	}
@@ -204,15 +202,10 @@ public class Discounts extends Activity {
 		return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, px, getResources().getDisplayMetrics());
 	}
 
-	public void settingsClick(View v) {
-		Intent intent = new Intent(this, Settings.class);
-		startActivity(intent);
-	}
-
 	public void okClick(View v) {
 		if (Float.valueOf(discountEditor.getText().toString()) > 100.0 && percentButton.isChecked()) {
 			Toast.makeText(getBaseContext(), "New discount can not be added with discount value more than 100%",
-					Toast.LENGTH_SHORT).show();
+					Toast.LENGTH_LONG).show();
 		}
 	}
 

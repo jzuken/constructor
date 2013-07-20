@@ -20,7 +20,7 @@ public class Settings extends PreferenceActivity {
 			public boolean onPreferenceChange(Preference preference, Object newValue) {
 				int newValueLength = ((String) newValue).length();
 				if (newValueLength != 4) {
-					Toast.makeText(getBaseContext(), "Password must consists of four digits", Toast.LENGTH_SHORT).show();
+					Toast.makeText(getBaseContext(), "Password must consists of four digits", Toast.LENGTH_LONG).show();
 					return false;
 				}
 				return true;

@@ -4,7 +4,7 @@
 		android:drawable="@drawable/users_icon"
 		android:state_focused="true"/>
     <item 
-		android:drawable="@drawable/users_icon" 
+		android:drawable="@drawable/active_button_users" 
 		android:state_pressed="true"/>
     <item 
 		android:drawable="@drawable/users_icon"/>

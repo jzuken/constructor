@@ -4,7 +4,7 @@
 		android:drawable="@drawable/logout_icon"
 		android:state_focused="true"/>
     <item 
-		android:drawable="@drawable/logout_icon" 
+		android:drawable="@drawable/active_button_logout" 
 		android:state_pressed="true"/>
     <item 
 		android:drawable="@drawable/logout_icon"/>

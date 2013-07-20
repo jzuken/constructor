@@ -1,74 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/search_for" />
-
-    <EditText
-        android:id="@+id/productsSearchLine"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:inputType="text" />
-
-    <Button
-        android:id="@+id/productsSearchButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:onClick="productsSearchClick"
-        android:text="@string/search" />
+    android:layout_height="match_parent" >
 
     <LinearLayout
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:orientation="vertical" >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/serach_in" />
+            android:text="@string/search_for" />
+
+        <EditText
+            android:id="@+id/productsSearchLine"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text" />
+
+        <Button
+            android:id="@+id/productsSearchButton"
+            style="@style/MainButtonTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:onClick="productsSearchClick"
+            android:text="@string/search" />
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="horizontal" >
 
-            <CheckBox
-                android:id="@+id/product_title_checkBox"
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/product_title" />
+                android:text="@string/serach_in" />
 
-            <CheckBox
-                android:id="@+id/short_descript_checkBox"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/short_descript" />
+                android:orientation="vertical" >
 
-            <CheckBox
-                android:id="@+id/detailed_descript_checkBox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/detailed_descript" />
+                <CheckBox
+                    android:id="@+id/product_title_checkBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/product_title" />
 
-            <CheckBox
-                android:id="@+id/search_keywords_checkBox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/search_keywordsText" />
+                <CheckBox
+                    android:id="@+id/short_descript_checkBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/short_descript" />
+
+                <CheckBox
+                    android:id="@+id/detailed_descript_checkBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/detailed_descript" />
+
+                <CheckBox
+                    android:id="@+id/search_keywords_checkBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/search_keywordsText" />
+            </LinearLayout>
         </LinearLayout>
+
+        <Button
+            android:id="@+id/addProductButton"
+            style="@style/MainButtonTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="addProductClick"
+            android:text="@string/add" />
     </LinearLayout>
 
-    <Button
-        android:id="@+id/addProductButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="addProductClick"
-        android:text="@string/add" />
-
-</LinearLayout>
+</ScrollView>

@@ -15,7 +15,7 @@
             android:layout_centerInParent="true"
             android:text="@string/add_discount"
             android:textColor="@color/white"
-            android:textSize="15dp" />
+            android:textSize="15sp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -24,7 +24,7 @@
             android:layout_marginLeft="10dp"
             android:text="@string/left_arrow"
             android:textColor="@color/white"
-            android:textSize="15dp" />
+            android:textSize="15sp" />
     </RelativeLayout>
 
     <ScrollView
@@ -42,7 +42,7 @@
                 android:background="@color/orange"
                 android:paddingLeft="10dp"
                 android:text="@string/order_subtotal"
-                android:textSize="15dp" />
+                android:textSize="15sp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -51,7 +51,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="15dp"
                 android:text="@string/enter_value"
-                android:textSize="12dp" />
+                android:textSize="12sp" />
 
             <EditText
                 android:id="@+id/orderSubtotalEditor"
@@ -69,7 +69,7 @@
                 android:background="@color/orange"
                 android:paddingLeft="10dp"
                 android:text="@string/discount"
-                android:textSize="15dp" />
+                android:textSize="15sp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -78,7 +78,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="15dp"
                 android:text="@string/enter_value"
-                android:textSize="12dp" />
+                android:textSize="12sp" />
 
             <EditText
                 android:id="@+id/discountEditor"
@@ -96,7 +96,7 @@
                 android:background="@color/orange"
                 android:paddingLeft="10dp"
                 android:text="@string/discount_type"
-                android:textSize="15dp" />
+                android:textSize="15sp" />
 
             <RadioGroup
                 android:layout_width="wrap_content"
@@ -112,14 +112,14 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="15dp"
                     android:text="@string/percent"
-                    android:textSize="12dp" />
+                    android:textSize="12sp" />
 
                 <RadioButton
                     android:id="@+id/absoluteRadioButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/absolute"
-                    android:textSize="12dp" />
+                    android:textSize="12sp" />
             </RadioGroup>
 
             <TextView
@@ -128,7 +128,7 @@
                 android:background="@color/orange"
                 android:paddingLeft="10dp"
                 android:text="@string/membership_text"
-                android:textSize="15dp" />
+                android:textSize="15sp" />
 
             <RadioGroup
                 android:layout_width="wrap_content"
@@ -144,7 +144,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="15dp"
                     android:text="@string/all"
-                    android:textSize="12dp" />
+                    android:textSize="12sp" />
 
                 <RadioButton
                     android:id="@+id/premiumRadioButton"
@@ -152,14 +152,14 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="15dp"
                     android:text="@string/premium"
-                    android:textSize="12dp" />
+                    android:textSize="12sp" />
 
                 <RadioButton
                     android:id="@+id/wholesaleRadioButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/wholesale"
-                    android:textSize="12dp" />
+                    android:textSize="12sp" />
             </RadioGroup>
 
             <Button
@@ -170,7 +170,8 @@
                 android:layout_marginBottom="15dp"
                 android:minWidth="100dp"
                 android:onClick="okClick"
-                android:text="@string/ok" />
+                android:text="@string/ok"
+                style="@style/MainButtonTheme" />
         </LinearLayout>
     </ScrollView>
 

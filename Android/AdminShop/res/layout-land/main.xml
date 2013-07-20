@@ -61,13 +61,6 @@
                     android:minHeight="100dp"
                     android:minWidth="100dp"
                     android:onClick="usersButtonClick" />
-            </TableRow>
-
-            <TableRow
-                android:id="@+id/tableRow2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center" >
 
                 <Button
                     android:id="@+id/discountsButton"
@@ -78,6 +71,13 @@
                     android:minHeight="100dp"
                     android:minWidth="100dp"
                     android:onClick="discountsButtonClick" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center" >
 
                 <Button
                     android:id="@+id/productsButton"
@@ -88,13 +88,6 @@
                     android:minHeight="100dp"
                     android:minWidth="100dp"
                     android:onClick="productsButtonClick" />
-            </TableRow>
-
-            <TableRow
-                android:id="@+id/tableRow3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center" >
 
                 <Button
                     android:id="@+id/reviewsButton"
