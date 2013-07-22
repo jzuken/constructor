@@ -46,7 +46,10 @@ function get_response()
             $response = create_discount($_GET['minprice'], $_GET['discount'], $_GET['discount_type'], $_GET['provider']);
             break;
         case 'update_discount':
-            $response = update_discount($discounts_fields);
+            $response = update_discount($_GET['id'], $_GET['minprice'], $_GET['discount'], $_GET['discount_type'], $_GET['provider']);
+            break;
+        case 'delete_discount':
+            $response = delete_discount($_GET['id']);
             break;
 
         default:
@@ -59,7 +62,7 @@ function get_response()
 function get_users_count()
 {
     global $sql_tbl;
-    $query = mysql_query("SELECT * FROM $sql_tbl[customers]");
+    $query = mysql_query("SELECT * FROM $sql_tbl[customers]") or die(mysql_error());
     $count = mysql_num_rows($query);
     $json_result = array('count' => $count);
     return json_encode($json_result);
@@ -68,7 +71,7 @@ function get_users_count()
 function get_users($fields)
 {
     global $sql_tbl;
-    $query = mysql_query("SELECT * FROM $sql_tbl[customers]");
+    $query = mysql_query("SELECT * FROM $sql_tbl[customers]") or die(mysql_error());
     return get_json($fields, $query);
 }
 
@@ -82,14 +85,14 @@ function get_orders($fields, $from, $to)
     }
     global $sql_tbl;
     $date_condition = "date BETWEEN $from AND $to";
-    $query = mysql_query("SELECT * FROM $sql_tbl[orders] WHERE $date_condition");
+    $query = mysql_query("SELECT * FROM $sql_tbl[orders] WHERE $date_condition") or die(mysql_error());
     return get_json($fields, $query);
 }
 
 function get_last_order($fields)
 {
     global $sql_tbl;
-    $query = mysql_query("SELECT * FROM $sql_tbl[orders] ORDER BY date DESC LIMIT 1");
+    $query = mysql_query("SELECT * FROM $sql_tbl[orders] ORDER BY date DESC LIMIT 1") or die(mysql_error());
     return get_json($fields, $query);
 }
 
@@ -106,7 +109,29 @@ function create_discount($minprice, $discount, $discount_type, $provider)
     if (is_null($minprice) || is_null($discount) || is_null($discount_type) || is_null($provider)) {
         return "error";
     }
-    $query = mysql_query("INSERT INTO $sql_tbl[discounts] (minprice, discount, discount_type, provider) VALUES ($minprice, $discount, $discount_type, $provider)") or die(mysql_error());
+    $query = mysql_query("INSERT INTO $sql_tbl[discounts] (minprice, discount, discount_type, provider) VALUES ($minprice, $discount, '$discount_type', $provider)") or die(mysql_error());
+    echo db_query($query);
+    return "success";
+}
+
+function update_discount($id, $minprice, $discount, $discount_type, $provider)
+{
+    global $sql_tbl;
+    if (is_null($id) || is_null($minprice) || is_null($discount) || is_null($discount_type) || is_null($provider)) {
+        return "error";
+    }
+    $query = mysql_query("UPDATE $sql_tbl[discounts] SET minprice=$minprice, discount=$discount, discount_type='$discount_type', provider=$provider") or die(mysql_error());
+    echo db_query($query);
+    return "success";
+}
+
+function delete_discount($id)
+{
+    global $sql_tbl;
+    if (is_null($id)) {
+        return "error";
+    }
+    $query = mysql_query("DELETE FROM $sql_tbl[discounts] WHERE discountid=$id") or die(mysql_error());
     echo db_query($query);
     return "success";
 }
