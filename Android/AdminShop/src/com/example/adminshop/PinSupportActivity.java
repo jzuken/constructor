@@ -20,6 +20,12 @@ public class PinSupportActivity extends Activity {
 		isPaused = true;
 	}
 	
+	/**
+	 * Override in childs if need some action without pin activity
+	 */
+	protected void withoutPinAction() {	
+	}
+	
 	@Override
 	protected void onStart() {
 		super.onStart();
@@ -28,6 +34,8 @@ public class PinSupportActivity extends Activity {
 			fromOtherPage = true;
 			intent.putExtra("afterPause", 1);
 			startActivityForResult(intent, 1);
+		} else {
+			withoutPinAction();
 		}
 		isPaused = false;
 		fromOtherPage = false;

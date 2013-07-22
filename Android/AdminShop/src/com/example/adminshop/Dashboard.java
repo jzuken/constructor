@@ -98,12 +98,16 @@ public class Dashboard extends PinSupportActivity {
 		addPositionToTable("second", 100);
 
 		getRequester = new GetRequester();
+	}
+
+	@Override
+	protected void withoutPinAction() {
 		if (isOnline()) {
 			initLastOrderData();
 		} else {
 			Toast.makeText(getBaseContext(),
-					"Sorry, unable to connect to server. Please check your internet connection"
-					, Toast.LENGTH_LONG).show();
+					"Sorry, unable to connect to server. Cannot update data. Please check your internet connection",
+					Toast.LENGTH_LONG).show();
 		}
 	}
 
