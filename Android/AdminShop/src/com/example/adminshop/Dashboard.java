@@ -8,7 +8,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
@@ -24,8 +23,9 @@ import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class Dashboard extends Activity {
+public class Dashboard extends PinSupportActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -100,6 +100,10 @@ public class Dashboard extends Activity {
 		getRequester = new GetRequester();
 		if (isOnline()) {
 			initLastOrderData();
+		} else {
+			Toast.makeText(getBaseContext(),
+					"Sorry, unable to connect to server. Please check your internet connection"
+					, Toast.LENGTH_LONG).show();
 		}
 	}
 

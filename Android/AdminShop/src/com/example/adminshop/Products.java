@@ -1,11 +1,10 @@
 package com.example.adminshop;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-public class Products extends Activity {
+public class Products extends PinSupportActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -15,7 +14,7 @@ public class Products extends Activity {
 
 	public void addProductClick(View v) {
 		Intent intent = new Intent(this, ProductAdder.class);
-		startActivity(intent);
+		startActivityForResult(intent, 1);
 	}
 
 	public void productsSearchClick(View v) {

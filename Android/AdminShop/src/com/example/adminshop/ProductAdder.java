@@ -1,6 +1,5 @@
 package com.example.adminshop;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -13,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
-public class ProductAdder extends Activity {
+public class ProductAdder extends PinSupportActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

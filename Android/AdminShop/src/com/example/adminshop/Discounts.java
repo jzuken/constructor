@@ -3,8 +3,6 @@ package com.example.adminshop;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.text.InputType;
@@ -24,7 +22,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class Discounts extends Activity {
+public class Discounts extends PinSupportActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

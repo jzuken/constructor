@@ -1,5 +1,6 @@
 package com.example.adminshop;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.preference.Preference;
@@ -26,5 +27,38 @@ public class Settings extends PreferenceActivity {
 				return true;
 			}
 		});
+	}
+	
+	@Override
+	public void onBackPressed() {
+		setResult(RESULT_OK);
+		super.onBackPressed();
+	}
+	private boolean isPaused;
+	private boolean fromPin;
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		isPaused = true;
+	}
+	
+	@Override
+	protected void onStart() {
+		super.onStart();
+		if (isPaused && !fromPin) {
+			Intent intent = new Intent(this, Unlock.class);
+			intent.putExtra("afterPause", 1);
+			startActivityForResult(intent, 1);
+		}
+		isPaused = false;
+		fromPin = false;
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (resultCode == 2) {
+			fromPin = true;
+		}
 	}
 }

@@ -31,8 +31,14 @@ public class Unlock extends Activity {
 
 	public void okButtonClick(View v) {
 		if (getPassword().equals(settingsData.getString("password", ""))) {
-			Intent intent = new Intent(this, MainActivity.class);
-			startActivity(intent);
+			Intent intent = getIntent();
+			if (intent.getIntExtra("afterPause", 0) == 0) {
+				Intent newIntent = new Intent(this, MainActivity.class);
+				startActivity(newIntent);
+			} else {
+				setResult(2);
+				finish();
+			}
 		}
 	}
 
