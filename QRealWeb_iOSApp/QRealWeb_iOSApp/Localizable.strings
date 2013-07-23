@@ -1,0 +1,24 @@
+/* 
+  Localizable.strings
+  FirstLineSoftwareTestProject
+
+  Created by Иван Афанасьев on 06.04.13.
+  Copyright (c) 2013 Иван Афанасьев. All rights reserved.
+*/
+
+
+"OK" = "OK";
+
+
+// FirstLoginMessage
+
+"FIRST_LOGIN_MESSAGE" = "Наберите ваш личны PIN-код он будет использоваться для последующих входов в приложения. Затем нажмите ВОЙТИ";
+
+
+
+
+//Relogin alert
+
+"RELOGIN_ALERT_TITLE" = "Wrong LOGIN/Password combination";//"Неправильная логин/пароль комбинация";
+
+"RELOGIN_ALERT_MESSAGE" = "Please try to re-login using different credentials";//"Пожалуйста воспользуйтесь правильной комбинацией";
