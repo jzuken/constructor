@@ -57,37 +57,30 @@ public class Discounts extends PinSupportActivity {
 		ViewPager viewPager = (ViewPager) findViewById(R.id.discounts_view_pager);
 		viewPager.setAdapter(pagerAdapter);
 		viewPager.setCurrentItem(0);
-
-		// example
-		addDiscountToList(30.0f, 10.0f, "Percent,  %", "All");
-		addDiscountToList(50.0f, 20.0f, "Percent,  %", "All");
-		addDiscountToList(20.0f, 5.0f, "Percent,  %", "All");
-		addDiscountToList(100.0f, 30.0f, "Percent,  %", "All");
 	}
 
 	@Override
 	protected void withoutPinAction() {
-		if (NetworkManager.isOnline(this)) {
-			initDiscountsData();
-		} else {
-			Toast.makeText(getBaseContext(),
-					"Sorry, unable to connect to server. Cannot update data. Please check your internet connection",
-					Toast.LENGTH_LONG).show();
-		}
+		initDiscountsData();
 	}
 
 	private void initDiscountsData() {
 		String data = GetRequester.getResponse("http://54.213.38.9/xcart/api.php?request=discounts");
-		try {
-			JSONArray array = new JSONArray(data);
-			for (int i = 0; i < array.length(); i++) {
-				JSONObject obj = array.getJSONObject(i);
-				String orderSubtotalString = obj.getString("minprice");
-				String discountString = obj.getString("discount");
-				String discountTypeString = obj.getString("discount_type");
+		if (data != null) {
+			try {
+				JSONArray array = new JSONArray(data);
+				for (int i = 0; i < array.length(); i++) {
+					JSONObject obj = array.getJSONObject(i);
+					String orderSubtotalString = obj.getString("minprice");
+					String discountString = obj.getString("discount");
+					String discountTypeString = obj.getString("discount_type");
+					addDiscountToList(orderSubtotalString, discountString, discountTypeString, "All");
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
 			}
-		} catch (JSONException e) {
-			e.printStackTrace();
+		} else {
+			showConnectionErrorMessage();
 		}
 	}
 
@@ -97,6 +90,12 @@ public class Discounts extends PinSupportActivity {
 		if (response == "success") {
 			Toast.makeText(getBaseContext(), "Success", Toast.LENGTH_SHORT).show();
 		}
+	}
+	
+	private void showConnectionErrorMessage() {
+		Toast.makeText(getBaseContext(),
+				"Sorry, unable to connect to server. Cannot update data. Please check your internet connection",
+				Toast.LENGTH_LONG).show();
 	}
 
 	private void addTextToLeft(RelativeLayout rl, CharSequence text) {
@@ -189,27 +188,27 @@ public class Discounts extends PinSupportActivity {
 		view.addView(discount);
 	}
 
-	private void addDiscountToList(float subtotal, float discount, String discountType, String membership) {
+	private void addDiscountToList(String subtotal, String discount, String discountType, String membership) {
 		addTitle(discountsList, position);
 		RelativeLayout subtotalLayout = new RelativeLayout(this);
 		addTextToLeft(subtotalLayout, "Order subtotal:");
 		// addNotEnableNumberToRight(subtotalLayout, String.valueOf(subtotal));
 
-		addTextToRight(subtotalLayout, "0.00");
+		addTextToRight(subtotalLayout, subtotal);
 
 		discountsList.addView(subtotalLayout);
 		RelativeLayout discountLayout = new RelativeLayout(this);
 		addTextToLeft(discountLayout, "Discount:");
 		// addNotEnableNumberToRight(discountLayout, String.valueOf(discount));
 
-		addTextToRight(discountLayout, "0.00");
+		addTextToRight(discountLayout, discount);
 
 		discountsList.addView(discountLayout);
 		RelativeLayout discountTypeLayout = new RelativeLayout(this);
 		addTextToLeft(discountTypeLayout, "Discount type:");
 		// addDiscountTypeSpinnerToRight(discountTypeLayout);
 
-		addTextToRight(discountTypeLayout, "Percent, %");
+		addTextToRight(discountTypeLayout, discountType);
 
 		discountsList.addView(discountTypeLayout);
 		RelativeLayout membershipLayout = new RelativeLayout(this);

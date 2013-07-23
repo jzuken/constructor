@@ -97,13 +97,7 @@ public class Dashboard extends PinSupportActivity {
 
 	@Override
 	protected void withoutPinAction() {
-		if (NetworkManager.isOnline(this)) {
-			initLastOrderData();
-		} else {
-			Toast.makeText(getBaseContext(),
-					"Sorry, unable to connect to server. Cannot update data. Please check your internet connection",
-					Toast.LENGTH_LONG).show();
-		}
+		initLastOrderData();
 	}
 
 	private void addEmptyTab(TabHost tabHost, String tag, String indicator) {
@@ -155,54 +149,69 @@ public class Dashboard extends PinSupportActivity {
 
 	private void initLastOrderData() {
 		String data = GetRequester.getResponse("http://54.213.38.9/xcart/api.php?request=last_order");
-		try {
-			JSONArray array = new JSONArray(data);
-			JSONObject obj = array.getJSONObject(0);
-			String orderId = obj.getString("orderid");
-			id.setText(orderId);
-			Long dateInSeconds = Long.parseLong(obj.getString("date"));
-			date.setText(getFormatDate(dateInSeconds));
-			totalPrice.setText("$" + obj.getString("total"));
-			user.setText(obj.getString("title") + " " + obj.getString("firstname") + " " + obj.getString("lastname"));
+		if (data != null) {
+			try {
+				JSONArray array = new JSONArray(data);
+				JSONObject obj = array.getJSONObject(0);
+				String orderId = obj.getString("orderid");
 
-			statusSymbols statusSymbol = statusSymbols.valueOf(obj.getString("status"));
-			switch (statusSymbol) {
-			case N:
-				status.setText("Not finished");
-				break;
-			case Q:
-				status.setText("Queued");
-				break;
-			case P:
-				status.setText("Processed");
-				break;
-			case B:
-				status.setText("Backordered");
-				break;
-			case D:
-				status.setText("Declined");
-				break;
-			case F:
-				status.setText("Failed");
-				break;
-			case C:
-				status.setText("Comlete");
-				break;
-			default:
-				break;
+				String orderDetailsData = GetRequester
+						.getResponse("http://54.213.38.9/xcart/api.php?request=order_details&id=" + orderId);
+
+				if (orderDetailsData != null) {
+					JSONArray detailsArray = new JSONArray(orderDetailsData);
+					JSONObject detailsObj = detailsArray.getJSONObject(0);
+					product.setText(detailsObj.getString("product"));
+					quantity.setText(detailsObj.getString("amount"));
+
+					id.setText(orderId);
+					Long dateInSeconds = Long.parseLong(obj.getString("date"));
+					date.setText(getFormatDate(dateInSeconds));
+					totalPrice.setText("$" + obj.getString("total"));
+					user.setText(obj.getString("title") + " " + obj.getString("firstname") + " "
+							+ obj.getString("lastname"));
+
+					statusSymbols statusSymbol = statusSymbols.valueOf(obj.getString("status"));
+					switch (statusSymbol) {
+					case N:
+						status.setText("Not finished");
+						break;
+					case Q:
+						status.setText("Queued");
+						break;
+					case P:
+						status.setText("Processed");
+						break;
+					case B:
+						status.setText("Backordered");
+						break;
+					case D:
+						status.setText("Declined");
+						break;
+					case F:
+						status.setText("Failed");
+						break;
+					case C:
+						status.setText("Comlete");
+						break;
+					default:
+						break;
+					}
+				} else {
+					showConnectionErrorMessage();
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
 			}
-
-			String orderDetailsData = GetRequester
-					.getResponse("http://54.213.38.9/xcart/api.php?request=order_details&id=" + orderId);
-			
-			JSONArray detailsArray = new JSONArray(orderDetailsData);
-			JSONObject detailsObj = detailsArray.getJSONObject(0);
-			product.setText(detailsObj.getString("product"));
-			quantity.setText(detailsObj.getString("amount"));
-
-		} catch (JSONException e) {
-			e.printStackTrace();
+		} else {
+			showConnectionErrorMessage();
 		}
+	}
+
+	private void showConnectionErrorMessage() {
+		Toast.makeText(getBaseContext(),
+				"Sorry, unable to connect to server. Cannot update data. Please check your internet connection",
+				Toast.LENGTH_LONG).show();
 	}
 
 	private String getFormatDate(Long seconds) {
