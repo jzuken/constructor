@@ -2,6 +2,7 @@ package com.example.adminshop;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -48,7 +49,6 @@ public class Discounts extends PinSupportActivity {
 		wholesaleButton = (RadioButton) page2.findViewById(R.id.wholesaleRadioButton);
 		percentButton = (RadioButton) page2.findViewById(R.id.percentRadioButton);
 		percentButton.setChecked(true);
-		absoluteButton = (RadioButton) page2.findViewById(R.id.absoluteRadioButton);
 		orderSubtotalEditor = (EditText) page2.findViewById(R.id.orderSubtotalEditor);
 		discountEditor = (EditText) page2.findViewById(R.id.discountEditor);
 		pages.add(page2);
@@ -65,7 +65,12 @@ public class Discounts extends PinSupportActivity {
 	}
 
 	private void initDiscountsData() {
-		String data = GetRequester.getResponse("http://54.213.38.9/xcart/api.php?request=discounts");
+		String data;
+		try {
+			data = new GetRequester().execute("http://54.213.38.9/xcart/api.php?request=discounts").get();
+		} catch (Exception e) {
+			data = null;
+		}
 		if (data != null) {
 			try {
 				JSONArray array = new JSONArray(data);
@@ -85,13 +90,26 @@ public class Discounts extends PinSupportActivity {
 	}
 
 	private void createNewDiscount() {
-		String response = GetRequester.getResponse("http://54.213.38.9/xcart/api.php?equest=create_discount&minprice="
-				+ "" + "&discount=" + "" + "&discount_type=" + "" + "&provider=" + "");
-		if (response == "success") {
+		String provider = "1";
+		String orderSubtotalValue = orderSubtotalEditor.getText().toString();
+		String discountValue = discountEditor.getText().toString();
+		String discountTypeValue = getDiscountType();
+		String response;
+		try {
+			response = new GetRequester().execute("http://54.213.38.9/xcart/api.php?request=create_discount&minprice="
+					+ orderSubtotalValue + "&discount=" + discountValue + "&discount_type=" + discountTypeValue
+					+ "&provider=" + provider).get();
+		} catch (Exception e) {
+			response = null;
+		}
+		if (response != null) {
 			Toast.makeText(getBaseContext(), "Success", Toast.LENGTH_SHORT).show();
+			addDiscountToList(orderSubtotalValue, discountValue, discountTypeValue, "All");
+		} else {
+			showConnectionErrorMessage();
 		}
 	}
-	
+
 	private void showConnectionErrorMessage() {
 		Toast.makeText(getBaseContext(),
 				"Sorry, unable to connect to server. Cannot update data. Please check your internet connection",
@@ -237,14 +255,23 @@ public class Discounts extends PinSupportActivity {
 		return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, px, getResources().getDisplayMetrics());
 	}
 
+	private String getDiscountType() {
+		if (percentButton.isChecked()) {
+			return "percent";
+		} else {
+			return "absolute";
+		}
+	}
+
 	public void okClick(View v) {
 		if (Float.valueOf(discountEditor.getText().toString()) > 100.0 && percentButton.isChecked()) {
 			Toast.makeText(getBaseContext(), "New discount can not be added with discount value more than 100%",
 					Toast.LENGTH_LONG).show();
-		}
-		if (Float.valueOf(discountEditor.getText().toString()) == 0f) {
+		} else if (Float.valueOf(discountEditor.getText().toString()) == 0f) {
 			Toast.makeText(getBaseContext(), "New discount can not be added with empty discount value",
 					Toast.LENGTH_LONG).show();
+		} else {
+			createNewDiscount();
 		}
 	}
 
@@ -252,7 +279,6 @@ public class Discounts extends PinSupportActivity {
 	private RadioButton premiumButton;
 	private RadioButton wholesaleButton;
 	private RadioButton percentButton;
-	private RadioButton absoluteButton;
 	private EditText orderSubtotalEditor;
 	private EditText discountEditor;
 	private int tenDp;

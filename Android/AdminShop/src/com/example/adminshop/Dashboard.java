@@ -3,6 +3,7 @@ package com.example.adminshop;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -148,15 +149,25 @@ public class Dashboard extends PinSupportActivity {
 	}
 
 	private void initLastOrderData() {
-		String data = GetRequester.getResponse("http://54.213.38.9/xcart/api.php?request=last_order");
+		
+		String data;
+		try {
+			data = new GetRequester().execute("http://54.213.38.9/xcart/api.php?request=last_order").get();
+		} catch (Exception e) {
+			data = null;
+		}
 		if (data != null) {
 			try {
 				JSONArray array = new JSONArray(data);
 				JSONObject obj = array.getJSONObject(0);
 				String orderId = obj.getString("orderid");
 
-				String orderDetailsData = GetRequester
-						.getResponse("http://54.213.38.9/xcart/api.php?request=order_details&id=" + orderId);
+				String orderDetailsData;
+				try {
+					orderDetailsData = new GetRequester().execute("http://54.213.38.9/xcart/api.php?request=order_details&id=" + orderId).get();
+				} catch (Exception e) {
+					orderDetailsData = null;
+				}
 
 				if (orderDetailsData != null) {
 					JSONArray detailsArray = new JSONArray(orderDetailsData);

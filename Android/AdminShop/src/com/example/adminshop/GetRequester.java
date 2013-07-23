@@ -11,9 +11,13 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
-public class GetRequester {
+import android.os.AsyncTask;
 
-	public static String getResponse(String url) {
+public class GetRequester extends AsyncTask<String, Void, String> {
+
+	@Override
+	protected String doInBackground(String... urls) {
+		String url = new String(urls[0]);
 		HttpClient client = new DefaultHttpClient();
 		HttpGet get = new HttpGet(url);
 
