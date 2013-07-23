@@ -110,10 +110,19 @@ static QRWDataManager *_instance;
     QRWLastOrder *lastOrder = [[QRWLastOrder alloc] init];
     
     
+    NSNumberFormatter * formatter = [[NSNumberFormatter alloc] init];
+    [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
     
     lastOrder.lastname = [jsonDictionary objectForKey:@"lastname"];
     lastOrder.firstname = [jsonDictionary objectForKey:@"firstname"];
     lastOrder.email = [jsonDictionary objectForKey:@"email"];
+    lastOrder.email = [jsonDictionary objectForKey:@"email"];
+    lastOrder.status = [jsonDictionary objectForKey:@"status"];
+    lastOrder.date = [jsonDictionary objectForKey:@"date"];
+    
+    lastOrder.orderid = [formatter numberFromString: (NSString *)[jsonDictionary objectForKey:@"orderid"]];
+    lastOrder.userid = [formatter numberFromString: (NSString *)[jsonDictionary objectForKey:@"userid"]];
+    lastOrder.total = [formatter numberFromString: (NSString *)[jsonDictionary objectForKey:@"total"]];
     
     [_delegate respondsForLastOrderRequest:lastOrder];
 }

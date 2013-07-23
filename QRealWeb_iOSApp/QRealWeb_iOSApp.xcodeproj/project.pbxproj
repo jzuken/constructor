@@ -70,7 +70,6 @@
 		968B1787179DD0AE00D8D8C9 /* QRWTopSellersDashboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 968B1785179DD0AE00D8D8C9 /* QRWTopSellersDashboardViewController.m */; };
 		968B1788179DD0AE00D8D8C9 /* QRWTopSellersDashboardViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 968B1786179DD0AE00D8D8C9 /* QRWTopSellersDashboardViewController.xib */; };
 		968B178A179DD28A00D8D8C9 /* subtitle_topsellers.png in Resources */ = {isa = PBXBuildFile; fileRef = 968B1789179DD28900D8D8C9 /* subtitle_topsellers.png */; };
-		968B178E179DE0B000D8D8C9 /* QRWCustomSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 968B178D179DE0B000D8D8C9 /* QRWCustomSegmentedControl.m */; };
 		968B1798179DFA4C00D8D8C9 /* topBarBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 968B1797179DFA4C00D8D8C9 /* topBarBackground.png */; };
 		968B179D179DFD2200D8D8C9 /* button_since_last_login.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 968B1799179DFD2200D8D8C9 /* button_since_last_login.jpg */; };
 		968B179E179DFD2200D8D8C9 /* button_this_month.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 968B179A179DFD2200D8D8C9 /* button_this_month.jpg */; };
@@ -169,8 +168,6 @@
 		968B1785179DD0AE00D8D8C9 /* QRWTopSellersDashboardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRWTopSellersDashboardViewController.m; sourceTree = "<group>"; };
 		968B1786179DD0AE00D8D8C9 /* QRWTopSellersDashboardViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRWTopSellersDashboardViewController.xib; sourceTree = "<group>"; };
 		968B1789179DD28900D8D8C9 /* subtitle_topsellers.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = subtitle_topsellers.png; sourceTree = "<group>"; };
-		968B178C179DE0B000D8D8C9 /* QRWCustomSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRWCustomSegmentedControl.h; sourceTree = "<group>"; };
-		968B178D179DE0B000D8D8C9 /* QRWCustomSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRWCustomSegmentedControl.m; sourceTree = "<group>"; };
 		968B178F179DECD600D8D8C9 /* button_since_last_login.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_since_last_login.png; sourceTree = "<group>"; };
 		968B1791179DECD600D8D8C9 /* button_this_month.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_this_month.png; sourceTree = "<group>"; };
 		968B1793179DECD600D8D8C9 /* button_this_week.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_this_week.png; sourceTree = "<group>"; };
@@ -446,7 +443,6 @@
 		968B1754179DC30300D8D8C9 /* PagesOfDashBoard */ = {
 			isa = PBXGroup;
 			children = (
-				968B178B179DE07D00D8D8C9 /* CustomSegmentedControl */,
 				968B1783179DD09000D8D8C9 /* TopSellers */,
 				968B177D179DCFDB00D8D8C9 /* OrdersInfo */,
 				968B1777179DCEDC00D8D8C9 /* LastOrder */,
@@ -534,15 +530,6 @@
 				968B1786179DD0AE00D8D8C9 /* QRWTopSellersDashboardViewController.xib */,
 			);
 			name = TopSellers;
-			sourceTree = "<group>";
-		};
-		968B178B179DE07D00D8D8C9 /* CustomSegmentedControl */ = {
-			isa = PBXGroup;
-			children = (
-				968B178C179DE0B000D8D8C9 /* QRWCustomSegmentedControl.h */,
-				968B178D179DE0B000D8D8C9 /* QRWCustomSegmentedControl.m */,
-			);
-			name = CustomSegmentedControl;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -668,7 +655,6 @@
 				968B177B179DCEFF00D8D8C9 /* QRWLastOrderDashboardViewController.m in Sources */,
 				968B1781179DD01200D8D8C9 /* QRWOrdersInfoDashboardViewController.m in Sources */,
 				968B1787179DD0AE00D8D8C9 /* QRWTopSellersDashboardViewController.m in Sources */,
-				968B178E179DE0B000D8D8C9 /* QRWCustomSegmentedControl.m in Sources */,
 				7F6DFA4D179E608800421123 /* QRWDownloader.m in Sources */,
 				7F6DFA50179E65BE00421123 /* QRWLastOrder.m in Sources */,
 			);

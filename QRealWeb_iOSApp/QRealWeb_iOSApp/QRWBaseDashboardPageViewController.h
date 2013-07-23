@@ -7,12 +7,11 @@
 //
 
 #import "QRWBaseViewController.h"
-#import "QRWCustomSegmentedControl.h"
 
 @interface QRWBaseDashboardPageViewController : QRWBaseViewController
 
 
-@property (strong, nonatomic) IBOutlet QRWCustomSegmentedControl *timeAndTypeCustomSegmentedControl;
+@property (strong, nonatomic) IBOutlet UIView *timeAndTypeSegmentedControlArea;
 @property (strong, nonatomic) IBOutlet UIImageView *nameOfPageImageView;
 
 

@@ -67,19 +67,19 @@
         [_dashboardPagesScrollView addSubview:pageViewController.view];
     }
 
-    NSArray *segmentImageNamesArray = [NSArray arrayWithObjects: @"button_since_last_login.jpg", @"button_this_month.jpg", @"button_this_week.jpg", @"button_today.jpg", nil];
-    UISegmentedControl *control = [[UISegmentedControl alloc] initWithFrame:_timeSegmentedControl.frame];
-    control.frame = _timeSegmentedControl.frame;
-    [control setDividerImage:[UIImage imageNamed:@"segmentedControl_separator.png"]
-                                  forLeftSegmentState:UIControlStateNormal
-                                    rightSegmentState:UIControlStateNormal
-                                           barMetrics:UIBarMetricsDefault];
-
-    for (NSString *imgName in segmentImageNamesArray) {
-        UIImage *segmentImage = [UIImage imageWithCGImage:[[UIImage imageNamed:imgName] CGImage] scale:1.9 orientation:UIImageOrientationUp];
-        [control insertSegmentWithImage:segmentImage atIndex:[segmentImageNamesArray indexOfObject:imgName] animated:NO];
-    }
-    [self.view addSubview:control];
+//    NSArray *segmentImageNamesArray = [NSArray arrayWithObjects: @"button_since_last_login.jpg", @"button_this_month.jpg", @"button_this_week.jpg", @"button_today.jpg", nil];
+//    UISegmentedControl *control = [[UISegmentedControl alloc] initWithFrame:_timeSegmentedControl.frame];
+//    control.frame = _timeSegmentedControl.frame;
+//    [control setDividerImage:[UIImage imageNamed:@"segmentedControl_separator.png"]
+//                                  forLeftSegmentState:UIControlStateNormal
+//                                    rightSegmentState:UIControlStateNormal
+//                                           barMetrics:UIBarMetricsDefault];
+//
+//    for (NSString *imgName in segmentImageNamesArray) {
+//        UIImage *segmentImage = [UIImage imageWithCGImage:[[UIImage imageNamed:imgName] CGImage] scale:1.9 orientation:UIImageOrientationUp];
+//        [control insertSegmentWithImage:segmentImage atIndex:[segmentImageNamesArray indexOfObject:imgName] animated:NO];
+//    }
+//    [self.view addSubview:control];
 }
 
 - (void)didReceiveMemoryWarning
