@@ -72,6 +72,15 @@ public class Unlock extends Activity {
 		return getPinString(pin1) + getPinString(pin2) + getPinString(pin3) + getPinString(pin4);
 	}
 
+	@Override
+	public void onBackPressed() {
+		Intent intent = getIntent();
+		if (intent.getIntExtra("afterPause", 0) == 1) {
+			moveTaskToBack(true);
+		}
+		super.onBackPressed();
+	}
+
 	private SharedPreferences settingsData;
 	private WheelView pin1;
 	private WheelView pin2;

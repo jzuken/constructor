@@ -3,6 +3,10 @@ package com.example.adminshop;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.text.InputType;
@@ -59,6 +63,40 @@ public class Discounts extends PinSupportActivity {
 		addDiscountToList(50.0f, 20.0f, "Percent,  %", "All");
 		addDiscountToList(20.0f, 5.0f, "Percent,  %", "All");
 		addDiscountToList(100.0f, 30.0f, "Percent,  %", "All");
+	}
+
+	@Override
+	protected void withoutPinAction() {
+		if (NetworkManager.isOnline(this)) {
+			initDiscountsData();
+		} else {
+			Toast.makeText(getBaseContext(),
+					"Sorry, unable to connect to server. Cannot update data. Please check your internet connection",
+					Toast.LENGTH_LONG).show();
+		}
+	}
+
+	private void initDiscountsData() {
+		String data = GetRequester.getResponse("http://54.213.38.9/xcart/api.php?request=discounts");
+		try {
+			JSONArray array = new JSONArray(data);
+			for (int i = 0; i < array.length(); i++) {
+				JSONObject obj = array.getJSONObject(i);
+				String orderSubtotalString = obj.getString("minprice");
+				String discountString = obj.getString("discount");
+				String discountTypeString = obj.getString("discount_type");
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void createNewDiscount() {
+		String response = GetRequester.getResponse("http://54.213.38.9/xcart/api.php?equest=create_discount&minprice="
+				+ "" + "&discount=" + "" + "&discount_type=" + "" + "&provider=" + "");
+		if (response == "success") {
+			Toast.makeText(getBaseContext(), "Success", Toast.LENGTH_SHORT).show();
+		}
 	}
 
 	private void addTextToLeft(RelativeLayout rl, CharSequence text) {
@@ -203,6 +241,10 @@ public class Discounts extends PinSupportActivity {
 	public void okClick(View v) {
 		if (Float.valueOf(discountEditor.getText().toString()) > 100.0 && percentButton.isChecked()) {
 			Toast.makeText(getBaseContext(), "New discount can not be added with discount value more than 100%",
+					Toast.LENGTH_LONG).show();
+		}
+		if (Float.valueOf(discountEditor.getText().toString()) == 0f) {
+			Toast.makeText(getBaseContext(), "New discount can not be added with empty discount value",
 					Toast.LENGTH_LONG).show();
 		}
 	}

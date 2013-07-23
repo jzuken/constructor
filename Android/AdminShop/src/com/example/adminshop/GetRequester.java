@@ -13,7 +13,7 @@ import org.apache.http.util.EntityUtils;
 
 public class GetRequester {
 
-	public String getResponse(String url) {
+	public static String getResponse(String url) {
 		HttpClient client = new DefaultHttpClient();
 		HttpGet get = new HttpGet(url);
 

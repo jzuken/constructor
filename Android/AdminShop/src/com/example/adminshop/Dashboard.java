@@ -8,10 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.content.Context;
 import android.graphics.Color;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.Gravity;
@@ -96,13 +93,11 @@ public class Dashboard extends PinSupportActivity {
 		// example
 		addPositionToTable("first", 300);
 		addPositionToTable("second", 100);
-
-		getRequester = new GetRequester();
 	}
 
 	@Override
 	protected void withoutPinAction() {
-		if (isOnline()) {
+		if (NetworkManager.isOnline(this)) {
 			initLastOrderData();
 		} else {
 			Toast.makeText(getBaseContext(),
@@ -159,11 +154,12 @@ public class Dashboard extends PinSupportActivity {
 	}
 
 	private void initLastOrderData() {
-		String data = getRequester.getResponse("http://54.213.38.9/xcart/api.php?request=last_order");
+		String data = GetRequester.getResponse("http://54.213.38.9/xcart/api.php?request=last_order");
 		try {
 			JSONArray array = new JSONArray(data);
 			JSONObject obj = array.getJSONObject(0);
-			id.setText(obj.getString("orderid"));
+			String orderId = obj.getString("orderid");
+			id.setText(orderId);
 			Long dateInSeconds = Long.parseLong(obj.getString("date"));
 			date.setText(getFormatDate(dateInSeconds));
 			totalPrice.setText("$" + obj.getString("total"));
@@ -196,6 +192,14 @@ public class Dashboard extends PinSupportActivity {
 				break;
 			}
 
+			String orderDetailsData = GetRequester
+					.getResponse("http://54.213.38.9/xcart/api.php?request=order_details&id=" + orderId);
+			
+			JSONArray detailsArray = new JSONArray(orderDetailsData);
+			JSONObject detailsObj = detailsArray.getJSONObject(0);
+			product.setText(detailsObj.getString("product"));
+			quantity.setText(detailsObj.getString("amount"));
+
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -217,15 +221,6 @@ public class Dashboard extends PinSupportActivity {
 		}
 	}
 
-	private boolean isOnline() {
-		ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-		NetworkInfo netInfo = cm.getActiveNetworkInfo();
-		if (netInfo != null && netInfo.isConnectedOrConnecting()) {
-			return true;
-		}
-		return false;
-	}
-
 	private TextView id;
 	private TextView date;
 	private TextView product;
@@ -241,5 +236,4 @@ public class Dashboard extends PinSupportActivity {
 	private LayoutParams rowParams;
 	private TableRow.LayoutParams itemParams;
 	private int position = 1;
-	private GetRequester getRequester;
 }
