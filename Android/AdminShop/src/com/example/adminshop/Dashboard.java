@@ -221,6 +221,7 @@ public class Dashboard extends PinSupportActivity {
 						e.printStackTrace();
 					}
 				} else {
+					progressBar.setVisibility(View.GONE);
 					showConnectionErrorMessage();
 				}
 			};
