@@ -3,20 +3,20 @@
 /*
  * Development imports
  */
-//require './xcart/top.inc.php';
-//require './xcart/init.php';
+require './xcart/top.inc.php';
+require './xcart/init.php';
 
 /*
  * Production imports
  */
-require './top.inc.php';
-require './init.php';
+//require './top.inc.php';
+//require './init.php';
 mysql_connect($sql_host, $sql_user, $sql_password)  or die(mysql_error());
 mysql_select_db($sql_db) or die(mysql_error());
 
 header('Content-Type: application/json; charset=utf-8');
 $users_fields = array(id, username, usertype, invalid_login_attempts, title, firstname, lastname, company, email, url, last_login, first_login, status, activation_key, autolock, suspend_date, referer, ssn, language, change_password, change_password_date, parent, pending_plan_id, activity, membershipid, pending_membershipid, tax_number, tax_exempt, trusted_provider, cookie_access);
-$orders_fields = array(orderid, userid, membership, total, giftcert_discount, giftcert_ids, subtotal, discount, coupon, coupon_discount, shippingid, shipping, tracking, shipping_cost, tax, taxes_applied, date, status, payment_method, flag, notes, details, customer_notes, customer, title, firstname, lastname, company, url, email, language, clickid, membershipid, paymentid, payment_surcharge, tax_number, tax_exempt, init_total, access_key, klarna_order_status);
+$orders_fields = array(orderid, status, total, title, firstname, b_firstname, lastname, b_lastname);
 $order_details_fields = array(orderid, productid, price, amount, provider, product_options, itemid, productcode, product);
 $discounts_fields = array(discountid, minprice, discount, discount_type, provider);
 $dates = array('last_login', 'today', 'week', 'month');
@@ -44,9 +44,6 @@ function get_response()
             break;
         case 'orders':
             $response = get_orders($orders_fields, $_GET['from'], $_GET['to']);
-            break;
-        case 'order_details':
-            $response = get_order_details($order_details_fields, $_GET['id']);
             break;
         case 'last_order':
             $response = get_last_order($orders_fields);
@@ -207,9 +204,21 @@ function get_orders($fields, $from, $to)
 
 function get_last_order($fields)
 {
-    global $sql_tbl;
-    $query = mysql_query("SELECT * FROM $sql_tbl[orders] ORDER BY date DESC LIMIT 1") or die(mysql_error());
-    return get_json($fields, $query);
+    global $sql_tbl, $order_details_fields;
+    $order_query = mysql_query("
+        SELECT orderid, status, total, title, firstname, b_firstname, lastname, b_lastname
+        FROM $sql_tbl[orders]
+        ORDER BY date DESC LIMIT 1
+        ") or die(mysql_error());
+    $result_array = array();
+    $row = mysql_fetch_array($order_query);
+    foreach ($fields as $value) {
+        $result_array[$value] = $row[$value];
+    }
+    $order_id = $row['orderid'];
+    $order_details = get_order_details($order_details_fields, $order_id);
+    $result_array[details] = $order_details;
+    return json_encode($result_array);
 }
 
 function get_order_details($fields, $id)
@@ -219,7 +228,17 @@ function get_order_details($fields, $id)
     }
     global $sql_tbl;
     $query = mysql_query("SELECT * FROM $sql_tbl[order_details] WHERE orderid=$id") or die(mysql_error());
-    return get_json($fields, $query);
+    $row = mysql_fetch_array($query);
+    $order_details_array = array();
+    while ($row = mysql_fetch_array($query)) {
+        $product_details = array();
+        foreach ($fields as $value) {
+            $product_details[$value] = $row[$value];
+        }
+        array_push($order_details_array, $product_details);
+    }
+
+    return $order_details_array;
 }
 
 function get_discounts($fields)
@@ -267,7 +286,7 @@ function get_json($fields, $query)
     $json_result = array();
     while ($row = mysql_fetch_array($query)) {
         $order_json = array();
-        foreach ($fields as &$value) {
+        foreach ($fields as $value) {
             $order_json[$value] = $row[$value];
         }
         array_push($json_result, $order_json);
