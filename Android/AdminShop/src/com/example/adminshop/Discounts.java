@@ -8,16 +8,19 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.text.InputType;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
@@ -35,6 +38,7 @@ public class Discounts extends PinSupportActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.discounts);
 		tenDp = convertPixelsToDip(10);
+		fiveDp = convertPixelsToDip(5);
 
 		LayoutInflater inflater = LayoutInflater.from(this);
 		List<View> pages = new ArrayList<View>();
@@ -59,8 +63,6 @@ public class Discounts extends PinSupportActivity {
 		ViewPager viewPager = (ViewPager) findViewById(R.id.discounts_view_pager);
 		viewPager.setAdapter(pagerAdapter);
 		viewPager.setCurrentItem(0);
-
-		discountsTable = new Hashtable<String, Integer>();
 	}
 
 	@Override
@@ -247,7 +249,10 @@ public class Discounts extends PinSupportActivity {
 
 		discountsList.addView(membershipLayout);
 
-		discountsTable.put(id, position);
+		RelativeLayout buttonsLayout = new RelativeLayout(this);
+		buttonsLayout.setPadding(0, fiveDp, 0, fiveDp);
+		addDeleteButtonToLeft(buttonsLayout, id);
+		discountsList.addView(buttonsLayout);
 
 		position++;
 	}
@@ -258,6 +263,63 @@ public class Discounts extends PinSupportActivity {
 		textEdit.setLongClickable(true);
 		textEdit.setFocusableInTouchMode(true);
 		textEdit.setCursorVisible(true);
+	}
+
+	private void addDeleteButtonToLeft(RelativeLayout rl, final String id) {
+		RelativeLayout.LayoutParams rpToLeft = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
+				LayoutParams.WRAP_CONTENT);
+		rpToLeft.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+		rpToLeft.setMargins(tenDp, 0, 0, 0);
+		Button deleteButton = new Button(this);
+		deleteButton.setText("Delete");
+		deleteButton.setTextColor(Color.WHITE);
+		deleteButton.setBackgroundResource(R.drawable.button);
+		deleteButton.setLayoutParams(rpToLeft);
+
+		deleteButton.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				String response;
+				try {
+					response = new GetRequester().execute(
+							"http://54.213.38.9/xcart/api.php?request=delete_discount&id=" + id).get();
+				} catch (Exception e) {
+					response = null;
+				}
+				if (response != null) {
+					Toast.makeText(getBaseContext(), "Success", Toast.LENGTH_SHORT).show();
+					clearList();
+					updateDiscountsTable();
+				} else {
+					showConnectionErrorMessage();
+				}
+			}
+		});
+
+		rl.addView(deleteButton);
+	}
+
+	private void addEditButtonToRight(RelativeLayout rl, final String id) {
+		RelativeLayout.LayoutParams rpToRight = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
+				LayoutParams.WRAP_CONTENT);
+		rpToRight.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+		rpToRight.setMargins(0, 0, tenDp, 0);
+		Button editButton = new Button(this);
+		editButton.setText("Edit");
+		editButton.setTextColor(Color.WHITE);
+		editButton.setBackgroundResource(R.drawable.button);
+		editButton.setMinimumWidth(100);
+		editButton.setLayoutParams(rpToRight);
+
+		editButton.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+			}
+		});
+
+		rl.addView(editButton);
 	}
 
 	private void clearList() {
@@ -296,8 +358,8 @@ public class Discounts extends PinSupportActivity {
 	private EditText orderSubtotalEditor;
 	private EditText discountEditor;
 	private int tenDp;
+	private int fiveDp;
 	private LinearLayout discountsList;
 	private int position = 1;
-	private Hashtable<String, Integer> discountsTable;
 	private ProgressBar progressBar;
 }
