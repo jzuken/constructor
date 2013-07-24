@@ -31,8 +31,14 @@ public class Unlock extends Activity {
 
 	public void okButtonClick(View v) {
 		if (getPassword().equals(settingsData.getString("password", ""))) {
-			Intent intent = new Intent(this, MainActivity.class);
-			startActivity(intent);
+			Intent intent = getIntent();
+			if (intent.getIntExtra("afterPause", 0) == 0) {
+				Intent newIntent = new Intent(this, MainActivity.class);
+				startActivity(newIntent);
+			} else {
+				setResult(2);
+				finish();
+			}
 		}
 	}
 
@@ -64,6 +70,15 @@ public class Unlock extends Activity {
 
 	private String getPassword() {
 		return getPinString(pin1) + getPinString(pin2) + getPinString(pin3) + getPinString(pin4);
+	}
+
+	@Override
+	public void onBackPressed() {
+		Intent intent = getIntent();
+		if (intent.getIntExtra("afterPause", 0) == 1) {
+			moveTaskToBack(true);
+		}
+		super.onBackPressed();
 	}
 
 	private SharedPreferences settingsData;

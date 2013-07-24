@@ -1,9 +1,8 @@
 package com.example.adminshop;
 
-import android.app.Activity;
 import android.os.Bundle;
 
-public class Reviews extends Activity {
+public class Reviews extends PinSupportActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

@@ -8,24 +8,22 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.Activity;
-import android.content.Context;
 import android.graphics.Color;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.ProgressBar;
 import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class Dashboard extends Activity {
+public class Dashboard extends PinSupportActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +41,7 @@ public class Dashboard extends Activity {
 		totalPrice = (TextView) page1.findViewById(R.id.last_order_price);
 		user = (TextView) page1.findViewById(R.id.last_order_user);
 		status = (TextView) page1.findViewById(R.id.last_order_status);
+		progressBar = (ProgressBar) page1.findViewById(R.id.progress_bar);
 		pages.add(page1);
 		View page2 = inflater.inflate(R.layout.orders_info, null);
 		totalOrders = (TextView) page2.findViewById(R.id.total_orders);
@@ -96,11 +95,11 @@ public class Dashboard extends Activity {
 		// example
 		addPositionToTable("first", 300);
 		addPositionToTable("second", 100);
+	}
 
-		getRequester = new GetRequester();
-		if (isOnline()) {
-			initLastOrderData();
-		}
+	@Override
+	protected void withoutPinAction() {
+		initLastOrderData();
 	}
 
 	private void addEmptyTab(TabHost tabHost, String tag, String indicator) {
@@ -146,51 +145,93 @@ public class Dashboard extends Activity {
 		position = 1;
 	}
 
-	private enum statusSymbols {
+	private enum StatusSymbols {
 		N, Q, P, B, D, F, C
 	}
 
 	private void initLastOrderData() {
-		String data = getRequester.getResponse("http://54.213.38.9/xcart/api.php?request=last_order");
-		try {
-			JSONArray array = new JSONArray(data);
-			JSONObject obj = array.getJSONObject(0);
-			id.setText(obj.getString("orderid"));
-			Long dateInSeconds = Long.parseLong(obj.getString("date"));
-			date.setText(getFormatDate(dateInSeconds));
-			totalPrice.setText("$" + obj.getString("total"));
-			user.setText(obj.getString("title") + " " + obj.getString("firstname") + " " + obj.getString("lastname"));
+		progressBar.setVisibility(View.VISIBLE);
+		GetRequester dataRequester = new GetRequester() {
+			protected void onPostExecute(String result) {
+				if (result != null) {
+					try {
+						JSONArray array = new JSONArray(result);
+						JSONObject obj = array.getJSONObject(0);
+						final String orderId = obj.getString("orderid");
 
-			statusSymbols statusSymbol = statusSymbols.valueOf(obj.getString("status"));
-			switch (statusSymbol) {
-			case N:
-				status.setText("Not finished");
-				break;
-			case Q:
-				status.setText("Queued");
-				break;
-			case P:
-				status.setText("Processed");
-				break;
-			case B:
-				status.setText("Backordered");
-				break;
-			case D:
-				status.setText("Declined");
-				break;
-			case F:
-				status.setText("Failed");
-				break;
-			case C:
-				status.setText("Comlete");
-				break;
-			default:
-				break;
-			}
+						final Long dateInSeconds = Long.parseLong(obj.getString("date"));
+						final String total = obj.getString("total");
+						final String userText = obj.getString("title") + " " + obj.getString("firstname") + " "
+								+ obj.getString("lastname");
+						final StatusSymbols statusSymbol = StatusSymbols.valueOf(obj.getString("status"));
 
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
+						GetRequester detailsRequester = new GetRequester() {
+							protected void onPostExecute(String result) {
+								if (result != null) {
+									try {
+										JSONArray detailsArray = new JSONArray(result);
+										JSONObject detailsObj = detailsArray.getJSONObject(0);
+
+										product.setText(detailsObj.getString("product"));
+										quantity.setText(detailsObj.getString("amount"));
+										id.setText(orderId);
+										date.setText(getFormatDate(dateInSeconds));
+										totalPrice.setText("$" + total);
+										user.setText(userText);
+
+										switch (statusSymbol) {
+										case N:
+											status.setText("Not finished");
+											break;
+										case Q:
+											status.setText("Queued");
+											break;
+										case P:
+											status.setText("Processed");
+											break;
+										case B:
+											status.setText("Backordered");
+											break;
+										case D:
+											status.setText("Declined");
+											break;
+										case F:
+											status.setText("Failed");
+											break;
+										case C:
+											status.setText("Comlete");
+											break;
+										default:
+											break;
+										}
+									} catch (JSONException e) {
+										e.printStackTrace();
+									}
+								} else {
+									showConnectionErrorMessage();
+								}
+								progressBar.setVisibility(View.GONE);
+							}
+						};
+
+						detailsRequester
+								.execute("http://54.213.38.9/xcart/api.php?request=order_details&id=" + orderId);
+
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+				} else {
+					showConnectionErrorMessage();
+				}
+			};
+		};
+		dataRequester.execute("http://54.213.38.9/xcart/api.php?request=last_order");
+	}
+
+	private void showConnectionErrorMessage() {
+		Toast.makeText(getBaseContext(),
+				"Sorry, unable to connect to server. Cannot update data. Please check your internet connection",
+				Toast.LENGTH_LONG).show();
 	}
 
 	private String getFormatDate(Long seconds) {
@@ -209,15 +250,6 @@ public class Dashboard extends Activity {
 		}
 	}
 
-	private boolean isOnline() {
-		ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-		NetworkInfo netInfo = cm.getActiveNetworkInfo();
-		if (netInfo != null && netInfo.isConnectedOrConnecting()) {
-			return true;
-		}
-		return false;
-	}
-
 	private TextView id;
 	private TextView date;
 	private TextView product;
@@ -233,5 +265,5 @@ public class Dashboard extends Activity {
 	private LayoutParams rowParams;
 	private TableRow.LayoutParams itemParams;
 	private int position = 1;
-	private GetRequester getRequester;
+	private ProgressBar progressBar;
 }

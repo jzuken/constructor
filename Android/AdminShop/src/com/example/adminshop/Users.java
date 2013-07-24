@@ -3,8 +3,6 @@ package com.example.adminshop;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
@@ -13,7 +11,7 @@ import android.view.View;
 import android.view.View.OnKeyListener;
 import android.widget.EditText;
 
-public class Users extends Activity {
+public class Users extends PinSupportActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

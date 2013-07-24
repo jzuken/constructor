@@ -1,6 +1,5 @@
 package com.example.adminshop;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -10,7 +9,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
-public class MainActivity extends Activity {
+public class MainActivity extends PinSupportActivity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -20,17 +19,17 @@ public class MainActivity extends Activity {
 
 	public void productsButtonClick(View v) {
 		Intent intent = new Intent(this, Products.class);
-		startActivity(intent);
+		startActivityForResult(intent, 1);
 	}
 
 	public void discountsButtonClick(View v) {
 		Intent intent = new Intent(this, Discounts.class);
-		startActivity(intent);
+		startActivityForResult(intent, 1);
 	}
 
 	public void dashboardButtonClick(View v) {
 		Intent intent = new Intent(this, Dashboard.class);
-		startActivity(intent);
+		startActivityForResult(intent, 1);
 	}
 
 	public void logoutClick(View v) {
@@ -45,17 +44,17 @@ public class MainActivity extends Activity {
 
 	public void settingsClick(View v) {
 		Intent intent = new Intent(this, Settings.class);
-		startActivity(intent);
+		startActivityForResult(intent, 1);
 	}
 
 	public void usersButtonClick(View v) {
 		Intent intent = new Intent(this, Users.class);
-		startActivity(intent);
+		startActivityForResult(intent, 1);
 	}
 
 	public void reviewsButtonClick(View v) {
 		Intent intent = new Intent(this, Reviews.class);
-		startActivity(intent);
+		startActivityForResult(intent, 1);
 	}
 
 	@Override
@@ -70,7 +69,7 @@ public class MainActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.settings:
-			startActivity(new Intent(this, Settings.class));
+			startActivityForResult(new Intent(this, Settings.class), 1);
 			return true;
 		}
 		return false;
