@@ -3,14 +3,14 @@
 /*
  * Development imports
  */
-require './xcart/top.inc.php';
-require './xcart/init.php';
+//require './xcart/top.inc.php';
+//require './xcart/init.php';
 
 /*
  * Production imports
  */
-//require './top.inc.php';
-//require './init.php';
+require './top.inc.php';
+require './init.php';
 mysql_connect($sql_host, $sql_user, $sql_password)  or die(mysql_error());
 mysql_select_db($sql_db) or die(mysql_error());
 
@@ -47,6 +47,10 @@ function get_response()
             break;
         case 'last_order':
             $response = get_last_order($orders_fields);
+            break;
+        case 'order_details':
+            $response = get_order_details($order_details_fields, $_GET['id']);
+            print_r($response);
             break;
         case 'discounts':
             $response = get_discounts($discounts_fields);
@@ -228,7 +232,6 @@ function get_order_details($fields, $id)
     }
     global $sql_tbl;
     $query = mysql_query("SELECT * FROM $sql_tbl[order_details] WHERE orderid=$id") or die(mysql_error());
-    $row = mysql_fetch_array($query);
     $order_details_array = array();
     while ($row = mysql_fetch_array($query)) {
         $product_details = array();
