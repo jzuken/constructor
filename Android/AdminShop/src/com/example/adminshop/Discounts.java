@@ -65,6 +65,7 @@ public class Discounts extends PinSupportActivity {
 
 	@Override
 	protected void withoutPinAction() {
+		clearList();
 		updateDiscountsTable();
 	}
 
