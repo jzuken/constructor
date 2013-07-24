@@ -1,8 +1,8 @@
 package com.example.adminshop;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -21,6 +21,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -40,6 +41,7 @@ public class Discounts extends PinSupportActivity {
 
 		View page1 = inflater.inflate(R.layout.discounts_list, null);
 		discountsList = (LinearLayout) page1.findViewById(R.id.discountsLinearLayout);
+		progressBar = (ProgressBar) page1.findViewById(R.id.progress_bar);
 		pages.add(page1);
 
 		View page2 = inflater.inflate(R.layout.add_discount, null);
@@ -57,36 +59,13 @@ public class Discounts extends PinSupportActivity {
 		ViewPager viewPager = (ViewPager) findViewById(R.id.discounts_view_pager);
 		viewPager.setAdapter(pagerAdapter);
 		viewPager.setCurrentItem(0);
+
+		discountsTable = new Hashtable<String, Integer>();
 	}
 
 	@Override
 	protected void withoutPinAction() {
-		initDiscountsData();
-	}
-
-	private void initDiscountsData() {
-		String data;
-		try {
-			data = new GetRequester().execute("http://54.213.38.9/xcart/api.php?request=discounts").get();
-		} catch (Exception e) {
-			data = null;
-		}
-		if (data != null) {
-			try {
-				JSONArray array = new JSONArray(data);
-				for (int i = 0; i < array.length(); i++) {
-					JSONObject obj = array.getJSONObject(i);
-					String orderSubtotalString = obj.getString("minprice");
-					String discountString = obj.getString("discount");
-					String discountTypeString = obj.getString("discount_type");
-					addDiscountToList(orderSubtotalString, discountString, discountTypeString, "All");
-				}
-			} catch (JSONException e) {
-				e.printStackTrace();
-			}
-		} else {
-			showConnectionErrorMessage();
-		}
+		updateDiscountsTable();
 	}
 
 	private void createNewDiscount() {
@@ -96,18 +75,49 @@ public class Discounts extends PinSupportActivity {
 		String discountTypeValue = getDiscountType();
 		String response;
 		try {
-			response = new GetRequester().execute("http://54.213.38.9/xcart/api.php?request=create_discount&minprice="
-					+ orderSubtotalValue + "&discount=" + discountValue + "&discount_type=" + discountTypeValue
-					+ "&provider=" + provider).get();
+			response = new GetRequester().execute(
+					"http://54.213.38.9/xcart/api.php?request=create_discount&minprice=" + orderSubtotalValue
+							+ "&discount=" + discountValue + "&discount_type=" + discountTypeValue + "&provider="
+							+ provider).get();
 		} catch (Exception e) {
 			response = null;
 		}
 		if (response != null) {
 			Toast.makeText(getBaseContext(), "Success", Toast.LENGTH_SHORT).show();
-			addDiscountToList(orderSubtotalValue, discountValue, discountTypeValue, "All");
+			clearList();
+			updateDiscountsTable();
 		} else {
 			showConnectionErrorMessage();
 		}
+	}
+
+	private void updateDiscountsTable() {
+		progressBar.setVisibility(View.VISIBLE);
+		GetRequester dataRequester = new GetRequester() {
+			@Override
+			protected void onPostExecute(String result) {
+				if (result != null) {
+					try {
+						JSONArray array = new JSONArray(result);
+						for (int i = 0; i < array.length(); i++) {
+							JSONObject obj = array.getJSONObject(i);
+							String id = obj.getString("discountid");
+							String orderSubtotalString = obj.getString("minprice");
+							String discountString = obj.getString("discount");
+							String discountTypeString = obj.getString("discount_type");
+							addDiscountToList(id, orderSubtotalString, discountString, discountTypeString, "All");
+						}
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+				} else {
+					showConnectionErrorMessage();
+				}
+				progressBar.setVisibility(View.GONE);
+			}
+		};
+
+		dataRequester.execute("http://54.213.38.9/xcart/api.php?request=discounts");
 	}
 
 	private void showConnectionErrorMessage() {
@@ -206,7 +216,7 @@ public class Discounts extends PinSupportActivity {
 		view.addView(discount);
 	}
 
-	private void addDiscountToList(String subtotal, String discount, String discountType, String membership) {
+	private void addDiscountToList(String id, String subtotal, String discount, String discountType, String membership) {
 		addTitle(discountsList, position);
 		RelativeLayout subtotalLayout = new RelativeLayout(this);
 		addTextToLeft(subtotalLayout, "Order subtotal:");
@@ -235,6 +245,9 @@ public class Discounts extends PinSupportActivity {
 		addTextToRight(membershipLayout, "All");
 
 		discountsList.addView(membershipLayout);
+
+		discountsTable.put(id, position);
+
 		position++;
 	}
 
@@ -284,4 +297,6 @@ public class Discounts extends PinSupportActivity {
 	private int tenDp;
 	private LinearLayout discountsList;
 	private int position = 1;
+	private Hashtable<String, Integer> discountsTable;
+	private ProgressBar progressBar;
 }

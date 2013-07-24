@@ -3,7 +3,6 @@ package com.example.adminshop;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -16,6 +15,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.ProgressBar;
 import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TableLayout;
@@ -41,6 +41,7 @@ public class Dashboard extends PinSupportActivity {
 		totalPrice = (TextView) page1.findViewById(R.id.last_order_price);
 		user = (TextView) page1.findViewById(R.id.last_order_user);
 		status = (TextView) page1.findViewById(R.id.last_order_status);
+		progressBar = (ProgressBar) page1.findViewById(R.id.progress_bar);
 		pages.add(page1);
 		View page2 = inflater.inflate(R.layout.orders_info, null);
 		totalOrders = (TextView) page2.findViewById(R.id.total_orders);
@@ -144,79 +145,87 @@ public class Dashboard extends PinSupportActivity {
 		position = 1;
 	}
 
-	private enum statusSymbols {
+	private enum StatusSymbols {
 		N, Q, P, B, D, F, C
 	}
 
 	private void initLastOrderData() {
-		
-		String data;
-		try {
-			data = new GetRequester().execute("http://54.213.38.9/xcart/api.php?request=last_order").get();
-		} catch (Exception e) {
-			data = null;
-		}
-		if (data != null) {
-			try {
-				JSONArray array = new JSONArray(data);
-				JSONObject obj = array.getJSONObject(0);
-				String orderId = obj.getString("orderid");
+		progressBar.setVisibility(View.VISIBLE);
+		GetRequester dataRequester = new GetRequester() {
+			protected void onPostExecute(String result) {
+				if (result != null) {
+					try {
+						JSONArray array = new JSONArray(result);
+						JSONObject obj = array.getJSONObject(0);
+						final String orderId = obj.getString("orderid");
 
-				String orderDetailsData;
-				try {
-					orderDetailsData = new GetRequester().execute("http://54.213.38.9/xcart/api.php?request=order_details&id=" + orderId).get();
-				} catch (Exception e) {
-					orderDetailsData = null;
-				}
+						final Long dateInSeconds = Long.parseLong(obj.getString("date"));
+						final String total = obj.getString("total");
+						final String userText = obj.getString("title") + " " + obj.getString("firstname") + " "
+								+ obj.getString("lastname");
+						final StatusSymbols statusSymbol = StatusSymbols.valueOf(obj.getString("status"));
 
-				if (orderDetailsData != null) {
-					JSONArray detailsArray = new JSONArray(orderDetailsData);
-					JSONObject detailsObj = detailsArray.getJSONObject(0);
-					product.setText(detailsObj.getString("product"));
-					quantity.setText(detailsObj.getString("amount"));
+						GetRequester detailsRequester = new GetRequester() {
+							protected void onPostExecute(String result) {
+								if (result != null) {
+									try {
+										JSONArray detailsArray = new JSONArray(result);
+										JSONObject detailsObj = detailsArray.getJSONObject(0);
 
-					id.setText(orderId);
-					Long dateInSeconds = Long.parseLong(obj.getString("date"));
-					date.setText(getFormatDate(dateInSeconds));
-					totalPrice.setText("$" + obj.getString("total"));
-					user.setText(obj.getString("title") + " " + obj.getString("firstname") + " "
-							+ obj.getString("lastname"));
+										product.setText(detailsObj.getString("product"));
+										quantity.setText(detailsObj.getString("amount"));
+										id.setText(orderId);
+										date.setText(getFormatDate(dateInSeconds));
+										totalPrice.setText("$" + total);
+										user.setText(userText);
 
-					statusSymbols statusSymbol = statusSymbols.valueOf(obj.getString("status"));
-					switch (statusSymbol) {
-					case N:
-						status.setText("Not finished");
-						break;
-					case Q:
-						status.setText("Queued");
-						break;
-					case P:
-						status.setText("Processed");
-						break;
-					case B:
-						status.setText("Backordered");
-						break;
-					case D:
-						status.setText("Declined");
-						break;
-					case F:
-						status.setText("Failed");
-						break;
-					case C:
-						status.setText("Comlete");
-						break;
-					default:
-						break;
+										switch (statusSymbol) {
+										case N:
+											status.setText("Not finished");
+											break;
+										case Q:
+											status.setText("Queued");
+											break;
+										case P:
+											status.setText("Processed");
+											break;
+										case B:
+											status.setText("Backordered");
+											break;
+										case D:
+											status.setText("Declined");
+											break;
+										case F:
+											status.setText("Failed");
+											break;
+										case C:
+											status.setText("Comlete");
+											break;
+										default:
+											break;
+										}
+									} catch (JSONException e) {
+										e.printStackTrace();
+									}
+								} else {
+									showConnectionErrorMessage();
+								}
+								progressBar.setVisibility(View.GONE);
+							}
+						};
+
+						detailsRequester
+								.execute("http://54.213.38.9/xcart/api.php?request=order_details&id=" + orderId);
+
+					} catch (JSONException e) {
+						e.printStackTrace();
 					}
 				} else {
 					showConnectionErrorMessage();
 				}
-			} catch (JSONException e) {
-				e.printStackTrace();
-			}
-		} else {
-			showConnectionErrorMessage();
-		}
+			};
+		};
+		dataRequester.execute("http://54.213.38.9/xcart/api.php?request=last_order");
 	}
 
 	private void showConnectionErrorMessage() {
@@ -256,4 +265,5 @@ public class Dashboard extends PinSupportActivity {
 	private LayoutParams rowParams;
 	private TableRow.LayoutParams itemParams;
 	private int position = 1;
+	private ProgressBar progressBar;
 }
