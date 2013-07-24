@@ -37,7 +37,6 @@ public class Dashboard extends PinSupportActivity {
 		id = (TextView) page1.findViewById(R.id.last_order_id);
 		date = (TextView) page1.findViewById(R.id.last_order_date);
 		product = (TextView) page1.findViewById(R.id.last_order_product);
-		quantity = (TextView) page1.findViewById(R.id.last_order_quantity);
 		totalPrice = (TextView) page1.findViewById(R.id.last_order_price);
 		user = (TextView) page1.findViewById(R.id.last_order_user);
 		status = (TextView) page1.findViewById(R.id.last_order_status);
@@ -155,77 +154,66 @@ public class Dashboard extends PinSupportActivity {
 			protected void onPostExecute(String result) {
 				if (result != null) {
 					try {
-						JSONArray array = new JSONArray(result);
-						JSONObject obj = array.getJSONObject(0);
-						final String orderId = obj.getString("orderid");
+						JSONObject obj = new JSONObject(result);
+						id.setText(obj.getString("orderid"));
+						// date.setText(getFormatDate(Long.parseLong(obj.getString("date"))));
+						totalPrice.setText("$" + obj.getString("total"));
+						user.setText(obj.getString("title") + " " + obj.getString("firstname") + " "
+								+ obj.getString("lastname"));
+						StatusSymbols statusSymbol = StatusSymbols.valueOf(obj.getString("status"));
 
-						final Long dateInSeconds = Long.parseLong(obj.getString("date"));
-						final String total = obj.getString("total");
-						final String userText = obj.getString("title") + " " + obj.getString("firstname") + " "
-								+ obj.getString("lastname");
-						final StatusSymbols statusSymbol = StatusSymbols.valueOf(obj.getString("status"));
+						switch (statusSymbol) {
+						case N:
+							status.setText("Not finished");
+							break;
+						case Q:
+							status.setText("Queued");
+							break;
+						case P:
+							status.setText("Processed");
+							break;
+						case B:
+							status.setText("Backordered");
+							break;
+						case D:
+							status.setText("Declined");
+							break;
+						case F:
+							status.setText("Failed");
+							break;
+						case C:
+							status.setText("Comlete");
+							break;
+						default:
+							break;
+						}
 
-						GetRequester detailsRequester = new GetRequester() {
-							protected void onPostExecute(String result) {
-								if (result != null) {
-									try {
-										JSONArray detailsArray = new JSONArray(result);
-										JSONObject detailsObj = detailsArray.getJSONObject(0);
+						JSONArray detailsArray = obj.getJSONArray("details");
+						StringBuilder productsInfo = new StringBuilder();
+						int arrayLenght = detailsArray.length();
 
-										product.setText(detailsObj.getString("product"));
-										quantity.setText(detailsObj.getString("amount"));
-										id.setText(orderId);
-										date.setText(getFormatDate(dateInSeconds));
-										totalPrice.setText("$" + total);
-										user.setText(userText);
+						for (int i = 0; i < arrayLenght - 1; i++) {
+							JSONObject detailsObj = detailsArray.getJSONObject(i);
+							productsInfo.append(detailsObj.getString("product") + ", " + "Quantity: "
+									+ detailsObj.getString("amount") + "\n\n");
+						}
 
-										switch (statusSymbol) {
-										case N:
-											status.setText("Not finished");
-											break;
-										case Q:
-											status.setText("Queued");
-											break;
-										case P:
-											status.setText("Processed");
-											break;
-										case B:
-											status.setText("Backordered");
-											break;
-										case D:
-											status.setText("Declined");
-											break;
-										case F:
-											status.setText("Failed");
-											break;
-										case C:
-											status.setText("Comlete");
-											break;
-										default:
-											break;
-										}
-									} catch (JSONException e) {
-										e.printStackTrace();
-									}
-								} else {
-									showConnectionErrorMessage();
-								}
-								progressBar.setVisibility(View.GONE);
-							}
-						};
+						JSONObject detailsObj = detailsArray.getJSONObject(arrayLenght - 1);
+						productsInfo.append(detailsObj.getString("product") + ", " + "Quantity: "
+								+ detailsObj.getString("amount"));
 
-						detailsRequester
-								.execute("http://54.213.38.9/xcart/api.php?request=order_details&id=" + orderId);
+						product.setText(productsInfo.toString());
 
 					} catch (JSONException e) {
 						e.printStackTrace();
 					}
 				} else {
-					progressBar.setVisibility(View.GONE);
 					showConnectionErrorMessage();
 				}
-			};
+				progressBar.setVisibility(View.GONE);
+			}
 		};
+
 		dataRequester.execute("http://54.213.38.9/xcart/api.php?request=last_order");
 	}
 
@@ -238,8 +226,8 @@ public class Dashboard extends PinSupportActivity {
 	private String getFormatDate(Long seconds) {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTimeInMillis(seconds * 1000L);
-		return dateNumber(calendar.get(Calendar.DAY_OF_MONTH)) + "/" + dateNumber(calendar.get(Calendar.MONTH)) + "/"
-				+ calendar.get(Calendar.YEAR) + " " + dateNumber(calendar.get(Calendar.HOUR_OF_DAY)) + ":"
+		return dateNumber(calendar.get(Calendar.DAY_OF_MONTH)) + "/" + dateNumber(calendar.get(Calendar.MONTH) + 1)
+				+ "/" + calendar.get(Calendar.YEAR) + " " + dateNumber(calendar.get(Calendar.HOUR_OF_DAY)) + ":"
 				+ dateNumber(calendar.get(Calendar.MINUTE));
 	}
 
@@ -254,7 +242,6 @@ public class Dashboard extends PinSupportActivity {
 	private TextView id;
 	private TextView date;
 	private TextView product;
-	private TextView quantity;
 	private TextView totalPrice;
 	private TextView user;
 	private TextView status;
