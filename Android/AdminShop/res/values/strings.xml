@@ -125,5 +125,6 @@
     <string name="backordered">Backordered:</string>
     <string name="declined">Declined:</string>
     <string name="failed">Failed:</string>
-
+	<string name="top_categories">Top 10 categories</string>
+    
 </resources>

@@ -29,15 +29,6 @@
                 android:text="@string/left_arrow"
                 android:textColor="@color/black"
                 android:textSize="15sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="10dp"
-                android:text="@string/right_arrow"
-                android:textColor="@color/black"
-                android:textSize="15sp" />
         </RelativeLayout>
 
         <TabHost
@@ -76,7 +67,7 @@
             android:layout_height="match_parent" >
 
             <com.example.adminshop.StatisticTable
-                android:id="@+id/top_sellers_table"
+                android:id="@+id/top_categories_table"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="10dp" >
@@ -92,7 +83,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="@string/topProducts"
+                        android:text="@string/top_categories"
                         android:textSize="15sp" />
 
                     <TextView
@@ -115,7 +106,7 @@
     </ProgressBar>
 
     <TextView
-        android:id="@+id/no_products_sold"
+        android:id="@+id/no_categories"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true" />
