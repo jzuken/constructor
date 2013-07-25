@@ -66,7 +66,6 @@ public class Discounts extends PinSupportActivity {
 
 	@Override
 	protected void withoutPinAction() {
-		clearList();
 		updateDiscountsTable();
 	}
 
@@ -86,7 +85,6 @@ public class Discounts extends PinSupportActivity {
 		}
 		if (response != null) {
 			Toast.makeText(getBaseContext(), "Success", Toast.LENGTH_SHORT).show();
-			clearList();
 			updateDiscountsTable();
 		} else {
 			showConnectionErrorMessage();
@@ -94,6 +92,7 @@ public class Discounts extends PinSupportActivity {
 	}
 
 	private void updateDiscountsTable() {
+		clearList();
 		progressBar.setVisibility(View.VISIBLE);
 		GetRequester dataRequester = new GetRequester() {
 			@Override
@@ -288,7 +287,6 @@ public class Discounts extends PinSupportActivity {
 				}
 				if (response != null) {
 					Toast.makeText(getBaseContext(), "Success", Toast.LENGTH_SHORT).show();
-					clearList();
 					updateDiscountsTable();
 				} else {
 					showConnectionErrorMessage();

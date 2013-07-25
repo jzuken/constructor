@@ -40,22 +40,39 @@ public class Dashboard extends PinSupportActivity {
 		totalPrice = (TextView) page1.findViewById(R.id.last_order_price);
 		user = (TextView) page1.findViewById(R.id.last_order_user);
 		status = (TextView) page1.findViewById(R.id.last_order_status);
-		progressBar = (ProgressBar) page1.findViewById(R.id.progress_bar);
+		lastOrderPrBar = (ProgressBar) page1.findViewById(R.id.progress_bar);
 		pages.add(page1);
 		View page2 = inflater.inflate(R.layout.orders_info, null);
 		totalOrders = (TextView) page2.findViewById(R.id.total_orders);
 		completeOrders = (TextView) page2.findViewById(R.id.complete_orders);
-		inProcessOrders = (TextView) page2.findViewById(R.id.in_process_orders);
+		notFinishedOrders = (TextView) page2.findViewById(R.id.not_finished_orders);
+		queuedOrders = (TextView) page2.findViewById(R.id.queued_orders);
+		processedOrders = (TextView) page2.findViewById(R.id.processed_orders);
+		backorderedOrders = (TextView) page2.findViewById(R.id.backordered_orders);
+		declinedOrders = (TextView) page2.findViewById(R.id.declined_orders);
+		failedOrders = (TextView) page2.findViewById(R.id.failed_orders);
 		totalPaid = (TextView) page2.findViewById(R.id.total_paid);
 
+		ordersInfoPeriod = 1;
 		TabHost ordersTabHost = (TabHost) page2.findViewById(android.R.id.tabhost);
 		newPeriodTabHost(ordersTabHost);
 
 		ordersTabHost.setOnTabChangedListener(new OnTabChangeListener() {
 			public void onTabChanged(String tabId) {
+				if (tabId.equals("tag1")) {
+					ordersInfoPeriod = 1;
+				} else if (tabId.equals("tag2")) {
+					ordersInfoPeriod = 2;
+				} else if (tabId.equals("tag3")) {
+					ordersInfoPeriod = 3;
+				} else {
+					ordersInfoPeriod = 4;
+				}
+				updateOrdersInfoData();
 			}
 		});
 
+		ordersInfoPrBar = (ProgressBar) page2.findViewById(R.id.progress_bar);
 		pages.add(page2);
 
 		View page3 = inflater.inflate(R.layout.sales_growth, null);
@@ -79,6 +96,8 @@ public class Dashboard extends PinSupportActivity {
 			public void onTabChanged(String tabId) {
 			}
 		});
+		
+		topSellersPrBar = (ProgressBar) page4.findViewById(R.id.progress_bar);
 
 		topSellersTable = (TableLayout) page4.findViewById(R.id.top_sellers_table);
 		rowParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
@@ -98,7 +117,8 @@ public class Dashboard extends PinSupportActivity {
 
 	@Override
 	protected void withoutPinAction() {
-		initLastOrderData();
+		updateLastOrderData();
+		updateOrdersInfoData();
 	}
 
 	private void addEmptyTab(TabHost tabHost, String tag, String indicator) {
@@ -145,11 +165,11 @@ public class Dashboard extends PinSupportActivity {
 	}
 
 	private enum StatusSymbols {
-		N, Q, P, B, D, F, C
+		I, Q, P, X, D, F, C
 	}
 
-	private void initLastOrderData() {
-		progressBar.setVisibility(View.VISIBLE);
+	private void updateLastOrderData() {
+		lastOrderPrBar.setVisibility(View.VISIBLE);
 		GetRequester dataRequester = new GetRequester() {
 			protected void onPostExecute(String result) {
 				if (result != null) {
@@ -163,7 +183,7 @@ public class Dashboard extends PinSupportActivity {
 						StatusSymbols statusSymbol = StatusSymbols.valueOf(obj.getString("status"));
 
 						switch (statusSymbol) {
-						case N:
+						case I:
 							status.setText("Not finished");
 							break;
 						case Q:
@@ -172,7 +192,7 @@ public class Dashboard extends PinSupportActivity {
 						case P:
 							status.setText("Processed");
 							break;
-						case B:
+						case X:
 							status.setText("Backordered");
 							break;
 						case D:
@@ -210,11 +230,58 @@ public class Dashboard extends PinSupportActivity {
 				} else {
 					showConnectionErrorMessage();
 				}
-				progressBar.setVisibility(View.GONE);
+				lastOrderPrBar.setVisibility(View.GONE);
 			}
 		};
 
 		dataRequester.execute("http://54.213.38.9/xcart/api.php?request=last_order");
+	}
+	
+	private void updateOrdersInfoData() {
+		ordersInfoPrBar.setVisibility(View.VISIBLE);
+		GetRequester dataRequester = new GetRequester() {
+			protected void onPostExecute(String result) {
+				if (result != null) {
+					try {
+						JSONObject obj = new JSONObject(result);
+						JSONObject currentPeriodObj;
+						switch (ordersInfoPeriod) {
+						case 1:
+							currentPeriodObj = obj.getJSONObject("last_login");
+							break;
+						case 2:
+							currentPeriodObj = obj.getJSONObject("today");
+							break;
+						case 3:
+							currentPeriodObj = obj.getJSONObject("week");
+							break;
+						case 4:
+							currentPeriodObj = obj.getJSONObject("month");
+							break;
+						default:
+							currentPeriodObj = null;
+							break;
+						}
+						
+						completeOrders.setText(currentPeriodObj.getString("C"));
+						notFinishedOrders.setText(currentPeriodObj.getString("I"));
+						queuedOrders.setText(currentPeriodObj.getString("Q"));
+						processedOrders.setText(currentPeriodObj.getString("P"));
+						backorderedOrders.setText(currentPeriodObj.getString("X"));
+						declinedOrders.setText(currentPeriodObj.getString("D"));
+						failedOrders.setText(currentPeriodObj.getString("F"));
+						totalOrders.setText(currentPeriodObj.getString("Total"));
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+				} else {
+					showConnectionErrorMessage();
+				}
+				ordersInfoPrBar.setVisibility(View.GONE);
+			}
+		};
+
+		dataRequester.execute("http://54.213.38.9/xcart/api.php?request=orders_statistic");
 	}
 
 	private void showConnectionErrorMessage() {
@@ -247,11 +314,19 @@ public class Dashboard extends PinSupportActivity {
 	private TextView status;
 	private TextView totalOrders;
 	private TextView completeOrders;
-	private TextView inProcessOrders;
+	private TextView notFinishedOrders;
+	private TextView queuedOrders;
+	private TextView processedOrders;
+	private TextView backorderedOrders;
+	private TextView declinedOrders;
+	private TextView failedOrders;
 	private TextView totalPaid;
 	private TableLayout topSellersTable;
 	private LayoutParams rowParams;
 	private TableRow.LayoutParams itemParams;
 	private int position = 1;
-	private ProgressBar progressBar;
+	private ProgressBar lastOrderPrBar;
+	private ProgressBar ordersInfoPrBar;
+	private ProgressBar topSellersPrBar;
+	private int ordersInfoPeriod;
 }

@@ -105,7 +105,7 @@
     <string name="sales_growth">Sales growth</string>
     <string name="id_text">ID:</string>
     <string name="date_text">Date:</string>
-    <string name="product_text">Product:</string>
+    <string name="product_text">Products:</string>
     <string name="quantity_text">Quantity:</string>
     <string name="total_price_text">Total price:</string>
     <string name="user_text">User:</string>
@@ -119,5 +119,11 @@
     <string name="unlock">Unlock</string>
     <string name="topProducts">Top 10 products</string>
     <string name="sold">Sold</string>
+    <string name="not_finished">Not finished:</string>
+    <string name="queued">Queued:</string>
+    <string name="processed">Processed:</string>
+    <string name="backordered">Backordered:</string>
+    <string name="declined">Declined:</string>
+    <string name="failed">Failed:</string>
 
 </resources>
