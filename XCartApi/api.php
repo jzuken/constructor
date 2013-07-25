@@ -3,22 +3,19 @@
 /*
  * Development imports
  */
-//require './xcart/top.inc.php';
-//require './xcart/init.php';
+require './xcart/top.inc.php';
+require './xcart/init.php';
 
 /*
  * Production imports
  */
-require './top.inc.php';
-require './init.php';
+//require './top.inc.php';
+//require './init.php';
 mysql_connect($sql_host, $sql_user, $sql_password)  or die(mysql_error());
 mysql_select_db($sql_db) or die(mysql_error());
 
 header('Content-Type: application/json; charset=utf-8');
-$users_fields = array(id, username, usertype, invalid_login_attempts, title, firstname, lastname, company, email, url, last_login, first_login, status, activation_key, autolock, suspend_date, referer, ssn, language, change_password, change_password_date, parent, pending_plan_id, activity, membershipid, pending_membershipid, tax_number, tax_exempt, trusted_provider, cookie_access);
-$orders_fields = array(orderid, status, total, title, firstname, b_firstname, lastname, b_lastname);
-$order_details_fields = array(orderid, productid, price, amount, provider, product_options, itemid, productcode, product);
-$discounts_fields = array(discountid, minprice, discount, discount_type, provider);
+
 $dates = array('last_login', 'today', 'week', 'month');
 
 $curtime = XC_TIME + $config['Appearance']['timezone_offset'];
@@ -46,14 +43,14 @@ function get_response()
             $response = get_orders($orders_fields, $_GET['from'], $_GET['to']);
             break;
         case 'last_order':
-            $response = get_last_order($orders_fields);
+            $response = get_last_order();
             break;
         case 'order_details':
             $response = get_order_details($order_details_fields, $_GET['id']);
             print_r($response);
             break;
         case 'discounts':
-            $response = get_discounts($discounts_fields);
+            $response = get_discounts();
             break;
         case 'create_discount':
             $response = create_discount($_GET['minprice'], $_GET['discount'], $_GET['discount_type'], $_GET['provider']);
@@ -179,8 +176,7 @@ function get_first_cell($query)
 function get_users_count()
 {
     global $sql_tbl;
-    $query = mysql_query("SELECT * FROM $sql_tbl[customers]") or die(mysql_error());
-    $count = mysql_num_rows($query);
+    $count = get_first_cell("SELECT COUNT(*) FROM $sql_tbl[customers]");
     $json_result = array('count' => $count);
     return json_encode($json_result);
 }
@@ -188,7 +184,10 @@ function get_users_count()
 function get_users($fields)
 {
     global $sql_tbl;
-    $query = mysql_query("SELECT * FROM $sql_tbl[customers]") or die(mysql_error());
+    $query = mysql_query("
+        SELECT *
+        FROM $sql_tbl[customers]
+        ") or die(mysql_error());
     return get_json($fields, $query);
 }
 
@@ -201,41 +200,48 @@ function get_orders($fields, $from, $to)
         $to = XC_TIME;
     }
     global $sql_tbl;
+    $orders_fields = array(orderid, status, total, title, firstname, b_firstname, lastname, b_lastname);
     $date_condition = "date BETWEEN $from AND $to";
-    $query = mysql_query("SELECT * FROM $sql_tbl[orders] WHERE $date_condition") or die(mysql_error());
-    return get_json($fields, $query);
+    $query = mysql_query("
+        SELECT orderid, status, total, title, firstname, b_firstname, lastname, b_lastname
+        FROM $sql_tbl[orders]
+        WHERE $date_condition
+        ") or die(mysql_error());
+    return get_json($orders_fields, $query);
 }
 
-function get_last_order($fields)
+function get_last_order()
 {
-    global $sql_tbl, $order_details_fields;
+    global $sql_tbl;
+    $orders_fields = array(orderid, status, total, title, firstname, b_firstname, lastname, b_lastname, date);
     $order_query = mysql_query("
-        SELECT orderid, status, total, title, firstname, b_firstname, lastname, b_lastname
+        SELECT orderid, status, total, title, firstname, b_firstname, lastname, b_lastname, date
         FROM $sql_tbl[orders]
         ORDER BY date DESC LIMIT 1
         ") or die(mysql_error());
     $result_array = array();
     $row = mysql_fetch_array($order_query);
-    foreach ($fields as $value) {
+    foreach ($orders_fields as $value) {
         $result_array[$value] = $row[$value];
     }
     $order_id = $row['orderid'];
-    $order_details = get_order_details($order_details_fields, $order_id);
+    $order_details = get_order_details($order_id);
     $result_array[details] = $order_details;
     return json_encode($result_array);
 }
 
-function get_order_details($fields, $id)
+function get_order_details($id)
 {
     if (is_null($id)) {
         return 'error';
     }
     global $sql_tbl;
+    $order_details_fields = array(productid, price, amount, provider, product_options, itemid, productcode, product);
     $query = mysql_query("SELECT * FROM $sql_tbl[order_details] WHERE orderid=$id") or die(mysql_error());
     $order_details_array = array();
     while ($row = mysql_fetch_array($query)) {
         $product_details = array();
-        foreach ($fields as $value) {
+        foreach ($order_details_fields as $value) {
             $product_details[$value] = $row[$value];
         }
         array_push($order_details_array, $product_details);
@@ -247,8 +253,12 @@ function get_order_details($fields, $id)
 function get_discounts($fields)
 {
     global $sql_tbl;
-    $query = mysql_query("SELECT * FROM $sql_tbl[discounts]") or die(mysql_error());
-    return get_json($fields, $query);
+    $discounts_fields = array(discountid, minprice, discount, discount_type, provider);
+    $query = mysql_query("
+        SELECT *
+        FROM $sql_tbl[discounts]
+        ") or die(mysql_error());
+    return get_json($discounts_fields, $query);
 }
 
 function create_discount($minprice, $discount, $discount_type, $provider)
@@ -257,8 +267,10 @@ function create_discount($minprice, $discount, $discount_type, $provider)
     if (is_null($minprice) || is_null($discount) || is_null($discount_type) || is_null($provider)) {
         return "error";
     }
-    $query = mysql_query("INSERT INTO $sql_tbl[discounts] (minprice, discount, discount_type, provider) VALUES ($minprice, $discount, '$discount_type', $provider)") or die(mysql_error());
-    echo db_query($query);
+    $query = mysql_query("
+        INSERT INTO $sql_tbl[discounts] (minprice, discount, discount_type, provider)
+        VALUES ($minprice, $discount, '$discount_type', $provider)
+        ") or die(mysql_error());
     return "success";
 }
 
@@ -268,8 +280,10 @@ function update_discount($id, $minprice, $discount, $discount_type, $provider)
     if (is_null($id) || is_null($minprice) || is_null($discount) || is_null($discount_type) || is_null($provider)) {
         return "error";
     }
-    $query = mysql_query("UPDATE $sql_tbl[discounts] SET minprice=$minprice, discount=$discount, discount_type='$discount_type', provider=$provider") or die(mysql_error());
-    echo db_query($query);
+    $query = mysql_query("
+        UPDATE $sql_tbl[discounts]
+        SET minprice=$minprice, discount=$discount, discount_type='$discount_type', provider=$provider
+        ") or die(mysql_error());
     return "success";
 }
 
@@ -280,7 +294,6 @@ function delete_discount($id)
         return "error";
     }
     $query = mysql_query("DELETE FROM $sql_tbl[discounts] WHERE discountid=$id") or die(mysql_error());
-    echo db_query($query);
     return "success";
 }
 
