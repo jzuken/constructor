@@ -69,7 +69,8 @@
             <TableLayout
                 android:id="@+id/top_sellers_table"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp" >
 
                 <TableRow
                     android:layout_width="wrap_content"
@@ -103,5 +104,11 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true" >
     </ProgressBar>
+
+    <TextView
+        android:id="@+id/no_products_sold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" />
 
 </RelativeLayout>

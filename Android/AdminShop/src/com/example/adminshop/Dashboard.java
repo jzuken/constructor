@@ -11,6 +11,7 @@ import org.json.JSONObject;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,6 +43,7 @@ public class Dashboard extends PinSupportActivity {
 		status = (TextView) page1.findViewById(R.id.last_order_status);
 		lastOrderPrBar = (ProgressBar) page1.findViewById(R.id.progress_bar);
 		pages.add(page1);
+
 		View page2 = inflater.inflate(R.layout.orders_info, null);
 		totalOrders = (TextView) page2.findViewById(R.id.total_orders);
 		completeOrders = (TextView) page2.findViewById(R.id.complete_orders);
@@ -59,15 +61,7 @@ public class Dashboard extends PinSupportActivity {
 
 		ordersTabHost.setOnTabChangedListener(new OnTabChangeListener() {
 			public void onTabChanged(String tabId) {
-				if (tabId.equals("tag1")) {
-					ordersInfoPeriod = 1;
-				} else if (tabId.equals("tag2")) {
-					ordersInfoPeriod = 2;
-				} else if (tabId.equals("tag3")) {
-					ordersInfoPeriod = 3;
-				} else {
-					ordersInfoPeriod = 4;
-				}
+				ordersInfoPeriod = periodIdByTag(tabId);
 				updateOrdersInfoData();
 			}
 		});
@@ -89,15 +83,19 @@ public class Dashboard extends PinSupportActivity {
 
 		View page4 = inflater.inflate(R.layout.top_sellers, null);
 
+		topSellersPeriod = 1;
 		TabHost sellersTabHost = (TabHost) page4.findViewById(android.R.id.tabhost);
 		newPeriodTabHost(sellersTabHost);
 
 		sellersTabHost.setOnTabChangedListener(new OnTabChangeListener() {
 			public void onTabChanged(String tabId) {
+				topSellersPeriod = periodIdByTag(tabId);
+				updateTopSellersData();
 			}
 		});
-		
+
 		topSellersPrBar = (ProgressBar) page4.findViewById(R.id.progress_bar);
+		noProducts = (TextView) page4.findViewById(R.id.no_products_sold);
 
 		topSellersTable = (TableLayout) page4.findViewById(R.id.top_sellers_table);
 		rowParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
@@ -109,16 +107,13 @@ public class Dashboard extends PinSupportActivity {
 		ViewPager viewPager = (ViewPager) findViewById(R.id.dashbroad_view_pager);
 		viewPager.setAdapter(pagerAdapter);
 		viewPager.setCurrentItem(0);
-
-		// example
-		addPositionToTable("first", 300);
-		addPositionToTable("second", 100);
 	}
 
 	@Override
 	protected void withoutPinAction() {
 		updateLastOrderData();
 		updateOrdersInfoData();
+		updateTopSellersData();
 	}
 
 	private void addEmptyTab(TabHost tabHost, String tag, String indicator) {
@@ -140,23 +135,42 @@ public class Dashboard extends PinSupportActivity {
 		addEmptyTab(tabHost, "tag4", "This month");
 	}
 
-	private void addPositionToTable(String name, int quantity) {
+	private int periodIdByTag(String tag) {
+		if (tag.equals("tag1")) {
+			return 1;
+		}
+		if (tag.equals("tag2")) {
+			return 2;
+		}
+		if (tag.equals("tag3")) {
+			return 3;
+		}
+		return 4;
+	}
+
+	private void addPositionToTable(String name, String quantity) {
 		TableRow newRow = new TableRow(this);
 		newRow.setLayoutParams(rowParams);
-		TextView newItem = newTableTextView(String.valueOf(position) + ". " + name);
-		TextView newItemQuantity = newTableTextView(String.valueOf(quantity));
+		TextView newItem = newTableTextView(String.valueOf(position) + ". " + name, Gravity.LEFT, 10);
+		TextView newItemQuantity = newTableTextView(quantity, Gravity.CENTER, 0);
 		newRow.addView(newItem);
 		newRow.addView(newItemQuantity);
 		topSellersTable.addView(newRow);
 		position++;
 	}
 
-	private TextView newTableTextView(CharSequence text) {
+	private TextView newTableTextView(CharSequence text, int gravity, int paddingLeft) {
 		TextView textView = new TextView(this);
 		textView.setText(text);
-		textView.setGravity(Gravity.CENTER);
+		textView.setMaxWidth(convertPixelsToDip(100));
+		textView.setGravity(gravity);
 		textView.setLayoutParams(itemParams);
+		textView.setPadding(paddingLeft, 0, 0, 0);
 		return textView;
+	}
+
+	private int convertPixelsToDip(int px) {
+		return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, px, getResources().getDisplayMetrics());
 	}
 
 	private void clearTable() {
@@ -236,7 +250,7 @@ public class Dashboard extends PinSupportActivity {
 
 		dataRequester.execute("http://54.213.38.9/xcart/api.php?request=last_order");
 	}
-	
+
 	private void updateOrdersInfoData() {
 		ordersInfoPrBar.setVisibility(View.VISIBLE);
 		GetRequester dataRequester = new GetRequester() {
@@ -262,7 +276,7 @@ public class Dashboard extends PinSupportActivity {
 							currentPeriodObj = null;
 							break;
 						}
-						
+
 						completeOrders.setText(currentPeriodObj.getString("C"));
 						notFinishedOrders.setText(currentPeriodObj.getString("I"));
 						queuedOrders.setText(currentPeriodObj.getString("Q"));
@@ -282,6 +296,67 @@ public class Dashboard extends PinSupportActivity {
 		};
 
 		dataRequester.execute("http://54.213.38.9/xcart/api.php?request=orders_statistic");
+	}
+
+	private void updateTopSellersData() {
+		clearTable();
+		noProducts.setText("");
+		topSellersPrBar.setVisibility(View.VISIBLE);
+		GetRequester dataRequester = new GetRequester() {
+			protected void onPostExecute(String result) {
+				if (result != null) {
+					try {
+						JSONObject obj = new JSONObject(result);
+						JSONArray currentPeriodArray = new JSONArray();
+						switch (topSellersPeriod) {
+						case 1:
+							if (obj.optBoolean("last_login", true)) {
+								currentPeriodArray = obj.getJSONArray("last_login");
+							} else {
+								noProducts.setText("No products sold during this period");
+							}
+							break;
+						case 2:
+							if (obj.optBoolean("today", true)) {
+								currentPeriodArray = obj.getJSONArray("today");
+							} else {
+								noProducts.setText("No products sold during this period");
+							}
+							break;
+						case 3:
+							if (obj.optBoolean("week", true)) {
+								currentPeriodArray = obj.getJSONArray("week");
+							} else {
+								noProducts.setText("No products sold during this period");
+							}
+							break;
+						case 4:
+							if (obj.optBoolean("month", true)) {
+								currentPeriodArray = obj.getJSONArray("month");
+							} else {
+								noProducts.setText("No products sold during this period");
+							}
+							break;
+						default:
+							break;
+						}
+
+						for (int i = 0; i < currentPeriodArray.length(); i++) {
+							JSONObject currentProduct = currentPeriodArray.getJSONObject(i);
+							addPositionToTable(currentProduct.getString("product"), currentProduct.getString("count"));
+						}
+
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+				} else {
+					showConnectionErrorMessage();
+				}
+				topSellersPrBar.setVisibility(View.GONE);
+			}
+		};
+
+		dataRequester.execute("http://54.213.38.9/xcart/api.php?request=top_products");
 	}
 
 	private void showConnectionErrorMessage() {
@@ -321,6 +396,7 @@ public class Dashboard extends PinSupportActivity {
 	private TextView declinedOrders;
 	private TextView failedOrders;
 	private TextView totalPaid;
+	private TextView noProducts;
 	private TableLayout topSellersTable;
 	private LayoutParams rowParams;
 	private TableRow.LayoutParams itemParams;
@@ -329,4 +405,5 @@ public class Dashboard extends PinSupportActivity {
 	private ProgressBar ordersInfoPrBar;
 	private ProgressBar topSellersPrBar;
 	private int ordersInfoPeriod;
+	private int topSellersPeriod;
 }
