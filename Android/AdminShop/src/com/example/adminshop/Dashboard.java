@@ -165,6 +165,7 @@ public class Dashboard extends PinSupportActivity {
 	}
 
 	private void updateLastOrderData() {
+		clearLastOrderInfo();
 		lastOrderPrBar.setVisibility(View.VISIBLE);
 		GetRequester dataRequester = new GetRequester() {
 			protected void onPostExecute(String result) {
@@ -232,8 +233,18 @@ public class Dashboard extends PinSupportActivity {
 
 		dataRequester.execute("http://54.213.38.9/xcart/api.php?request=last_order");
 	}
+	
+	private void clearLastOrderInfo() {
+		id.setText("");
+		date.setText("");
+		product.setText("");
+		totalPrice.setText("");
+		user.setText("");
+		status.setText("");
+	}
 
 	private void updateOrdersInfoData() {
+		clearOrdersInfo();
 		ordersInfoPrBar.setVisibility(View.VISIBLE);
 		GetRequester dataRequester = new GetRequester() {
 			protected void onPostExecute(String result) {
@@ -278,6 +289,18 @@ public class Dashboard extends PinSupportActivity {
 		};
 
 		dataRequester.execute("http://54.213.38.9/xcart/api.php?request=orders_statistic");
+	}
+	
+	private void clearOrdersInfo() {
+		completeOrders.setText("");
+		notFinishedOrders.setText("");
+		queuedOrders.setText("");
+		processedOrders.setText("");
+		backorderedOrders.setText("");
+		declinedOrders.setText("");
+		failedOrders.setText("");
+		totalOrders.setText("");
+		totalPaid.setText("");
 	}
 
 	private void updateTopSellersData() {
