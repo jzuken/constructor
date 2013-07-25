@@ -1,6 +1,7 @@
 package com.example.adminshop;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -31,6 +32,9 @@ public class StatisticTable extends TableLayout {
 	public void addPositionToTable(String name, String quantity) {
 		TableRow newRow = new TableRow(context);
 		newRow.setLayoutParams(rowParams);
+		if (currentPosition % 2 == 0) {
+			newRow.setBackgroundColor(getResources().getColor(R.color.ghostwhite));
+		}
 		TextView newItem = newTableTextView(String.valueOf(currentPosition) + ". " + name, Gravity.LEFT, 10);
 		TextView newItemQuantity = newTableTextView(quantity, Gravity.CENTER, 0);
 		newRow.addView(newItem);

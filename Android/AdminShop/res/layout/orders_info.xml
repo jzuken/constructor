@@ -74,7 +74,6 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp" >
 
             <TableLayout
@@ -92,6 +91,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="left"
+                        android:paddingLeft="10dp"
                         android:text="@string/total_orders" />
 
                     <TextView
@@ -104,13 +104,15 @@
 
                 <TableRow
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" >
+                    android:layout_height="wrap_content"
+                    android:background="@color/ghostwhite" >
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="left"
+                        android:paddingLeft="10dp"
                         android:text="@string/complete_orders" />
 
                     <TextView
@@ -130,6 +132,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="left"
+                        android:paddingLeft="10dp"
                         android:text="@string/not_finished" />
 
                     <TextView
@@ -142,13 +145,15 @@
 
                 <TableRow
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" >
+                    android:layout_height="wrap_content"
+                    android:background="@color/ghostwhite" >
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="left"
+                        android:paddingLeft="10dp"
                         android:text="@string/queued" />
 
                     <TextView
@@ -168,6 +173,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="left"
+                        android:paddingLeft="10dp"
                         android:text="@string/processed" />
 
                     <TextView
@@ -180,13 +186,15 @@
 
                 <TableRow
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" >
+                    android:layout_height="wrap_content"
+                    android:background="@color/ghostwhite" >
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="left"
+                        android:paddingLeft="10dp"
                         android:text="@string/backordered" />
 
                     <TextView
@@ -206,6 +214,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="left"
+                        android:paddingLeft="10dp"
                         android:text="@string/declined" />
 
                     <TextView
@@ -218,13 +227,15 @@
 
                 <TableRow
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" >
+                    android:layout_height="wrap_content"
+                    android:background="@color/ghostwhite" >
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="left"
+                        android:paddingLeft="10dp"
                         android:text="@string/failed" />
 
                     <TextView
@@ -244,6 +255,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="left"
+                        android:paddingLeft="10dp"
                         android:text="@string/total_paid" />
 
                     <TextView
