@@ -11,6 +11,8 @@ import org.json.JSONObject;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -118,6 +120,24 @@ public class Dashboard extends PinSupportActivity {
 		ViewPager viewPager = (ViewPager) findViewById(R.id.dashbroad_view_pager);
 		viewPager.setAdapter(pagerAdapter);
 		viewPager.setCurrentItem(0);
+
+		currentPage = 0;
+
+		viewPager.setOnPageChangeListener(new OnPageChangeListener() {
+
+			@Override
+			public void onPageSelected(int position) {
+				currentPage = position;
+			}
+
+			@Override
+			public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+			}
+
+			@Override
+			public void onPageScrollStateChanged(int state) {
+			}
+		});
 	}
 
 	@Override
@@ -225,7 +245,7 @@ public class Dashboard extends PinSupportActivity {
 						e.printStackTrace();
 					}
 				} else {
-					showConnectionErrorMessage();
+					showConnectionErrorMessage(0);
 				}
 				lastOrderPrBar.setVisibility(View.GONE);
 			}
@@ -233,7 +253,7 @@ public class Dashboard extends PinSupportActivity {
 
 		dataRequester.execute("http://54.213.38.9/xcart/api.php?request=last_order");
 	}
-	
+
 	private void clearLastOrderInfo() {
 		id.setText("");
 		date.setText("");
@@ -282,7 +302,7 @@ public class Dashboard extends PinSupportActivity {
 						e.printStackTrace();
 					}
 				} else {
-					showConnectionErrorMessage();
+					showConnectionErrorMessage(1);
 				}
 				ordersInfoPrBar.setVisibility(View.GONE);
 			}
@@ -290,7 +310,7 @@ public class Dashboard extends PinSupportActivity {
 
 		dataRequester.execute("http://54.213.38.9/xcart/api.php?request=orders_statistic");
 	}
-	
+
 	private void clearOrdersInfo() {
 		completeOrders.setText("");
 		notFinishedOrders.setText("");
@@ -356,7 +376,7 @@ public class Dashboard extends PinSupportActivity {
 						e.printStackTrace();
 					}
 				} else {
-					showConnectionErrorMessage();
+					showConnectionErrorMessage(3);
 				}
 				topSellersPrBar.setVisibility(View.GONE);
 			}
@@ -418,7 +438,7 @@ public class Dashboard extends PinSupportActivity {
 						e.printStackTrace();
 					}
 				} else {
-					showConnectionErrorMessage();
+					showConnectionErrorMessage(4);
 				}
 				topCategoriesPrBar.setVisibility(View.GONE);
 			}
@@ -427,10 +447,12 @@ public class Dashboard extends PinSupportActivity {
 		dataRequester.execute("http://54.213.38.9/xcart/api.php?request=top_categories");
 	}
 
-	private void showConnectionErrorMessage() {
-		Toast.makeText(getBaseContext(),
-				"Sorry, unable to connect to server. Cannot update data. Please check your internet connection",
-				Toast.LENGTH_LONG).show();
+	private void showConnectionErrorMessage(int page) {
+		if (page == currentPage) {
+			Toast.makeText(getBaseContext(),
+					"Sorry, unable to connect to server. Cannot update data. Please check your internet connection",
+					Toast.LENGTH_LONG).show();
+		}
 	}
 
 	private String getFormatDate(Long seconds) {
@@ -475,4 +497,5 @@ public class Dashboard extends PinSupportActivity {
 	private int ordersInfoPeriod;
 	private int topSellersPeriod;
 	private int topCategoriesPeriod;
+	private int currentPage;
 }
