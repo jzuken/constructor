@@ -126,5 +126,9 @@
     <string name="declined">Declined:</string>
     <string name="failed">Failed:</string>
 	<string name="top_categories">Top 10 categories</string>
+	<string name="information">Information</string>
+	<string name="search_users">Search for users</string>
+	<string name="registered">Registered:</string>
+	<string name="online">Online:</string>
     
 </resources>
