@@ -8,5 +8,6 @@
     <color name="orange">#ffFFA500</color>
     <color name="black">#ff000000</color>
     <color name="white">#ffffffff</color>
+    <color name="ghostwhite">#ffF0F0F6</color>
 
 </resources>

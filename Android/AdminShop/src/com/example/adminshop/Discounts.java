@@ -2,25 +2,28 @@ package com.example.adminshop;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.text.InputType;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -34,12 +37,14 @@ public class Discounts extends PinSupportActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.discounts);
 		tenDp = convertPixelsToDip(10);
+		fiveDp = convertPixelsToDip(5);
 
 		LayoutInflater inflater = LayoutInflater.from(this);
 		List<View> pages = new ArrayList<View>();
 
 		View page1 = inflater.inflate(R.layout.discounts_list, null);
 		discountsList = (LinearLayout) page1.findViewById(R.id.discountsLinearLayout);
+		progressBar = (ProgressBar) page1.findViewById(R.id.progress_bar);
 		pages.add(page1);
 
 		View page2 = inflater.inflate(R.layout.add_discount, null);
@@ -61,32 +66,7 @@ public class Discounts extends PinSupportActivity {
 
 	@Override
 	protected void withoutPinAction() {
-		initDiscountsData();
-	}
-
-	private void initDiscountsData() {
-		String data;
-		try {
-			data = new GetRequester().execute("http://54.213.38.9/xcart/api.php?request=discounts").get();
-		} catch (Exception e) {
-			data = null;
-		}
-		if (data != null) {
-			try {
-				JSONArray array = new JSONArray(data);
-				for (int i = 0; i < array.length(); i++) {
-					JSONObject obj = array.getJSONObject(i);
-					String orderSubtotalString = obj.getString("minprice");
-					String discountString = obj.getString("discount");
-					String discountTypeString = obj.getString("discount_type");
-					addDiscountToList(orderSubtotalString, discountString, discountTypeString, "All");
-				}
-			} catch (JSONException e) {
-				e.printStackTrace();
-			}
-		} else {
-			showConnectionErrorMessage();
-		}
+		updateDiscountsTable();
 	}
 
 	private void createNewDiscount() {
@@ -96,18 +76,49 @@ public class Discounts extends PinSupportActivity {
 		String discountTypeValue = getDiscountType();
 		String response;
 		try {
-			response = new GetRequester().execute("http://54.213.38.9/xcart/api.php?request=create_discount&minprice="
-					+ orderSubtotalValue + "&discount=" + discountValue + "&discount_type=" + discountTypeValue
-					+ "&provider=" + provider).get();
+			response = new GetRequester().execute(
+					"http://54.213.38.9/xcart/api.php?request=create_discount&minprice=" + orderSubtotalValue
+							+ "&discount=" + discountValue + "&discount_type=" + discountTypeValue + "&provider="
+							+ provider).get();
 		} catch (Exception e) {
 			response = null;
 		}
 		if (response != null) {
 			Toast.makeText(getBaseContext(), "Success", Toast.LENGTH_SHORT).show();
-			addDiscountToList(orderSubtotalValue, discountValue, discountTypeValue, "All");
+			updateDiscountsTable();
 		} else {
 			showConnectionErrorMessage();
 		}
+	}
+
+	private void updateDiscountsTable() {
+		clearList();
+		progressBar.setVisibility(View.VISIBLE);
+		GetRequester dataRequester = new GetRequester() {
+			@Override
+			protected void onPostExecute(String result) {
+				if (result != null) {
+					try {
+						JSONArray array = new JSONArray(result);
+						for (int i = 0; i < array.length(); i++) {
+							JSONObject obj = array.getJSONObject(i);
+							String id = obj.getString("discountid");
+							String orderSubtotalString = obj.getString("minprice");
+							String discountString = obj.getString("discount");
+							String discountTypeString = obj.getString("discount_type");
+							addDiscountToList(id, orderSubtotalString, discountString, discountTypeString, "All");
+						}
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+				} else {
+					showConnectionErrorMessage();
+				}
+				progressBar.setVisibility(View.GONE);
+			}
+		};
+
+		dataRequester.execute("http://54.213.38.9/xcart/api.php?request=discounts");
 	}
 
 	private void showConnectionErrorMessage() {
@@ -206,7 +217,7 @@ public class Discounts extends PinSupportActivity {
 		view.addView(discount);
 	}
 
-	private void addDiscountToList(String subtotal, String discount, String discountType, String membership) {
+	private void addDiscountToList(String id, String subtotal, String discount, String discountType, String membership) {
 		addTitle(discountsList, position);
 		RelativeLayout subtotalLayout = new RelativeLayout(this);
 		addTextToLeft(subtotalLayout, "Order subtotal:");
@@ -235,6 +246,12 @@ public class Discounts extends PinSupportActivity {
 		addTextToRight(membershipLayout, "All");
 
 		discountsList.addView(membershipLayout);
+
+		RelativeLayout buttonsLayout = new RelativeLayout(this);
+		buttonsLayout.setPadding(0, fiveDp, 0, fiveDp);
+		addDeleteButtonToLeft(buttonsLayout, id);
+		discountsList.addView(buttonsLayout);
+
 		position++;
 	}
 
@@ -244,6 +261,62 @@ public class Discounts extends PinSupportActivity {
 		textEdit.setLongClickable(true);
 		textEdit.setFocusableInTouchMode(true);
 		textEdit.setCursorVisible(true);
+	}
+
+	private void addDeleteButtonToLeft(RelativeLayout rl, final String id) {
+		RelativeLayout.LayoutParams rpToLeft = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
+				LayoutParams.WRAP_CONTENT);
+		rpToLeft.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+		rpToLeft.setMargins(tenDp, 0, 0, 0);
+		Button deleteButton = new Button(this);
+		deleteButton.setText("Delete");
+		deleteButton.setTextColor(Color.WHITE);
+		deleteButton.setBackgroundResource(R.drawable.button);
+		deleteButton.setLayoutParams(rpToLeft);
+
+		deleteButton.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				String response;
+				try {
+					response = new GetRequester().execute(
+							"http://54.213.38.9/xcart/api.php?request=delete_discount&id=" + id).get();
+				} catch (Exception e) {
+					response = null;
+				}
+				if (response != null) {
+					Toast.makeText(getBaseContext(), "Success", Toast.LENGTH_SHORT).show();
+					updateDiscountsTable();
+				} else {
+					showConnectionErrorMessage();
+				}
+			}
+		});
+
+		rl.addView(deleteButton);
+	}
+
+	private void addEditButtonToRight(RelativeLayout rl, final String id) {
+		RelativeLayout.LayoutParams rpToRight = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
+				LayoutParams.WRAP_CONTENT);
+		rpToRight.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+		rpToRight.setMargins(0, 0, tenDp, 0);
+		Button editButton = new Button(this);
+		editButton.setText("Edit");
+		editButton.setTextColor(Color.WHITE);
+		editButton.setBackgroundResource(R.drawable.button);
+		editButton.setMinimumWidth(100);
+		editButton.setLayoutParams(rpToRight);
+
+		editButton.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+			}
+		});
+
+		rl.addView(editButton);
 	}
 
 	private void clearList() {
@@ -282,6 +355,8 @@ public class Discounts extends PinSupportActivity {
 	private EditText orderSubtotalEditor;
 	private EditText discountEditor;
 	private int tenDp;
+	private int fiveDp;
 	private LinearLayout discountsList;
 	private int position = 1;
+	private ProgressBar progressBar;
 }
