@@ -42,6 +42,10 @@ static QRWDataManager *_instance;
     return _instance;
 }
 
+
+#pragma mark Send requests
+
+
 -(void)sendAuthorizationRequestWithLogin:(NSString *)login andPassowrd:(NSString *)password
 {
     [_delegate respondsForAuthRequest:([kTestUsername isEqualToString:login] && [kTestPassword isEqualToString:password])];
@@ -97,7 +101,15 @@ static QRWDataManager *_instance;
     
 }
 
+- (void) sendTopProductsRequest
+{
+    
+}
 
+- (void) sendTopCategoriesRequest
+{
+    
+}
 
 - (void)sendLastOrderRequest
 {
@@ -105,10 +117,12 @@ static QRWDataManager *_instance;
     [lastOrderDownloader startDownloadWithDelegate:self];
 }
 
+
+#pragma mark Send response
+
 - (void)sendLastOrderResponse: (NSDictionary *) jsonDictionary
 {
     QRWLastOrder *lastOrder = [[QRWLastOrder alloc] init];
-    
     
     NSNumberFormatter * formatter = [[NSNumberFormatter alloc] init];
     [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
@@ -127,7 +141,25 @@ static QRWDataManager *_instance;
     [_delegate respondsForLastOrderRequest:lastOrder];
 }
 
+- (void)sendTopProductsResponse: (NSDictionary *) jsonDictionary
+{
+    QRWTopProducts *topProducts = [[QRWTopProducts alloc] init];
+    
+    NSNumberFormatter * formatter = [[NSNumberFormatter alloc] init];
+    [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
+    
+    QRWProductInTopArray *topProductInTop = [[QRWProductInTopArray alloc] init];
+    
+    topProductInTop.product = [jsonDictionary objectForKey:@"product"];
+    
+    topProductInTop.productcode = [formatter numberFromString: (NSString *)[jsonDictionary objectForKey:@"productcode"]];
+    topProductInTop.productid = [formatter numberFromString: (NSString *)[jsonDictionary objectForKey:@"productid"]];
+    topProductInTop.count = [formatter numberFromString: (NSString *)[jsonDictionary objectForKey:@"count"]];
+    
+    [_delegate respondsForTopProductsRequest:topProducts];
+}
 
+#pragma mark NSURLConnection methods
 
 - (void)downloadWasFinishedWithData:(NSMutableData *)jsonData forRequestURL:(NSURL *)requesrURL
 {
@@ -140,6 +172,14 @@ static QRWDataManager *_instance;
     NSDictionary *jsonDictionary = [NSJSONSerialization JSONObjectWithData:[result dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:&error];
     
     if ([url_lastOrderURL isEqualToString:requesrURL.absoluteString]) {
+        [self sendLastOrderResponse:jsonDictionary];
+    }
+    
+    if ([url_topProductsURL isEqualToString:requesrURL.absoluteString]) {
+        [self sendLastOrderResponse:jsonDictionary];
+    }
+    
+    if ([url_topCategoriesURL isEqualToString:requesrURL.absoluteString]) {
         [self sendLastOrderResponse:jsonDictionary];
     }
 }

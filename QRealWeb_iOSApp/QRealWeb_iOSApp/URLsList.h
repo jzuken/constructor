@@ -11,3 +11,7 @@
 
 
 static NSString *const url_lastOrderURL = @"http://54.213.38.9/xcart/api.php?request=last_order";
+
+static NSString *const url_topProductsURL = @"http://54.213.38.9/xcart/api.php?request=top_products";
+
+static NSString *const url_topCategoriesURL = @"http://54.213.38.9/xcart/api.php?request=top_categories";

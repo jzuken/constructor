@@ -8,6 +8,9 @@
 
 #import "QRWBaseDashboardPageViewController.h"
 
-@interface QRWTopSellersDashboardViewController : QRWBaseDashboardPageViewController
+@interface QRWTopSellersDashboardViewController : QRWBaseDashboardPageViewController<UITableViewDataSource, UITableViewDelegate>
+
+
+@property (nonatomic, strong) IBOutlet UITableView *topSellersTableView;
 
 @end
