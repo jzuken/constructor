@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.animation.AnticipateOvershootInterpolator;
+import android.widget.Toast;
 
 public class Unlock extends Activity {
 
@@ -27,18 +28,22 @@ public class Unlock extends Activity {
 		initWheel(pin3);
 		pin4 = (WheelView) findViewById(R.id.passw_4);
 		initWheel(pin4);
+		isScrolling = false;
 	}
 
 	public void okButtonClick(View v) {
-		if (getPassword().equals(settingsData.getString("password", ""))) {
-			Intent intent = getIntent();
-			if (intent.getIntExtra("afterPause", 0) == 0) {
-				Intent newIntent = new Intent(this, MainActivity.class);
-				startActivity(newIntent);
-			} else {
-				setResult(2);
-				finish();
+		if (!isScrolling) {
+			if (getPassword().equals(settingsData.getString("password", ""))) {
+				Intent intent = getIntent();
+				if (intent.getIntExtra("afterPause", 0) == 0) {
+					Intent newIntent = new Intent(this, MainActivity.class);
+					startActivity(newIntent);
+				} else {
+					setResult(2);
+					finish();
+				}
 			}
+			else Toast.makeText(this, "incorrect password", Toast.LENGTH_SHORT).show();
 		}
 	}
 
@@ -58,9 +63,11 @@ public class Unlock extends Activity {
 
 	private OnWheelScrollListener scrolledListener = new OnWheelScrollListener() {
 		public void onScrollingStarted(WheelView wheel) {
+			isScrolling = true;
 		}
 
 		public void onScrollingFinished(WheelView wheel) {
+			isScrolling = false;
 		}
 	};
 
@@ -86,4 +93,5 @@ public class Unlock extends Activity {
 	private WheelView pin2;
 	private WheelView pin3;
 	private WheelView pin4;
+	private boolean isScrolling;
 }

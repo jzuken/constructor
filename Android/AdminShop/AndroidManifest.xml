@@ -31,18 +31,23 @@
             android:noHistory="true" />
         <activity android:name=".MainActivity" />
         <activity android:name=".Settings" />
-        <activity android:name=".Products" />
-        <activity android:name=".Orders" />
-        <activity android:name=".Sale" />
+        <activity
+            android:name=".Products"
+            android:windowSoftInputMode="stateHidden" />
         <activity android:name=".Dashboard" />
         <activity
             android:name=".ProductAdder"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".Users" />
+        <activity
+            android:name=".Users"
+            android:windowSoftInputMode="stateHidden" />
         <activity android:name=".Reviews" />
-        <activity android:name=".SaleAdder" />
-        <activity android:name=".EditSale" />
-        <activity android:name=".Discounts" />
+        <activity
+            android:name=".Discounts"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".DiscountEditor"
+            android:windowSoftInputMode="stateHidden" />
     </application>
 
 </manifest>

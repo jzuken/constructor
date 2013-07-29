@@ -98,8 +98,8 @@
                         android:id="@+id/total_orders"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:gravity="left" />
+                        android:layout_weight="1"
+                        android:gravity="center" />
                 </TableRow>
 
                 <TableRow
@@ -119,8 +119,8 @@
                         android:id="@+id/complete_orders"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:gravity="left" />
+                        android:layout_weight="1"
+                        android:gravity="center" />
                 </TableRow>
 
                 <TableRow
@@ -139,8 +139,8 @@
                         android:id="@+id/not_finished_orders"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:gravity="left" />
+                        android:layout_weight="1"
+                        android:gravity="center" />
                 </TableRow>
 
                 <TableRow
@@ -160,8 +160,8 @@
                         android:id="@+id/queued_orders"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:gravity="left" />
+                        android:layout_weight="1"
+                        android:gravity="center" />
                 </TableRow>
 
                 <TableRow
@@ -180,8 +180,8 @@
                         android:id="@+id/processed_orders"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:gravity="left" />
+                        android:layout_weight="1"
+                        android:gravity="center" />
                 </TableRow>
 
                 <TableRow
@@ -201,8 +201,8 @@
                         android:id="@+id/backordered_orders"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:gravity="left" />
+                        android:layout_weight="1"
+                        android:gravity="center" />
                 </TableRow>
 
                 <TableRow
@@ -221,8 +221,8 @@
                         android:id="@+id/declined_orders"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:gravity="left" />
+                        android:layout_weight="1"
+                        android:gravity="center" />
                 </TableRow>
 
                 <TableRow
@@ -242,8 +242,8 @@
                         android:id="@+id/failed_orders"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:gravity="left" />
+                        android:layout_weight="1"
+                        android:gravity="center" />
                 </TableRow>
 
                 <TableRow
@@ -262,8 +262,8 @@
                         android:id="@+id/total_paid"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:gravity="left" />
+                        android:layout_weight="1"
+                        android:gravity="center" />
                 </TableRow>
             </TableLayout>
         </ScrollView>

@@ -7,6 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -250,6 +251,7 @@ public class Discounts extends PinSupportActivity {
 		RelativeLayout buttonsLayout = new RelativeLayout(this);
 		buttonsLayout.setPadding(0, fiveDp, 0, fiveDp);
 		addDeleteButtonToLeft(buttonsLayout, id);
+		addEditButtonToRight(buttonsLayout, id, subtotal, discount, discountType, membership);
 		discountsList.addView(buttonsLayout);
 
 		position++;
@@ -297,7 +299,8 @@ public class Discounts extends PinSupportActivity {
 		rl.addView(deleteButton);
 	}
 
-	private void addEditButtonToRight(RelativeLayout rl, final String id) {
+	private void addEditButtonToRight(RelativeLayout rl, final String id, final String subtotal, final String discount,
+			final String discountType, final String membership) {
 		RelativeLayout.LayoutParams rpToRight = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
 				LayoutParams.WRAP_CONTENT);
 		rpToRight.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
@@ -306,13 +309,20 @@ public class Discounts extends PinSupportActivity {
 		editButton.setText("Edit");
 		editButton.setTextColor(Color.WHITE);
 		editButton.setBackgroundResource(R.drawable.button);
-		editButton.setMinimumWidth(100);
+		editButton.setMinimumWidth(60);
 		editButton.setLayoutParams(rpToRight);
 
 		editButton.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
+				Intent intent = new Intent(getBaseContext(), DiscountEditor.class);
+				intent.putExtra("id", id);
+				intent.putExtra("orderSub", subtotal);
+				intent.putExtra("discount", discount);
+				intent.putExtra("discountType", discountType);
+				intent.putExtra("membership", membership);
+				startActivityForResult(intent, 1);
 			}
 		});
 
