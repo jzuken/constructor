@@ -8,38 +8,48 @@
         android:layout_height="match_parent"
         android:orientation="vertical" >
 
-        <RelativeLayout
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/black" >
+            android:background="@color/dark_grey"
+            android:gravity="center"
+            android:text="@string/discounts"
+            android:textColor="@color/white"
+            android:textSize="30sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="@string/current"
-                android:textColor="@color/white"
-                android:textSize="15sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="10dp"
-                android:text="@string/right_arrow"
-                android:textColor="@color/white"
-                android:textSize="15sp" />
-        </RelativeLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/gray"
+            android:gravity="center"
+            android:text="@string/current"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
 
             <LinearLayout
-                android:id="@+id/discountsLinearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical" >
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:onClick="addNewDiscountClick"
+                    android:text="@string/add_new_discount" />
+
+                <LinearLayout
+                    android:id="@+id/discountsLinearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" >
+                </LinearLayout>
             </LinearLayout>
         </ScrollView>
     </LinearLayout>

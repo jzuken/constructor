@@ -1,11 +1,13 @@
 package com.example.adminshop;
 
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
-public class DiscountEditor extends PinSupportActivity {
+public class DiscountEditor extends PinSupportNetworkActivity {
 	@Override
 	protected void onCreate(android.os.Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -36,6 +38,10 @@ public class DiscountEditor extends PinSupportActivity {
 		orderSubtotalEditor.setText(getIntent().getCharSequenceExtra("orderSub"));
 		discountEditor = (EditText) findViewById(R.id.discountEditor);
 		discountEditor.setText(getIntent().getCharSequenceExtra("discount"));
+		Button okButton = (Button) findViewById(R.id.okButton);
+		okButton.setText("Save");
+		TextView smallTitle = (TextView) findViewById(R.id.small_title);
+		smallTitle.setText("Edit the discount");
 	}
 
 	public void okClick(View v) {
@@ -79,12 +85,6 @@ public class DiscountEditor extends PinSupportActivity {
 		} else {
 			return "absolute";
 		}
-	}
-
-	private void showConnectionErrorMessage() {
-		Toast.makeText(getBaseContext(),
-				"Sorry, unable to connect to server. Cannot update data. Please check your internet connection",
-				Toast.LENGTH_LONG).show();
 	}
 
 	private RadioButton allButton;

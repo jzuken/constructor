@@ -48,6 +48,13 @@
         <activity
             android:name=".DiscountEditor"
             android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".DiscountAdder"
+            android:windowSoftInputMode="stateHidden" />
+        <activity 
+            android:name=".DiscountDialog"
+            android:label="Choose action"
+            android:theme="@android:style/Theme.Dialog" />
     </application>
 
 </manifest>

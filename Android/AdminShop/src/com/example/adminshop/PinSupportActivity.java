@@ -7,7 +7,7 @@ public class PinSupportActivity extends Activity {
 	
 	@Override
 	public void onBackPressed() {
-		setResult(RESULT_OK);
+		setBackResult();
 		super.onBackPressed();
 	}
 	private boolean isPaused;
@@ -18,6 +18,10 @@ public class PinSupportActivity extends Activity {
 	protected void onPause() {
 		super.onPause();
 		isPaused = true;
+	}
+	
+	protected void setBackResult() {
+		setResult(RESULT_OK);
 	}
 	
 	/**
@@ -44,7 +48,7 @@ public class PinSupportActivity extends Activity {
 	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (resultCode == RESULT_OK) {
+		if (resultCode == RESULT_OK || requestCode > 3) {
 			fromOtherPage = true;
 		}
 		if (resultCode == 2) {

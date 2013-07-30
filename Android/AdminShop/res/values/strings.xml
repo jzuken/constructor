@@ -130,5 +130,8 @@
 	<string name="search_users">Search for users</string>
 	<string name="registered">Registered:</string>
 	<string name="online">Online:</string>
+	<string name="add_new_discount">Add new discount</string>
+	<string name="delete">Delete</string>
+	<string name="edit">Edit</string>
     
 </resources>
