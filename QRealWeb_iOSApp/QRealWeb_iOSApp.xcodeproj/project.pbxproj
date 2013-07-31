@@ -56,6 +56,10 @@
 		7FBDFA0917A6B071004B6CB8 /* QRWTopSellersTopCategoriesTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FBDFA0817A6B071004B6CB8 /* QRWTopSellersTopCategoriesTableViewCell.xib */; };
 		7FBDFA0C17A6B083004B6CB8 /* QRWTopSellersTopCategoriesTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FBDFA0B17A6B083004B6CB8 /* QRWTopSellersTopCategoriesTableViewCell.m */; };
 		7FBDFA0F17A6B6D3004B6CB8 /* QRWTopProducts.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FBDFA0E17A6B6D3004B6CB8 /* QRWTopProducts.m */; };
+		7FBDFA1217A8FD9C004B6CB8 /* QRWTopCategories.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FBDFA1117A8FD9B004B6CB8 /* QRWTopCategories.m */; };
+		7FBDFA1517A905C5004B6CB8 /* QRWProductInTop.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FBDFA1417A905C4004B6CB8 /* QRWProductInTop.m */; };
+		7FBDFA1817A905F2004B6CB8 /* QRWCategoryInTop.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FBDFA1717A905F1004B6CB8 /* QRWCategoryInTop.m */; };
+		7FBDFA1B17A9149D004B6CB8 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FBDFA1A17A913FC004B6CB8 /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		7FD6E3AC1796888A006B3440 /* QRWDashboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FD6E3AA17968889006B3440 /* QRWDashboardViewController.m */; };
 		7FD6E3AD1796888A006B3440 /* QRWDashboardViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FD6E3AB1796888A006B3440 /* QRWDashboardViewController.xib */; };
 		7FD6E3B11796BA24006B3440 /* UIColor+hex.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FD6E3B01796BA24006B3440 /* UIColor+hex.m */; };
@@ -155,6 +159,14 @@
 		7FBDFA0B17A6B083004B6CB8 /* QRWTopSellersTopCategoriesTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRWTopSellersTopCategoriesTableViewCell.m; sourceTree = "<group>"; };
 		7FBDFA0D17A6B6D3004B6CB8 /* QRWTopProducts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRWTopProducts.h; sourceTree = "<group>"; };
 		7FBDFA0E17A6B6D3004B6CB8 /* QRWTopProducts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRWTopProducts.m; sourceTree = "<group>"; };
+		7FBDFA1017A8FD99004B6CB8 /* QRWTopCategories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRWTopCategories.h; sourceTree = "<group>"; };
+		7FBDFA1117A8FD9B004B6CB8 /* QRWTopCategories.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRWTopCategories.m; sourceTree = "<group>"; };
+		7FBDFA1317A905C3004B6CB8 /* QRWProductInTop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRWProductInTop.h; sourceTree = "<group>"; };
+		7FBDFA1417A905C4004B6CB8 /* QRWProductInTop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRWProductInTop.m; sourceTree = "<group>"; };
+		7FBDFA1617A905F1004B6CB8 /* QRWCategoryInTop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRWCategoryInTop.h; sourceTree = "<group>"; };
+		7FBDFA1717A905F1004B6CB8 /* QRWCategoryInTop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRWCategoryInTop.m; sourceTree = "<group>"; };
+		7FBDFA1917A913FC004B6CB8 /* JSONKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
+		7FBDFA1A17A913FC004B6CB8 /* JSONKit.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
 		7FD6E3A917968889006B3440 /* QRWDashboardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRWDashboardViewController.h; sourceTree = "<group>"; };
 		7FD6E3AA17968889006B3440 /* QRWDashboardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRWDashboardViewController.m; sourceTree = "<group>"; };
 		7FD6E3AB1796888A006B3440 /* QRWDashboardViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRWDashboardViewController.xib; sourceTree = "<group>"; };
@@ -258,6 +270,8 @@
 		7F6FB2441795393C0024BB12 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7FBDFA1917A913FC004B6CB8 /* JSONKit.h */,
+				7FBDFA1A17A913FC004B6CB8 /* JSONKit.m */,
 				7F6FB2A317953D7D0024BB12 /* QuartzCore.framework */,
 				7F6FB2451795393C0024BB12 /* UIKit.framework */,
 				7F6FB2471795393C0024BB12 /* Foundation.framework */,
@@ -367,6 +381,12 @@
 				7F6DFA4F179E65BE00421123 /* QRWLastOrder.m */,
 				7FBDFA0D17A6B6D3004B6CB8 /* QRWTopProducts.h */,
 				7FBDFA0E17A6B6D3004B6CB8 /* QRWTopProducts.m */,
+				7FBDFA1017A8FD99004B6CB8 /* QRWTopCategories.h */,
+				7FBDFA1117A8FD9B004B6CB8 /* QRWTopCategories.m */,
+				7FBDFA1317A905C3004B6CB8 /* QRWProductInTop.h */,
+				7FBDFA1417A905C4004B6CB8 /* QRWProductInTop.m */,
+				7FBDFA1617A905F1004B6CB8 /* QRWCategoryInTop.h */,
+				7FBDFA1717A905F1004B6CB8 /* QRWCategoryInTop.m */,
 			);
 			name = ENTETIES;
 			sourceTree = "<group>";
@@ -707,6 +727,10 @@
 				7FBDFA0317A6AD17004B6CB8 /* QRWTopSellersTopProductsTableViewCell.m in Sources */,
 				7FBDFA0C17A6B083004B6CB8 /* QRWTopSellersTopCategoriesTableViewCell.m in Sources */,
 				7FBDFA0F17A6B6D3004B6CB8 /* QRWTopProducts.m in Sources */,
+				7FBDFA1217A8FD9C004B6CB8 /* QRWTopCategories.m in Sources */,
+				7FBDFA1517A905C5004B6CB8 /* QRWProductInTop.m in Sources */,
+				7FBDFA1817A905F2004B6CB8 /* QRWCategoryInTop.m in Sources */,
+				7FBDFA1B17A9149D004B6CB8 /* JSONKit.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

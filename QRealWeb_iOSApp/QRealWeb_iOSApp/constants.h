@@ -18,7 +18,7 @@ static const NSInteger kBottomYCoordinateLoginBoxFor3_5 = 120;
 static const NSInteger kHeightOfListRows = 70;
 
 
-static NSString *const kTestUsername = @"test";
-static NSString *const kTestPassword = @"test";
+static NSString *const kTestUsername = @"1";
+static NSString *const kTestPassword = @"1";
 
 static const NSInteger kSideOfToolView = 140;

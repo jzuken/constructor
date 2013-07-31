@@ -11,6 +11,7 @@
 
 #import "QRWLastOrder.h"
 #import "QRWTopProducts.h"
+#import "QRWTopCategories.h"
 
 
 
@@ -26,7 +27,7 @@
 
 -(void) respondsForTopProductsRequest:(QRWTopProducts *)topProducts;
 
--(void) respondsForTopCategoriesRequest:(QRWLastOrder *)lastOrder;
+-(void) respondsForTopCategoriesRequest:(QRWTopCategories *)topCategories;
 
 @end
 

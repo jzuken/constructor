@@ -1,17 +1,16 @@
 //
-//  QRWTopProducts.h
+//  QRWTopCategories.h
 //  QRealWeb_iOSApp
 //
-//  Created by Ivan Afanasiev on 7/29/13.
+//  Created by Ivan Afanasiev on 7/31/13.
 //  Copyright (c) 2013 Ivan Afanasiev. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 
-#import "QRWProductInTop.h"
+#import "QRWCategoryInTop.h"
 
-
-@interface QRWTopProducts : NSObject
+@interface QRWTopCategories : NSObject
 
 @property (nonatomic, strong) NSArray *lastLoginTopArray;
 @property (nonatomic, strong) NSArray *todayTopArray;

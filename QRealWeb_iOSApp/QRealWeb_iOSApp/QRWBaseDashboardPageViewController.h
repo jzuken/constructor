@@ -13,7 +13,8 @@
 
 @property (strong, nonatomic) IBOutlet UIView *timeAndTypeSegmentedControlArea;
 @property (strong, nonatomic) IBOutlet UIImageView *nameOfPageImageView;
-
+@property (strong, nonatomic) UISegmentedControl *timeAndTypeSegmentedControl;
+@property (strong, nonatomic) NSString *currentSegment;
 
 
 - (id)initWithNameOfPageImage: (NSString *) nameOfPageImage nibName: (NSString *) nibName;

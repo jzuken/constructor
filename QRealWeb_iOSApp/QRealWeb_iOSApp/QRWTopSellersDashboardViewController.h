@@ -8,9 +8,16 @@
 
 #import "QRWBaseDashboardPageViewController.h"
 
+#import "QRWTopProducts.h"
+#import "QRWTopCategories.h"
+
 @interface QRWTopSellersDashboardViewController : QRWBaseDashboardPageViewController<UITableViewDataSource, UITableViewDelegate>
 
 
 @property (nonatomic, strong) IBOutlet UITableView *topSellersTableView;
+
+- (void) setTopProducts: (QRWTopProducts *) topProducts;
+- (void) setTopCategories: (QRWTopCategories *) topCategories;
+
 
 @end
