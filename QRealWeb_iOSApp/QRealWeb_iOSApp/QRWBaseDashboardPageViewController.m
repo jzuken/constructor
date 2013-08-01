@@ -40,17 +40,17 @@
     [super viewDidLoad];
     
     NSArray *segmentImageNamesArray = [NSArray arrayWithObjects: @"button_since_last_login.jpg", @"button_this_month.jpg", @"button_this_week.jpg", @"button_today.jpg", nil];
-    UISegmentedControl *control = [[UISegmentedControl alloc] initWithFrame:_timeAndTypeSegmentedControlArea.frame];
-    [control setDividerImage:[UIImage imageNamed:@"segmentedControl_separator.png"]
+    _timeAndTypeSegmentedControl = [[UISegmentedControl alloc] initWithFrame:_timeAndTypeSegmentedControlArea.frame];
+    [_timeAndTypeSegmentedControl setDividerImage:[UIImage imageNamed:@"segmentedControl_separator.png"]
          forLeftSegmentState:UIControlStateNormal
            rightSegmentState:UIControlStateNormal
                   barMetrics:UIBarMetricsDefault];
     
     for (NSString *imgName in segmentImageNamesArray) {
         UIImage *segmentImage = [UIImage imageWithCGImage:[[UIImage imageNamed:imgName] CGImage] scale:1.8 orientation:UIImageOrientationUp];
-        [control insertSegmentWithImage:segmentImage atIndex:[segmentImageNamesArray indexOfObject:imgName] animated:NO];
+        [_timeAndTypeSegmentedControl insertSegmentWithImage:segmentImage atIndex:[segmentImageNamesArray indexOfObject:imgName] animated:NO];
     }
-    [self.view addSubview:control];
+    [self.view addSubview:_timeAndTypeSegmentedControl];
 
     [self.nameOfPageImageView setImage:[UIImage imageNamed:pageImageName]];
 }

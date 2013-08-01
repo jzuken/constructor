@@ -7,6 +7,8 @@
 //
 
 #import "QRWDataManager.h"
+#import "JSONKit.h"
+
 #import "constants.h"
 #import "URLsList.h"
 
@@ -103,12 +105,14 @@ static QRWDataManager *_instance;
 
 - (void) sendTopProductsRequest
 {
-    
+    QRWDownloader *lastOrderDownloader = [[QRWDownloader alloc] initWithRequestURL:[NSURL URLWithString:url_topProductsURL]];
+    [lastOrderDownloader startDownloadWithDelegate:self];
 }
 
 - (void) sendTopCategoriesRequest
 {
-    
+    QRWDownloader *lastOrderDownloader = [[QRWDownloader alloc] initWithRequestURL:[NSURL URLWithString:url_topCategoriesURL]];
+    [lastOrderDownloader startDownloadWithDelegate:self];
 }
 
 - (void)sendLastOrderRequest
@@ -141,23 +145,102 @@ static QRWDataManager *_instance;
     [_delegate respondsForLastOrderRequest:lastOrder];
 }
 
+
+//#####################  DASHBOARD - TopSellers - TopProducts  ##################### 
+
 - (void)sendTopProductsResponse: (NSDictionary *) jsonDictionary
 {
     QRWTopProducts *topProducts = [[QRWTopProducts alloc] init];
     
-    NSNumberFormatter * formatter = [[NSNumberFormatter alloc] init];
-    [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
-    
-    QRWProductInTopArray *topProductInTop = [[QRWProductInTopArray alloc] init];
-    
-    topProductInTop.product = [jsonDictionary objectForKey:@"product"];
-    
-    topProductInTop.productcode = [formatter numberFromString: (NSString *)[jsonDictionary objectForKey:@"productcode"]];
-    topProductInTop.productid = [formatter numberFromString: (NSString *)[jsonDictionary objectForKey:@"productid"]];
-    topProductInTop.count = [formatter numberFromString: (NSString *)[jsonDictionary objectForKey:@"count"]];
-    
+    topProducts.todayTopArray = [NSArray arrayWithArray:[self arrayOfProductsForTag:@"today" inJson:jsonDictionary]];
+    topProducts.lastLoginTopArray = [NSArray arrayWithArray:[self arrayOfProductsForTag:@"last_login" inJson:jsonDictionary]];
+    topProducts.weekTopArray = [NSArray arrayWithArray:[self arrayOfProductsForTag:@"week" inJson:jsonDictionary]];
+    topProducts.monthTopArray = [NSArray arrayWithArray:[self arrayOfProductsForTag:@"month" inJson:jsonDictionary]];
+       
     [_delegate respondsForTopProductsRequest:topProducts];
 }
+
+- (NSArray *) arrayOfProductsForTag: (NSString *) tag inJson: (NSDictionary *)jsonDictionary
+{
+    NSMutableArray *productsFortTag = [[NSMutableArray alloc] init];
+    
+    
+    if ([@"false" isEqualToString: [jsonDictionary objectForKey:tag]]) {
+        return nil;
+    } else {
+    
+        NSArray *objectsInJson = [NSArray arrayWithArray:[jsonDictionary objectForKey:@"month"]];
+        
+        
+        NSDictionary *argsDict = [[NSDictionary alloc] initWithDictionary:[objectsInJson objectAtIndex:0]];
+        DLog(@"keys = %@", [argsDict allKeys]);
+        
+        for (NSDictionary *product in objectsInJson) {
+            
+            NSNumberFormatter * formatter = [[NSNumberFormatter alloc] init];
+            [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
+            
+            QRWProductInTop *topProductInTop = [[QRWProductInTop alloc] init];
+            
+            topProductInTop.product = [product objectForKey:@"product"];
+            topProductInTop.productcode = [product objectForKey:@"productcode"];
+            topProductInTop.productid = [formatter numberFromString: (NSString *)[product objectForKey:@"productid"]];
+            topProductInTop.count = [formatter numberFromString: (NSString *)[product objectForKey:@"count"]];
+            
+            
+            [productsFortTag addObject:topProductInTop];
+        }
+        
+        return productsFortTag;
+    }
+}
+
+
+//#####################  DASHBOARD - TopSellers - TopCategories  ##################### 
+
+- (void)sendTopCategoriesResponse: (NSDictionary *) jsonDictionary
+{
+    QRWTopCategories *topCateroies = [[QRWTopCategories alloc] init];
+    
+    topCateroies.todayTopArray = [NSArray arrayWithArray:[self arrayOfCategoriesForTag:@"today" inJson:jsonDictionary]];
+    topCateroies.lastLoginTopArray = [NSArray arrayWithArray:[self arrayOfCategoriesForTag:@"last_login" inJson:jsonDictionary]];
+    topCateroies.weekTopArray = [NSArray arrayWithArray:[self arrayOfCategoriesForTag:@"week" inJson:jsonDictionary]];
+    topCateroies.monthTopArray = [NSArray arrayWithArray:[self arrayOfCategoriesForTag:@"month" inJson:jsonDictionary]];
+    
+    [_delegate respondsForTopCategoriesRequest:topCateroies];
+}
+
+- (NSArray *) arrayOfCategoriesForTag: (NSString *) tag inJson: (NSDictionary *)jsonDictionary
+{
+    NSMutableArray *productsFortTag = [[NSMutableArray alloc] init];
+    
+    
+    if ([@"false" isEqualToString: [jsonDictionary objectForKey:tag]]) {
+        return nil;
+    } else {
+        NSArray *objectsInJson = [NSArray arrayWithArray:[jsonDictionary objectForKey:@"month"]];
+        
+        NSDictionary *argsDict = [[NSDictionary alloc] initWithDictionary:[objectsInJson objectAtIndex:0]];
+        DLog(@"keys = %@", [argsDict allKeys]);
+        
+        for (NSDictionary *category in objectsInJson) {
+            
+            NSNumberFormatter * formatter = [[NSNumberFormatter alloc] init];
+            [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
+            
+            QRWCategoryInTop *topCategoryInTop = [[QRWCategoryInTop alloc] init];
+            
+            topCategoryInTop.category = [category objectForKey:@"category"];
+            topCategoryInTop.categoryid = [formatter numberFromString: (NSString *)[category objectForKey:@"categoryid"]];
+            topCategoryInTop.count = [formatter numberFromString: (NSString *)[category objectForKey:@"count"]];
+            
+            [productsFortTag addObject:topCategoryInTop];
+        }
+        
+        return productsFortTag;
+    }
+}
+
 
 #pragma mark NSURLConnection methods
 
@@ -165,22 +248,25 @@ static QRWDataManager *_instance;
 {
     NSError *error;
     NSMutableString *result = [[NSMutableString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-    [result deleteCharactersInRange:NSMakeRange(0, 1)];
-    [result deleteCharactersInRange:NSMakeRange(result.length - 1, 1)];
-    
     DLog(@"Receive data: %@", result);
-    NSDictionary *jsonDictionary = [NSJSONSerialization JSONObjectWithData:[result dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:&error];
+    
+    DLog(@"Is valid JSON %@ for URL: %@", ([NSJSONSerialization isValidJSONObject:jsonData] ? @"YES" : @"NO"), requesrURL.absoluteString);
     
     if ([url_lastOrderURL isEqualToString:requesrURL.absoluteString]) {
-        [self sendLastOrderResponse:jsonDictionary];
+        NSDictionary *jsonDictionary = [NSJSONSerialization JSONObjectWithData:jsonData options:kNilOptions error:&error];
+        [self sendLastOrderResponse: jsonDictionary];
     }
     
     if ([url_topProductsURL isEqualToString:requesrURL.absoluteString]) {
-        [self sendLastOrderResponse:jsonDictionary];
+
+        NSDictionary *JSON = [NSJSONSerialization JSONObjectWithData:jsonData options: NSJSONReadingMutableLeaves error: nil];;
+        [self sendTopProductsResponse:JSON];
     }
     
     if ([url_topCategoriesURL isEqualToString:requesrURL.absoluteString]) {
-        [self sendLastOrderResponse:jsonDictionary];
+        
+        NSDictionary *JSON = [NSJSONSerialization JSONObjectWithData:jsonData options: NSJSONReadingMutableLeaves error: nil];
+        [self sendTopCategoriesResponse:JSON];
     }
 }
 

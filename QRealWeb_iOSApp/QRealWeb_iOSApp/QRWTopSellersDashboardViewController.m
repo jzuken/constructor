@@ -12,14 +12,18 @@
 #import "QRWTopSellersTopCategoriesTableViewCell.h"
 
 
+
+
 @interface QRWTopSellersDashboardViewController ()
 {
     NSArray *segmentImageNamesArray;
 }
 
-@property (nonatomic, strong) NSDictionary *topProducts;
-@property (nonatomic, strong) NSDictionary *topCategories;
+@property (nonatomic, strong) QRWTopProducts *topProducts;
+@property (nonatomic, strong) QRWTopCategories *topCategories;
 
+@property (nonatomic, strong) NSArray *productsArray;
+@property (nonatomic, strong) NSArray *categoriesArray;
 
 @end
 
@@ -37,6 +41,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [dataManager sendTopCategoriesRequest];
+    [dataManager sendTopProductsRequest];
+    [self.timeAndTypeSegmentedControl setSelectedSegmentIndex:0];
+    self.currentSegment = @"last_login";
 }
 
 - (void)didReceiveMemoryWarning
@@ -45,17 +53,67 @@
 }
 
 
+- (void) setTopProducts: (QRWTopProducts *) topProducts
+{
+    _topProducts = topProducts;
+    switch (self.timeAndTypeSegmentedControl.selectedSegmentIndex) {
+        case 0:
+            _categoriesArray = _topCategories.lastLoginTopArray;
+            break;
+            
+        case 1:
+            _categoriesArray = _topCategories.todayTopArray;
+            break;
+            
+        case 2:
+            _categoriesArray = _topCategories.weekTopArray;
+            break;
+            
+        case 3:
+            _categoriesArray = _topCategories.monthTopArray;
+            break;
+    }
+    [_topSellersTableView reloadData];
+//    [_topSellersTableView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 1)] withRowAnimation:UITableViewRowAnimationAutomatic];
+}
+
+- (void) setTopCategories: (QRWTopCategories *) topCategories
+{
+    _topCategories = topCategories;
+    switch (self.timeAndTypeSegmentedControl.selectedSegmentIndex) {
+        case 0:
+            _productsArray = _topProducts.lastLoginTopArray;
+            break;
+            
+        case 1:
+            _productsArray = _topProducts.todayTopArray;
+            break;
+            
+        case 2:
+            _productsArray = _topProducts.weekTopArray;
+            break;
+            
+        case 3:
+            _productsArray = _topProducts.monthTopArray;
+            break;
+    }
+    
+    [_topSellersTableView reloadData];
+//    [_topSellersTableView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(1, 1)] withRowAnimation:UITableViewRowAnimationAutomatic];
+}
+
+
 #pragma mark Table view methods
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    return 0;
 }
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 10;
+    return section == 0 ? _productsArray.count : _categoriesArray.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -86,31 +144,43 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell;
-    
+    DLog(@"Load cell in section: %d row: %d", indexPath.section, indexPath.row);
     if (indexPath.section == 0) {
         NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:@"QRWTopSellersTopProductsTableViewCell" owner:self options:nil];
         QRWTopSellersTopProductsTableViewCell *cell = [topLevelObjects objectAtIndex:0];
         
         [self configureProductCell:cell atIndexPath:indexPath];
+        
+        return cell;
     } else {
         NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:@"QRWTopSellersTopCategoriesTableViewCell" owner:self options:nil];
         QRWTopSellersTopCategoriesTableViewCell *cell = [topLevelObjects objectAtIndex:0];
         
         [self configureCategoriesCell:cell atIndexPath:indexPath];
+        
+        return cell;
     }
-    
-    return cell;
 }
 
 - (void)configureProductCell:(QRWTopSellersTopProductsTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
+    QRWProductInTop *productInTop = [[QRWProductInTop alloc] init];
+    productInTop = [_productsArray objectAtIndex:indexPath.row];
     
+    cell.countLabel.text = [NSString stringWithFormat:@"%d", [productInTop.count intValue]];
+    cell.namelabel.text = productInTop.product;
+    cell.codeLabel.text = productInTop.productcode;
+    cell.idLabel.text = [NSString stringWithFormat:@"ID: %d", [productInTop.productid intValue]];
 }
 
 - (void)configureCategoriesCell:(QRWTopSellersTopCategoriesTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
+    QRWCategoryInTop *categoryInTop = [[QRWCategoryInTop alloc] init];
+    categoryInTop = [_categoriesArray objectAtIndex:indexPath.row];
     
+    cell.countLable.text = [NSString stringWithFormat:@"%d", [categoryInTop.count intValue]];
+    cell.idLabel.text = [NSString stringWithFormat:@"ID: %d", [categoryInTop.categoryid intValue]];
+    cell.nameLable.text = categoryInTop.category;
 }
 
 @end
