@@ -17,7 +17,7 @@
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
         android:gravity="center"
         android:text="@string/admin_area"
         android:textSize="20sp" />
@@ -33,6 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
             android:text="@string/email"
             android:textSize="20sp" />
 
@@ -49,7 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="5dp"
             android:text="@string/password"
             android:textSize="20sp" />
 
@@ -66,7 +67,7 @@
             android:id="@+id/authorizationOkButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="15dp"
             android:background="@drawable/login_button"
             android:minWidth="100dp"
             android:onClick="okButtonClick" />

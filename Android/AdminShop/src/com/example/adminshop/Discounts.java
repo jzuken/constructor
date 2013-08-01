@@ -104,12 +104,11 @@ public class Discounts extends PinSupportNetworkActivity {
 		dialog.show();
 
 	}
-	
+
 	private void deleteDiscount(String id) {
 		String response;
 		try {
-			response = new GetRequester().execute(
-					"http://54.213.38.9/xcart/api.php?request=delete_discount&id=" + id)
+			response = new GetRequester().execute("http://54.213.38.9/xcart/api.php?request=delete_discount&id=" + id)
 					.get();
 		} catch (Exception e) {
 			response = null;
