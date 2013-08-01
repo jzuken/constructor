@@ -13,4 +13,8 @@
 
 @property (nonatomic, strong) IBOutlet UITableView *ordersStatisticTableView;
 
+
+
+- (void)setStatistic:(NSDictionary *)statistic;
+
 @end

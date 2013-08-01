@@ -39,19 +39,30 @@
 {
     [super viewDidLoad];
     
-    NSArray *segmentImageNamesArray = [NSArray arrayWithObjects: @"button_since_last_login.jpg", @"button_this_month.jpg", @"button_this_week.jpg", @"button_today.jpg", nil];
-    _timeAndTypeSegmentedControl = [[UISegmentedControl alloc] initWithFrame:_timeAndTypeSegmentedControlArea.frame];
-    [_timeAndTypeSegmentedControl setDividerImage:[UIImage imageNamed:@"segmentedControl_separator.png"]
-         forLeftSegmentState:UIControlStateNormal
-           rightSegmentState:UIControlStateNormal
-                  barMetrics:UIBarMetricsDefault];
+    CGRect frameOfSegmentedControl = _timeAndTypeSegmentedControlArea.frame;
+//    frameOfSegmentedControl.origin.y -= frameOfSegmentedControl.size.height;
     
-    for (NSString *imgName in segmentImageNamesArray) {
+    self.timeAndTypeSegmentedControl = [[UISegmentedControl alloc] initWithFrame:frameOfSegmentedControl];
+    [self.timeAndTypeSegmentedControl setSelectedSegmentIndex:0];
+    
+    _segmentImageNamesArray = [NSArray arrayWithObjects: @"button_since_last_login.jpg", @"button_today.jpg", @"button_this_month.jpg", @"button_this_week.jpg", nil];
+    _segmentSelectedImageNamesArray = [NSArray arrayWithObjects: @"active_button_since_last_login.jpg", @"active_button_today.jpg", @"active_button_this_month.jpg", @"active_button_this_week.jpg", nil];
+    [self.timeAndTypeSegmentedControl setDividerImage:[UIImage imageNamed:@"segmentedControl_separator.png"]
+                                  forLeftSegmentState:UIControlStateNormal
+                                    rightSegmentState:UIControlStateNormal
+                                           barMetrics:UIBarMetricsDefault];
+    for (NSString *imgName in _segmentImageNamesArray) {
         UIImage *segmentImage = [UIImage imageWithCGImage:[[UIImage imageNamed:imgName] CGImage] scale:1.8 orientation:UIImageOrientationUp];
-        [_timeAndTypeSegmentedControl insertSegmentWithImage:segmentImage atIndex:[segmentImageNamesArray indexOfObject:imgName] animated:NO];
+        if ([_segmentImageNamesArray indexOfObject:imgName] == self.timeAndTypeSegmentedControl.selectedSegmentIndex) {
+            [self.timeAndTypeSegmentedControl insertSegmentWithImage:segmentImage atIndex:[_segmentSelectedImageNamesArray indexOfObject:imgName] animated:NO];
+        } else {
+            [self.timeAndTypeSegmentedControl insertSegmentWithImage:segmentImage atIndex:[_segmentImageNamesArray indexOfObject:imgName] animated:NO];
+        }
     }
-    [self.view addSubview:_timeAndTypeSegmentedControl];
-
+    
+    
+    [self.view addSubview:self.timeAndTypeSegmentedControl];
+    
     [self.nameOfPageImageView setImage:[UIImage imageNamed:pageImageName]];
 }
 
@@ -61,6 +72,26 @@
     // Dispose of any resources that can be recreated.
 }
 
+
+
+- (void) presentSegmentedControl
+{
+//    [UIView animateWithDuration:0.2 animations:^{
+//        CGRect frameOfSegmentedControl = self.timeAndTypeSegmentedControlArea.frame;
+//        self.timeAndTypeSegmentedControl.frame = frameOfSegmentedControl;
+//    }];
+    
+}
+
+
+- (void) dismissSegmentedControl
+{
+//    [UIView animateWithDuration:0.2 animations:^{
+//        CGRect frameOfSegmentedControl = _timeAndTypeSegmentedControlArea.frame;
+//        frameOfSegmentedControl.origin.x -= frameOfSegmentedControl.size.height;
+//        self.timeAndTypeSegmentedControl.frame = frameOfSegmentedControl;
+//    }];
+}
 
 
 @end

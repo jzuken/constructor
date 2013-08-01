@@ -157,7 +157,7 @@ static QRWDataManager *_instance;
     for (NSString *key in [jsonDictionary allKeys]) {
         NSDictionary *staticticInTime = [jsonDictionary objectForKey:key];
         for (NSString *inTimeKey in [staticticInTime allKeys]) {
-            NSString *totalKey = [NSString stringWithFormat:@"ORDERS_STATISTIC_KEY_%@_%@", key, inTimeKey];
+            NSString *totalKey = [NSString stringWithFormat:@"%@_%@", key, inTimeKey];
             [keysArray addObject:totalKey];
             [resultsDictionary setObject:[staticticInTime objectForKey:inTimeKey] forKey:totalKey];
         }

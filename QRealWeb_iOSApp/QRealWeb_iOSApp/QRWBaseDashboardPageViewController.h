@@ -16,7 +16,13 @@
 @property (strong, nonatomic) UISegmentedControl *timeAndTypeSegmentedControl;
 @property (strong, nonatomic) NSString *currentSegment;
 
+@property (strong, nonatomic) NSArray *segmentImageNamesArray;
+@property (strong, nonatomic) NSArray *segmentSelectedImageNamesArray;
+
 
 - (id)initWithNameOfPageImage: (NSString *) nameOfPageImage nibName: (NSString *) nibName;
+
+- (void) presentSegmentedControl;
+- (void) dismissSegmentedControl;
 
 @end

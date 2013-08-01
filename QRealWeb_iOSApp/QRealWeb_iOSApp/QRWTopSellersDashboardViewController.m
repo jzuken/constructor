@@ -41,10 +41,26 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    _topSellersTableView.hidden = YES;
     [dataManager sendTopCategoriesRequest];
     [dataManager sendTopProductsRequest];
     [self.timeAndTypeSegmentedControl setSelectedSegmentIndex:0];
+    [self.timeAndTypeSegmentedControl addTarget:self action:@selector(selectedControlEvent) forControlEvents:UIControlEventValueChanged];
     self.currentSegment = @"last_login";
+}
+
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self presentSegmentedControl];
+}
+
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [self dismissSegmentedControl];
 }
 
 - (void)didReceiveMemoryWarning
@@ -74,8 +90,7 @@
             _productsArray = [NSArray arrayWithArray:_topProducts.monthTopArray];
             break;
     }
-    [_topSellersTableView reloadData];
-//    [_topSellersTableView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 1)] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self reloadDataInTableView];
 }
 
 - (void) setTopCategories: (QRWTopCategories *) topCategories
@@ -99,8 +114,30 @@
             break;
     }
     
+    [self reloadDataInTableView];
+}
+
+
+
+- (void) reloadDataInTableView
+{
+    if ((_categoriesArray.count == 0) && (_productsArray.count == 0)) {
+        _topSellersTableView.hidden = YES;
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"ERROR_ALERT_TITLE", nil)
+                                                        message:NSLocalizedString(@"NO_DATA_FOR_PERIOD_ALERT_MESSAGE", nil)
+                                                       delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil)
+                                              otherButtonTitles:nil, nil];
+        [alert show];
+    } else {
+        _topSellersTableView.hidden = NO;
+    }
     [_topSellersTableView reloadData];
-//    [_topSellersTableView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(1, 1)] withRowAnimation:UITableViewRowAnimationAutomatic];
+}
+
+- (void) selectedControlEvent
+{
+    [self setTopCategories:_topCategories];
+    [self setTopProducts:_topProducts];
 }
 
 
@@ -169,7 +206,7 @@
     
     cell.countLabel.text = [NSString stringWithFormat:@"%d", [productInTop.count intValue]];
     cell.namelabel.text = productInTop.product;
-    cell.codeLabel.text = [NSString stringWithFormat:@"ID: %@", productInTop.productcode];
+    cell.codeLabel.text = [NSString stringWithFormat:@"Code: %@", productInTop.productcode];
     cell.idLabel.text = [NSString stringWithFormat:@"ID: %d", [productInTop.productid intValue]];
 }
 
