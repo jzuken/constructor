@@ -7,6 +7,20 @@
 */
 
 
+
+//OrdersStatistic
+
+"I" = "Not finished";
+"Q" = "Queued";
+"P" = "Processed";
+"X" = "Backordered";
+"D" = "Declined";
+"F" = "Failed";
+"C" = "Comlete";
+"Total" = "Total";
+
+
+
 "OK" = "OK";
 
 

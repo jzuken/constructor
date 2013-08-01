@@ -29,6 +29,8 @@
 
 -(void) respondsForTopCategoriesRequest:(QRWTopCategories *)topCategories;
 
+-(void) respondsForOrdersStatisticRequest:(NSDictionary *)statistic withArratOfKeys: (NSArray *) keys;
+
 @end
 
 
@@ -49,5 +51,7 @@
 - (void) sendTopProductsRequest;
 
 - (void) sendTopCategoriesRequest;
+
+- (void) sendOrdersStatisticRequest;
 
 @end

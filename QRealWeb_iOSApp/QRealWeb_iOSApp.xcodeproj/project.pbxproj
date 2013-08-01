@@ -60,6 +60,14 @@
 		7FBDFA1517A905C5004B6CB8 /* QRWProductInTop.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FBDFA1417A905C4004B6CB8 /* QRWProductInTop.m */; };
 		7FBDFA1817A905F2004B6CB8 /* QRWCategoryInTop.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FBDFA1717A905F1004B6CB8 /* QRWCategoryInTop.m */; };
 		7FBDFA1B17A9149D004B6CB8 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FBDFA1A17A913FC004B6CB8 /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		7FBDFA2317AA7612004B6CB8 /* QRWProductInOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FBDFA2217AA7612004B6CB8 /* QRWProductInOrder.m */; };
+		7FBDFA2817AA7EDD004B6CB8 /* QRWProductsLastorderDashboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FBDFA2617AA7EDD004B6CB8 /* QRWProductsLastorderDashboardViewController.m */; };
+		7FBDFA2917AA7EDD004B6CB8 /* QRWProductsLastorderDashboardViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FBDFA2717AA7EDD004B6CB8 /* QRWProductsLastorderDashboardViewController.xib */; };
+		7FBDFA2B17AA8040004B6CB8 /* Exit.png in Resources */ = {isa = PBXBuildFile; fileRef = 7FBDFA2A17AA8040004B6CB8 /* Exit.png */; };
+		7FBDFA2F17AA81BE004B6CB8 /* QRWProductInLastOrderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FBDFA2E17AA81BE004B6CB8 /* QRWProductInLastOrderCell.m */; };
+		7FBDFA3117AA81F1004B6CB8 /* QRWProductInLastOrderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FBDFA3017AA81F0004B6CB8 /* QRWProductInLastOrderCell.xib */; };
+		7FBDFA3417AAA795004B6CB8 /* QRWOrdersStatisticCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FBDFA3317AAA795004B6CB8 /* QRWOrdersStatisticCell.xib */; };
+		7FBDFA3717AAA7B7004B6CB8 /* QRWOrdersStatisticCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FBDFA3617AAA7B5004B6CB8 /* QRWOrdersStatisticCell.m */; };
 		7FD6E3AC1796888A006B3440 /* QRWDashboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FD6E3AA17968889006B3440 /* QRWDashboardViewController.m */; };
 		7FD6E3AD1796888A006B3440 /* QRWDashboardViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FD6E3AB1796888A006B3440 /* QRWDashboardViewController.xib */; };
 		7FD6E3B11796BA24006B3440 /* UIColor+hex.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FD6E3B01796BA24006B3440 /* UIColor+hex.m */; };
@@ -167,6 +175,18 @@
 		7FBDFA1717A905F1004B6CB8 /* QRWCategoryInTop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRWCategoryInTop.m; sourceTree = "<group>"; };
 		7FBDFA1917A913FC004B6CB8 /* JSONKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
 		7FBDFA1A17A913FC004B6CB8 /* JSONKit.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
+		7FBDFA2117AA7612004B6CB8 /* QRWProductInOrder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRWProductInOrder.h; sourceTree = "<group>"; };
+		7FBDFA2217AA7612004B6CB8 /* QRWProductInOrder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRWProductInOrder.m; sourceTree = "<group>"; };
+		7FBDFA2517AA7EDD004B6CB8 /* QRWProductsLastorderDashboardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRWProductsLastorderDashboardViewController.h; sourceTree = "<group>"; };
+		7FBDFA2617AA7EDD004B6CB8 /* QRWProductsLastorderDashboardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRWProductsLastorderDashboardViewController.m; sourceTree = "<group>"; };
+		7FBDFA2717AA7EDD004B6CB8 /* QRWProductsLastorderDashboardViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRWProductsLastorderDashboardViewController.xib; sourceTree = "<group>"; };
+		7FBDFA2A17AA8040004B6CB8 /* Exit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Exit.png; sourceTree = "<group>"; };
+		7FBDFA2D17AA81BE004B6CB8 /* QRWProductInLastOrderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRWProductInLastOrderCell.h; sourceTree = "<group>"; };
+		7FBDFA2E17AA81BE004B6CB8 /* QRWProductInLastOrderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRWProductInLastOrderCell.m; sourceTree = "<group>"; };
+		7FBDFA3017AA81F0004B6CB8 /* QRWProductInLastOrderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRWProductInLastOrderCell.xib; sourceTree = "<group>"; };
+		7FBDFA3317AAA795004B6CB8 /* QRWOrdersStatisticCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRWOrdersStatisticCell.xib; sourceTree = "<group>"; };
+		7FBDFA3517AAA7B5004B6CB8 /* QRWOrdersStatisticCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRWOrdersStatisticCell.h; sourceTree = "<group>"; };
+		7FBDFA3617AAA7B5004B6CB8 /* QRWOrdersStatisticCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRWOrdersStatisticCell.m; sourceTree = "<group>"; };
 		7FD6E3A917968889006B3440 /* QRWDashboardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRWDashboardViewController.h; sourceTree = "<group>"; };
 		7FD6E3AA17968889006B3440 /* QRWDashboardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRWDashboardViewController.m; sourceTree = "<group>"; };
 		7FD6E3AB1796888A006B3440 /* QRWDashboardViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRWDashboardViewController.xib; sourceTree = "<group>"; };
@@ -335,6 +355,7 @@
 		7F6FB268179539790024BB12 /* IMGS */ = {
 			isa = PBXGroup;
 			children = (
+				7FBDFA2A17AA8040004B6CB8 /* Exit.png */,
 				7F6FB26C179539BD0024BB12 /* large-black-and-white-stripes-a4.jpg */,
 				7F6FB26D179539BD0024BB12 /* Black_white_Apple_background.jpg */,
 			);
@@ -387,6 +408,8 @@
 				7FBDFA1417A905C4004B6CB8 /* QRWProductInTop.m */,
 				7FBDFA1617A905F1004B6CB8 /* QRWCategoryInTop.h */,
 				7FBDFA1717A905F1004B6CB8 /* QRWCategoryInTop.m */,
+				7FBDFA2117AA7612004B6CB8 /* QRWProductInOrder.h */,
+				7FBDFA2217AA7612004B6CB8 /* QRWProductInOrder.m */,
 			);
 			name = ENTETIES;
 			sourceTree = "<group>";
@@ -493,6 +516,37 @@
 			name = QRWTopSellersTopCategoriesTableViewCell;
 			sourceTree = "<group>";
 		};
+		7FBDFA2417AA7E7C004B6CB8 /* ProductsView */ = {
+			isa = PBXGroup;
+			children = (
+				7FBDFA2C17AA8189004B6CB8 /* ProductCell */,
+				7FBDFA2517AA7EDD004B6CB8 /* QRWProductsLastorderDashboardViewController.h */,
+				7FBDFA2617AA7EDD004B6CB8 /* QRWProductsLastorderDashboardViewController.m */,
+				7FBDFA2717AA7EDD004B6CB8 /* QRWProductsLastorderDashboardViewController.xib */,
+			);
+			name = ProductsView;
+			sourceTree = "<group>";
+		};
+		7FBDFA2C17AA8189004B6CB8 /* ProductCell */ = {
+			isa = PBXGroup;
+			children = (
+				7FBDFA2D17AA81BE004B6CB8 /* QRWProductInLastOrderCell.h */,
+				7FBDFA2E17AA81BE004B6CB8 /* QRWProductInLastOrderCell.m */,
+				7FBDFA3017AA81F0004B6CB8 /* QRWProductInLastOrderCell.xib */,
+			);
+			name = ProductCell;
+			sourceTree = "<group>";
+		};
+		7FBDFA3217AAA754004B6CB8 /* OrdersStatisticCell */ = {
+			isa = PBXGroup;
+			children = (
+				7FBDFA3317AAA795004B6CB8 /* QRWOrdersStatisticCell.xib */,
+				7FBDFA3517AAA7B5004B6CB8 /* QRWOrdersStatisticCell.h */,
+				7FBDFA3617AAA7B5004B6CB8 /* QRWOrdersStatisticCell.m */,
+			);
+			name = OrdersStatisticCell;
+			sourceTree = "<group>";
+		};
 		7FD6E3AE1796892C006B3440 /* DashboardViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -569,6 +623,7 @@
 		968B1777179DCEDC00D8D8C9 /* LastOrder */ = {
 			isa = PBXGroup;
 			children = (
+				7FBDFA2417AA7E7C004B6CB8 /* ProductsView */,
 				968B1778179DCEFF00D8D8C9 /* QRWLastOrderDashboardViewController.h */,
 				968B1779179DCEFF00D8D8C9 /* QRWLastOrderDashboardViewController.m */,
 				968B177A179DCEFF00D8D8C9 /* QRWLastOrderDashboardViewController.xib */,
@@ -579,6 +634,7 @@
 		968B177D179DCFDB00D8D8C9 /* OrdersInfo */ = {
 			isa = PBXGroup;
 			children = (
+				7FBDFA3217AAA754004B6CB8 /* OrdersStatisticCell */,
 				968B177E179DD01200D8D8C9 /* QRWOrdersInfoDashboardViewController.h */,
 				968B177F179DD01200D8D8C9 /* QRWOrdersInfoDashboardViewController.m */,
 				968B1780179DD01200D8D8C9 /* QRWOrdersInfoDashboardViewController.xib */,
@@ -690,6 +746,10 @@
 				7F6DFA49179E5F4E00421123 /* segmentedControl_separator.png in Resources */,
 				7FBDFA0517A6AD84004B6CB8 /* QRWTopSellersTopProductsTableViewCell.xib in Resources */,
 				7FBDFA0917A6B071004B6CB8 /* QRWTopSellersTopCategoriesTableViewCell.xib in Resources */,
+				7FBDFA2917AA7EDD004B6CB8 /* QRWProductsLastorderDashboardViewController.xib in Resources */,
+				7FBDFA2B17AA8040004B6CB8 /* Exit.png in Resources */,
+				7FBDFA3117AA81F1004B6CB8 /* QRWProductInLastOrderCell.xib in Resources */,
+				7FBDFA3417AAA795004B6CB8 /* QRWOrdersStatisticCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -731,6 +791,10 @@
 				7FBDFA1517A905C5004B6CB8 /* QRWProductInTop.m in Sources */,
 				7FBDFA1817A905F2004B6CB8 /* QRWCategoryInTop.m in Sources */,
 				7FBDFA1B17A9149D004B6CB8 /* JSONKit.m in Sources */,
+				7FBDFA2317AA7612004B6CB8 /* QRWProductInOrder.m in Sources */,
+				7FBDFA2817AA7EDD004B6CB8 /* QRWProductsLastorderDashboardViewController.m in Sources */,
+				7FBDFA2F17AA81BE004B6CB8 /* QRWProductInLastOrderCell.m in Sources */,
+				7FBDFA3717AAA7B7004B6CB8 /* QRWOrdersStatisticCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -45,8 +45,17 @@ static QRWDataManager *_instance;
 }
 
 
-#pragma mark Send requests
+#pragma mark SEND REQUESTS
 
+
+- (void) sendRequestUseDownloaderWithURL: (NSString *) urlString
+{
+    QRWDownloader *lastOrderDownloader = [[QRWDownloader alloc] initWithRequestURL:[NSURL URLWithString:urlString]];
+    [lastOrderDownloader startDownloadWithDelegate:self];
+}
+
+
+#pragma mark Auth
 
 -(void)sendAuthorizationRequestWithLogin:(NSString *)login andPassowrd:(NSString *)password
 {
@@ -103,26 +112,61 @@ static QRWDataManager *_instance;
     
 }
 
+
+
+
+
+#pragma mark Dashboard
+
+
 - (void) sendTopProductsRequest
 {
-    QRWDownloader *lastOrderDownloader = [[QRWDownloader alloc] initWithRequestURL:[NSURL URLWithString:url_topProductsURL]];
-    [lastOrderDownloader startDownloadWithDelegate:self];
+    [self sendRequestUseDownloaderWithURL:url_topProductsURL];
 }
 
 - (void) sendTopCategoriesRequest
 {
-    QRWDownloader *lastOrderDownloader = [[QRWDownloader alloc] initWithRequestURL:[NSURL URLWithString:url_topCategoriesURL]];
-    [lastOrderDownloader startDownloadWithDelegate:self];
+    [self sendRequestUseDownloaderWithURL:url_topCategoriesURL];
 }
 
 - (void)sendLastOrderRequest
 {
-    QRWDownloader *lastOrderDownloader = [[QRWDownloader alloc] initWithRequestURL:[NSURL URLWithString:url_lastOrderURL]];
-    [lastOrderDownloader startDownloadWithDelegate:self];
+    [self sendRequestUseDownloaderWithURL:url_lastOrderURL];
 }
 
+- (void)sendOrdersStatisticRequest
+{
+    [self sendRequestUseDownloaderWithURL:url_ordersStatisticURL];
+}
 
-#pragma mark Send response
+#pragma mark SEND OBJECTS TO CONTROLLERS
+
+#pragma mark Dashboard
+
+//#####################  DASHBOARD - Last order  #####################
+
+
+
+
+
+- (void)sendOrdersStatisticsResponse: (NSDictionary *) jsonDictionary
+{
+    NSMutableArray *keysArray = [[NSMutableArray alloc] init];
+    NSMutableDictionary *resultsDictionary = [[NSMutableDictionary alloc] init];
+    
+    for (NSString *key in [jsonDictionary allKeys]) {
+        NSDictionary *staticticInTime = [jsonDictionary objectForKey:key];
+        for (NSString *inTimeKey in [staticticInTime allKeys]) {
+            NSString *totalKey = [NSString stringWithFormat:@"ORDERS_STATISTIC_KEY_%@_%@", key, inTimeKey];
+            [keysArray addObject:totalKey];
+            [resultsDictionary setObject:[staticticInTime objectForKey:inTimeKey] forKey:totalKey];
+        }
+    }
+    
+    [_delegate respondsForOrdersStatisticRequest:resultsDictionary withArratOfKeys:keysArray];
+}
+
+//#####################  DASHBOARD - Last order  #####################
 
 - (void)sendLastOrderResponse: (NSDictionary *) jsonDictionary
 {
@@ -134,15 +178,52 @@ static QRWDataManager *_instance;
     lastOrder.lastname = [jsonDictionary objectForKey:@"lastname"];
     lastOrder.firstname = [jsonDictionary objectForKey:@"firstname"];
     lastOrder.email = [jsonDictionary objectForKey:@"email"];
-    lastOrder.email = [jsonDictionary objectForKey:@"email"];
     lastOrder.status = [jsonDictionary objectForKey:@"status"];
     lastOrder.date = [jsonDictionary objectForKey:@"date"];
+    lastOrder.title = [jsonDictionary objectForKey:@"title"];
     
     lastOrder.orderid = [formatter numberFromString: (NSString *)[jsonDictionary objectForKey:@"orderid"]];
     lastOrder.userid = [formatter numberFromString: (NSString *)[jsonDictionary objectForKey:@"userid"]];
     lastOrder.total = [formatter numberFromString: (NSString *)[jsonDictionary objectForKey:@"total"]];
     
+    lastOrder.products = [NSArray arrayWithArray:[self arrayOfProductsInLastOrderInJson:jsonDictionary]];
+    
     [_delegate respondsForLastOrderRequest:lastOrder];
+}
+
+
+
+- (NSArray *) arrayOfProductsInLastOrderInJson: (NSDictionary *)jsonDictionary
+{
+    NSMutableArray *products = [[NSMutableArray alloc] init];
+ 
+    if ([@"none" isEqualToString: [jsonDictionary objectForKey:@"details"]]) {
+        return nil;
+    } else {
+        NSArray *objectsInJson = [NSArray arrayWithArray:[jsonDictionary objectForKey:@"details"]];
+        
+        for (NSDictionary *product in objectsInJson) {
+            
+            NSNumberFormatter * formatter = [[NSNumberFormatter alloc] init];
+            [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
+            
+            QRWProductInOrder *productInLastOrder = [[QRWProductInOrder alloc] init];
+            
+            productInLastOrder.product = [product objectForKey:@"product"];
+            productInLastOrder.productcode = [product objectForKey:@"productcode"];
+            productInLastOrder.productid = [formatter numberFromString: (NSString *)[product objectForKey:@"productid"]];
+            productInLastOrder.count = [formatter numberFromString: (NSString *)[product objectForKey:@"amount"]];
+            
+            productInLastOrder.price = [formatter numberFromString: (NSString *)[product objectForKey:@"price"]];
+            productInLastOrder.provider = [product objectForKey:@"provider"];
+            productInLastOrder.itemid = [formatter numberFromString: (NSString *)[product objectForKey:@"itemid"]];
+            productInLastOrder.productOptions = [product objectForKey:@"product_options"];
+            
+            [products addObject:productInLastOrder];
+        }
+        
+        return products;
+    }
 }
 
 
@@ -165,16 +246,11 @@ static QRWDataManager *_instance;
     NSMutableArray *productsFortTag = [[NSMutableArray alloc] init];
     
     
-    if ([@"false" isEqualToString: [jsonDictionary objectForKey:tag]]) {
+    if ([@"none" isEqualToString: [jsonDictionary objectForKey:tag]]) {
         return nil;
     } else {
-    
-        NSArray *objectsInJson = [NSArray arrayWithArray:[jsonDictionary objectForKey:@"month"]];
-        
-        
-        NSDictionary *argsDict = [[NSDictionary alloc] initWithDictionary:[objectsInJson objectAtIndex:0]];
-        DLog(@"keys = %@", [argsDict allKeys]);
-        
+        NSArray *objectsInJson = [NSArray arrayWithArray:[jsonDictionary objectForKey:tag]];
+
         for (NSDictionary *product in objectsInJson) {
             
             NSNumberFormatter * formatter = [[NSNumberFormatter alloc] init];
@@ -196,6 +272,7 @@ static QRWDataManager *_instance;
 }
 
 
+
 //#####################  DASHBOARD - TopSellers - TopCategories  ##################### 
 
 - (void)sendTopCategoriesResponse: (NSDictionary *) jsonDictionary
@@ -215,13 +292,10 @@ static QRWDataManager *_instance;
     NSMutableArray *productsFortTag = [[NSMutableArray alloc] init];
     
     
-    if ([@"false" isEqualToString: [jsonDictionary objectForKey:tag]]) {
+    if ([@"none" isEqualToString: [jsonDictionary objectForKey:tag]]) {
         return nil;
     } else {
-        NSArray *objectsInJson = [NSArray arrayWithArray:[jsonDictionary objectForKey:@"month"]];
-        
-        NSDictionary *argsDict = [[NSDictionary alloc] initWithDictionary:[objectsInJson objectAtIndex:0]];
-        DLog(@"keys = %@", [argsDict allKeys]);
+        NSArray *objectsInJson = [NSArray arrayWithArray:[jsonDictionary objectForKey:tag]];
         
         for (NSDictionary *category in objectsInJson) {
             
@@ -252,21 +326,22 @@ static QRWDataManager *_instance;
     
     DLog(@"Is valid JSON %@ for URL: %@", ([NSJSONSerialization isValidJSONObject:jsonData] ? @"YES" : @"NO"), requesrURL.absoluteString);
     
+    NSDictionary *jsonDictionary = [NSJSONSerialization JSONObjectWithData:jsonData options:kNilOptions error:&error];
+    
     if ([url_lastOrderURL isEqualToString:requesrURL.absoluteString]) {
-        NSDictionary *jsonDictionary = [NSJSONSerialization JSONObjectWithData:jsonData options:kNilOptions error:&error];
         [self sendLastOrderResponse: jsonDictionary];
     }
     
     if ([url_topProductsURL isEqualToString:requesrURL.absoluteString]) {
-
-        NSDictionary *JSON = [NSJSONSerialization JSONObjectWithData:jsonData options: NSJSONReadingMutableLeaves error: nil];;
-        [self sendTopProductsResponse:JSON];
+        [self sendTopProductsResponse:jsonDictionary];
     }
     
     if ([url_topCategoriesURL isEqualToString:requesrURL.absoluteString]) {
-        
-        NSDictionary *JSON = [NSJSONSerialization JSONObjectWithData:jsonData options: NSJSONReadingMutableLeaves error: nil];
-        [self sendTopCategoriesResponse:JSON];
+        [self sendTopCategoriesResponse:jsonDictionary];
+    }
+    
+    if ([url_ordersStatisticURL isEqualToString:requesrURL.absoluteString]) {
+        [self sendOrdersStatisticsResponse:jsonDictionary];
     }
 }
 

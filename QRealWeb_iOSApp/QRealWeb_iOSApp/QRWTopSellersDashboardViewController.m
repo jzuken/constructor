@@ -56,21 +56,22 @@
 - (void) setTopProducts: (QRWTopProducts *) topProducts
 {
     _topProducts = topProducts;
+
     switch (self.timeAndTypeSegmentedControl.selectedSegmentIndex) {
         case 0:
-            _categoriesArray = _topCategories.lastLoginTopArray;
+            _productsArray = [NSArray arrayWithArray:_topProducts.lastLoginTopArray];
             break;
             
         case 1:
-            _categoriesArray = _topCategories.todayTopArray;
+            _productsArray = [NSArray arrayWithArray:_topProducts.todayTopArray];
             break;
             
         case 2:
-            _categoriesArray = _topCategories.weekTopArray;
+            _productsArray = [NSArray arrayWithArray:_topProducts.weekTopArray];
             break;
             
         case 3:
-            _categoriesArray = _topCategories.monthTopArray;
+            _productsArray = [NSArray arrayWithArray:_topProducts.monthTopArray];
             break;
     }
     [_topSellersTableView reloadData];
@@ -82,19 +83,19 @@
     _topCategories = topCategories;
     switch (self.timeAndTypeSegmentedControl.selectedSegmentIndex) {
         case 0:
-            _productsArray = _topProducts.lastLoginTopArray;
+            _categoriesArray = [NSArray arrayWithArray:_topCategories.lastLoginTopArray];
             break;
             
         case 1:
-            _productsArray = _topProducts.todayTopArray;
+            _categoriesArray = [NSArray arrayWithArray:_topCategories.todayTopArray];
             break;
             
         case 2:
-            _productsArray = _topProducts.weekTopArray;
+            _categoriesArray = [NSArray arrayWithArray:_topCategories.weekTopArray];
             break;
             
         case 3:
-            _productsArray = _topProducts.monthTopArray;
+            _categoriesArray = [NSArray arrayWithArray:_topCategories.monthTopArray];
             break;
     }
     
@@ -107,7 +108,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 0;
+    return 2;
 }
 
 
@@ -144,7 +145,6 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    DLog(@"Load cell in section: %d row: %d", indexPath.section, indexPath.row);
     if (indexPath.section == 0) {
         NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:@"QRWTopSellersTopProductsTableViewCell" owner:self options:nil];
         QRWTopSellersTopProductsTableViewCell *cell = [topLevelObjects objectAtIndex:0];
@@ -169,7 +169,7 @@
     
     cell.countLabel.text = [NSString stringWithFormat:@"%d", [productInTop.count intValue]];
     cell.namelabel.text = productInTop.product;
-    cell.codeLabel.text = productInTop.productcode;
+    cell.codeLabel.text = [NSString stringWithFormat:@"ID: %@", productInTop.productcode];
     cell.idLabel.text = [NSString stringWithFormat:@"ID: %d", [productInTop.productid intValue]];
 }
 

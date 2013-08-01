@@ -77,7 +77,7 @@
 
 - (void)respondsForLastOrderRequest:(QRWLastOrder *)lastOrder
 {
-//    [_lastOrderDashboardViewController setLastOrder:lastOrder];
+    [_lastOrderDashboardViewController setLastOrder:lastOrder];
 }
 
 - (void)respondsForTopProductsRequest:(QRWTopProducts *)topProducts
