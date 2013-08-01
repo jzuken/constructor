@@ -152,13 +152,15 @@
 
             <Button
                 android:id="@+id/okButton"
-                style="@style/MainButtonTheme"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginBottom="15dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/save_button"
                 android:minWidth="100dp"
-                android:onClick="okClick" />
+                android:onClick="okClick"
+                android:textColor="@color/white" />
         </LinearLayout>
     </ScrollView>
 
