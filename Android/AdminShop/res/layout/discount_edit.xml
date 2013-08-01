@@ -47,8 +47,9 @@
                 android:layout_marginBottom="5dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="5dp"
+                android:background="@drawable/edit_text"
                 android:inputType="numberDecimal"
-                android:minWidth="100dp"
+                android:minWidth="175dp"
                 android:text="@string/null_number" />
 
             <TextView
@@ -67,8 +68,9 @@
                 android:layout_marginBottom="5dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="5dp"
+                android:background="@drawable/edit_text"
                 android:inputType="numberDecimal"
-                android:minWidth="100dp"
+                android:minWidth="175dp"
                 android:text="@string/null_number" />
 
             <TextView

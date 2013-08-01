@@ -9,6 +9,9 @@ import org.json.JSONObject;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -60,7 +63,7 @@ public class Discounts extends PinSupportNetworkActivity {
 
 	private void addDiscountToList(final String id, final String subtotal, final String discount,
 			final String discountType, final String membership) {
-		adapter.add(new Discount(id, "Position" + String.valueOf(position), subtotal, discount, discountType,
+		adapter.add(new Discount(id, "Discount " + String.valueOf(position), subtotal, discount, discountType,
 				membership));
 		position++;
 	}
@@ -76,12 +79,38 @@ public class Discounts extends PinSupportNetworkActivity {
 		startActivityForResult(intent, 1);
 	}
 
-	public void deleteClick(View v) {
-		Discount itemToRemove = (Discount) v.getTag();
+	public void deleteClick(final View currentView) {
+		LinearLayout view = (LinearLayout) getLayoutInflater().inflate(R.layout.confirmation_dialog, null);
+		final CustomDialog dialog = new CustomDialog(this, view);
+
+		Button noButton = (Button) view.findViewById(R.id.dialog_no_button);
+		noButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				dialog.dismiss();
+			}
+		});
+
+		Button yesButton = (Button) view.findViewById(R.id.dialog_yes_button);
+		yesButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				dialog.dismiss();
+				Discount itemToRemove = (Discount) currentView.getTag();
+				deleteDiscount(itemToRemove.getId());
+			}
+		});
+
+		dialog.show();
+
+	}
+	
+	private void deleteDiscount(String id) {
 		String response;
 		try {
 			response = new GetRequester().execute(
-					"http://54.213.38.9/xcart/api.php?request=delete_discount&id=" + itemToRemove.getId()).get();
+					"http://54.213.38.9/xcart/api.php?request=delete_discount&id=" + id)
+					.get();
 		} catch (Exception e) {
 			response = null;
 		}
