@@ -3,14 +3,14 @@
 /*
  * Development imports
  */
-//require './xcart/top.inc.php';
-//require './xcart/init.php';
+require './xcart/top.inc.php';
+require './xcart/init.php';
 
 /*
  * Production imports
  */
-require './top.inc.php';
-require './init.php';
+//require './top.inc.php';
+//require './init.php';
 
 mysql_connect($sql_host, $sql_user, $sql_password)  or die(mysql_error());
 mysql_select_db($sql_db) or die(mysql_error());
@@ -59,6 +59,9 @@ function get_response()
             break;
         case 'top_categories':
             $response = get_top_categories_statistic();
+            break;
+        case 'reviews':
+            $response = get_reviews();
             break;
         default:
             $response = "error";
@@ -266,15 +269,10 @@ function get_order_details($id)
         return 'error';
     }
     global $sql_tbl;
-    $order_details_fields = array(productid, price, amount, provider, product_options, itemid, productcode, product);
-    $query = mysql_query("SELECT * FROM $sql_tbl[order_details] WHERE orderid=$id") or die(mysql_error());
+    $query = mysql_query("SELECT productid, price, amount, provider, product_options, itemid, productcode, product FROM $sql_tbl[order_details] WHERE orderid=$id") or die(mysql_error());
     $order_details_array = array();
-    while ($row = mysql_fetch_array($query)) {
-        $product_details = array();
-        foreach ($order_details_fields as $value) {
-            $product_details[$value] = $row[$value];
-        }
-        array_push($order_details_array, $product_details);
+    while ($row = mysql_fetch_assoc($query)) {
+        array_push($order_details_array, $row);
     }
 
     return $order_details_array;
@@ -283,12 +281,11 @@ function get_order_details($id)
 function get_discounts($fields)
 {
     global $sql_tbl;
-    $discounts_fields = array(discountid, minprice, discount, discount_type, provider);
     $query = mysql_query("
-        SELECT *
+        SELECT discountid, minprice, discount, discount_type, provider
         FROM $sql_tbl[discounts]
         ") or die(mysql_error());
-    return get_json($discounts_fields, $query);
+    return get_json($query);
 }
 
 function create_discount($minprice, $discount, $discount_type, $provider)
@@ -328,15 +325,20 @@ function delete_discount($id)
     return "success";
 }
 
-function get_json($fields, $query)
+function get_reviews(){
+    global $sql_tbl;
+    $query = mysql_query("
+        SELECT email, message, productid
+        FROM $sql_tbl[product_reviews]
+        ") or die(mysql_error());
+    return get_json($query);
+}
+
+function get_json($query)
 {
     $json_result = array();
-    while ($row = mysql_fetch_array($query)) {
-        $order_json = array();
-        foreach ($fields as $value) {
-            $order_json[$value] = $row[$value];
-        }
-        array_push($json_result, $order_json);
+    while ($row = mysql_fetch_assoc($query)) {
+        array_push($json_result, $row);
     }
     return array_to_json($json_result);
 }
