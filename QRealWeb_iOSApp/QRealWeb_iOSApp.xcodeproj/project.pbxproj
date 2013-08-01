@@ -96,6 +96,8 @@
 		968B17A617AAE48300D8D8C9 /* active_button_this_month.png in Resources */ = {isa = PBXBuildFile; fileRef = 968B17A217AAE47D00D8D8C9 /* active_button_this_month.png */; };
 		968B17A717AAE48300D8D8C9 /* active_button_this_week.png in Resources */ = {isa = PBXBuildFile; fileRef = 968B17A317AAE48000D8D8C9 /* active_button_this_week.png */; };
 		968B17A817AAE48300D8D8C9 /* active_button_today.png in Resources */ = {isa = PBXBuildFile; fileRef = 968B17A417AAE48100D8D8C9 /* active_button_today.png */; };
+		968B17AC17AAF56300D8D8C9 /* title_welcome_to.png in Resources */ = {isa = PBXBuildFile; fileRef = 968B17AB17AAF56300D8D8C9 /* title_welcome_to.png */; };
+		968B17AE17AAF60500D8D8C9 /* button_login.png in Resources */ = {isa = PBXBuildFile; fileRef = 968B17AD17AAF60500D8D8C9 /* button_login.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -230,6 +232,8 @@
 		968B17A217AAE47D00D8D8C9 /* active_button_this_month.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = active_button_this_month.png; sourceTree = "<group>"; };
 		968B17A317AAE48000D8D8C9 /* active_button_this_week.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = active_button_this_week.png; sourceTree = "<group>"; };
 		968B17A417AAE48100D8D8C9 /* active_button_today.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = active_button_today.png; sourceTree = "<group>"; };
+		968B17AB17AAF56300D8D8C9 /* title_welcome_to.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = title_welcome_to.png; sourceTree = "<group>"; };
+		968B17AD17AAF60500D8D8C9 /* button_login.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_login.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -363,6 +367,8 @@
 		7F6FB268179539790024BB12 /* IMGS */ = {
 			isa = PBXGroup;
 			children = (
+				968B17AD17AAF60500D8D8C9 /* button_login.png */,
+				968B17AB17AAF56300D8D8C9 /* title_welcome_to.png */,
 				7FBDFA2A17AA8040004B6CB8 /* Exit.png */,
 				7F6FB26C179539BD0024BB12 /* large-black-and-white-stripes-a4.jpg */,
 				7F6FB26D179539BD0024BB12 /* Black_white_Apple_background.jpg */,
@@ -766,6 +772,8 @@
 				968B17A617AAE48300D8D8C9 /* active_button_this_month.png in Resources */,
 				968B17A717AAE48300D8D8C9 /* active_button_this_week.png in Resources */,
 				968B17A817AAE48300D8D8C9 /* active_button_today.png in Resources */,
+				968B17AC17AAF56300D8D8C9 /* title_welcome_to.png in Resources */,
+				968B17AE17AAF60500D8D8C9 /* button_login.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

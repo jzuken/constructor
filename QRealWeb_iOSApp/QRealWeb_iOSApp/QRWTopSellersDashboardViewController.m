@@ -164,7 +164,7 @@
     if (indexPath.section == 0) {
         return 70;
     } else {
-        return 60;
+        return 50;
     }
 }
 
