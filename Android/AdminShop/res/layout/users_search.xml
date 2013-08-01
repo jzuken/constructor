@@ -53,9 +53,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
                 android:background="@color/ghostwhite"
-                android:orientation="horizontal"
-                android:layout_marginBottom="15dp" >
+                android:orientation="horizontal" >
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -69,8 +69,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp" />
             </LinearLayout>
-            
-             <TextView
+
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/gray"
@@ -79,64 +79,54 @@
                 android:textColor="@color/black"
                 android:textSize="15sp" />
 
-            <EditText
-                android:id="@+id/usersSearchLine"
-                android:layout_width="fill_parent"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/edit_text"
-                android:drawableRight="@drawable/loupe"
-                android:inputType="textFilter|textNoSuggestions"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="15dp" />
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:text="@string/sort_by"
+                android:textSize="14sp" />
 
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:paddingLeft="10dp" >
 
-                <TextView
+                <CheckBox
+                    android:id="@+id/username_checkBox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/serach_in" />
+                    android:button="@drawable/check_box"
+                    android:text="@string/username" />
 
-                <LinearLayout
-                    android:layout_width="fill_parent"
+                <CheckBox
+                    android:id="@+id/first_name_checkBox"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical" >
+                    android:button="@drawable/check_box"
+                    android:text="@string/first_name" />
 
-                    <CheckBox
-                        android:id="@+id/username_checkBox"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/username" />
+                <CheckBox
+                    android:id="@+id/last_name_checkBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@drawable/check_box"
+                    android:text="@string/last_name" />
 
-                    <CheckBox
-                        android:id="@+id/first_name_checkBox"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/first_name" />
+                <CheckBox
+                    android:id="@+id/email_checkBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@drawable/check_box"
+                    android:text="@string/email" />
 
-                    <CheckBox
-                        android:id="@+id/last_name_checkBox"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/last_name" />
-
-                    <CheckBox
-                        android:id="@+id/email_checkBox"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/email" />
-
-                    <CheckBox
-                        android:id="@+id/company_checkBox"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/company" />
-                </LinearLayout>
+                <CheckBox
+                    android:id="@+id/company_checkBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@drawable/check_box"
+                    android:text="@string/company" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
