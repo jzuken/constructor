@@ -34,7 +34,11 @@ function get_response()
             $response = get_users_count();
             break;
         case 'users':
-            $response = get_users($_GET['from'], $_GET['size'], $_GET['sort']);
+            $response = get_users(
+                mysql_real_escape_string($_GET['from']),
+                mysql_real_escape_string($_GET['size']),
+                mysql_real_escape_string($_GET['sort'])
+            );
             break;
         case 'last_order':
             $response = get_last_order();
@@ -43,13 +47,26 @@ function get_response()
             $response = get_discounts();
             break;
         case 'create_discount':
-            $response = create_discount($_GET['minprice'], $_GET['discount'], $_GET['discount_type'], $_GET['provider']);
+            $response = create_discount(
+                mysql_real_escape_string($_GET['minprice']),
+                mysql_real_escape_string($_GET['discount']),
+                mysql_real_escape_string($_GET['discount_type']),
+                mysql_real_escape_string($_GET['provider'])
+            );
             break;
         case 'update_discount':
-            $response = update_discount($_GET['id'], $_GET['minprice'], $_GET['discount'], $_GET['discount_type'], $_GET['provider']);
+            $response = update_discount(
+                mysql_real_escape_string($_GET['id']),
+                mysql_real_escape_string($_GET['minprice']),
+                mysql_real_escape_string($_GET['discount']),
+                mysql_real_escape_string($_GET['discount_type']),
+                mysql_real_escape_string($_GET['provider'])
+            );
             break;
         case 'delete_discount':
-            $response = delete_discount($_GET['id']);
+            $response = delete_discount(
+                mysql_real_escape_string($_GET['id'])
+            );
             break;
         case 'orders_statistic':
             $response = get_orders_statistic();
@@ -61,7 +78,15 @@ function get_response()
             $response = get_top_categories_statistic();
             break;
         case 'reviews':
-            $response = get_reviews();
+            $response = get_reviews(
+                mysql_real_escape_string($_GET['from']),
+                mysql_real_escape_string($_GET['size'])
+            );
+            break;
+        case 'delete_review':
+            $response = delete_rewiew(
+                mysql_real_escape_string($_GET['id'])
+            );
             break;
         default:
             $response = "error";
@@ -187,13 +212,13 @@ function get_users_count()
 function get_users($from, $size, $sort)
 {
     global $sql_tbl;
-    if (is_null($from)) {
+    if (!($from)) {
         $from = 0;
     }
-    if (is_null($size)) {
+    if (!($size)) {
         $size = 20;
     }
-    if (is_null($sort)) {
+    if (!($sort)) {
         $sort = 'none';
     }
     switch ($sort) {
@@ -265,7 +290,7 @@ function get_last_order()
 
 function get_order_details($id)
 {
-    if (is_null($id)) {
+    if (!($id)) {
         return 'error';
     }
     global $sql_tbl;
@@ -291,7 +316,7 @@ function get_discounts($fields)
 function create_discount($minprice, $discount, $discount_type, $provider)
 {
     global $sql_tbl;
-    if (is_null($minprice) || is_null($discount) || is_null($discount_type) || is_null($provider)) {
+    if (!($minprice) || !($discount) || !($discount_type) || !($provider)) {
         return "error";
     }
     $query = mysql_query("
@@ -304,7 +329,7 @@ function create_discount($minprice, $discount, $discount_type, $provider)
 function update_discount($id, $minprice, $discount, $discount_type, $provider)
 {
     global $sql_tbl;
-    if (is_null($id) || is_null($minprice) || is_null($discount) || is_null($discount_type) || is_null($provider)) {
+    if (!($id) || !($minprice) || !($discount) || !($discount_type) || !($provider)) {
         return "error";
     }
     $query = mysql_query("
@@ -318,20 +343,42 @@ function update_discount($id, $minprice, $discount, $discount_type, $provider)
 function delete_discount($id)
 {
     global $sql_tbl;
-    if (is_null($id)) {
+    if (!($id)) {
         return "error";
     }
+    //TODO: fix sql injections
     $query = mysql_query("DELETE FROM $sql_tbl[discounts] WHERE discountid=$id") or die(mysql_error());
     return "success";
 }
 
-function get_reviews(){
+function get_reviews($from, $size)
+{
     global $sql_tbl;
+    if (!($size)) {
+        $size = 20;
+    }
+    if (!$from) {
+        $from = 0;
+    }
     $query = mysql_query("
-        SELECT email, message, productid
+        SELECT $sql_tbl[product_reviews].review_id, $sql_tbl[product_reviews].email, $sql_tbl[product_reviews].message, $sql_tbl[products_lng_current].product
         FROM $sql_tbl[product_reviews]
+        INNER JOIN $sql_tbl[products_lng_current]
+        ON $sql_tbl[product_reviews].productid = $sql_tbl[products_lng_current].productid
+        LIMIT $from, $size
         ") or die(mysql_error());
     return get_json($query);
+}
+
+function delete_rewiew($id)
+{
+    global $sql_tbl;
+    if (!($id)) {
+        return "error";
+    }
+    //TODO: fix sql injections
+    $query = mysql_query("DELETE FROM $sql_tbl[product_reviews] WHERE review_id=$id") or die(mysql_error());
+    return "success";
 }
 
 function get_json($query)
