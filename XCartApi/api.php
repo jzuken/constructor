@@ -3,20 +3,19 @@
 /*
  * Development imports
  */
-require './xcart/top.inc.php';
-require './xcart/init.php';
+//require './xcart/top.inc.php';
+//require './xcart/init.php';
 
 /*
  * Production imports
  */
-//require './top.inc.php';
-//require './init.php';
+require './top.inc.php';
+require './init.php';
 
 mysql_connect($sql_host, $sql_user, $sql_password)  or die(mysql_error());
 mysql_select_db($sql_db) or die(mysql_error());
 
 header('Content-Type: application/json; charset=utf-8');
-
 $curtime = XC_TIME + $config['Appearance']['timezone_offset'];
 $start_dates['last_login'] = $previous_login_date; // Since last login
 $start_dates['today'] = func_prepare_search_date($curtime) - $config['Appearance']['timezone_offset']; // Today
@@ -37,15 +36,8 @@ function get_response()
         case 'users':
             $response = get_users($_GET['from'], $_GET['size'], $_GET['sort']);
             break;
-        case 'orders':
-            $response = get_orders($_GET['from'], $_GET['to']);
-            break;
         case 'last_order':
             $response = get_last_order();
-            break;
-        case 'order_details':
-            $response = get_order_details($order_details_fields, $_GET['id']);
-            print_r($response);
             break;
         case 'discounts':
             $response = get_discounts();
@@ -103,8 +95,8 @@ function get_top_products_statistic()
 {
     global $start_dates;
     $result_array = array();
-    foreach ($dates as $date) {
-        $result_array[$date] = get_top_products($start_dates[$date]);
+    foreach ($start_dates as $key => $date) {
+        $result_array[$key] = is_array_check(get_top_products($date));
     }
     return array_to_json($result_array);
 }
@@ -131,10 +123,10 @@ function get_top_products($start_date)
 
 function get_top_categories_statistic()
 {
-    global $start_dates, $dates;
+    global $start_dates;
     $result_array = array();
-    foreach ($dates as $date) {
-        $result_array[$date] = get_top_categories($start_dates[$date]);
+    foreach ($start_dates as $key => $date) {
+        $result_array[$key] = is_array_check(get_top_categories($date));
     }
     return array_to_json($result_array);
 }
@@ -160,6 +152,18 @@ function get_top_categories($start_date)
          ORDER BY count DESC LIMIT 0, $max_top_sellers
         ");
     return $categories;
+}
+
+/**
+ * @param $date
+ * @return array|string
+ */
+function is_array_check($data)
+{
+    if (!is_array($data)) {
+        return 'none';
+    }
+    return $data;
 }
 
 function get_first_cell($query)
@@ -189,7 +193,6 @@ function get_users($from, $size, $sort)
     if (is_null($sort)) {
         $sort = 'none';
     }
-    $users_fields = array(login, username, usertype, invalid_login_attempts, title, firstname, lastname, company, email, url, last_login, first_login, status, language, activity, trusted_provider);
     switch ($sort) {
         case 'login_date':
             $query = mysql_query("
@@ -235,25 +238,6 @@ function get_users($from, $size, $sort)
         'users_count' => get_users_count(),
         'users' => $users_array);
     return array_to_json($json_array);
-}
-
-function get_orders($from, $to)
-{
-    if (is_null($from)) {
-        $from = 0;
-    }
-    if (is_null($to)) {
-        $to = XC_TIME;
-    }
-    global $sql_tbl;
-    $orders_fields = array(orderid, status, total, title, firstname, b_firstname, lastname, b_lastname);
-    $date_condition = "date BETWEEN $from AND $to";
-    $query = mysql_query("
-        SELECT orderid, status, total, title, firstname, b_firstname, lastname, b_lastname
-        FROM $sql_tbl[orders]
-        WHERE $date_condition
-        ") or die(mysql_error());
-    return get_json($orders_fields, $query);
 }
 
 function get_last_order()
@@ -380,6 +364,7 @@ function indent($json)
     $outOfQuotes = true;
 
     for ($i = 0; $i <= $strLen; $i++) {
+
         // Grab the next character in the string.
         $char = substr($json, $i, 1);
 
