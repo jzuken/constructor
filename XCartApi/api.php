@@ -380,7 +380,6 @@ function indent($json)
     $outOfQuotes = true;
 
     for ($i = 0; $i <= $strLen; $i++) {
-
         // Grab the next character in the string.
         $char = substr($json, $i, 1);
 
