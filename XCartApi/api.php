@@ -11,55 +11,62 @@ require './xcart/init.php';
  */
 //require './top.inc.php';
 //require './init.php';
+
 mysql_connect($sql_host, $sql_user, $sql_password)  or die(mysql_error());
 mysql_select_db($sql_db) or die(mysql_error());
 
 header('Content-Type: application/json; charset=utf-8');
-
-$dates = array('last_login', 'today', 'week', 'month');
-
 $curtime = XC_TIME + $config['Appearance']['timezone_offset'];
-$start_dates[$dates[0]] = $previous_login_date; // Since last login
-$start_dates[$dates[1]] = func_prepare_search_date($curtime) - $config['Appearance']['timezone_offset']; // Today
+$start_dates['last_login'] = $previous_login_date; // Since last login
+$start_dates['today'] = func_prepare_search_date($curtime) - $config['Appearance']['timezone_offset']; // Today
 $start_week = $curtime - date('w', $curtime) * 24 * 3600; // Week starts since Sunday
-$start_dates[$dates[2]] = func_prepare_search_date($start_week) - $config['Appearance']['timezone_offset']; // Current week
-$start_dates[$dates[3]] = mktime(0, 0, 0, date('m', $curtime), 1, date('Y', $curtime)) - $config['Appearance']['timezone_offset']; // Current month
+$start_dates['week'] = func_prepare_search_date($start_week) - $config['Appearance']['timezone_offset']; // Current week
+$start_dates['month'] = mktime(0, 0, 0, date('m', $curtime), 1, date('Y', $curtime)) - $config['Appearance']['timezone_offset']; // Current month
 $curtime = XC_TIME;
 
 echo get_response();
 
 function get_response()
 {
-    global $users_fields, $orders_fields, $discounts_fields, $order_details_fields;
     $request = $_GET['request'];
     switch ($request) {
         case 'users_count':
             $response = get_users_count();
             break;
         case 'users':
-            $response = get_users($users_fields);
-            break;
-        case 'orders':
-            $response = get_orders($orders_fields, $_GET['from'], $_GET['to']);
+            $response = get_users(
+                mysql_real_escape_string($_GET['from']),
+                mysql_real_escape_string($_GET['size']),
+                mysql_real_escape_string($_GET['sort'])
+            );
             break;
         case 'last_order':
             $response = get_last_order();
-            break;
-        case 'order_details':
-            $response = get_order_details($order_details_fields, $_GET['id']);
-            print_r($response);
             break;
         case 'discounts':
             $response = get_discounts();
             break;
         case 'create_discount':
-            $response = create_discount($_GET['minprice'], $_GET['discount'], $_GET['discount_type'], $_GET['provider']);
+            $response = create_discount(
+                mysql_real_escape_string($_GET['minprice']),
+                mysql_real_escape_string($_GET['discount']),
+                mysql_real_escape_string($_GET['discount_type']),
+                mysql_real_escape_string($_GET['provider'])
+            );
             break;
         case 'update_discount':
-            $response = update_discount($_GET['id'], $_GET['minprice'], $_GET['discount'], $_GET['discount_type'], $_GET['provider']);
+            $response = update_discount(
+                mysql_real_escape_string($_GET['id']),
+                mysql_real_escape_string($_GET['minprice']),
+                mysql_real_escape_string($_GET['discount']),
+                mysql_real_escape_string($_GET['discount_type']),
+                mysql_real_escape_string($_GET['provider'])
+            );
             break;
         case 'delete_discount':
-            $response = delete_discount($_GET['id']);
+            $response = delete_discount(
+                mysql_real_escape_string($_GET['id'])
+            );
             break;
         case 'orders_statistic':
             $response = get_orders_statistic();
@@ -70,6 +77,17 @@ function get_response()
         case 'top_categories':
             $response = get_top_categories_statistic();
             break;
+        case 'reviews':
+            $response = get_reviews(
+                mysql_real_escape_string($_GET['from']),
+                mysql_real_escape_string($_GET['size'])
+            );
+            break;
+        case 'delete_review':
+            $response = delete_rewiew(
+                mysql_real_escape_string($_GET['id'])
+            );
+            break;
         default:
             $response = "error";
             break;
@@ -79,12 +97,12 @@ function get_response()
 
 function get_orders_statistic()
 {
-    global $start_dates, $dates;
+    global $start_dates;
     $result_array = array();
-    foreach ($dates as $date) {
-        $result_array[$date] = get_orders_count($start_dates[$date]);
+    foreach ($start_dates as $key => $date) {
+        $result_array[$key] = get_orders_count($date);
     }
-    return json_encode($result_array);
+    return array_to_json($result_array);
 }
 
 function get_orders_count($start_date)
@@ -103,12 +121,12 @@ function get_orders_count($start_date)
 
 function get_top_products_statistic()
 {
-    global $start_dates, $dates;
+    global $start_dates;
     $result_array = array();
-    foreach ($dates as $date) {
-        $result_array[$date] = get_top_products($start_dates[$date]);
+    foreach ($start_dates as $key => $date) {
+        $result_array[$key] = is_array_check(get_top_products($date));
     }
-    return json_encode($result_array);
+    return array_to_json($result_array);
 }
 
 function get_top_products($start_date)
@@ -128,18 +146,17 @@ function get_top_products($start_date)
        AND $sql_tbl[orders].status NOT IN ('F','D')
      GROUP BY $sql_tbl[order_details].productid
      ORDER BY count DESC LIMIT 0, $max_top_sellers");
-    //print_r($ordered_products);
     return $ordered_products;
 }
 
 function get_top_categories_statistic()
 {
-    global $start_dates, $dates;
+    global $start_dates;
     $result_array = array();
-    foreach ($dates as $date) {
-        $result_array[$date] = get_top_categories($start_dates[$date]);
+    foreach ($start_dates as $key => $date) {
+        $result_array[$key] = is_array_check(get_top_categories($date));
     }
-    return json_encode($result_array);
+    return array_to_json($result_array);
 }
 
 function get_top_categories($start_date)
@@ -162,8 +179,19 @@ function get_top_categories($start_date)
          GROUP BY $sql_tbl[products_categories].categoryid
          ORDER BY count DESC LIMIT 0, $max_top_sellers
         ");
-    //print_r($categories);
     return $categories;
+}
+
+/**
+ * @param $date
+ * @return array|string
+ */
+function is_array_check($data)
+{
+    if (!is_array($data)) {
+        return 'none';
+    }
+    return $data;
 }
 
 function get_first_cell($query)
@@ -177,37 +205,67 @@ function get_users_count()
 {
     global $sql_tbl;
     $count = get_first_cell("SELECT COUNT(*) FROM $sql_tbl[customers]");
-    $json_result = array('count' => $count);
-    return json_encode($json_result);
+    $array = array('registered' => $count);
+    return $array;
 }
 
-function get_users($fields)
+function get_users($from, $size, $sort)
 {
     global $sql_tbl;
-    $query = mysql_query("
-        SELECT *
-        FROM $sql_tbl[customers]
-        ") or die(mysql_error());
-    return get_json($fields, $query);
-}
-
-function get_orders($fields, $from, $to)
-{
-    if (is_null($from)) {
+    if (!($from)) {
         $from = 0;
     }
-    if (is_null($to)) {
-        $to = XC_TIME;
+    if (!($size)) {
+        $size = 20;
     }
-    global $sql_tbl;
-    $orders_fields = array(orderid, status, total, title, firstname, b_firstname, lastname, b_lastname);
-    $date_condition = "date BETWEEN $from AND $to";
-    $query = mysql_query("
-        SELECT orderid, status, total, title, firstname, b_firstname, lastname, b_lastname
-        FROM $sql_tbl[orders]
-        WHERE $date_condition
-        ") or die(mysql_error());
-    return get_json($orders_fields, $query);
+    if (!($sort)) {
+        $sort = 'none';
+    }
+    switch ($sort) {
+        case 'login_date':
+            $query = mysql_query("
+                SELECT $sql_tbl[customers].login, $sql_tbl[customers].username, $sql_tbl[customers].usertype, $sql_tbl[customers].invalid_login_attempts, $sql_tbl[customers].title, $sql_tbl[customers].firstname, $sql_tbl[customers].lastname, $sql_tbl[customers].company, $sql_tbl[customers].email, $sql_tbl[customers].url, $sql_tbl[customers].last_login, $sql_tbl[customers].first_login, $sql_tbl[customers].status, $sql_tbl[customers].language, $sql_tbl[customers].activity, $sql_tbl[customers].trusted_provider
+                FROM $sql_tbl[customers]
+                ORDER BY $sql_tbl[customers].last_login desc
+                LIMIT $from, $size
+                ") or die(mysql_error());
+            break;
+        case 'order_date':
+            $query = mysql_query("
+                SELECT $sql_tbl[customers].login, $sql_tbl[customers].username, $sql_tbl[customers].usertype, $sql_tbl[customers].invalid_login_attempts, $sql_tbl[customers].title, $sql_tbl[customers].firstname, $sql_tbl[customers].lastname, $sql_tbl[customers].company, $sql_tbl[customers].email, $sql_tbl[customers].url, $sql_tbl[customers].last_login, $sql_tbl[customers].first_login, $sql_tbl[customers].status, $sql_tbl[customers].language, $sql_tbl[customers].activity, $sql_tbl[customers].trusted_provider, orders.date
+                FROM $sql_tbl[customers]
+                INNER JOIN (SELECT userid, MAX(date) as 'date' FROM $sql_tbl[orders] GROUP BY userid) as orders
+                ON $sql_tbl[customers].id = orders.userid
+                ORDER BY orders.date desc
+                LIMIT $from, $size
+                ") or die(mysql_error());
+            break;
+        case 'orders':
+            $query = mysql_query("
+                SELECT $sql_tbl[customers].login, $sql_tbl[customers].username, $sql_tbl[customers].usertype, $sql_tbl[customers].invalid_login_attempts, $sql_tbl[customers].title, $sql_tbl[customers].firstname, $sql_tbl[customers].lastname, $sql_tbl[customers].company, $sql_tbl[customers].email, $sql_tbl[customers].url, $sql_tbl[customers].last_login, $sql_tbl[customers].first_login, $sql_tbl[customers].status, $sql_tbl[customers].language, $sql_tbl[customers].activity, $sql_tbl[customers].trusted_provider,
+                (SELECT COUNT(*) FROM $sql_tbl[orders] WHERE $sql_tbl[orders].userid = $sql_tbl[customers].id) as 'orders_count'
+                FROM $sql_tbl[customers]
+                ORDER BY orders_count desc
+                LIMIT $from, $size
+                ") or die(mysql_error());
+            break;
+        default:
+            $query = mysql_query("
+                SELECT $sql_tbl[customers].login, $sql_tbl[customers].username, $sql_tbl[customers].usertype, $sql_tbl[customers].invalid_login_attempts, $sql_tbl[customers].title, $sql_tbl[customers].firstname, $sql_tbl[customers].lastname, $sql_tbl[customers].company, $sql_tbl[customers].email, $sql_tbl[customers].url, $sql_tbl[customers].last_login, $sql_tbl[customers].first_login, $sql_tbl[customers].status, $sql_tbl[customers].language, $sql_tbl[customers].activity, $sql_tbl[customers].trusted_provider
+                FROM $sql_tbl[customers]
+                LIMIT $from, $size
+                ") or die(mysql_error());
+            break;
+    }
+
+    $users_array = array();
+    while ($row = mysql_fetch_assoc($query)) {
+        array_push($users_array, $row);
+    }
+    $json_array = array(
+        'users_count' => get_users_count(),
+        'users' => $users_array);
+    return array_to_json($json_array);
 }
 
 function get_last_order()
@@ -227,24 +285,19 @@ function get_last_order()
     $order_id = $row['orderid'];
     $order_details = get_order_details($order_id);
     $result_array[details] = $order_details;
-    return json_encode($result_array);
+    return array_to_json($result_array);
 }
 
 function get_order_details($id)
 {
-    if (is_null($id)) {
+    if (!($id)) {
         return 'error';
     }
     global $sql_tbl;
-    $order_details_fields = array(productid, price, amount, provider, product_options, itemid, productcode, product);
-    $query = mysql_query("SELECT * FROM $sql_tbl[order_details] WHERE orderid=$id") or die(mysql_error());
+    $query = mysql_query("SELECT productid, price, amount, provider, product_options, itemid, productcode, product FROM $sql_tbl[order_details] WHERE orderid=$id") or die(mysql_error());
     $order_details_array = array();
-    while ($row = mysql_fetch_array($query)) {
-        $product_details = array();
-        foreach ($order_details_fields as $value) {
-            $product_details[$value] = $row[$value];
-        }
-        array_push($order_details_array, $product_details);
+    while ($row = mysql_fetch_assoc($query)) {
+        array_push($order_details_array, $row);
     }
 
     return $order_details_array;
@@ -253,18 +306,17 @@ function get_order_details($id)
 function get_discounts($fields)
 {
     global $sql_tbl;
-    $discounts_fields = array(discountid, minprice, discount, discount_type, provider);
     $query = mysql_query("
-        SELECT *
+        SELECT discountid, minprice, discount, discount_type, provider
         FROM $sql_tbl[discounts]
         ") or die(mysql_error());
-    return get_json($discounts_fields, $query);
+    return get_json($query);
 }
 
 function create_discount($minprice, $discount, $discount_type, $provider)
 {
     global $sql_tbl;
-    if (is_null($minprice) || is_null($discount) || is_null($discount_type) || is_null($provider)) {
+    if (!($minprice) || !($discount) || !($discount_type) || !($provider)) {
         return "error";
     }
     $query = mysql_query("
@@ -277,12 +329,13 @@ function create_discount($minprice, $discount, $discount_type, $provider)
 function update_discount($id, $minprice, $discount, $discount_type, $provider)
 {
     global $sql_tbl;
-    if (is_null($id) || is_null($minprice) || is_null($discount) || is_null($discount_type) || is_null($provider)) {
+    if (!($id) || !($minprice) || !($discount) || !($discount_type) || !($provider)) {
         return "error";
     }
     $query = mysql_query("
         UPDATE $sql_tbl[discounts]
         SET minprice=$minprice, discount=$discount, discount_type='$discount_type', provider=$provider
+        WHERE discountid=$id
         ") or die(mysql_error());
     return "success";
 }
@@ -290,22 +343,112 @@ function update_discount($id, $minprice, $discount, $discount_type, $provider)
 function delete_discount($id)
 {
     global $sql_tbl;
-    if (is_null($id)) {
+    if (!($id)) {
         return "error";
     }
+    //TODO: fix sql injections
     $query = mysql_query("DELETE FROM $sql_tbl[discounts] WHERE discountid=$id") or die(mysql_error());
     return "success";
 }
 
-function get_json($fields, $query)
+function get_reviews($from, $size)
+{
+    global $sql_tbl;
+    if (!($size)) {
+        $size = 20;
+    }
+    if (!$from) {
+        $from = 0;
+    }
+    $query = mysql_query("
+        SELECT $sql_tbl[product_reviews].review_id, $sql_tbl[product_reviews].email, $sql_tbl[product_reviews].message, $sql_tbl[products_lng_current].product
+        FROM $sql_tbl[product_reviews]
+        INNER JOIN $sql_tbl[products_lng_current]
+        ON $sql_tbl[product_reviews].productid = $sql_tbl[products_lng_current].productid
+        LIMIT $from, $size
+        ") or die(mysql_error());
+    return get_json($query);
+}
+
+function delete_rewiew($id)
+{
+    global $sql_tbl;
+    if (!($id)) {
+        return "error";
+    }
+    //TODO: fix sql injections
+    $query = mysql_query("DELETE FROM $sql_tbl[product_reviews] WHERE review_id=$id") or die(mysql_error());
+    return "success";
+}
+
+function get_json($query)
 {
     $json_result = array();
-    while ($row = mysql_fetch_array($query)) {
-        $order_json = array();
-        foreach ($fields as $value) {
-            $order_json[$value] = $row[$value];
-        }
-        array_push($json_result, $order_json);
+    while ($row = mysql_fetch_assoc($query)) {
+        array_push($json_result, $row);
     }
-    return json_encode($json_result);
+    return array_to_json($json_result);
+}
+
+function array_to_json($array)
+{
+    return indent(json_encode($array));
+}
+
+/**
+ * Indents a flat JSON string to make it more human-readable.
+ *
+ * @param string $json The original JSON string to process.
+ *
+ * @return string Indented version of the original JSON string.
+ */
+function indent($json)
+{
+    $result = '';
+    $pos = 0;
+    $strLen = strlen($json);
+    $indentStr = '  ';
+    $newLine = "\n";
+    $prevChar = '';
+    $outOfQuotes = true;
+
+    for ($i = 0; $i <= $strLen; $i++) {
+
+        // Grab the next character in the string.
+        $char = substr($json, $i, 1);
+
+        // Are we inside a quoted string?
+        if ($char == '"' && $prevChar != '\\') {
+            $outOfQuotes = !$outOfQuotes;
+
+            // If this character is the end of an element,
+            // output a new line and indent the next line.
+        } else if (($char == '}' || $char == ']') && $outOfQuotes) {
+            $result .= $newLine;
+            $pos--;
+            for ($j = 0; $j < $pos; $j++) {
+                $result .= $indentStr;
+            }
+        }
+
+        // Add the character to the result string.
+        $result .= $char;
+
+        // If the last character was the beginning of an element,
+        // output a new line and indent the next line.
+        if (($char == ',' || $char == '{' || $char == '[') && $outOfQuotes) {
+            $result .= $newLine;
+            if ($char == '{' || $char == '[') {
+                $pos++;
+            }
+
+            for ($j = 0; $j < $pos; $j++) {
+                $result .= $indentStr;
+            }
+        }
+
+        $prevChar = $char;
+    }
+
+    return $result;
 }
