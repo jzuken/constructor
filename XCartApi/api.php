@@ -3,14 +3,14 @@
 /*
  * Development imports
  */
-require './xcart/top.inc.php';
-require './xcart/init.php';
+//require './xcart/top.inc.php';
+//require './xcart/init.php';
 
 /*
  * Production imports
  */
-//require './top.inc.php';
-//require './init.php';
+require './top.inc.php';
+require './init.php';
 
 mysql_connect($sql_host, $sql_user, $sql_password)  or die(mysql_error());
 mysql_select_db($sql_db) or die(mysql_error());
@@ -51,7 +51,8 @@ function get_response()
                 mysql_real_escape_string($_GET['minprice']),
                 mysql_real_escape_string($_GET['discount']),
                 mysql_real_escape_string($_GET['discount_type']),
-                mysql_real_escape_string($_GET['provider'])
+                mysql_real_escape_string($_GET['provider']),
+                mysql_real_escape_string($_GET['membership_id'])
             );
             break;
         case 'update_discount':
@@ -60,7 +61,8 @@ function get_response()
                 mysql_real_escape_string($_GET['minprice']),
                 mysql_real_escape_string($_GET['discount']),
                 mysql_real_escape_string($_GET['discount_type']),
-                mysql_real_escape_string($_GET['provider'])
+                mysql_real_escape_string($_GET['provider']),
+                mysql_real_escape_string($_GET['membership_id'])
             );
             break;
         case 'delete_discount':
@@ -88,6 +90,24 @@ function get_response()
                 mysql_real_escape_string($_GET['id'])
             );
             break;
+        case 'user_orders':
+            $response = get_orders_for_user(
+                mysql_real_escape_string($_GET['user_id']),
+                mysql_real_escape_string($_GET['from']),
+                mysql_real_escape_string($_GET['size'])
+            );
+            break;
+//        case 'add_fake':
+//            for ($i = 0; $i < 1000; $i++) {
+//                global $sql_tbl;
+//                $login = 'login'.$i;
+//                $name = 'username'.$i;
+//                $query = mysql_query("
+//                INSERT INTO $sql_tbl[customers]
+//                SET $sql_tbl[customers].login='$name', $sql_tbl[customers].username='$login', $sql_tbl[customers].usertype='C'
+//                ") or die(mysql_error());
+//            }
+//            break;
         default:
             $response = "error";
             break;
@@ -224,7 +244,7 @@ function get_users($from, $size, $sort)
     switch ($sort) {
         case 'login_date':
             $query = mysql_query("
-                SELECT $sql_tbl[customers].login, $sql_tbl[customers].username, $sql_tbl[customers].usertype, $sql_tbl[customers].invalid_login_attempts, $sql_tbl[customers].title, $sql_tbl[customers].firstname, $sql_tbl[customers].lastname, $sql_tbl[customers].company, $sql_tbl[customers].email, $sql_tbl[customers].url, $sql_tbl[customers].last_login, $sql_tbl[customers].first_login, $sql_tbl[customers].status, $sql_tbl[customers].language, $sql_tbl[customers].activity, $sql_tbl[customers].trusted_provider
+                SELECT $sql_tbl[customers].id, $sql_tbl[customers].login, $sql_tbl[customers].username, $sql_tbl[customers].usertype, $sql_tbl[customers].invalid_login_attempts, $sql_tbl[customers].title, $sql_tbl[customers].firstname, $sql_tbl[customers].lastname, $sql_tbl[customers].company, $sql_tbl[customers].email, $sql_tbl[customers].url, $sql_tbl[customers].last_login, $sql_tbl[customers].first_login, $sql_tbl[customers].status, $sql_tbl[customers].language, $sql_tbl[customers].activity, $sql_tbl[customers].trusted_provider
                 FROM $sql_tbl[customers]
                 ORDER BY $sql_tbl[customers].last_login desc
                 LIMIT $from, $size
@@ -232,7 +252,7 @@ function get_users($from, $size, $sort)
             break;
         case 'order_date':
             $query = mysql_query("
-                SELECT $sql_tbl[customers].login, $sql_tbl[customers].username, $sql_tbl[customers].usertype, $sql_tbl[customers].invalid_login_attempts, $sql_tbl[customers].title, $sql_tbl[customers].firstname, $sql_tbl[customers].lastname, $sql_tbl[customers].company, $sql_tbl[customers].email, $sql_tbl[customers].url, $sql_tbl[customers].last_login, $sql_tbl[customers].first_login, $sql_tbl[customers].status, $sql_tbl[customers].language, $sql_tbl[customers].activity, $sql_tbl[customers].trusted_provider, orders.date
+                SELECT $sql_tbl[customers].id, $sql_tbl[customers].login, $sql_tbl[customers].username, $sql_tbl[customers].usertype, $sql_tbl[customers].invalid_login_attempts, $sql_tbl[customers].title, $sql_tbl[customers].firstname, $sql_tbl[customers].lastname, $sql_tbl[customers].company, $sql_tbl[customers].email, $sql_tbl[customers].url, $sql_tbl[customers].last_login, $sql_tbl[customers].first_login, $sql_tbl[customers].status, $sql_tbl[customers].language, $sql_tbl[customers].activity, $sql_tbl[customers].trusted_provider, orders.date
                 FROM $sql_tbl[customers]
                 INNER JOIN (SELECT userid, MAX(date) as 'date' FROM $sql_tbl[orders] GROUP BY userid) as orders
                 ON $sql_tbl[customers].id = orders.userid
@@ -242,7 +262,7 @@ function get_users($from, $size, $sort)
             break;
         case 'orders':
             $query = mysql_query("
-                SELECT $sql_tbl[customers].login, $sql_tbl[customers].username, $sql_tbl[customers].usertype, $sql_tbl[customers].invalid_login_attempts, $sql_tbl[customers].title, $sql_tbl[customers].firstname, $sql_tbl[customers].lastname, $sql_tbl[customers].company, $sql_tbl[customers].email, $sql_tbl[customers].url, $sql_tbl[customers].last_login, $sql_tbl[customers].first_login, $sql_tbl[customers].status, $sql_tbl[customers].language, $sql_tbl[customers].activity, $sql_tbl[customers].trusted_provider,
+                SELECT $sql_tbl[customers].id, $sql_tbl[customers].login, $sql_tbl[customers].username, $sql_tbl[customers].usertype, $sql_tbl[customers].invalid_login_attempts, $sql_tbl[customers].title, $sql_tbl[customers].firstname, $sql_tbl[customers].lastname, $sql_tbl[customers].company, $sql_tbl[customers].email, $sql_tbl[customers].url, $sql_tbl[customers].last_login, $sql_tbl[customers].first_login, $sql_tbl[customers].status, $sql_tbl[customers].language, $sql_tbl[customers].activity, $sql_tbl[customers].trusted_provider,
                 (SELECT COUNT(*) FROM $sql_tbl[orders] WHERE $sql_tbl[orders].userid = $sql_tbl[customers].id) as 'orders_count'
                 FROM $sql_tbl[customers]
                 ORDER BY orders_count desc
@@ -251,7 +271,7 @@ function get_users($from, $size, $sort)
             break;
         default:
             $query = mysql_query("
-                SELECT $sql_tbl[customers].login, $sql_tbl[customers].username, $sql_tbl[customers].usertype, $sql_tbl[customers].invalid_login_attempts, $sql_tbl[customers].title, $sql_tbl[customers].firstname, $sql_tbl[customers].lastname, $sql_tbl[customers].company, $sql_tbl[customers].email, $sql_tbl[customers].url, $sql_tbl[customers].last_login, $sql_tbl[customers].first_login, $sql_tbl[customers].status, $sql_tbl[customers].language, $sql_tbl[customers].activity, $sql_tbl[customers].trusted_provider
+                SELECT $sql_tbl[customers].id, $sql_tbl[customers].login, $sql_tbl[customers].username, $sql_tbl[customers].usertype, $sql_tbl[customers].invalid_login_attempts, $sql_tbl[customers].title, $sql_tbl[customers].firstname, $sql_tbl[customers].lastname, $sql_tbl[customers].company, $sql_tbl[customers].email, $sql_tbl[customers].url, $sql_tbl[customers].last_login, $sql_tbl[customers].first_login, $sql_tbl[customers].status, $sql_tbl[customers].language, $sql_tbl[customers].activity, $sql_tbl[customers].trusted_provider
                 FROM $sql_tbl[customers]
                 LIMIT $from, $size
                 ") or die(mysql_error());
@@ -268,23 +288,48 @@ function get_users($from, $size, $sort)
     return array_to_json($json_array);
 }
 
+function get_orders_for_user($user_id, $from, $size)
+{
+    global $sql_tbl;
+    if(!$user_id){
+        $user_id = 0;
+    }
+    if (!$from) {
+        $from = 0;
+    }
+    if (!$size) {
+        $size = 20;
+    }
+    $order_query = mysql_query("
+        SELECT userid, orderid, status, total, title, firstname, b_firstname, lastname, b_lastname, date
+        FROM $sql_tbl[orders]
+        WHERE userid=$user_id
+        LIMIT $from, $size
+        ") or die(mysql_error());
+    $result_array = array();
+    while ($row = mysql_fetch_assoc($order_query)) {
+        $row['details'] = get_order_details($row[userid]);
+        array_push($result_array, $row);
+    }
+    return array_to_json($result_array);
+}
+
 function get_last_order()
 {
     global $sql_tbl;
-    $orders_fields = array(orderid, status, total, title, firstname, b_firstname, lastname, b_lastname, date);
     $order_query = mysql_query("
         SELECT orderid, status, total, title, firstname, b_firstname, lastname, b_lastname, date
         FROM $sql_tbl[orders]
         ORDER BY date DESC LIMIT 1
         ") or die(mysql_error());
     $result_array = array();
-    $row = mysql_fetch_array($order_query);
-    foreach ($orders_fields as $value) {
-        $result_array[$value] = $row[$value];
+    $row = mysql_fetch_assoc($order_query);
+    foreach ($row as $key => $value) {
+        $result_array[$key] = $value;
     }
     $order_id = $row['orderid'];
     $order_details = get_order_details($order_id);
-    $result_array[details] = $order_details;
+    $result_array['details'] = $order_details;
     return array_to_json($result_array);
 }
 
@@ -319,8 +364,12 @@ function create_discount($minprice, $discount, $discount_type, $provider)
     if (!($minprice) || !($discount) || !($discount_type) || !($provider)) {
         return "error";
     }
-    $query = mysql_query("
+    mysql_query("
         INSERT INTO $sql_tbl[discounts] (minprice, discount, discount_type, provider)
+        VALUES ($minprice, $discount, '$discount_type', $provider)
+        ") or die(mysql_error());
+    mysql_query("
+        INSERT INTO $sql_tbl[discounts_memberships] (discountid, membershipid)
         VALUES ($minprice, $discount, '$discount_type', $provider)
         ") or die(mysql_error());
     return "success";
