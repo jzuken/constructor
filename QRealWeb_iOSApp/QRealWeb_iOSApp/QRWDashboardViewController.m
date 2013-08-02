@@ -90,5 +90,9 @@
     [_topSellersDashboardViewController setTopCategories:topCategories];
 }
 
+- (void)respondsForOrdersStatisticRequest:(NSDictionary *)statistic withArratOfKeys:(NSArray *)keys
+{
+    [_ordersInfoDashboardViewController setStatistic:statistic];
+}
 
 @end

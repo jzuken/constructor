@@ -36,3 +36,9 @@
 "RELOGIN_ALERT_TITLE" = "Wrong LOGIN/Password combination";//"Неправильная логин/пароль комбинация";
 
 "RELOGIN_ALERT_MESSAGE" = "Please try to re-login using different credentials";//"Пожалуйста воспользуйтесь правильной комбинацией";
+
+//No data on topSellers alert
+
+"ERROR_ALERT_TITLE" = "No data!";//"Неправильная логин/пароль комбинация";
+
+"NO_DATA_FOR_PERIOD_ALERT_MESSAGE" = "No data available for this time period";//"Пожалуйста воспользуйтесь правильной комбинацией";

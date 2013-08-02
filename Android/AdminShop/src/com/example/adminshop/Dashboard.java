@@ -337,31 +337,31 @@ public class Dashboard extends PinSupportNetworkActivity {
 						JSONArray currentPeriodArray = new JSONArray();
 						switch (topSellersPeriod) {
 						case 1:
-							if (obj.optBoolean("last_login", true)) {
-								currentPeriodArray = obj.getJSONArray("last_login");
-							} else {
+							if (obj.optString("last_login").equals("none")) {
 								noProducts.setText("No products sold during this period");
+							} else {
+								currentPeriodArray = obj.getJSONArray("last_login");
 							}
 							break;
 						case 2:
-							if (obj.optBoolean("today", true)) {
-								currentPeriodArray = obj.getJSONArray("today");
-							} else {
+							if (obj.optString("today").equals("none")) {
 								noProducts.setText("No products sold during this period");
+							} else {
+								currentPeriodArray = obj.getJSONArray("today");
 							}
 							break;
 						case 3:
-							if (obj.optBoolean("week", true)) {
-								currentPeriodArray = obj.getJSONArray("week");
-							} else {
+							if (obj.optString("week").equals("none")) {
 								noProducts.setText("No products sold during this period");
+							} else {
+								currentPeriodArray = obj.getJSONArray("week");
 							}
 							break;
 						case 4:
-							if (obj.optBoolean("month", true)) {
-								currentPeriodArray = obj.getJSONArray("month");
-							} else {
+							if (obj.optString("month").equals("none")) {
 								noProducts.setText("No products sold during this period");
+							} else {
+								currentPeriodArray = obj.getJSONArray("month");
 							}
 							break;
 						default:
@@ -401,31 +401,31 @@ public class Dashboard extends PinSupportNetworkActivity {
 						JSONArray currentPeriodArray = new JSONArray();
 						switch (topCategoriesPeriod) {
 						case 1:
-							if (obj.optBoolean("last_login", true)) {
-								currentPeriodArray = obj.getJSONArray("last_login");
-							} else {
+							if (obj.optString("last_login").equals("none")) {
 								noCategories.setText("No categories statistic during this period");
+							} else {							
+								currentPeriodArray = obj.getJSONArray("last_login");
 							}
 							break;
 						case 2:
-							if (obj.optBoolean("today", true)) {
-								currentPeriodArray = obj.getJSONArray("today");
-							} else {
+							if (obj.optString("today").equals("none")) {
 								noCategories.setText("No categories statistic during this period");
+							} else {
+								currentPeriodArray = obj.getJSONArray("today");
 							}
 							break;
 						case 3:
-							if (obj.optBoolean("week", true)) {
-								currentPeriodArray = obj.getJSONArray("week");
-							} else {
+							if (obj.optString("week").equals("none")) {
 								noCategories.setText("No categories statistic during this period");
+							} else {
+								currentPeriodArray = obj.getJSONArray("week");
 							}
 							break;
 						case 4:
-							if (obj.optBoolean("month", true)) {
-								currentPeriodArray = obj.getJSONArray("month");
-							} else {
+							if (obj.optString("month").equals("none")) {
 								noCategories.setText("No categories statistic during this period");
+							} else {
+								currentPeriodArray = obj.getJSONArray("month");
 							}
 							break;
 						default:
