@@ -48,8 +48,8 @@
     _IDLabel.text = [_lastOrder.orderid stringValue];
     _nameLabel.text = [NSString stringWithFormat:@"%@ %@", _lastOrder.firstname, _lastOrder.lastname];
     _dateLabel.text = _lastOrder.date;
-    _statusLabel.text = _lastOrder.status;
-    _totalPriceLabel.text = [_lastOrder.total stringValue];
+    _statusLabel.text = NSLocalizedString(_lastOrder.status, nil);
+    _totalPriceLabel.text = [NSString stringWithFormat:@"%.2f$", [_lastOrder.total floatValue]];
     [_productButton setTitle: [NSString stringWithFormat:@"%d items >", _lastOrder.products.count]forState:UIControlStateNormal];
     [_productButton addTarget:self action:@selector(openProductsView) forControlEvents:UIControlEventTouchUpInside];
 }

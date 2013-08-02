@@ -19,3 +19,7 @@ static NSString *const url_topProductsURL = @"http://54.213.38.9/xcart/api.php?r
 static NSString *const url_topCategoriesURL = @"http://54.213.38.9/xcart/api.php?request=top_categories";
 
 static NSString *const url_ordersStatisticURL = @"http://54.213.38.9/xcart/api.php?request=orders_statistic";
+
+#pragma mark Users
+
+static NSString *const url_usersURL = @"http://54.213.38.9/xcart/api.php?request=users&from=%d&size=%d&sort=%@";

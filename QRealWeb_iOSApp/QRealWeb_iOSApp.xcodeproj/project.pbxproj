@@ -68,6 +68,17 @@
 		7FBDFA3117AA81F1004B6CB8 /* QRWProductInLastOrderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FBDFA3017AA81F0004B6CB8 /* QRWProductInLastOrderCell.xib */; };
 		7FBDFA3417AAA795004B6CB8 /* QRWOrdersStatisticCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FBDFA3317AAA795004B6CB8 /* QRWOrdersStatisticCell.xib */; };
 		7FBDFA3717AAA7B7004B6CB8 /* QRWOrdersStatisticCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FBDFA3617AAA7B5004B6CB8 /* QRWOrdersStatisticCell.m */; };
+		7FBDFA3A17ABAB81004B6CB8 /* QRWUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FBDFA3917ABAB81004B6CB8 /* QRWUser.m */; };
+		7FBDFA3D17ABAC9F004B6CB8 /* QRWUsers.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FBDFA3C17ABAC9D004B6CB8 /* QRWUsers.m */; };
+		7FBDFA4217ABC095004B6CB8 /* QRWUsersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FBDFA4017ABC095004B6CB8 /* QRWUsersViewController.m */; };
+		7FBDFA4317ABC095004B6CB8 /* QRWUsersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FBDFA4117ABC095004B6CB8 /* QRWUsersViewController.xib */; };
+		7FBDFA4617ABC7DC004B6CB8 /* QRWUserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FBDFA4517ABC7DB004B6CB8 /* QRWUserCell.m */; };
+		7FBDFA4917ABC825004B6CB8 /* QRWUserCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FBDFA4817ABC825004B6CB8 /* QRWUserCell.xib */; };
+		7FBDFA4D17ABD439004B6CB8 /* QRWUsersSortedByTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FBDFA4C17ABD439004B6CB8 /* QRWUsersSortedByTableViewController.m */; };
+		7FBDFA4F17ABD5E0004B6CB8 /* QRWUsersSortedByTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FBDFA4E17ABD5DF004B6CB8 /* QRWUsersSortedByTableViewController.xib */; };
+		7FBDFA5817ABE3A4004B6CB8 /* FPPopoverController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FBDFA5717ABE3A4004B6CB8 /* FPPopoverController.m */; };
+		7FBDFA5917ABE3AF004B6CB8 /* FPPopoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FBDFA5317ABE398004B6CB8 /* FPPopoverView.m */; };
+		7FBDFA5A17ABE3B4004B6CB8 /* FPTouchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FBDFA5517ABE398004B6CB8 /* FPTouchView.m */; };
 		7FD6E3AC1796888A006B3440 /* QRWDashboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FD6E3AA17968889006B3440 /* QRWDashboardViewController.m */; };
 		7FD6E3AD1796888A006B3440 /* QRWDashboardViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FD6E3AB1796888A006B3440 /* QRWDashboardViewController.xib */; };
 		7FD6E3B11796BA24006B3440 /* UIColor+hex.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FD6E3B01796BA24006B3440 /* UIColor+hex.m */; };
@@ -92,6 +103,12 @@
 		968B179E179DFD2200D8D8C9 /* button_this_month.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 968B179A179DFD2200D8D8C9 /* button_this_month.jpg */; };
 		968B179F179DFD2200D8D8C9 /* button_this_week.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 968B179B179DFD2200D8D8C9 /* button_this_week.jpg */; };
 		968B17A0179DFD2200D8D8C9 /* button_today.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 968B179C179DFD2200D8D8C9 /* button_today.jpg */; };
+		968B17A517AAE48300D8D8C9 /* active_button_since_last_login.png in Resources */ = {isa = PBXBuildFile; fileRef = 968B17A117AAE47B00D8D8C9 /* active_button_since_last_login.png */; };
+		968B17A617AAE48300D8D8C9 /* active_button_this_month.png in Resources */ = {isa = PBXBuildFile; fileRef = 968B17A217AAE47D00D8D8C9 /* active_button_this_month.png */; };
+		968B17A717AAE48300D8D8C9 /* active_button_this_week.png in Resources */ = {isa = PBXBuildFile; fileRef = 968B17A317AAE48000D8D8C9 /* active_button_this_week.png */; };
+		968B17A817AAE48300D8D8C9 /* active_button_today.png in Resources */ = {isa = PBXBuildFile; fileRef = 968B17A417AAE48100D8D8C9 /* active_button_today.png */; };
+		968B17AC17AAF56300D8D8C9 /* title_welcome_to.png in Resources */ = {isa = PBXBuildFile; fileRef = 968B17AB17AAF56300D8D8C9 /* title_welcome_to.png */; };
+		968B17AE17AAF60500D8D8C9 /* button_login.png in Resources */ = {isa = PBXBuildFile; fileRef = 968B17AD17AAF60500D8D8C9 /* button_login.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -187,6 +204,26 @@
 		7FBDFA3317AAA795004B6CB8 /* QRWOrdersStatisticCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRWOrdersStatisticCell.xib; sourceTree = "<group>"; };
 		7FBDFA3517AAA7B5004B6CB8 /* QRWOrdersStatisticCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRWOrdersStatisticCell.h; sourceTree = "<group>"; };
 		7FBDFA3617AAA7B5004B6CB8 /* QRWOrdersStatisticCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRWOrdersStatisticCell.m; sourceTree = "<group>"; };
+		7FBDFA3817ABAB81004B6CB8 /* QRWUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRWUser.h; sourceTree = "<group>"; };
+		7FBDFA3917ABAB81004B6CB8 /* QRWUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRWUser.m; sourceTree = "<group>"; };
+		7FBDFA3B17ABAC9C004B6CB8 /* QRWUsers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRWUsers.h; sourceTree = "<group>"; };
+		7FBDFA3C17ABAC9D004B6CB8 /* QRWUsers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRWUsers.m; sourceTree = "<group>"; };
+		7FBDFA3F17ABC095004B6CB8 /* QRWUsersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRWUsersViewController.h; sourceTree = "<group>"; };
+		7FBDFA4017ABC095004B6CB8 /* QRWUsersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRWUsersViewController.m; sourceTree = "<group>"; };
+		7FBDFA4117ABC095004B6CB8 /* QRWUsersViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRWUsersViewController.xib; sourceTree = "<group>"; };
+		7FBDFA4417ABC7DB004B6CB8 /* QRWUserCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRWUserCell.h; sourceTree = "<group>"; };
+		7FBDFA4517ABC7DB004B6CB8 /* QRWUserCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRWUserCell.m; sourceTree = "<group>"; };
+		7FBDFA4817ABC825004B6CB8 /* QRWUserCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRWUserCell.xib; sourceTree = "<group>"; };
+		7FBDFA4B17ABD439004B6CB8 /* QRWUsersSortedByTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRWUsersSortedByTableViewController.h; sourceTree = "<group>"; };
+		7FBDFA4C17ABD439004B6CB8 /* QRWUsersSortedByTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRWUsersSortedByTableViewController.m; sourceTree = "<group>"; };
+		7FBDFA4E17ABD5DF004B6CB8 /* QRWUsersSortedByTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRWUsersSortedByTableViewController.xib; sourceTree = "<group>"; };
+		7FBDFA5217ABE398004B6CB8 /* FPPopoverView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FPPopoverView.h; sourceTree = "<group>"; };
+		7FBDFA5317ABE398004B6CB8 /* FPPopoverView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FPPopoverView.m; sourceTree = "<group>"; };
+		7FBDFA5417ABE398004B6CB8 /* FPTouchView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FPTouchView.h; sourceTree = "<group>"; };
+		7FBDFA5517ABE398004B6CB8 /* FPTouchView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FPTouchView.m; sourceTree = "<group>"; };
+		7FBDFA5617ABE3A4004B6CB8 /* FPPopoverController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FPPopoverController.h; sourceTree = "<group>"; };
+		7FBDFA5717ABE3A4004B6CB8 /* FPPopoverController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FPPopoverController.m; sourceTree = "<group>"; };
+		7FBDFA5B17ABE3C5004B6CB8 /* ARCMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARCMacros.h; sourceTree = "<group>"; };
 		7FD6E3A917968889006B3440 /* QRWDashboardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRWDashboardViewController.h; sourceTree = "<group>"; };
 		7FD6E3AA17968889006B3440 /* QRWDashboardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRWDashboardViewController.m; sourceTree = "<group>"; };
 		7FD6E3AB1796888A006B3440 /* QRWDashboardViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRWDashboardViewController.xib; sourceTree = "<group>"; };
@@ -222,6 +259,12 @@
 		968B179A179DFD2200D8D8C9 /* button_this_month.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = button_this_month.jpg; sourceTree = "<group>"; };
 		968B179B179DFD2200D8D8C9 /* button_this_week.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = button_this_week.jpg; sourceTree = "<group>"; };
 		968B179C179DFD2200D8D8C9 /* button_today.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = button_today.jpg; sourceTree = "<group>"; };
+		968B17A117AAE47B00D8D8C9 /* active_button_since_last_login.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = active_button_since_last_login.png; sourceTree = "<group>"; };
+		968B17A217AAE47D00D8D8C9 /* active_button_this_month.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = active_button_this_month.png; sourceTree = "<group>"; };
+		968B17A317AAE48000D8D8C9 /* active_button_this_week.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = active_button_this_week.png; sourceTree = "<group>"; };
+		968B17A417AAE48100D8D8C9 /* active_button_today.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = active_button_today.png; sourceTree = "<group>"; };
+		968B17AB17AAF56300D8D8C9 /* title_welcome_to.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = title_welcome_to.png; sourceTree = "<group>"; };
+		968B17AD17AAF60500D8D8C9 /* button_login.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_login.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -355,6 +398,8 @@
 		7F6FB268179539790024BB12 /* IMGS */ = {
 			isa = PBXGroup;
 			children = (
+				968B17AD17AAF60500D8D8C9 /* button_login.png */,
+				968B17AB17AAF56300D8D8C9 /* title_welcome_to.png */,
 				7FBDFA2A17AA8040004B6CB8 /* Exit.png */,
 				7F6FB26C179539BD0024BB12 /* large-black-and-white-stripes-a4.jpg */,
 				7F6FB26D179539BD0024BB12 /* Black_white_Apple_background.jpg */,
@@ -365,8 +410,8 @@
 		7F6FB270179539C70024BB12 /* UTILS */ = {
 			isa = PBXGroup;
 			children = (
-				7F6FB271179539D90024BB12 /* iCarousel.h */,
-				7F6FB272179539D90024BB12 /* iCarousel.m */,
+				7FBDFA5117ABE37F004B6CB8 /* Popover */,
+				7FBDFA5017ABE36E004B6CB8 /* Carousel */,
 			);
 			name = UTILS;
 			sourceTree = "<group>";
@@ -410,6 +455,10 @@
 				7FBDFA1717A905F1004B6CB8 /* QRWCategoryInTop.m */,
 				7FBDFA2117AA7612004B6CB8 /* QRWProductInOrder.h */,
 				7FBDFA2217AA7612004B6CB8 /* QRWProductInOrder.m */,
+				7FBDFA3817ABAB81004B6CB8 /* QRWUser.h */,
+				7FBDFA3917ABAB81004B6CB8 /* QRWUser.m */,
+				7FBDFA3B17ABAC9C004B6CB8 /* QRWUsers.h */,
+				7FBDFA3C17ABAC9D004B6CB8 /* QRWUsers.m */,
 			);
 			name = ENTETIES;
 			sourceTree = "<group>";
@@ -417,6 +466,7 @@
 		7F6FB27E17953A560024BB12 /* VIEW_CONTROLLERS */ = {
 			isa = PBXGroup;
 			children = (
+				7FBDFA3E17ABC066004B6CB8 /* UsersViewController */,
 				7FD6E3AE1796892C006B3440 /* DashboardViewController */,
 				7F6FB28E17953B470024BB12 /* LoginViewControllers */,
 				7F6FB27F17953A660024BB12 /* ProductViewController */,
@@ -547,6 +597,61 @@
 			name = OrdersStatisticCell;
 			sourceTree = "<group>";
 		};
+		7FBDFA3E17ABC066004B6CB8 /* UsersViewController */ = {
+			isa = PBXGroup;
+			children = (
+				7FBDFA4A17ABD401004B6CB8 /* SortedByView */,
+				7FBDFA4717ABC7E4004B6CB8 /* UserCell */,
+				7FBDFA3F17ABC095004B6CB8 /* QRWUsersViewController.h */,
+				7FBDFA4017ABC095004B6CB8 /* QRWUsersViewController.m */,
+				7FBDFA4117ABC095004B6CB8 /* QRWUsersViewController.xib */,
+			);
+			name = UsersViewController;
+			sourceTree = "<group>";
+		};
+		7FBDFA4717ABC7E4004B6CB8 /* UserCell */ = {
+			isa = PBXGroup;
+			children = (
+				7FBDFA4417ABC7DB004B6CB8 /* QRWUserCell.h */,
+				7FBDFA4517ABC7DB004B6CB8 /* QRWUserCell.m */,
+				7FBDFA4817ABC825004B6CB8 /* QRWUserCell.xib */,
+			);
+			name = UserCell;
+			sourceTree = "<group>";
+		};
+		7FBDFA4A17ABD401004B6CB8 /* SortedByView */ = {
+			isa = PBXGroup;
+			children = (
+				7FBDFA4B17ABD439004B6CB8 /* QRWUsersSortedByTableViewController.h */,
+				7FBDFA4C17ABD439004B6CB8 /* QRWUsersSortedByTableViewController.m */,
+				7FBDFA4E17ABD5DF004B6CB8 /* QRWUsersSortedByTableViewController.xib */,
+			);
+			name = SortedByView;
+			sourceTree = "<group>";
+		};
+		7FBDFA5017ABE36E004B6CB8 /* Carousel */ = {
+			isa = PBXGroup;
+			children = (
+				7F6FB271179539D90024BB12 /* iCarousel.h */,
+				7F6FB272179539D90024BB12 /* iCarousel.m */,
+			);
+			name = Carousel;
+			sourceTree = "<group>";
+		};
+		7FBDFA5117ABE37F004B6CB8 /* Popover */ = {
+			isa = PBXGroup;
+			children = (
+				7FBDFA5B17ABE3C5004B6CB8 /* ARCMacros.h */,
+				7FBDFA5617ABE3A4004B6CB8 /* FPPopoverController.h */,
+				7FBDFA5717ABE3A4004B6CB8 /* FPPopoverController.m */,
+				7FBDFA5217ABE398004B6CB8 /* FPPopoverView.h */,
+				7FBDFA5317ABE398004B6CB8 /* FPPopoverView.m */,
+				7FBDFA5417ABE398004B6CB8 /* FPTouchView.h */,
+				7FBDFA5517ABE398004B6CB8 /* FPTouchView.m */,
+			);
+			name = Popover;
+			sourceTree = "<group>";
+		};
 		7FD6E3AE1796892C006B3440 /* DashboardViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -593,6 +698,10 @@
 		968B1767179DCE6D00D8D8C9 /* SegmentedControl */ = {
 			isa = PBXGroup;
 			children = (
+				968B17A117AAE47B00D8D8C9 /* active_button_since_last_login.png */,
+				968B17A217AAE47D00D8D8C9 /* active_button_this_month.png */,
+				968B17A317AAE48000D8D8C9 /* active_button_this_week.png */,
+				968B17A417AAE48100D8D8C9 /* active_button_today.png */,
 				7F6DFA48179E5F4E00421123 /* segmentedControl_separator.png */,
 				968B1799179DFD2200D8D8C9 /* button_since_last_login.jpg */,
 				968B179A179DFD2200D8D8C9 /* button_this_month.jpg */,
@@ -750,6 +859,15 @@
 				7FBDFA2B17AA8040004B6CB8 /* Exit.png in Resources */,
 				7FBDFA3117AA81F1004B6CB8 /* QRWProductInLastOrderCell.xib in Resources */,
 				7FBDFA3417AAA795004B6CB8 /* QRWOrdersStatisticCell.xib in Resources */,
+				968B17A517AAE48300D8D8C9 /* active_button_since_last_login.png in Resources */,
+				968B17A617AAE48300D8D8C9 /* active_button_this_month.png in Resources */,
+				968B17A717AAE48300D8D8C9 /* active_button_this_week.png in Resources */,
+				968B17A817AAE48300D8D8C9 /* active_button_today.png in Resources */,
+				968B17AC17AAF56300D8D8C9 /* title_welcome_to.png in Resources */,
+				968B17AE17AAF60500D8D8C9 /* button_login.png in Resources */,
+				7FBDFA4317ABC095004B6CB8 /* QRWUsersViewController.xib in Resources */,
+				7FBDFA4917ABC825004B6CB8 /* QRWUserCell.xib in Resources */,
+				7FBDFA4F17ABD5E0004B6CB8 /* QRWUsersSortedByTableViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -795,6 +913,14 @@
 				7FBDFA2817AA7EDD004B6CB8 /* QRWProductsLastorderDashboardViewController.m in Sources */,
 				7FBDFA2F17AA81BE004B6CB8 /* QRWProductInLastOrderCell.m in Sources */,
 				7FBDFA3717AAA7B7004B6CB8 /* QRWOrdersStatisticCell.m in Sources */,
+				7FBDFA3A17ABAB81004B6CB8 /* QRWUser.m in Sources */,
+				7FBDFA3D17ABAC9F004B6CB8 /* QRWUsers.m in Sources */,
+				7FBDFA4217ABC095004B6CB8 /* QRWUsersViewController.m in Sources */,
+				7FBDFA4617ABC7DC004B6CB8 /* QRWUserCell.m in Sources */,
+				7FBDFA4D17ABD439004B6CB8 /* QRWUsersSortedByTableViewController.m in Sources */,
+				7FBDFA5817ABE3A4004B6CB8 /* FPPopoverController.m in Sources */,
+				7FBDFA5917ABE3AF004B6CB8 /* FPPopoverView.m in Sources */,
+				7FBDFA5A17ABE3B4004B6CB8 /* FPTouchView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
