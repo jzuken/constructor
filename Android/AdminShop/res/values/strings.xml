@@ -135,5 +135,12 @@
 	<string name="edit">Edit</string>
 	<string name="confirmation_question">Are you sure you want to delete this discount?</string>
 	<string name="sort_by">Sort by:</string>
+	<string name="last_login_date">Last login</string>
+	<string name="last_order_date">Last order</string>
+	<string name="total_reviews">Total reviews</string>
+	<string name="total_orders_text">Total orders</string>
+	<string name="login_text">Login:</string>
+	<string name="user_type">User type:</string>
+	<string name="last_login_text">Last login:</string>
     
 </resources>
