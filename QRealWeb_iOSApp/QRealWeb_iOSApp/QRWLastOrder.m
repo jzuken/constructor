@@ -19,20 +19,8 @@
 @synthesize firstname;
 @synthesize lastname;
 @synthesize email;
+@synthesize products;
 
-//@synthesize giftcert_discount;
-//@synthesize giftcert_ids;
-//@synthesize subtotal;
-//@synthesize discount;
-//@synthesize coupon;
-//@synthesize coupon_discount;
-//@synthesize shippingid;
-//
-//@synthesize shipping;
-//@synthesize tracking;
-//@synthesize shipping_cost;
-//@synthesize tax;
-//@synthesize taxes_applied;
 
 
 @end

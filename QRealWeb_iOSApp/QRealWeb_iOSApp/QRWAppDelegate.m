@@ -37,8 +37,8 @@
     UISearchBar *searchBarAppearance = [UISearchBar appearance];
     [searchBarAppearance setTintColor:tintColor];
     
-    UITableView *tableViewAppereance = [UITableView appearance];
-    [tableViewAppereance setBackgroundColor:tintColor];
+//    UITableView *tableViewAppereance = [UITableView appearance];
+//    [tableViewAppereance setBackgroundColor:tintColor];
 }
 
 

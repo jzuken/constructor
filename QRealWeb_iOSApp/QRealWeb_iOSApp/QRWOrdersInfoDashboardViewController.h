@@ -8,6 +8,13 @@
 
 #import "QRWBaseDashboardPageViewController.h"
 
-@interface QRWOrdersInfoDashboardViewController : QRWBaseDashboardPageViewController
+@interface QRWOrdersInfoDashboardViewController : QRWBaseDashboardPageViewController<UITableViewDelegate, UITableViewDataSource>
+
+
+@property (nonatomic, strong) IBOutlet UITableView *ordersStatisticTableView;
+
+
+
+- (void)setStatistic:(NSDictionary *)statistic;
 
 @end

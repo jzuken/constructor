@@ -13,6 +13,8 @@
 #import "QRWTopProducts.h"
 #import "QRWTopCategories.h"
 
+#import "QRWUsers.h"
+
 
 
 @protocol QRWDataManagerDelegate <NSObject>
@@ -29,6 +31,10 @@
 
 -(void) respondsForTopCategoriesRequest:(QRWTopCategories *)topCategories;
 
+-(void) respondsForOrdersStatisticRequest:(NSDictionary *)statistic withArratOfKeys: (NSArray *) keys;
+
+-(void) respondsForUserRequest:(QRWUsers *)usersObject;
+
 @end
 
 
@@ -40,14 +46,35 @@
 
 + (QRWDataManager *)instance;
 
+/*
+Auth
+ */
+
 - (void) sendAuthorizationRequestWithLogin:(NSString *)login andPassowrd:(NSString *)password;
 
+/*
+Settings for admin
+ */
+
 - (void) sendToolsRequest;
+
+
+/*
+ Dashboard
+ */
 
 - (void) sendLastOrderRequest;
 
 - (void) sendTopProductsRequest;
 
 - (void) sendTopCategoriesRequest;
+
+- (void) sendOrdersStatisticRequest;
+
+/*
+Users
+ */
+
+- (void) sendUsersRequestWithSort: (NSString *) sort startPoint: (NSInteger) startPoint lenght: (NSInteger) lenght;
 
 @end

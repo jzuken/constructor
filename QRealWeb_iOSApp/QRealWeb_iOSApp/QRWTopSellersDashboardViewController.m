@@ -41,10 +41,26 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    _topSellersTableView.hidden = YES;
     [dataManager sendTopCategoriesRequest];
     [dataManager sendTopProductsRequest];
     [self.timeAndTypeSegmentedControl setSelectedSegmentIndex:0];
+    [self.timeAndTypeSegmentedControl addTarget:self action:@selector(selectedControlEvent) forControlEvents:UIControlEventValueChanged];
     self.currentSegment = @"last_login";
+}
+
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self presentSegmentedControl];
+}
+
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [self dismissSegmentedControl];
 }
 
 - (void)didReceiveMemoryWarning
@@ -56,25 +72,25 @@
 - (void) setTopProducts: (QRWTopProducts *) topProducts
 {
     _topProducts = topProducts;
+
     switch (self.timeAndTypeSegmentedControl.selectedSegmentIndex) {
         case 0:
-            _categoriesArray = _topCategories.lastLoginTopArray;
+            _productsArray = [NSArray arrayWithArray:_topProducts.lastLoginTopArray];
             break;
             
         case 1:
-            _categoriesArray = _topCategories.todayTopArray;
+            _productsArray = [NSArray arrayWithArray:_topProducts.todayTopArray];
             break;
             
         case 2:
-            _categoriesArray = _topCategories.weekTopArray;
+            _productsArray = [NSArray arrayWithArray:_topProducts.weekTopArray];
             break;
             
         case 3:
-            _categoriesArray = _topCategories.monthTopArray;
+            _productsArray = [NSArray arrayWithArray:_topProducts.monthTopArray];
             break;
     }
-    [_topSellersTableView reloadData];
-//    [_topSellersTableView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 1)] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self reloadDataInTableView];
 }
 
 - (void) setTopCategories: (QRWTopCategories *) topCategories
@@ -82,24 +98,46 @@
     _topCategories = topCategories;
     switch (self.timeAndTypeSegmentedControl.selectedSegmentIndex) {
         case 0:
-            _productsArray = _topProducts.lastLoginTopArray;
+            _categoriesArray = [NSArray arrayWithArray:_topCategories.lastLoginTopArray];
             break;
             
         case 1:
-            _productsArray = _topProducts.todayTopArray;
+            _categoriesArray = [NSArray arrayWithArray:_topCategories.todayTopArray];
             break;
             
         case 2:
-            _productsArray = _topProducts.weekTopArray;
+            _categoriesArray = [NSArray arrayWithArray:_topCategories.weekTopArray];
             break;
             
         case 3:
-            _productsArray = _topProducts.monthTopArray;
+            _categoriesArray = [NSArray arrayWithArray:_topCategories.monthTopArray];
             break;
     }
     
+    [self reloadDataInTableView];
+}
+
+
+
+- (void) reloadDataInTableView
+{
+    if ((_categoriesArray.count == 0) && (_productsArray.count == 0)) {
+        _topSellersTableView.hidden = YES;
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"ERROR_ALERT_TITLE", nil)
+                                                        message:NSLocalizedString(@"NO_DATA_FOR_PERIOD_ALERT_MESSAGE", nil)
+                                                       delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil)
+                                              otherButtonTitles:nil, nil];
+        [alert show];
+    } else {
+        _topSellersTableView.hidden = NO;
+    }
     [_topSellersTableView reloadData];
-//    [_topSellersTableView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(1, 1)] withRowAnimation:UITableViewRowAnimationAutomatic];
+}
+
+- (void) selectedControlEvent
+{
+    [self setTopCategories:_topCategories];
+    [self setTopProducts:_topProducts];
 }
 
 
@@ -107,7 +145,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 0;
+    return 2;
 }
 
 
@@ -126,7 +164,7 @@
     if (indexPath.section == 0) {
         return 70;
     } else {
-        return 60;
+        return 50;
     }
 }
 
@@ -144,7 +182,6 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    DLog(@"Load cell in section: %d row: %d", indexPath.section, indexPath.row);
     if (indexPath.section == 0) {
         NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:@"QRWTopSellersTopProductsTableViewCell" owner:self options:nil];
         QRWTopSellersTopProductsTableViewCell *cell = [topLevelObjects objectAtIndex:0];
@@ -169,7 +206,7 @@
     
     cell.countLabel.text = [NSString stringWithFormat:@"%d", [productInTop.count intValue]];
     cell.namelabel.text = productInTop.product;
-    cell.codeLabel.text = productInTop.productcode;
+    cell.codeLabel.text = [NSString stringWithFormat:@"Code: %@", productInTop.productcode];
     cell.idLabel.text = [NSString stringWithFormat:@"ID: %d", [productInTop.productid intValue]];
 }
 

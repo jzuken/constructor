@@ -77,7 +77,7 @@
 
 - (void)respondsForLastOrderRequest:(QRWLastOrder *)lastOrder
 {
-//    [_lastOrderDashboardViewController setLastOrder:lastOrder];
+    [_lastOrderDashboardViewController setLastOrder:lastOrder];
 }
 
 - (void)respondsForTopProductsRequest:(QRWTopProducts *)topProducts
@@ -90,5 +90,9 @@
     [_topSellersDashboardViewController setTopCategories:topCategories];
 }
 
+- (void)respondsForOrdersStatisticRequest:(NSDictionary *)statistic withArratOfKeys:(NSArray *)keys
+{
+    [_ordersInfoDashboardViewController setStatistic:statistic];
+}
 
 @end
