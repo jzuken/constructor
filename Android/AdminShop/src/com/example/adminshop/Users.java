@@ -109,12 +109,14 @@ public class Users extends PinSupportNetworkActivity {
 		View listHeader = inflater.inflate(R.layout.users_header, null, false);
 		registered = (TextView) listHeader.findViewById(R.id.registered);
 		online = (TextView) listHeader.findViewById(R.id.online);
-		usersListView.addHeaderView(listHeader);
+		usersListView.addHeaderView(listHeader, null, false);
 		
 		View listFooter = inflater.inflate(R.layout.users_footer, null, false);
 		showMoreButton = (Button) listFooter.findViewById(R.id.show_more_button);
-		usersListView.addFooterView(listFooter);
+		usersListView.addFooterView(listFooter, null, false);
 		
+		usersListView.setHeaderDividersEnabled(false);
+		usersListView.setFooterDividersEnabled(false);
 		usersListView.setAdapter(adapter);
 	}
 

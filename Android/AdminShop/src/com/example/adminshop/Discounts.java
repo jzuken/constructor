@@ -46,7 +46,16 @@ public class Discounts extends PinSupportNetworkActivity {
 							String orderSubtotalString = obj.getString("minprice");
 							String discountString = obj.getString("discount");
 							String discountTypeString = obj.getString("discount_type");
-							addDiscountToList(id, orderSubtotalString, discountString, discountTypeString, "All");
+							String membershipid = obj.getString("membershipid");
+							String membership = null;
+							if (membershipid.equals("none")) {
+								membership = "All";
+							} else if (membershipid.equals("1")) {
+								membership = "Premium";
+							} else {
+								membership = "Wholesale";
+							}
+							addDiscountToList(id, orderSubtotalString, discountString, discountTypeString, membership);
 						}
 					} catch (JSONException e) {
 						e.printStackTrace();

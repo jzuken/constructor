@@ -17,7 +17,6 @@ public class DiscountAdder extends PinSupportNetworkActivity {
 		allButton = (RadioButton) findViewById(R.id.allRadioButton);
 		allButton.setChecked(true);
 		premiumButton = (RadioButton) findViewById(R.id.premiumRadioButton);
-		wholesaleButton = (RadioButton) findViewById(R.id.wholesaleRadioButton);
 		percentButton = (RadioButton) findViewById(R.id.percentRadioButton);
 		percentButton.setChecked(true);
 		orderSubtotalEditor = (EditText) findViewById(R.id.orderSubtotalEditor);
@@ -33,12 +32,17 @@ public class DiscountAdder extends PinSupportNetworkActivity {
 		String orderSubtotalValue = orderSubtotalEditor.getText().toString();
 		String discountValue = discountEditor.getText().toString();
 		String discountTypeValue = getDiscountType();
+		String membershipIdParametr = "";
+		String memvershipId = getMembershipId();
+		if (!memvershipId.equals("0")) {
+			membershipIdParametr = "&membership_id=" + memvershipId;
+		}
 		String response;
 		try {
 			response = new GetRequester().execute(
 					"http://54.213.38.9/xcart/api.php?request=create_discount&minprice=" + orderSubtotalValue
 							+ "&discount=" + discountValue + "&discount_type=" + discountTypeValue + "&provider="
-							+ provider).get();
+							+ provider + membershipIdParametr).get();
 		} catch (Exception e) {
 			response = null;
 		}
@@ -70,9 +74,19 @@ public class DiscountAdder extends PinSupportNetworkActivity {
 		}
 	}
 	
+	private String getMembershipId() {
+		if (allButton.isChecked()) {
+			return "0";
+		} else if (premiumButton.isChecked()) {
+			return "1";
+		} else {
+			return "2";
+		}
+		
+	}
+	
 	private RadioButton allButton;
 	private RadioButton premiumButton;
-	private RadioButton wholesaleButton;
 	private RadioButton percentButton;
 	private EditText orderSubtotalEditor;
 	private EditText discountEditor;
