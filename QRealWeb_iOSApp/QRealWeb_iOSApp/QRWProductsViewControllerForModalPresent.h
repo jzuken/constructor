@@ -8,7 +8,7 @@
 
 #import "QRWBaseViewController.h"
 
-@interface QRWProductsLastorderDashboardViewController : QRWBaseViewController <UITableViewDataSource, UITableViewDelegate>
+@interface QRWProductsViewControllerForModalPresent : QRWBaseViewController <UITableViewDataSource, UITableViewDelegate>
 
 
 @property (nonatomic, strong) IBOutlet UITableView *productsTableView;

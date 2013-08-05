@@ -53,6 +53,16 @@
     _currentSort = @"orders";
     [self.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithTitle:@"Sort by:" style:UIBarButtonItemStyleBordered target:self action:@selector(openSortedByPopover)]];
     
+    __weak QRWUsersViewController *weakSelf = self;
+    
+    [_usersTableView addPullToRefreshWithActionHandler:^{
+        [weakSelf reloadsTableViewData];
+    }];
+    
+    [_usersTableView addInfiniteScrollingWithActionHandler:^{
+        [weakSelf addsDataAndReloadsTableView];
+    }];
+    
     [dataManager sendUsersRequestWithSort:_currentSort startPoint:0 lenght:10];
 }
 
@@ -62,10 +72,11 @@
     if (_users.count == 0) {
         _users = [NSMutableArray arrayWithArray:usersObject.users];
     } else {
-        [_users addObject:usersObject.users];
+        [_users addObjectsFromArray:usersObject.users];
     }
     [_usersTableView reloadData];
     loadMoreDataAvaliable = YES;
+    [_usersTableView.pullToRefreshView stopAnimating];
 }
 
 - (void) openSortedByPopover
@@ -77,7 +88,6 @@
     _sortedByPopoverController.contentSize = _sortedByViewController.view.frame.size;
     _sortedByPopoverController.border = NO;
     _sortedByPopoverController.tint = FPPopoverWhiteTint;
-//    [_sortedByPopoverController presentPopoverFromView:[[UIView alloc] initWithFrame:CGRectMake(0, 5, 40, 20)]];
     [_sortedByPopoverController presentPopoverFromView:_pointForPopoverPresent];
 
 }
@@ -85,12 +95,16 @@
 
 - (void) addsDataAndReloadsTableView
 {
-    if (loadMoreDataAvaliable) {
-        loadMoreDataAvaliable = NO;
-        [dataManager sendUsersRequestWithSort:_currentSort startPoint:[_usersTableView numberOfRowsInSection:0] lenght:10];
-    }
+    [dataManager sendUsersRequestWithSort:_currentSort startPoint:[_usersTableView numberOfRowsInSection:0] lenght:10];
 }
 
+
+- (void) reloadsTableViewData
+{
+    [dataManager sendUsersRequestWithSort:_currentSort startPoint:[_usersTableView numberOfRowsInSection:0] lenght:10];
+    [_users removeAllObjects];
+    [_usersTableView reloadData];
+}
 
 #pragma mark QRWUsersSortedByTableViewControllerDelegate
 
@@ -99,29 +113,21 @@
     if (![_currentSort isEqualToString:sortType]) {
         [_users removeAllObjects];
         [_usersTableView reloadData];
+        _currentSort = sortType;
+        [dataManager sendUsersRequestWithSort:_currentSort startPoint:0 lenght:10];
     }
-    _currentSort = sortType;
-    [dataManager sendUsersRequestWithSort:_currentSort startPoint:0 lenght:10];
+    [_sortedByPopoverController dismissPopoverAnimated:YES];
 }
 
 #pragma mark Table view methods
 
-- (void)scrollViewDidScroll: (UIScrollView *)scroll
-{
-    NSInteger currentOffset = scroll.contentOffset.y;
-    NSInteger maximumOffset = scroll.contentSize.height - scroll.frame.size.height;
-
-    if (maximumOffset - currentOffset <= -40.0) {
-        [self addsDataAndReloadsTableView];
-    }
-}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     UIActionSheet *userActionSheet = [[UIActionSheet alloc] initWithTitle:nil
                                                                  delegate:self
-                                                        cancelButtonTitle:@"Cencal"
+                                                        cancelButtonTitle:@"Cancel"
                                                    destructiveButtonTitle:nil
                                                         otherButtonTitles:@"Full info", @"Orders list", @"Send a message", @"To the black list with a message", nil];
     [userActionSheet showInView:self.view];

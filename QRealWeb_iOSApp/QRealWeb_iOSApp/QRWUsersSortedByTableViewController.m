@@ -39,7 +39,6 @@
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [_delegate useSortWithName:_currentSort];
 }
 
 
@@ -53,6 +52,7 @@
     [_sortedByTableView cellForRowAtIndexPath:[NSIndexPath indexPathForItem:[_avaliableSorts indexOfObject:_currentSort] inSection:0]].accessoryType = UITableViewCellAccessoryNone;
     _currentSort = [_avaliableSorts objectAtIndex:indexPath.row];
     [_sortedByTableView cellForRowAtIndexPath:indexPath].accessoryType = UITableViewCellAccessoryCheckmark;
+    [_delegate useSortWithName:_currentSort];
 }
 
 

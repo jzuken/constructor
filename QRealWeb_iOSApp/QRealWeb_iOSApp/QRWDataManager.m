@@ -19,6 +19,8 @@
 
 #import "QRWDashboardViewController.h"
 #import "QRWUsersViewController.h"
+#import "QRWDiscountsViewController.h"
+
 
 
 @interface QRWDataManager ()
@@ -89,6 +91,10 @@ static QRWDataManager *_instance;
         [[(QRWMainScrinViewController *)_delegate navigationController] pushViewController:[[QRWUsersViewController alloc] init] animated:YES];
     };
     
+    void (^discountsActionBlock)(void) = ^{
+        [[(QRWMainScrinViewController *)_delegate navigationController] pushViewController:[[QRWDiscountsViewController alloc] init] animated:YES];
+    };
+    
     for (int index = 0; index < 6; index++) {
         QRWToolView *toolView;
         switch (index) {
@@ -101,7 +107,7 @@ static QRWDataManager *_instance;
                 break;
                 
             case 2:
-                toolView = [[QRWToolView alloc] initWithName:@"" image:[UIImage imageNamed:@"discountsIcon.jpg"] actionBlock:actionBlock];
+                toolView = [[QRWToolView alloc] initWithName:@"" image:[UIImage imageNamed:@"discountsIcon.jpg"] actionBlock:discountsActionBlock];
                 break;
                 
             case 3:
@@ -126,8 +132,19 @@ static QRWDataManager *_instance;
     
 }
 
-#pragma mark Users
 
+
+#pragma mark Discounts
+
+
+
+- (void) sendDiscountsRequest
+{
+    [self sendRequestUseDownloaderWithURL:url_discountsURL];
+}
+
+
+#pragma mark Users
 
 
 - (void) sendUsersRequestWithSort: (NSString *) sort startPoint: (NSInteger) startPoint lenght: (NSInteger) lenght
@@ -162,6 +179,46 @@ static QRWDataManager *_instance;
 }
 
 #pragma mark SEND OBJECTS TO CONTROLLERS
+
+
+#pragma mark Discounts
+
+
+-(void) sendResponseForDiscountRequest:(NSData *)jsonObject
+{
+    NSError *error;
+    NSArray *jsonObjects = [NSJSONSerialization JSONObjectWithData:jsonObject options:kNilOptions error:&error];
+    
+    NSMutableArray *discounts = [[NSMutableArray alloc] init];
+    
+    NSNumberFormatter * formatter = [[NSNumberFormatter alloc] init];
+    [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
+
+        
+    for (NSDictionary *discountInJSON in jsonObjects) {
+            
+        NSNumberFormatter * formatter = [[NSNumberFormatter alloc] init];
+        [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
+        
+        QRWDiscount *discount = [[QRWDiscount alloc] init];
+        
+        discount.discountType = [discountInJSON objectForKey:@"discount_type"];
+        discount.discountid = [formatter numberFromString: (NSString *)[discountInJSON objectForKey:@"discountid"]];
+        discount.minprice = [formatter numberFromString: (NSString *)[discountInJSON objectForKey:@"minprice"]];
+        discount.discount = [formatter numberFromString: (NSString *)[discountInJSON objectForKey:@"discount"]];
+        discount.provider = [formatter numberFromString: (NSString *)[discountInJSON objectForKey:@"provider"]];
+        if (![@"none" isEqualToString:[discountInJSON objectForKey:@"membershipid"] ]) {
+            discount.membershipid = [formatter numberFromString: (NSString *)[discountInJSON objectForKey:@"membershipid"]];
+        } else {
+            discount.membershipid = 0;
+            
+        }
+        
+        [discounts addObject:discount];
+    }
+
+    [_delegate respondsForDiscountsRequest:discounts];
+}
 
 
 #pragma mark Users
@@ -404,6 +461,7 @@ static QRWDataManager *_instance;
     
     NSDictionary *jsonDictionary = [NSJSONSerialization JSONObjectWithData:jsonData options:kNilOptions error:&error];
     
+    
     if ([url_lastOrderURL isEqualToString:requesrURL.absoluteString]) {
         [self sendResponseForLastOrderRequest: jsonDictionary];
     }
@@ -422,6 +480,10 @@ static QRWDataManager *_instance;
     
     if ([usersUrl isEqualToString:requesrURL.absoluteString]) {
         [self sendResponseForUserRequest:jsonDictionary];
+    }
+    
+    if ([url_discountsURL isEqualToString:requesrURL.absoluteString]) {
+        [self sendResponseForDiscountRequest:jsonData];
     }
 }
 

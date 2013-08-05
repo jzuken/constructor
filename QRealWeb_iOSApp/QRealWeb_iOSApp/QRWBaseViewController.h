@@ -12,6 +12,8 @@
 #import "constants.h"
 #import "UIDevice+Resolutions.h"
 
+#import "SVPullToRefresh.h"
+
 
 
 @interface QRWBaseViewController : UIViewController<QRWDataManagerDelegate>

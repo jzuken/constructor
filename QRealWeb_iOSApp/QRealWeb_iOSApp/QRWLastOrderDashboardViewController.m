@@ -7,13 +7,13 @@
 //
 
 #import "QRWLastOrderDashboardViewController.h"
-#import "QRWProductsLastorderDashboardViewController.h"
+#import "QRWProductsViewControllerForModalPresent.h"
 
 @interface QRWLastOrderDashboardViewController ()
 
 @property (nonatomic, strong) QRWLastOrder *lastOrder;
 
-@property (nonatomic, strong) QRWProductsLastorderDashboardViewController *productsLastorderDashboardViewController;
+@property (nonatomic, strong) QRWProductsViewControllerForModalPresent *productsLastorderDashboardViewController;
 
 @end
 
@@ -57,7 +57,7 @@
 
 - (void) openProductsView
 {
-    _productsLastorderDashboardViewController = [[QRWProductsLastorderDashboardViewController alloc] initWithProducts:_lastOrder.products];
+    _productsLastorderDashboardViewController = [[QRWProductsViewControllerForModalPresent alloc] initWithProducts:_lastOrder.products];
     [self presentViewController:_productsLastorderDashboardViewController animated:YES completion:nil];
 }
 
