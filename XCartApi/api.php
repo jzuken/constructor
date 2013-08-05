@@ -3,14 +3,14 @@
 /*
  * Development imports
  */
-//require './xcart/top.inc.php';
-//require './xcart/init.php';
+require './xcart/top.inc.php';
+require './xcart/init.php';
 
 /*
  * Production imports
  */
-require './top.inc.php';
-require './init.php';
+//require './top.inc.php';
+//require './init.php';
 
 mysql_connect($sql_host, $sql_user, $sql_password)  or die(mysql_error());
 mysql_select_db($sql_db) or die(mysql_error());
@@ -291,7 +291,7 @@ function get_users($from, $size, $sort)
 function get_orders_for_user($user_id, $from, $size)
 {
     global $sql_tbl;
-    if(!$user_id){
+    if (!$user_id) {
         $user_id = 0;
     }
     if (!$from) {
@@ -352,36 +352,80 @@ function get_discounts($fields)
 {
     global $sql_tbl;
     $query = mysql_query("
-        SELECT discountid, minprice, discount, discount_type, provider
+        SELECT $sql_tbl[discounts].discountid, minprice, discount, discount_type, provider, ifnull($sql_tbl[discount_memberships].membershipid, 'none') as 'membershipid'
         FROM $sql_tbl[discounts]
+        LEFT JOIN $sql_tbl[discount_memberships]
+        ON $sql_tbl[discounts].discountid = $sql_tbl[discount_memberships].discountid
         ") or die(mysql_error());
     return get_json($query);
 }
 
-function create_discount($minprice, $discount, $discount_type, $provider)
+function create_discount($minprice, $discount, $discount_type, $provider, $membership_id)
 {
     global $sql_tbl;
     if (!($minprice) || !($discount) || !($discount_type) || !($provider)) {
         return "error";
     }
-    mysql_query("
+    if ($membership_id != 1 && $membership_id != 2) {
+        mysql_query("
         INSERT INTO $sql_tbl[discounts] (minprice, discount, discount_type, provider)
         VALUES ($minprice, $discount, '$discount_type', $provider)
         ") or die(mysql_error());
-    mysql_query("
-        INSERT INTO $sql_tbl[discounts_memberships] (discountid, membershipid)
-        VALUES ($minprice, $discount, '$discount_type', $provider)
-        ") or die(mysql_error());
+    } else {
+        mysql_query("
+            BEGIN;") or die(mysql_error());
+        mysql_query("
+            INSERT INTO $sql_tbl[discounts] (minprice, discount, discount_type, provider)
+            VALUES ($minprice, $discount, '$discount_type', $provider);
+            ") or die(mysql_error());
+        mysql_query("
+            INSERT INTO $sql_tbl[discount_memberships] (discountid, membershipid)
+            VALUES (LAST_INSERT_ID(), $membership_id);
+            ") or die(mysql_error());
+        mysql_query("
+            COMMIT;
+            ") or die(mysql_error());
+    }
     return "success";
 }
 
-function update_discount($id, $minprice, $discount, $discount_type, $provider)
+function update_discount($id, $minprice, $discount, $discount_type, $provider, $membership_id)
 {
     global $sql_tbl;
     if (!($id) || !($minprice) || !($discount) || !($discount_type) || !($provider)) {
         return "error";
     }
-    $query = mysql_query("
+    if ($membership_id != 1 && $membership_id != 2) {
+        mysql_query("
+            DELETE FROM $sql_tbl[discount_memberships]
+            WHERE discountid=$id
+            ") or die(mysql_error());
+        mysql_query("
+            UPDATE $sql_tbl[discounts]
+            SET minprice=$minprice, discount=$discount, discount_type='$discount_type', provider=$provider
+            WHERE discountid=$id
+            ") or die(mysql_error());
+    }else{
+        mysql_query("
+            BEGIN;") or die(mysql_error());
+        mysql_query("
+             UPDATE $sql_tbl[discounts]
+             SET minprice=$minprice, discount=$discount, discount_type='$discount_type', provider=$provider
+             WHERE discountid=$id
+          ") or die(mysql_error());
+        mysql_query("
+            DELETE FROM $sql_tbl[discount_memberships]
+            WHERE discountid=$id
+            ") or die(mysql_error());
+        mysql_query("
+            INSERT INTO $sql_tbl[discount_memberships] (discountid, membershipid)
+            VALUES ($id, $membership_id);
+            ") or die(mysql_error());
+        mysql_query("
+            COMMIT;
+            ") or die(mysql_error());
+    }
+    mysql_query("
         UPDATE $sql_tbl[discounts]
         SET minprice=$minprice, discount=$discount, discount_type='$discount_type', provider=$provider
         WHERE discountid=$id
