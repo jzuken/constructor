@@ -9,11 +9,13 @@
 #import "QRWDiscountsViewController.h"
 #import "QRWDiscount.h"
 #import "QRWDiscountCell.h"
+#import "QRWDiscountEditFormViewController.h"
 
 @interface QRWDiscountsViewController ()
 
 
 @property (nonatomic, strong) NSMutableArray *discounts;
+@property (nonatomic, strong) QRWDiscountEditFormViewController *discountEditFormViewController;
 
 
 @end
@@ -66,7 +68,9 @@
 
 - (void) openAddDiscountView
 {
-    
+    _discountEditFormViewController = [[QRWDiscountEditFormViewController alloc] init];
+    self.modalPresentationStyle =  UIModalPresentationPageSheet;
+    [self presentViewController:_discountEditFormViewController animated:YES completion:nil];
 }
 
 - (void) reloadsTableView

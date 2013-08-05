@@ -20,6 +20,7 @@
 #import "QRWDashboardViewController.h"
 #import "QRWUsersViewController.h"
 #import "QRWDiscountsViewController.h"
+#import "QRWReviewsViewController.h"
 
 
 
@@ -95,6 +96,10 @@ static QRWDataManager *_instance;
         [[(QRWMainScrinViewController *)_delegate navigationController] pushViewController:[[QRWDiscountsViewController alloc] init] animated:YES];
     };
     
+    void (^reviewsActionBlock)(void) = ^{
+        [[(QRWMainScrinViewController *)_delegate navigationController] pushViewController:[[QRWReviewsViewController alloc] init] animated:YES];
+    };
+    
     for (int index = 0; index < 6; index++) {
         QRWToolView *toolView;
         switch (index) {
@@ -115,7 +120,7 @@ static QRWDataManager *_instance;
                 break;
                 
             case 4:
-                toolView = [[QRWToolView alloc] initWithName:@"" image:[UIImage imageNamed:@"reviewsIcon.jpg"] actionBlock:actionBlock];
+                toolView = [[QRWToolView alloc] initWithName:@"" image:[UIImage imageNamed:@"reviewsIcon.jpg"] actionBlock:reviewsActionBlock];
                 break;
                 
             case 5:
@@ -132,11 +137,14 @@ static QRWDataManager *_instance;
     
 }
 
+#pragma mark Reviews
 
+- (void) sendReviewsRequest
+{
+    [self sendRequestUseDownloaderWithURL:url_reviewsURL];
+}
 
 #pragma mark Discounts
-
-
 
 - (void) sendDiscountsRequest
 {
@@ -180,6 +188,40 @@ static QRWDataManager *_instance;
 
 #pragma mark SEND OBJECTS TO CONTROLLERS
 
+
+
+#pragma mark Discounts
+
+
+-(void) sendResponseForReviewsRequest:(NSData *)jsonObject
+{
+    NSError *error;
+    NSArray *jsonObjects = [NSJSONSerialization JSONObjectWithData:jsonObject options:kNilOptions error:&error];
+    
+    NSMutableArray *reviews = [[NSMutableArray alloc] init];
+    
+    NSNumberFormatter * formatter = [[NSNumberFormatter alloc] init];
+    [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
+    
+    
+    for (NSDictionary *discountInJSON in jsonObjects) {
+        
+        NSNumberFormatter * formatter = [[NSNumberFormatter alloc] init];
+        [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
+        
+        QRWReview *review = [[QRWReview alloc] init];
+        
+        review.message = [discountInJSON objectForKey:@"message"];
+        review.email = [discountInJSON objectForKey:@"email"];
+        review.product = [discountInJSON objectForKey:@"product"];
+        review.review_id = [formatter numberFromString: (NSString *)[discountInJSON objectForKey:@"review_id"]];
+        
+        
+        [reviews addObject:review];
+    }
+    
+    [_delegate respondsForReviewsRequest:reviews];
+}
 
 #pragma mark Discounts
 
@@ -484,6 +526,10 @@ static QRWDataManager *_instance;
     
     if ([url_discountsURL isEqualToString:requesrURL.absoluteString]) {
         [self sendResponseForDiscountRequest:jsonData];
+    }
+    
+    if ([url_reviewsURL isEqualToString:requesrURL.absoluteString]) {
+        [self sendResponseForReviewsRequest:jsonData];
     }
 }
 
