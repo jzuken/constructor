@@ -108,7 +108,7 @@ function get_response()
 //                ") or die(mysql_error());
 //            }
 //            break;
-case "sales":
+        case "sales":
             $response = get_sales(
                 mysql_real_escape_string($_GET['from']),
                 mysql_real_escape_string($_GET['until'])
@@ -414,7 +414,7 @@ function update_discount($id, $minprice, $discount, $discount_type, $provider, $
             SET minprice=$minprice, discount=$discount, discount_type='$discount_type', provider=$provider
             WHERE discountid=$id
             ") or die(mysql_error());
-    }else{
+    } else {
         mysql_query("
             BEGIN;") or die(mysql_error());
         mysql_query("
@@ -483,8 +483,19 @@ function delete_rewiew($id)
     return "success";
 }
 
-function get_sales($from, $until){
+function get_sales($from, $until)
+{
+    global $sql_tbl, $config;
+    $start_time = func_prepare_search_date($from) - $config['Appearance']['timezone_offset'];
+    $end_time = func_prepare_search_date($until) - $config['Appearance']['timezone_offset'];
 
+    $sales_array = array();
+    for ($day_start = $start_time; $day_start < $end_time; $day_start += 24 * 3600) {
+        $day_end = $day_start + 24 * 3600;
+        $date_condition = "$sql_tbl[orders].date>='$day_start' AND $sql_tbl[orders].date<='$day_end'";
+        $sales_array[(string)$day_start] = price_format(get_first_cell("SELECT SUM(total) FROM $sql_tbl[orders] WHERE $date_condition"));
+    }
+    return array_to_json($sales_array);
 }
 
 function get_json($query)
