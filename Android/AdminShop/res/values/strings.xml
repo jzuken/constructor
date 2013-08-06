@@ -142,5 +142,8 @@
 	<string name="login_text">Login:</string>
 	<string name="user_type">User type:</string>
 	<string name="last_login_text">Last login:</string>
-    
+    <string name="user_email_text">User\'s email:</string>
+	<string name="review_product_text">Product:</string>
+	<string name="message_text">Message:</string>
+	
 </resources>

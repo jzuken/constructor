@@ -108,6 +108,12 @@ function get_response()
 //                ") or die(mysql_error());
 //            }
 //            break;
+        case "sales":
+            $response = get_sales(
+                mysql_real_escape_string($_GET['from']),
+                mysql_real_escape_string($_GET['until'])
+            );
+            break;
         default:
             $response = "error";
             break;
@@ -135,6 +141,9 @@ function get_orders_count($start_date)
         $orders_count[$status] = get_first_cell("SELECT COUNT(*) FROM $sql_tbl[orders] WHERE status='$status' AND $date_condition");
     }
     $orders_count['Total'] = get_first_cell("SELECT COUNT(*) FROM $sql_tbl[orders] WHERE $date_condition");
+
+    $orders_count['gross_total'] = price_format(get_first_cell("SELECT SUM(total) FROM $sql_tbl[orders] WHERE $date_condition"));
+    $orders_count['total_paid'] = price_format(get_first_cell("SELECT SUM(total) FROM $sql_tbl[orders] WHERE (status='P' OR status='C') AND $date_condition"));
 
     return $orders_count;
 }
@@ -405,7 +414,7 @@ function update_discount($id, $minprice, $discount, $discount_type, $provider, $
             SET minprice=$minprice, discount=$discount, discount_type='$discount_type', provider=$provider
             WHERE discountid=$id
             ") or die(mysql_error());
-    }else{
+    } else {
         mysql_query("
             BEGIN;") or die(mysql_error());
         mysql_query("
@@ -472,6 +481,21 @@ function delete_rewiew($id)
     //TODO: fix sql injections
     $query = mysql_query("DELETE FROM $sql_tbl[product_reviews] WHERE review_id=$id") or die(mysql_error());
     return "success";
+}
+
+function get_sales($from, $until)
+{
+    global $sql_tbl, $config;
+    $start_time = func_prepare_search_date($from) - $config['Appearance']['timezone_offset'];
+    $end_time = func_prepare_search_date($until) - $config['Appearance']['timezone_offset'];
+
+    $sales_array = array();
+    for ($day_start = $start_time; $day_start < $end_time; $day_start += 24 * 3600) {
+        $day_end = $day_start + 24 * 3600;
+        $date_condition = "$sql_tbl[orders].date>='$day_start' AND $sql_tbl[orders].date<='$day_end'";
+        $sales_array[(string)$day_start] = price_format(get_first_cell("SELECT SUM(total) FROM $sql_tbl[orders] WHERE $date_condition"));
+    }
+    return array_to_json($sales_array);
 }
 
 function get_json($query)
