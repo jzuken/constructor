@@ -20,12 +20,17 @@
 #import "QRWDashboardViewController.h"
 #import "QRWUsersViewController.h"
 #import "QRWDiscountsViewController.h"
+#import "QRWReviewsViewController.h"
 
 
 
 @interface QRWDataManager ()
 {
     NSString *usersUrl;
+    
+    NSString *editedDiscountUrl;
+    NSString *newDiscountUrl;
+    NSString *deletedDiscountUrl;
 }
 
 @end
@@ -95,6 +100,10 @@ static QRWDataManager *_instance;
         [[(QRWMainScrinViewController *)_delegate navigationController] pushViewController:[[QRWDiscountsViewController alloc] init] animated:YES];
     };
     
+    void (^reviewsActionBlock)(void) = ^{
+        [[(QRWMainScrinViewController *)_delegate navigationController] pushViewController:[[QRWReviewsViewController alloc] init] animated:YES];
+    };
+    
     for (int index = 0; index < 6; index++) {
         QRWToolView *toolView;
         switch (index) {
@@ -115,7 +124,7 @@ static QRWDataManager *_instance;
                 break;
                 
             case 4:
-                toolView = [[QRWToolView alloc] initWithName:@"" image:[UIImage imageNamed:@"reviewsIcon.jpg"] actionBlock:actionBlock];
+                toolView = [[QRWToolView alloc] initWithName:@"" image:[UIImage imageNamed:@"reviewsIcon.jpg"] actionBlock:reviewsActionBlock];
                 break;
                 
             case 5:
@@ -132,17 +141,39 @@ static QRWDataManager *_instance;
     
 }
 
+#pragma mark Reviews
 
+- (void) sendReviewsRequest
+{
+    [self sendRequestUseDownloaderWithURL:url_reviewsURL];
+}
 
 #pragma mark Discounts
-
-
 
 - (void) sendDiscountsRequest
 {
     [self sendRequestUseDownloaderWithURL:url_discountsURL];
 }
 
+
+- (void) uploadNewDiscountWithDiscount:(QRWDiscount *) discount
+{
+    newDiscountUrl = [NSString stringWithFormat:url_discountsCreateURL, [discount.minprice floatValue], [discount.discount floatValue], discount.discountType, [discount.membershipid intValue]];
+    [self sendRequestUseDownloaderWithURL:newDiscountUrl];
+}
+
+
+- (void) uploadEditedDiscountWithDiscount:(QRWDiscount *) discount
+{
+    editedDiscountUrl = [NSString stringWithFormat:url_discountsEditURL, [discount.discountid intValue], [discount.minprice floatValue], [discount.discount floatValue], discount.discountType, [discount.membershipid intValue]];
+    [self sendRequestUseDownloaderWithURL:editedDiscountUrl];
+}
+
+- (void) uploadDeletedDiscountWithDiscount:(QRWDiscount *) discount
+{
+    editedDiscountUrl = [NSString stringWithFormat:url_discountsDeleteURL, [discount.discountid intValue]];
+    [self sendRequestUseDownloaderWithURL:editedDiscountUrl];
+}
 
 #pragma mark Users
 
@@ -180,6 +211,40 @@ static QRWDataManager *_instance;
 
 #pragma mark SEND OBJECTS TO CONTROLLERS
 
+
+
+#pragma mark Review
+
+
+-(void) sendResponseForReviewsRequest:(NSData *)jsonObject
+{
+    NSError *error;
+    NSArray *jsonObjects = [NSJSONSerialization JSONObjectWithData:jsonObject options:kNilOptions error:&error];
+    
+    NSMutableArray *reviews = [[NSMutableArray alloc] init];
+    
+    NSNumberFormatter * formatter = [[NSNumberFormatter alloc] init];
+    [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
+    
+    
+    for (NSDictionary *discountInJSON in jsonObjects) {
+        
+        NSNumberFormatter * formatter = [[NSNumberFormatter alloc] init];
+        [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
+        
+        QRWReview *review = [[QRWReview alloc] init];
+        
+        review.message = [discountInJSON objectForKey:@"message"];
+        review.email = [discountInJSON objectForKey:@"email"];
+        review.product = [discountInJSON objectForKey:@"product"];
+        review.review_id = [formatter numberFromString: (NSString *)[discountInJSON objectForKey:@"review_id"]];
+        
+        
+        [reviews addObject:review];
+    }
+    
+    [_delegate respondsForReviewsRequest:reviews];
+}
 
 #pragma mark Discounts
 
@@ -448,6 +513,13 @@ static QRWDataManager *_instance;
     }
 }
 
+#pragma merk UPLOAD
+
+- (void) sendUploadStatus:(NSDictionary *)jsonDictionary
+{
+    [_delegate respondsForUploadingRequest:[@"1" isEqualToString:[jsonDictionary objectForKey:@"upload_status"]]];
+}
+
 
 #pragma mark NSURLConnection methods
 
@@ -485,6 +557,18 @@ static QRWDataManager *_instance;
     if ([url_discountsURL isEqualToString:requesrURL.absoluteString]) {
         [self sendResponseForDiscountRequest:jsonData];
     }
+    
+    if ([url_reviewsURL isEqualToString:requesrURL.absoluteString]) {
+        [self sendResponseForReviewsRequest:jsonData];
+    }
+    
+    if ([newDiscountUrl isEqualToString:requesrURL.absoluteString] ||
+        [editedDiscountUrl isEqualToString:requesrURL.absoluteString] ||
+        [deletedDiscountUrl isEqualToString:requesrURL.absoluteString]) {
+        [self sendUploadStatus:jsonDictionary];
+    }
+    
+
 }
 
 

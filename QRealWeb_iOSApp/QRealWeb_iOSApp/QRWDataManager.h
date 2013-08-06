@@ -17,6 +17,8 @@
 
 #import "QRWDiscount.h"
 
+#import "QRWReview.h"
+
 
 
 @protocol QRWDataManagerDelegate <NSObject>
@@ -38,6 +40,10 @@
 -(void) respondsForUserRequest:(QRWUsers *)usersObject;
 
 -(void) respondsForDiscountsRequest:(NSArray *)discounts;
+
+-(void) respondsForReviewsRequest:(NSArray *)reviews;
+
+-(void) respondsForUploadingRequest:(BOOL)status;
 
 @end
 
@@ -86,7 +92,16 @@
  */
 - (void) sendDiscountsRequest;
 
+- (void) uploadNewDiscountWithDiscount:(QRWDiscount *) discount;
 
+- (void) uploadEditedDiscountWithDiscount:(QRWDiscount *) discount;
+
+- (void) uploadDeletedDiscountWithDiscount:(QRWDiscount *) discount;
+
+/*
+ Discounts
+ */
+- (void) sendReviewsRequest;
 
 
 

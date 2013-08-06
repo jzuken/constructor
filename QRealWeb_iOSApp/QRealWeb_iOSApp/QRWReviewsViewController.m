@@ -9,6 +9,8 @@
 #import "QRWReviewsViewController.h"
 #import "QRWReviewCell.h"
 
+#import "QRWReview.h"
+
 @interface QRWReviewsViewController ()
 
 
@@ -26,20 +28,22 @@
     }
     return self;
 }
+
+
 - (id)init
 {
-    return [self initWithNibName:@"QRWDiscountsViewController" bundle:nil];
+    return [self initWithNibName:@"QRWReviewsViewController" bundle:nil];
 }
 
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [dataManager sendDiscountsRequest];
+    [dataManager sendReviewsRequest];
     
     self.navigationController.navigationBarHidden = NO;
     self.navigationItem.title = @"Discounts";
-    [self.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(openAddDiscountView)]];
+//    [self.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(openAddDiscountView)]];
     
     __weak QRWReviewsViewController *weakSelf = self;
     
@@ -66,21 +70,33 @@
 
 - (void) reloadsTableView
 {
-    [dataManager sendDiscountsRequest];
+    [dataManager sendReviewsRequest];
     [_reviews removeAllObjects];
     [_reviewsTableView reloadData];
 }
 
 
-- (void)respondsForDiscountsRequest:(NSArray *)discounts
+- (void)respondsForReviewsRequest:(NSArray *)reviews
 {
     if (_reviews.count == 0) {
-        _reviews = [NSMutableArray arrayWithArray:discounts];
+        _reviews = [NSMutableArray arrayWithArray:reviews];
     } else {
-        [_reviews addObjectsFromArray:discounts];
+        [_reviews addObjectsFromArray:reviews];
     }
     [_reviewsTableView reloadData];
     [_reviewsTableView.pullToRefreshView stopAnimating];
+}
+
+#pragma mark Action sheet methods
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    switch (buttonIndex) {
+        case 0:{
+            
+        }
+            break;
+    }
 }
 
 #pragma mark Table view methods
@@ -91,9 +107,9 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     UIActionSheet *userActionSheet = [[UIActionSheet alloc] initWithTitle:nil
                                                                  delegate:self
-                                                        cancelButtonTitle:@"Cancel"
+                                                        cancelButtonTitle:NSLocalizedString(@"CANCEL", nil)
                                                    destructiveButtonTitle:nil
-                                                        otherButtonTitles:@"Edit", @"Delete", nil];
+                                                        otherButtonTitles:NSLocalizedString(@"EDIT", nil), NSLocalizedString(@"DELETE", nil), nil];
     [userActionSheet showInView:self.view];
 }
 
@@ -128,27 +144,8 @@
 
 - (void)configureProductCell:(QRWReviewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-//    cell.minPriceLable.text = [NSString stringWithFormat:@"Min price: %.2f$", [[(QRWDiscount *)_discounts[indexPath.row] minprice] floatValue]];
-//    cell.discountLable.text = [NSString stringWithFormat:@"Discount: %.2f$", [[(QRWDiscount *)_discounts[indexPath.row] discount] floatValue]];
-//    cell.discountTypeLable.text = [NSString stringWithFormat:@"Type: %@", [(QRWDiscount *)_discounts[indexPath.row] discountType] ];
-//    
-//    NSString *membershipWord;
-//    switch ([[(QRWDiscount *)_discounts[indexPath.row] membershipid] intValue]) {
-//        case 0:
-//            membershipWord = @"All";
-//            break;
-//            
-//        case 1:
-//            membershipWord = @"Premium";
-//            break;
-//            
-//        case 2:
-//            membershipWord = @"Wholesaler";
-//            break;
-//            
-//        default:
-//            break;
-//    }
-//    cell.membershipLabel.text = [NSString stringWithFormat:@"Memebership: %@", membershipWord];
+    cell.productLable.text = [(QRWReview *)_reviews[indexPath.row] product];
+    cell.userLable.text = [NSString stringWithFormat:@"User: %@", [(QRWReview *)_reviews[indexPath.row] email]];
+    cell.messageLable.text = [(QRWReview *)_reviews[indexPath.row] message];
 }
 @end

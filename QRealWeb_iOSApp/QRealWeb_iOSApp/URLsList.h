@@ -27,3 +27,13 @@ static NSString *const url_usersURL = @"http://54.213.38.9/xcart/api.php?request
 #pragma mark Discounts
 
 static NSString *const url_discountsURL = @"http://54.213.38.9/xcart/api.php?request=discounts";
+
+static NSString *const url_discountsCreateURL = @"http://54.213.38.9/xcart/api.php?request=create_discount&minprice=%.2f&discount=%.2f&discount_type=%@&provider=1&membership_id=%d";
+
+static NSString *const url_discountsEditURL = @"http://54.213.38.9/xcart/api.php?request=update_discount&id=%d&minprice=%.2f&discount=%.2f&discount_type=%@&provider=1&membership_id=%d";
+
+static NSString *const url_discountsDeleteURL = @"http://54.213.38.9/xcart/api.php?request=delete_discount&id=%d";
+
+#pragma mark Reviews
+
+static NSString *const url_reviewsURL = @"http://54.213.38.9/xcart/api.php?request=reviews";

@@ -51,6 +51,9 @@
 		7F6FB2B6179541460024BB12 /* toolsScrinBackground.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7F6FB2AE179541460024BB12 /* toolsScrinBackground.jpg */; };
 		7F6FB2B7179541460024BB12 /* topBarBackground.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7F6FB2AF179541460024BB12 /* topBarBackground.jpg */; };
 		7F6FB2B8179541460024BB12 /* usersIcon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7F6FB2B0179541460024BB12 /* usersIcon.jpg */; };
+		7F7C4CAD17B110FD00BD60F5 /* VCRadioButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F7C4CAC17B110FD00BD60F5 /* VCRadioButton.m */; };
+		7F7C4CB017B1308C00BD60F5 /* QRWUploadResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F7C4CAF17B1308C00BD60F5 /* QRWUploadResponse.m */; };
+		7F7C4CB317B136F100BD60F5 /* TLAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F7C4CB217B136F100BD60F5 /* TLAlertView.m */; };
 		7FBDFA0317A6AD17004B6CB8 /* QRWTopSellersTopProductsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FBDFA0217A6AD17004B6CB8 /* QRWTopSellersTopProductsTableViewCell.m */; };
 		7FBDFA0517A6AD84004B6CB8 /* QRWTopSellersTopProductsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FBDFA0417A6AD84004B6CB8 /* QRWTopSellersTopProductsTableViewCell.xib */; };
 		7FBDFA0917A6B071004B6CB8 /* QRWTopSellersTopCategoriesTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FBDFA0817A6B071004B6CB8 /* QRWTopSellersTopCategoriesTableViewCell.xib */; };
@@ -119,6 +122,9 @@
 		968B17A817AAE48300D8D8C9 /* active_button_today.png in Resources */ = {isa = PBXBuildFile; fileRef = 968B17A417AAE48100D8D8C9 /* active_button_today.png */; };
 		968B17AC17AAF56300D8D8C9 /* title_welcome_to.png in Resources */ = {isa = PBXBuildFile; fileRef = 968B17AB17AAF56300D8D8C9 /* title_welcome_to.png */; };
 		968B17AE17AAF60500D8D8C9 /* button_login.png in Resources */ = {isa = PBXBuildFile; fileRef = 968B17AD17AAF60500D8D8C9 /* button_login.png */; };
+		968B17B117B03F8800D8D8C9 /* QRWReview.m in Sources */ = {isa = PBXBuildFile; fileRef = 968B17B017B03F8800D8D8C9 /* QRWReview.m */; };
+		968B17B617B0545D00D8D8C9 /* QRWDiscountEditFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 968B17B417B0545D00D8D8C9 /* QRWDiscountEditFormViewController.m */; };
+		968B17B717B0545D00D8D8C9 /* QRWDiscountEditFormViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 968B17B517B0545D00D8D8C9 /* QRWDiscountEditFormViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -186,6 +192,12 @@
 		7F6FB2AE179541460024BB12 /* toolsScrinBackground.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = toolsScrinBackground.jpg; sourceTree = "<group>"; };
 		7F6FB2AF179541460024BB12 /* topBarBackground.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = topBarBackground.jpg; sourceTree = "<group>"; };
 		7F6FB2B0179541460024BB12 /* usersIcon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = usersIcon.jpg; sourceTree = "<group>"; };
+		7F7C4CAB17B110FD00BD60F5 /* VCRadioButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCRadioButton.h; sourceTree = "<group>"; };
+		7F7C4CAC17B110FD00BD60F5 /* VCRadioButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCRadioButton.m; sourceTree = "<group>"; };
+		7F7C4CAE17B1308C00BD60F5 /* QRWUploadResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRWUploadResponse.h; sourceTree = "<group>"; };
+		7F7C4CAF17B1308C00BD60F5 /* QRWUploadResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRWUploadResponse.m; sourceTree = "<group>"; };
+		7F7C4CB117B136F100BD60F5 /* TLAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLAlertView.h; sourceTree = "<group>"; };
+		7F7C4CB217B136F100BD60F5 /* TLAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TLAlertView.m; sourceTree = "<group>"; };
 		7FBDFA0117A6AD17004B6CB8 /* QRWTopSellersTopProductsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRWTopSellersTopProductsTableViewCell.h; sourceTree = "<group>"; };
 		7FBDFA0217A6AD17004B6CB8 /* QRWTopSellersTopProductsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRWTopSellersTopProductsTableViewCell.m; sourceTree = "<group>"; };
 		7FBDFA0417A6AD84004B6CB8 /* QRWTopSellersTopProductsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRWTopSellersTopProductsTableViewCell.xib; sourceTree = "<group>"; };
@@ -291,6 +303,11 @@
 		968B17A417AAE48100D8D8C9 /* active_button_today.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = active_button_today.png; sourceTree = "<group>"; };
 		968B17AB17AAF56300D8D8C9 /* title_welcome_to.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = title_welcome_to.png; sourceTree = "<group>"; };
 		968B17AD17AAF60500D8D8C9 /* button_login.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_login.png; sourceTree = "<group>"; };
+		968B17AF17B03F8800D8D8C9 /* QRWReview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRWReview.h; sourceTree = "<group>"; };
+		968B17B017B03F8800D8D8C9 /* QRWReview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRWReview.m; sourceTree = "<group>"; };
+		968B17B317B0545D00D8D8C9 /* QRWDiscountEditFormViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRWDiscountEditFormViewController.h; sourceTree = "<group>"; };
+		968B17B417B0545D00D8D8C9 /* QRWDiscountEditFormViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRWDiscountEditFormViewController.m; sourceTree = "<group>"; };
+		968B17B517B0545D00D8D8C9 /* QRWDiscountEditFormViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRWDiscountEditFormViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -436,6 +453,8 @@
 		7F6FB270179539C70024BB12 /* UTILS */ = {
 			isa = PBXGroup;
 			children = (
+				7F7C4CB417B136F400BD60F5 /* CustomAlert */,
+				7F7C4CAA17B110E600BD60F5 /* RadioButton */,
 				7FBDFA5F17AFBD6B004B6CB8 /* PullToRefresh */,
 				7FBDFA5117ABE37F004B6CB8 /* Popover */,
 				7FBDFA5017ABE36E004B6CB8 /* Carousel */,
@@ -488,6 +507,10 @@
 				7FBDFA3C17ABAC9D004B6CB8 /* QRWUsers.m */,
 				7FBDFA6217AFCADB004B6CB8 /* QRWDiscount.h */,
 				7FBDFA6317AFCADF004B6CB8 /* QRWDiscount.m */,
+				968B17AF17B03F8800D8D8C9 /* QRWReview.h */,
+				968B17B017B03F8800D8D8C9 /* QRWReview.m */,
+				7F7C4CAE17B1308C00BD60F5 /* QRWUploadResponse.h */,
+				7F7C4CAF17B1308C00BD60F5 /* QRWUploadResponse.m */,
 			);
 			name = ENTETIES;
 			sourceTree = "<group>";
@@ -567,6 +590,24 @@
 				7F6FB29317953B9B0024BB12 /* QRWDeployScrinViewController.xib */,
 			);
 			name = DeployViewController;
+			sourceTree = "<group>";
+		};
+		7F7C4CAA17B110E600BD60F5 /* RadioButton */ = {
+			isa = PBXGroup;
+			children = (
+				7F7C4CAB17B110FD00BD60F5 /* VCRadioButton.h */,
+				7F7C4CAC17B110FD00BD60F5 /* VCRadioButton.m */,
+			);
+			name = RadioButton;
+			sourceTree = "<group>";
+		};
+		7F7C4CB417B136F400BD60F5 /* CustomAlert */ = {
+			isa = PBXGroup;
+			children = (
+				7F7C4CB117B136F100BD60F5 /* TLAlertView.h */,
+				7F7C4CB217B136F100BD60F5 /* TLAlertView.m */,
+			);
+			name = CustomAlert;
 			sourceTree = "<group>";
 		};
 		7FBDFA0017A6ACC9004B6CB8 /* tableCells */ = {
@@ -704,6 +745,7 @@
 		7FBDFA6117AFC9E9004B6CB8 /* DiscountsViewController */ = {
 			isa = PBXGroup;
 			children = (
+				968B17B217B0541A00D8D8C9 /* DiscountEditForm */,
 				7FBDFA6A17AFE004004B6CB8 /* DiscountCell */,
 				7FBDFA6517AFD0C8004B6CB8 /* QRWDiscountsViewController.h */,
 				7FBDFA6617AFD0C8004B6CB8 /* QRWDiscountsViewController.m */,
@@ -852,6 +894,16 @@
 			name = TopSellers;
 			sourceTree = "<group>";
 		};
+		968B17B217B0541A00D8D8C9 /* DiscountEditForm */ = {
+			isa = PBXGroup;
+			children = (
+				968B17B317B0545D00D8D8C9 /* QRWDiscountEditFormViewController.h */,
+				968B17B417B0545D00D8D8C9 /* QRWDiscountEditFormViewController.m */,
+				968B17B517B0545D00D8D8C9 /* QRWDiscountEditFormViewController.xib */,
+			);
+			name = DiscountEditForm;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -962,6 +1014,7 @@
 				7FBDFA6F17AFE04C004B6CB8 /* QRWDiscountCell.xib in Resources */,
 				7FBDFA7517AFEC03004B6CB8 /* QRWReviewsViewController.xib in Resources */,
 				7FBDFA7A17AFECE3004B6CB8 /* QRWReviewCell.xib in Resources */,
+				968B17B717B0545D00D8D8C9 /* QRWDiscountEditFormViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1021,6 +1074,11 @@
 				7FBDFA6D17AFE028004B6CB8 /* QRWDiscountCell.m in Sources */,
 				7FBDFA7417AFEC03004B6CB8 /* QRWReviewsViewController.m in Sources */,
 				7FBDFA7817AFECC3004B6CB8 /* QRWReviewCell.m in Sources */,
+				968B17B117B03F8800D8D8C9 /* QRWReview.m in Sources */,
+				968B17B617B0545D00D8D8C9 /* QRWDiscountEditFormViewController.m in Sources */,
+				7F7C4CAD17B110FD00BD60F5 /* VCRadioButton.m in Sources */,
+				7F7C4CB017B1308C00BD60F5 /* QRWUploadResponse.m in Sources */,
+				7F7C4CB317B136F100BD60F5 /* TLAlertView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

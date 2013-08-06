@@ -9,11 +9,16 @@
 #import "QRWDiscountsViewController.h"
 #import "QRWDiscount.h"
 #import "QRWDiscountCell.h"
+#import "QRWDiscountEditFormViewController.h"
 
 @interface QRWDiscountsViewController ()
+{
+    int lastSelectedRow;
+}
 
 
 @property (nonatomic, strong) NSMutableArray *discounts;
+@property (nonatomic, strong) QRWDiscountEditFormViewController *discountEditFormViewController;
 
 
 @end
@@ -40,12 +45,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [dataManager sendDiscountsRequest];
     
     self.navigationController.navigationBarHidden = NO;
-    self.navigationItem.title = @"Discounts";
+    self.navigationItem.title = NSLocalizedString(@"DISCOUNTS", nil);
     [self.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(openAddDiscountView)]];
-    
     __weak QRWDiscountsViewController *weakSelf = self;
     
     [_discountsTableView addPullToRefreshWithActionHandler:^{
@@ -59,6 +62,13 @@
 
 }
 
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self reloadsTableView];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -66,7 +76,8 @@
 
 - (void) openAddDiscountView
 {
-    
+    _discountEditFormViewController = [[QRWDiscountEditFormViewController alloc] init];
+    [self presentViewController:_discountEditFormViewController animated:YES completion:nil];
 }
 
 - (void) reloadsTableView
@@ -88,17 +99,61 @@
     [_discountsTableView.pullToRefreshView stopAnimating];
 }
 
+- (void)respondsForUploadingRequest:(BOOL)status
+{
+    NSString *titleString;
+    NSString *messageString;
+    TLCompletionBlock cencelBlock;
+    
+    if (status) {
+        titleString = NSLocalizedString(@"SUCCESS_TITLE", nil);
+        messageString = NSLocalizedString(@"SUCCESS_DELETE_MESSAGE", nil);
+        cencelBlock = ^{
+            [self reloadsTableView];
+        };
+        
+    } else {
+        titleString = NSLocalizedString(@"FAIL_TITLE", nil);
+        messageString = NSLocalizedString(@"FAIL_DELETE_MESSAGE", nil);
+    }
+    
+    TLAlertView *alert = [[TLAlertView alloc] initWithTitle:titleString message:messageString inView:self.view cancelButtonTitle:NSLocalizedString(@"CANCEL", nil) confirmButton:nil];
+    [alert handleCancel:cencelBlock handleConfirm:nil];
+    [alert show];
+}
+
+
+#pragma mark Action sheet methods
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    switch (buttonIndex) {
+        case 0:{
+            _discountEditFormViewController = [[QRWDiscountEditFormViewController alloc] initWithDiscount:[_discounts objectAtIndex:lastSelectedRow]];
+            [self presentViewController:_discountEditFormViewController animated:YES completion:nil];
+        }
+            break;
+            
+        case 1:
+            [dataManager uploadDeletedDiscountWithDiscount:[_discounts objectAtIndex:lastSelectedRow]];
+            break;
+    }
+}
+
+
 #pragma mark Table view methods
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    lastSelectedRow = indexPath.row;
+    
     UIActionSheet *userActionSheet = [[UIActionSheet alloc] initWithTitle:nil
                                                                  delegate:self
-                                                        cancelButtonTitle:@"Cancel"
+                                                        cancelButtonTitle:NSLocalizedString(@"CANCEL", nil)
                                                    destructiveButtonTitle:nil
-                                                        otherButtonTitles:@"Edit", @"Delete", nil];
+                                                        otherButtonTitles:NSLocalizedString(@"EDIT", nil), NSLocalizedString(@"DELETE", nil), nil];
     [userActionSheet showInView:self.view];
 }
 
@@ -133,28 +188,28 @@
 
 - (void)configureProductCell:(QRWDiscountCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    cell.minPriceLable.text = [NSString stringWithFormat:@"Min price: %.2f$", [[(QRWDiscount *)_discounts[indexPath.row] minprice] floatValue]];
-    cell.discountLable.text = [NSString stringWithFormat:@"Discount: %.2f$", [[(QRWDiscount *)_discounts[indexPath.row] discount] floatValue]];
-    cell.discountTypeLable.text = [NSString stringWithFormat:@"Type: %@", [(QRWDiscount *)_discounts[indexPath.row] discountType] ];
+    cell.minPriceLable.text = [NSString stringWithFormat:NSLocalizedString(@"MIN_PRICE", nil), [[(QRWDiscount *)_discounts[indexPath.row] minprice] floatValue]];
+    cell.discountLable.text = [NSString stringWithFormat:NSLocalizedString(@"DISCOUNT", nil), [[(QRWDiscount *)_discounts[indexPath.row] discount] floatValue]];
+    cell.discountTypeLable.text = [NSString stringWithFormat:NSLocalizedString(@"TYPE", nil), [(QRWDiscount *)_discounts[indexPath.row] discountType] ];
     
     NSString *membershipWord;
     switch ([[(QRWDiscount *)_discounts[indexPath.row] membershipid] intValue]) {
         case 0:
-            membershipWord = @"All";
+            membershipWord = NSLocalizedString(@"ALL", nil);
             break;
             
         case 1:
-            membershipWord = @"Premium";
+            membershipWord = NSLocalizedString(@"PREMIUM", nil);
             break;
             
         case 2:
-            membershipWord = @"Wholesaler";
+            membershipWord = NSLocalizedString(@"WHOLESALER", nil);
             break;
             
         default:
             break;
     }
-    cell.membershipLabel.text = [NSString stringWithFormat:@"Memebership: %@", membershipWord];
+    cell.membershipLabel.text = [NSString stringWithFormat:NSLocalizedString(@"MEMBERSHIP", nil), membershipWord];
 }
 
 @end

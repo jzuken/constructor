@@ -62,12 +62,17 @@ public class DiscountEditor extends PinSupportNetworkActivity {
 		String orderSubtotalValue = orderSubtotalEditor.getText().toString();
 		String discountValue = discountEditor.getText().toString();
 		String discountTypeValue = getDiscountType();
+		String membershipIdParametr = "";
+		String memvershipId = getMembershipId();
+		if (!memvershipId.equals("0")) {
+			membershipIdParametr = "&membership_id=" + memvershipId;
+		}
 		String response;
 		try {
 			response = new GetRequester().execute(
 					"http://54.213.38.9/xcart/api.php?request=update_discount&id=" + id + "&minprice="
 							+ orderSubtotalValue + "&discount=" + discountValue + "&discount_type=" + discountTypeValue
-							+ "&provider=" + provider).get();
+							+ "&provider=" + provider + membershipIdParametr).get();
 		} catch (Exception e) {
 			response = null;
 		}
@@ -77,6 +82,17 @@ public class DiscountEditor extends PinSupportNetworkActivity {
 		} else {
 			showConnectionErrorMessage();
 		}
+	}
+	
+	private String getMembershipId() {
+		if (allButton.isChecked()) {
+			return "0";
+		} else if (premiumButton.isChecked()) {
+			return "1";
+		} else {
+			return "2";
+		}
+		
 	}
 
 	private String getDiscountType() {
