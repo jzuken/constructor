@@ -15,6 +15,10 @@
 
 #import "QRWUsers.h"
 
+#import "QRWDiscount.h"
+
+#import "QRWReview.h"
+
 
 
 @protocol QRWDataManagerDelegate <NSObject>
@@ -35,6 +39,10 @@
 
 -(void) respondsForUserRequest:(QRWUsers *)usersObject;
 
+-(void) respondsForDiscountsRequest:(NSArray *)discounts;
+
+-(void) respondsForReviewsRequest:(NSArray *)reviews;
+
 @end
 
 
@@ -42,18 +50,17 @@
 @interface QRWDataManager : NSObject<QRWDownloaderDelegate>
 
 @property (nonatomic, strong) id<QRWDataManagerDelegate> delegate;
-@property (nonatomic, strong) NSDictionary *documentsDictionary;
 
 + (QRWDataManager *)instance;
 
 /*
-Auth
+ Auth
  */
 
 - (void) sendAuthorizationRequestWithLogin:(NSString *)login andPassowrd:(NSString *)password;
 
 /*
-Settings for admin
+ Settings for admin
  */
 
 - (void) sendToolsRequest;
@@ -72,9 +79,27 @@ Settings for admin
 - (void) sendOrdersStatisticRequest;
 
 /*
-Users
+ Users
  */
 
 - (void) sendUsersRequestWithSort: (NSString *) sort startPoint: (NSInteger) startPoint lenght: (NSInteger) lenght;
+
+
+/*
+ Discounts
+ */
+- (void) sendDiscountsRequest;
+
+
+
+
+/*
+ Discounts
+ */
+- (void) sendReviewsRequest;
+
+
+
+
 
 @end

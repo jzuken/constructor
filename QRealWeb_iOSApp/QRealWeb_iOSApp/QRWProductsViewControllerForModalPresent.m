@@ -6,18 +6,19 @@
 //  Copyright (c) 2013 Ivan Afanasiev. All rights reserved.
 //
 
-#import "QRWProductsLastorderDashboardViewController.h"
+#import "QRWProductsViewControllerForModalPresent.h"
 #import "QRWProductInLastOrderCell.h"
 #import "QRWProductInOrder.h"
 
-@interface QRWProductsLastorderDashboardViewController ()
+@interface QRWProductsViewControllerForModalPresent ()
 
 
 @property (nonatomic, strong) NSArray *productsArray;
+@property (nonatomic, strong) NSNumber *userID;
 
 @end
 
-@implementation QRWProductsLastorderDashboardViewController
+@implementation QRWProductsViewControllerForModalPresent
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -31,8 +32,16 @@
 
 - (id)initWithProducts: (NSArray *) products
 {
-    self = [self initWithNibName:@"QRWProductsLastorderDashboardViewController" bundle:nil];
+    self = [self initWithNibName:@"QRWProductsViewControllerForModalPresent" bundle:nil];
     self.productsArray = [NSArray arrayWithArray:products];
+    return self;
+}
+
+
+- (id)initWithUserID: (NSNumber *) userID
+{
+    self = [self initWithNibName:@"QRWProductsViewControllerForModalPresent" bundle:nil];
+    self.userID = [NSNumber numberWithInt:[userID intValue]];
     return self;
 }
 
