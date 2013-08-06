@@ -108,6 +108,12 @@ function get_response()
 //                ") or die(mysql_error());
 //            }
 //            break;
+case "sales":
+            $response = get_sales(
+                mysql_real_escape_string($_GET['from']),
+                mysql_real_escape_string($_GET['until'])
+            );
+            break;
         default:
             $response = "error";
             break;
@@ -135,6 +141,9 @@ function get_orders_count($start_date)
         $orders_count[$status] = get_first_cell("SELECT COUNT(*) FROM $sql_tbl[orders] WHERE status='$status' AND $date_condition");
     }
     $orders_count['Total'] = get_first_cell("SELECT COUNT(*) FROM $sql_tbl[orders] WHERE $date_condition");
+
+    $orders_count['gross_total'] = price_format(get_first_cell("SELECT SUM(total) FROM $sql_tbl[orders] WHERE $date_condition"));
+    $orders_count['total_paid'] = price_format(get_first_cell("SELECT SUM(total) FROM $sql_tbl[orders] WHERE (status='P' OR status='C') AND $date_condition"));
 
     return $orders_count;
 }
@@ -472,6 +481,10 @@ function delete_rewiew($id)
     //TODO: fix sql injections
     $query = mysql_query("DELETE FROM $sql_tbl[product_reviews] WHERE review_id=$id") or die(mysql_error());
     return "success";
+}
+
+function get_sales($from, $until){
+
 }
 
 function get_json($query)
