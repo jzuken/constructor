@@ -256,6 +256,27 @@
                         android:layout_weight="1"
                         android:gravity="left"
                         android:paddingLeft="10dp"
+                        android:text="@string/gross_total" />
+
+                    <TextView
+                        android:id="@+id/gross_total"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/ghostwhite" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="left"
+                        android:paddingLeft="10dp"
                         android:text="@string/total_paid" />
 
                     <TextView

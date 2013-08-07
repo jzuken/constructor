@@ -145,5 +145,6 @@
     <string name="user_email_text">User\'s email:</string>
 	<string name="review_product_text">Product:</string>
 	<string name="message_text">Message:</string>
+	<string name="gross_total">Gross total:</string>
 	
 </resources>

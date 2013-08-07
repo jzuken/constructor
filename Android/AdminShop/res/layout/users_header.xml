@@ -61,63 +61,25 @@
         android:textColor="@color/black"
         android:textSize="15sp" />
 
-    <TextView
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
-        android:text="@string/sort_by"
-        android:textSize="14sp" />
+        android:orientation="horizontal" >
 
-    <TableLayout
-        android:id="@+id/top_sellers_table"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp" >
-
-        <TableRow
+        <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:text="@string/sort_by"
+            android:textSize="14sp" />
 
-            <CheckBox
-                android:id="@+id/last_login_checkBox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:button="@drawable/check_box"
-                android:text="@string/last_login_date" />
-
-            <CheckBox
-                android:id="@+id/last_order_checkBox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:button="@drawable/check_box"
-                android:text="@string/last_order_date" />
-        </TableRow>
-
-        <TableRow
+        <Spinner
+            android:id="@+id/sort_spinner"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
-
-            <CheckBox
-                android:id="@+id/total_reviews"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:button="@drawable/check_box"
-                android:text="@string/total_reviews" />
-
-            <CheckBox
-                android:id="@+id/total_orders"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:button="@drawable/check_box"
-                android:text="@string/total_orders_text" />
-        </TableRow>
-    </TableLayout>
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp" />
+    </LinearLayout>
 
 </LinearLayout>
