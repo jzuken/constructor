@@ -8,12 +8,16 @@
 
 #import "QRWReviewsViewController.h"
 #import "QRWReviewCell.h"
+#import "QRWFullReviewTextViewController.h"
 
 #import "QRWReview.h"
 
 @interface QRWReviewsViewController ()
+{
+    int lastSelectedRow;
+}
 
-
+@property(nonatomic, strong) QRWFullReviewTextViewController *fullReviewTextViewController;
 @property(nonatomic, strong) NSMutableArray *reviews;
 
 @end
@@ -39,10 +43,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [dataManager sendReviewsRequest];
+    [self addDataAndReloadsTableView];
     
     self.navigationController.navigationBarHidden = NO;
-    self.navigationItem.title = @"Discounts";
+    self.navigationItem.title = NSLocalizedString(@"REVIEWS", nil);
 //    [self.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(openAddDiscountView)]];
     
     __weak QRWReviewsViewController *weakSelf = self;
@@ -51,9 +55,9 @@
         [weakSelf reloadsTableView];
     }];
     
-    //    [_discountsTableView addInfiniteScrollingWithActionHandler:^{
-    ////        [weakSelf addsDataAndReloadsTableView];
-    //    }];
+    [_reviewsTableView addInfiniteScrollingWithActionHandler:^{
+        [weakSelf addDataAndReloadsTableView];
+    }];
     
     
 }
@@ -63,18 +67,18 @@
     [super didReceiveMemoryWarning];
 }
 
-- (void) openAddDiscountView
-{
-    
-}
 
 - (void) reloadsTableView
 {
-    [dataManager sendReviewsRequest];
+    [self addDataAndReloadsTableView];
     [_reviews removeAllObjects];
     [_reviewsTableView reloadData];
 }
 
+- (void) addDataAndReloadsTableView
+{
+    [dataManager sendReviewsRequestWithStartPoint:[_reviewsTableView numberOfRowsInSection:0] lenght:10];
+}
 
 - (void)respondsForReviewsRequest:(NSArray *)reviews
 {
@@ -85,6 +89,31 @@
     }
     [_reviewsTableView reloadData];
     [_reviewsTableView.pullToRefreshView stopAnimating];
+    [_reviewsTableView.infiniteScrollingView stopAnimating];
+}
+
+
+- (void)respondsForUploadingRequest:(BOOL)status
+{
+    NSString *titleString;
+    NSString *messageString;
+    TLCompletionBlock cencelBlock;
+    
+    if (status) {
+        titleString = NSLocalizedString(@"SUCCESS_TITLE", nil);
+        messageString = NSLocalizedString(@"SUCCESS_DELETE_MESSAGE", nil);
+        cencelBlock = ^{
+            [self reloadsTableView];
+        };
+        
+    } else {
+        titleString = NSLocalizedString(@"FAIL_TITLE", nil);
+        messageString = NSLocalizedString(@"FAIL_DELETE_MESSAGE", nil);
+    }
+    
+    TLAlertView *alert = [[TLAlertView alloc] initWithTitle:titleString message:messageString inView:self.view cancelButtonTitle:NSLocalizedString(@"CANCEL", nil) confirmButton:nil];
+    [alert handleCancel:cencelBlock handleConfirm:nil];
+    [alert show];
 }
 
 #pragma mark Action sheet methods
@@ -93,23 +122,31 @@
 {
     switch (buttonIndex) {
         case 0:{
-            
+            _fullReviewTextViewController = [[QRWFullReviewTextViewController alloc] initWithReview:[_reviews objectAtIndex:lastSelectedRow]];
+            [self.navigationController pushViewController:_fullReviewTextViewController animated:YES];
         }
             break;
+        case 1:{
+            [dataManager uploadDeletedReviewWithReview:[_reviews objectAtIndex:lastSelectedRow]];
+        }
+        break;
     }
 }
+
 
 #pragma mark Table view methods
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    lastSelectedRow = indexPath.row;
+    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     UIActionSheet *userActionSheet = [[UIActionSheet alloc] initWithTitle:nil
                                                                  delegate:self
                                                         cancelButtonTitle:NSLocalizedString(@"CANCEL", nil)
                                                    destructiveButtonTitle:nil
-                                                        otherButtonTitles:NSLocalizedString(@"EDIT", nil), NSLocalizedString(@"DELETE", nil), nil];
+                                                        otherButtonTitles:  NSLocalizedString(@"FULL_TEXT", nil), NSLocalizedString(@"DELETE", nil), nil];
     [userActionSheet showInView:self.view];
 }
 
@@ -147,5 +184,6 @@
     cell.productLable.text = [(QRWReview *)_reviews[indexPath.row] product];
     cell.userLable.text = [NSString stringWithFormat:@"User: %@", [(QRWReview *)_reviews[indexPath.row] email]];
     cell.messageLable.text = [(QRWReview *)_reviews[indexPath.row] message];
+
 }
 @end

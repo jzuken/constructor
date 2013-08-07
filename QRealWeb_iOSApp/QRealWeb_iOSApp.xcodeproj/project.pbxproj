@@ -54,6 +54,8 @@
 		7F7C4CAD17B110FD00BD60F5 /* VCRadioButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F7C4CAC17B110FD00BD60F5 /* VCRadioButton.m */; };
 		7F7C4CB017B1308C00BD60F5 /* QRWUploadResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F7C4CAF17B1308C00BD60F5 /* QRWUploadResponse.m */; };
 		7F7C4CB317B136F100BD60F5 /* TLAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F7C4CB217B136F100BD60F5 /* TLAlertView.m */; };
+		7F9D357717B27D02005E0900 /* QRWFullReviewTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F9D357517B27CFF005E0900 /* QRWFullReviewTextViewController.m */; };
+		7F9D357817B27D02005E0900 /* QRWFullReviewTextViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F9D357617B27D00005E0900 /* QRWFullReviewTextViewController.xib */; };
 		7FBDFA0317A6AD17004B6CB8 /* QRWTopSellersTopProductsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FBDFA0217A6AD17004B6CB8 /* QRWTopSellersTopProductsTableViewCell.m */; };
 		7FBDFA0517A6AD84004B6CB8 /* QRWTopSellersTopProductsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FBDFA0417A6AD84004B6CB8 /* QRWTopSellersTopProductsTableViewCell.xib */; };
 		7FBDFA0917A6B071004B6CB8 /* QRWTopSellersTopCategoriesTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FBDFA0817A6B071004B6CB8 /* QRWTopSellersTopCategoriesTableViewCell.xib */; };
@@ -198,6 +200,9 @@
 		7F7C4CAF17B1308C00BD60F5 /* QRWUploadResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRWUploadResponse.m; sourceTree = "<group>"; };
 		7F7C4CB117B136F100BD60F5 /* TLAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLAlertView.h; sourceTree = "<group>"; };
 		7F7C4CB217B136F100BD60F5 /* TLAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TLAlertView.m; sourceTree = "<group>"; };
+		7F9D357417B27CFB005E0900 /* QRWFullReviewTextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRWFullReviewTextViewController.h; sourceTree = "<group>"; };
+		7F9D357517B27CFF005E0900 /* QRWFullReviewTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRWFullReviewTextViewController.m; sourceTree = "<group>"; };
+		7F9D357617B27D00005E0900 /* QRWFullReviewTextViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRWFullReviewTextViewController.xib; sourceTree = "<group>"; };
 		7FBDFA0117A6AD17004B6CB8 /* QRWTopSellersTopProductsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRWTopSellersTopProductsTableViewCell.h; sourceTree = "<group>"; };
 		7FBDFA0217A6AD17004B6CB8 /* QRWTopSellersTopProductsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRWTopSellersTopProductsTableViewCell.m; sourceTree = "<group>"; };
 		7FBDFA0417A6AD84004B6CB8 /* QRWTopSellersTopProductsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRWTopSellersTopProductsTableViewCell.xib; sourceTree = "<group>"; };
@@ -610,6 +615,16 @@
 			name = CustomAlert;
 			sourceTree = "<group>";
 		};
+		7F9D357317B27CB9005E0900 /* FullReviewTextViewController */ = {
+			isa = PBXGroup;
+			children = (
+				7F9D357417B27CFB005E0900 /* QRWFullReviewTextViewController.h */,
+				7F9D357517B27CFF005E0900 /* QRWFullReviewTextViewController.m */,
+				7F9D357617B27D00005E0900 /* QRWFullReviewTextViewController.xib */,
+			);
+			name = FullReviewTextViewController;
+			sourceTree = "<group>";
+		};
 		7FBDFA0017A6ACC9004B6CB8 /* tableCells */ = {
 			isa = PBXGroup;
 			children = (
@@ -767,6 +782,7 @@
 		7FBDFA7017AFEBBE004B6CB8 /* ReviewsViewController */ = {
 			isa = PBXGroup;
 			children = (
+				7F9D357317B27CB9005E0900 /* FullReviewTextViewController */,
 				7FBDFA7B17AFED67004B6CB8 /* ReviewCell */,
 				7FBDFA7117AFEC03004B6CB8 /* QRWReviewsViewController.h */,
 				7FBDFA7217AFEC03004B6CB8 /* QRWReviewsViewController.m */,
@@ -1015,6 +1031,7 @@
 				7FBDFA7517AFEC03004B6CB8 /* QRWReviewsViewController.xib in Resources */,
 				7FBDFA7A17AFECE3004B6CB8 /* QRWReviewCell.xib in Resources */,
 				968B17B717B0545D00D8D8C9 /* QRWDiscountEditFormViewController.xib in Resources */,
+				7F9D357817B27D02005E0900 /* QRWFullReviewTextViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1079,6 +1096,7 @@
 				7F7C4CAD17B110FD00BD60F5 /* VCRadioButton.m in Sources */,
 				7F7C4CB017B1308C00BD60F5 /* QRWUploadResponse.m in Sources */,
 				7F7C4CB317B136F100BD60F5 /* TLAlertView.m in Sources */,
+				7F9D357717B27D02005E0900 /* QRWFullReviewTextViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

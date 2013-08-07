@@ -99,11 +99,11 @@
 - (void) uploadDeletedDiscountWithDiscount:(QRWDiscount *) discount;
 
 /*
- Discounts
+ Reviews
  */
-- (void) sendReviewsRequest;
+- (void) sendReviewsRequestWithStartPoint:(NSInteger) startPoint lenght:(NSInteger) lenght;
 
-
+- (void) uploadDeletedReviewWithReview:(QRWReview *) review;
 
 
 

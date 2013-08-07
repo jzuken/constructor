@@ -36,4 +36,6 @@ static NSString *const url_discountsDeleteURL = @"http://54.213.38.9/xcart/api.p
 
 #pragma mark Reviews
 
-static NSString *const url_reviewsURL = @"http://54.213.38.9/xcart/api.php?request=reviews";
+static NSString *const url_reviewsURL = @"http://54.213.38.9/xcart/api.php?request=reviews&from=%d&size=%d";
+
+static NSString *const url_reviewDeleteURL = @"http://54.213.38.9/xcart/api.php?request=delete_review&id=%d";

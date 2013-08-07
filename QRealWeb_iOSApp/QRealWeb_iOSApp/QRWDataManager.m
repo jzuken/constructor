@@ -31,6 +31,9 @@
     NSString *editedDiscountUrl;
     NSString *newDiscountUrl;
     NSString *deletedDiscountUrl;
+    
+    NSString *reviewUrl;
+    NSString *deletedReviewUrl;
 }
 
 @end
@@ -143,9 +146,17 @@ static QRWDataManager *_instance;
 
 #pragma mark Reviews
 
-- (void) sendReviewsRequest
+- (void) sendReviewsRequestWithStartPoint:(NSInteger) startPoint lenght:(NSInteger) lenght
 {
-    [self sendRequestUseDownloaderWithURL:url_reviewsURL];
+    reviewUrl = [NSString stringWithFormat:url_reviewsURL, startPoint, lenght];
+    [self sendRequestUseDownloaderWithURL:reviewUrl];
+}
+
+
+- (void) uploadDeletedReviewWithReview:(QRWReview *) review
+{
+    deletedReviewUrl = [NSString stringWithFormat:url_reviewDeleteURL, [review.review_id intValue]];
+    [self sendRequestUseDownloaderWithURL:deletedReviewUrl];
 }
 
 #pragma mark Discounts
@@ -558,13 +569,14 @@ static QRWDataManager *_instance;
         [self sendResponseForDiscountRequest:jsonData];
     }
     
-    if ([url_reviewsURL isEqualToString:requesrURL.absoluteString]) {
+    if ([reviewUrl isEqualToString:requesrURL.absoluteString]) {
         [self sendResponseForReviewsRequest:jsonData];
     }
     
     if ([newDiscountUrl isEqualToString:requesrURL.absoluteString] ||
         [editedDiscountUrl isEqualToString:requesrURL.absoluteString] ||
-        [deletedDiscountUrl isEqualToString:requesrURL.absoluteString]) {
+        [deletedDiscountUrl isEqualToString:requesrURL.absoluteString] ||
+        [deletedReviewUrl isEqualToString:requesrURL.absoluteString]) {
         [self sendUploadStatus:jsonDictionary];
     }
     
