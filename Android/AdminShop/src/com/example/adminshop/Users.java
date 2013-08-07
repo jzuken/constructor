@@ -145,7 +145,7 @@ public class Users extends PinSupportNetworkActivity {
 		online = (TextView) listHeader.findViewById(R.id.online);
 		usersListView.getRefreshableView().addHeaderView(listHeader, null, false);
 
-		View listFooter = inflater.inflate(R.layout.users_footer, null, false);
+		View listFooter = inflater.inflate(R.layout.on_demand_footer, null, false);
 		progressBar = (ProgressBar) listFooter.findViewById(R.id.progress_bar);
 		usersListView.getRefreshableView().addFooterView(listFooter, null, false);
 
@@ -160,9 +160,8 @@ public class Users extends PinSupportNetworkActivity {
 
 			@Override
 			public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-				if (totalItemCount > 4 && firstVisibleItem + visibleItemCount == totalItemCount && !isDownloading
-						&& hasNext) {
-					Log.d("scroll", String.valueOf(totalItemCount));
+				if (totalItemCount > startItemCount && firstVisibleItem + visibleItemCount == totalItemCount
+						&& !isDownloading && hasNext) {
 					updateUsersList();
 				}
 			}
@@ -192,10 +191,10 @@ public class Users extends PinSupportNetworkActivity {
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 				currentSortOption = position;
-				clearData();
 				if (isFirstSelection) {
 					isFirstSelection = false;
 				} else {
+					clearData();
 					updateUsersList();
 				}
 			}
@@ -217,5 +216,6 @@ public class Users extends PinSupportNetworkActivity {
 	private int currentSortOption;
 	private boolean hasNext;
 	private int packAmount = 10;
+	private final int startItemCount = 4;
 	PullToRefreshListView usersListView;
 }
