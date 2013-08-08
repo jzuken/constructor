@@ -111,7 +111,6 @@ public class Discounts extends PinSupportNetworkActivity {
 		});
 
 		dialog.show();
-
 	}
 
 	private void deleteDiscount(String id) {

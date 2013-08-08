@@ -11,8 +11,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
@@ -79,7 +84,20 @@ public class Reviews extends PinSupportNetworkActivity {
 	}
 
 	private void deleteReview(String id) {
-
+		String response;
+		try {
+			response = new GetRequester().execute("http://54.213.38.9/xcart/api.php?request=delete_review&id=" + id)
+					.get();
+		} catch (Exception e) {
+			response = null;
+		}
+		if (response != null) {
+			Toast.makeText(getBaseContext(), "Success", Toast.LENGTH_SHORT).show();
+			clearList();
+			updateReviewsList();
+		} else {
+			showConnectionErrorMessage();
+		}
 	}
 
 	private void setupListViewAdapter() {
@@ -107,7 +125,7 @@ public class Reviews extends PinSupportNetworkActivity {
 				}
 			}
 		});
-		
+
 		reviewsListView.setOnRefreshListener(new OnRefreshListener<ListView>() {
 			@Override
 			public void onRefresh(PullToRefreshBase<ListView> refreshView) {
@@ -115,8 +133,45 @@ public class Reviews extends PinSupportNetworkActivity {
 				updateReviewsList();
 			}
 		});
-		
+
+		reviewsListView.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				showActionDialog(((Review) view.getTag()).getId());
+			}
+		});
+
 		reviewsListView.setAdapter(adapter);
+	}
+
+	private void showActionDialog(final String review_id) {
+		LinearLayout action_view = (LinearLayout) getLayoutInflater().inflate(R.layout.review_action_dialog, null);
+		final CustomDialog dialog = new CustomDialog(this, action_view);
+
+		ListView actionList = (ListView) action_view.findViewById(R.id.action_list);
+
+		String[] actions = { "Delete", "Cancel" };
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, actions);
+
+		actionList.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				switch (position) {
+				case 0:
+					deleteReview(review_id);
+					dialog.dismiss();
+					break;
+				case 1:
+					dialog.dismiss();
+					break;
+				default:
+					break;
+				}
+
+			}
+		});
+
+		actionList.setAdapter(adapter);
+
+		dialog.show();
 	}
 
 	private void clearList() {
