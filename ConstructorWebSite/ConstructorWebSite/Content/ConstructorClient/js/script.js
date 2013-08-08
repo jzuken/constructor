@@ -37,13 +37,7 @@ var screens = {
 
             mainScreen.params.items.push(mainScreenItem);
 
-            $("#chose-screens").append('<div screen="' + id + '">' +
-                                            '<input value="' + screen.name + '"></input>' +
-                                            '<a href="javascript:void(0)" class="remove-screen">' +
-                                                '<img class="remove-screen-image" src="images/remove-screen.png"></img>' +
-                                                '<img class="add-screen-image" src="images/add-screen.png"></img>' +
-                                            '</a>' +
-                                        '</div>');
+            $("#chose-screens").append(templates.choseScreenTrigger(id, screen.name));
 
             $("#chose-screens [screen=" + id + "] input").change(function() {
                 screens.changeScreenTitle(id, $(this).val());
@@ -58,11 +52,11 @@ var screens = {
 
                 var isDisabled = screen.disabled;
                 if (isDisabled) {
-                    $(this).removeClass("add-screen");
-                    $(this).addClass("remove-screen");
+                    $(this).parent().removeClass("screen-disabled");
+                    $(this).parent().addClass("screen-enabled");
                 } else {
-                    $(this).removeClass("remove-screen");
-                    $(this).addClass("add-screen");
+                    $(this).parent().removeClass("screen-enabled");
+                    $(this).parent().addClass("screen-disabled");
                 }
 
                 screen.disabled = !isDisabled;
@@ -70,16 +64,16 @@ var screens = {
             });
         }
 
-        $("#phone-screen").append("<div screen-view='" + id + "'><div class='screen-name'></div><div class='screen-controls'></div></div>");
+        $("#phone-screen").append(templates.screenView(id));
         screen.initView($("#phone-screen [screen-view=" + id + "] .screen-controls"));
 
-        $("#screens").append("<div screen='" + id + "'>" + screen.name + "</div>");
+        $("#screens").append(templates.screen(id, screen.name));
         $("#screens [screen=" + id + "]").button();
         $("#screens [screen=" + id + "]").click(function() {
             me.loadSelectedScreen(id);
         });
 
-        $("#screen-editors").append("<div screen-editor='" + id + "'></div>");
+        $("#screen-editors").append(templates.screenEditor(id));
         screen.initEditor($("#screen-editors [screen-editor=" + id + "]"));
     },
     changeScreenTitle: function(id, title) {
@@ -95,8 +89,7 @@ var screens = {
             var screen = this.items[i];
 
             if (!screen.disabled) {
-                var newEl = "<div class='main-button' screen='" + screen.id + "'></div>";
-                $el.append(newEl);
+                $el.append(templates.mainButton(screen.id));
             }
         }
 
@@ -141,6 +134,9 @@ var screens = {
         });
 
         this.items[id].loadScreen($el);
+
+        $("div[screen-editor]").css("display", "none");
+        $("div[screen-editor=" + id + "]").css("display", "block");
     },
     changeSelectedScreenBgColor: function (hex) {
         var screen = this.items[this.selectedScreen];
@@ -226,21 +222,19 @@ var initStep1 = function() {
     $("#editors [step=1] div[screen]").click(function() {
         var screenName = $(this).attr('screen');
         screens.loadSelectedScreen(screenName);
-
-        $("div[screen-editor]").css("display", "none");
-        $("div[screen-editor=" + screenName + "]").css("display", "block");
     });
-
 
     $("#screen-bg-color").ColorPicker({
         onChange: function (hsb, hex, rgb) {
             screens.changeSelectedScreenBgColor(hex);
+            $(this).css('backgroundColor', '#' + hex);
         }
     });
 
     $("#screen-text-color").ColorPicker({
         onChange: function (hsb, hex, rgb) {
             screens.changeSelectedScreenTextColor(hex);
+            $(this).css('backgroundColor', '#' + hex);
         }
     });
 

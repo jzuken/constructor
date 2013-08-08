@@ -29,8 +29,12 @@
 }
 
 #editors {
-    width: 300px;
+    width: 100%;
     float: left;
+}
+
+.center {
+    height: 600px;
 }
 
 .main-button {
@@ -53,24 +57,56 @@
     width: 100%;
 }
 
-.remove-screen .remove-screen-image {
+.chose-screen-trigger span {
     display: block;
+    overflow: hidden;
 }
 
-.remove-screen .add-screen-image {
-    display: none;
+.chose-screen-trigger input {
+    width: 100%;
 }
 
-.add-screen .remove-screen-image {
-    display: none;
+.chose-screen-trigger a {
+    width: 23px;
+    height: 22px;
+    float: right;
 }
 
-.add-screen .add-screen-image {
-    display: block;
+.screen-enabled a {
+    background-image: url(../images/remove-screen.png);
+}
+
+.screen-disabled a {
+    background-image: url(../images/add-screen.png);
+}
+
+.screen-disabled input {
+    color: #AAAAAA;
 }
 
 #phone-screen .screen-name {
     border: 1px solid #000000;
     text-align: center;
     font-size: 18pt;
+}
+
+.step-editor {
+    width: 100%;
+}
+
+#screen-editors {
+    float: left;
+    width: 280px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.properties-block {
+    padding-bottom: 5px;
+}
+
+.color-selector {
+    width: 30px;
+    height: 30px;
+    background: url(../images/select.png) center;
 }

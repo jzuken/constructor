@@ -209,33 +209,42 @@ var initScreens = function() {
                 $el.find(".main-button").click(function() {
                     me.params.loadSelectedButton($(this).attr("screen"));
                 });
+
+                if (this.params.items.length > 0) {
+                    this.params.loadSelectedButton(this.params.items[0].id);
+                }
             },
             initView: function($el) {
             },
             initEditor: function($el) {
-                $el.append('<div class="controls">' +
-                                '<input id="main-button-text"></input>' +
-                                '<div id="main-up-button">up</div>' +
-                                '<div id="main-down-button">down</div>' +
-                                '<div id="main-remove-button">remove</div>' +
-                                '<div class="colors">' +
-                                    '<div>' +
-                                        'Фоновый рисунок кнопки' +
-                                        '<input type="file" id="main-button-bg"></input>' +
-                                    '</div>' +
-                                    '<div>' +
-                                        'Цвет фона кнопки' +
-                                        '<input id="main-button-bg-color"></input>' +
-                                    '</div>' +
-                                    '<div>' +
-                                        'Цвет текста кнопки' +
-                                        '<input id="main-button-text-color"></input>' +
-                                    '</div>' +
-                                '</div>' +
-                            '</div>' +
-                            '<div id="removed-buttons">' +
-                                'Удалённые кнопки' +
-                            '</div>');
+                $el.append('<div class="controls properties-block">' +
+                               '<h2>Свойства кнопки</h2>' +
+                               '<label for="main-button-text">Текст кнопки</label>' +
+                               '<input id="main-button-text"></input>' +
+                               '<div class="colors">' +
+                                   '<div>' +
+                                       'Фоновый рисунок кнопки' +
+                                       '<input type="file" id="main-button-bg"></input>' +
+                                   '</div>' +
+                                   '<div>' +
+                                       'Цвет фона кнопки' +
+                                       '<div id="main-button-bg-color" class="color-selector"></div>' +
+                                   '</div>' +
+                                   '<div>' +
+                                       'Цвет текста кнопки' +
+                                       '<div id="main-button-text-color" class="color-selector"></div>' +
+                                   '</div>' +
+                               '</div>' +
+                               '<div>' +
+                                   '<h3>Положение конпки</h3>' +
+                                   '<div id="main-up-button">Выше</div>' +
+                                   '<div id="main-down-button">Ниже</div>' +
+                                   '<div id="main-remove-button">Удалить</div>' +
+                               '</div>' +
+                           '</div>' +
+                           '<div id="removed-buttons" class="controls properties-block">' +
+                               '<h2>Удалённые кнопки</h2>' +
+                           '</div>');
 
                 $("#main-up-button").button();
                 $("#main-down-button").button();
@@ -329,17 +338,20 @@ var initScreens = function() {
                            '</div>');
             },
             initEditor: function($el) {
-                $el.append('<div>' +
-                               '<input type="checkbox" param="aboutOrders" checked>Общая информация о заказах' +
-                           '</div>' +
-                           '<div>' +
-                               '<input type="checkbox" param="lastOrder" checked>Последний заказ' +
-                           '</div>' +
-                           '<div>' +
-                               '<input type="checkbox" param="leadersOfSales" checked>Лидеры продаж' +
-                           '</div>' +
-                           '<div>' +
-                               '<input type="checkbox" param="technicalInfo" checked>Техническая информация о магазине' +
+                $el.append('<div class="properties-block">' +
+                               '<h2>Выбор свойств для отображения</h2>' +
+                               '<div>' +
+                                   '<input type="checkbox" param="aboutOrders" checked>Общая информация о заказах' +
+                               '</div>' +
+                               '<div>' +
+                                   '<input type="checkbox" param="lastOrder" checked>Последний заказ' +
+                               '</div>' +
+                               '<div>' +
+                                   '<input type="checkbox" param="leadersOfSales" checked>Лидеры продаж' +
+                               '</div>' +
+                               '<div>' +
+                                   '<input type="checkbox" param="technicalInfo" checked>Техническая информация о магазине' +
+                               '</div>' +
                            '</div>');
 
                 var params = this.params;

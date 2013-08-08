@@ -1,3 +1,4 @@
+<!doctype html>
 <html>
     <head>
         <title>Online application editor</title>
@@ -9,10 +10,12 @@
         <link rel="stylesheet" media="screen" type="text/css" href="./css/colorpicker.css" />
         <script type="text/javascript" src="./js/colorpicker.js"></script>
         <script type='text/javascript' src='./js/initscreens.js'></script>
+        <script type='text/javascript' src='./js/templates.js'></script>
         <script type='text/javascript' src='./js/script.js'></script>
     </head>
     <body>
-        <div id="controls" style="float: left;">
+        <header>
+            <hgroup>
             <div id="steps">
                 <div class="step" step="0">
                 </div>
@@ -21,42 +24,46 @@
                 <div class="step" step="2">
                 </div>
             </div>
-            <div id="editors">
-                <div step="0">
-                    Выберите нужные экраны
-                    <div id="chose-screens"></div>
-                </div>
-                <div step="1">
-                    <div id="screens">
-                        Экраны
-                        <!--<div screen="auth">Авторизация</div>
-                        <div screen="unlock">Разблокировка</div>-->
+          </hgroup>
+        </header>
+        <section class="center">
+            <div id="controls" style="float: left;">
+                <div id="editors">
+                    <div class="step-editor" step="0">
+                        <h2>Выберите нужные экраны</h2>
+                        <div id="chose-screens"></div>
                     </div>
-                    <div id="screen-editors">
-                        <div class="colors">
-                            <div>
-                                Фоновый рисунок экрана
-                                <input type="file" id="screen-bg"></input>
-                            </div>
-                            <div>
-                                Цвет фона экрана
-                                <input id="screen-bg-color"></input>
-                            </div>
-                            <div>
-                                Цвет текста экрана
-                                <input id="screen-text-color"></input>
+                    <div class="step-editor" step="1">
+                        <div id="screens">
+                            <h2>Экраны</h2>
+                        </div>
+                        <div id="screen-editors">
+                            <div class="colors properties-block">
+                                <h2>Общие свойства экрана</h2>
+                                <div>
+                                    <label for="screen-bg">Фоновый рисунок экрана</label>
+                                    <input type="file" id="screen-bg"></input>
+                                </div>
+                                <div>
+                                    Цвет фона экрана
+                                    <div id="screen-bg-color" class="color-selector"></div>
+                                </div>
+                                <div>
+                                    Цвет текста экрана
+                                    <div id="screen-text-color" class="color-selector"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div>
-                <div class="button" id="prev-step-button">Назад</div>
-                <div class="button" id="next-step-button">Далее</div>
+            <div id="phone" style="float: left;">
+                <div id="phone-screen"></div>
             </div>
-        </div>
-        <div id="phone" style="float: left;">
-            <div id="phone-screen"></div>
-        </div>
+        </section>
+        <footer>
+            <div class="button" id="prev-step-button">Назад</div>
+            <div class="button" id="next-step-button">Далее</div>
+        </footer>
     </body>
 </html>
