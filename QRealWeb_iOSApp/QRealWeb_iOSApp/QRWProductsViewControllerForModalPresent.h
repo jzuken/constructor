@@ -12,7 +12,7 @@
 
 
 @property (nonatomic, strong) IBOutlet UITableView *productsTableView;
-
+@property (nonatomic, strong) NSArray *productsArray;
 
 - (IBAction)exitButtonClicked:(id)sender;
 

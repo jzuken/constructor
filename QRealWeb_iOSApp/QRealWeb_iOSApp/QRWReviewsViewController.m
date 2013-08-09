@@ -123,7 +123,7 @@
     switch (buttonIndex) {
         case 0:{
             _fullReviewTextViewController = [[QRWFullReviewTextViewController alloc] initWithReview:[_reviews objectAtIndex:lastSelectedRow]];
-            [self.navigationController pushViewController:_fullReviewTextViewController animated:YES];
+            [self presentViewController:_fullReviewTextViewController animated:YES completion:nil];
         }
             break;
         case 1:{

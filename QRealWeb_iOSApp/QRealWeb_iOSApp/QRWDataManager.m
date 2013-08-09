@@ -111,27 +111,45 @@ static QRWDataManager *_instance;
         QRWToolView *toolView;
         switch (index) {
             case 0:
-                toolView = [[QRWToolView alloc] initWithName:@"" image:[UIImage imageNamed:@"dashboardIcon.jpg"] actionBlock:dashboardActionBlock];
+                toolView = [[QRWToolView alloc] initWithName:@""
+                                                       image:[UIImage imageNamed:@"dashboardIcon.jpg"]
+                                               selectedImage:[UIImage imageNamed:@"active_button_dashboard.png"]
+                                                 actionBlock:dashboardActionBlock];
                 break;
             
             case 1:
-                toolView = [[QRWToolView alloc] initWithName:@"" image:[UIImage imageNamed:@"usersIcon.jpg"] actionBlock:usersActionBlock];
+                toolView = [[QRWToolView alloc] initWithName:@""
+                                                       image:[UIImage imageNamed:@"usersIcon.jpg"]
+                                               selectedImage:[UIImage imageNamed:@"active_button_users.png"]
+                                                 actionBlock:usersActionBlock];
                 break;
                 
             case 2:
-                toolView = [[QRWToolView alloc] initWithName:@"" image:[UIImage imageNamed:@"discountsIcon.jpg"] actionBlock:discountsActionBlock];
+                toolView = [[QRWToolView alloc] initWithName:@""
+                                                       image:[UIImage imageNamed:@"discountsIcon.jpg"]
+                                               selectedImage:[UIImage imageNamed:@"active_button_discounts.png"]
+                                                 actionBlock:discountsActionBlock];
                 break;
                 
             case 3:
-                toolView = [[QRWToolView alloc] initWithName:@"" image:[UIImage imageNamed:@"productsIcon.jpg"] actionBlock:actionBlock];
+                toolView = [[QRWToolView alloc] initWithName:@""
+                                                       image:[UIImage imageNamed:@"productsIcon.jpg"]
+                                               selectedImage:[UIImage imageNamed:@"active_button_products.png"]
+                                                 actionBlock:actionBlock];
                 break;
                 
             case 4:
-                toolView = [[QRWToolView alloc] initWithName:@"" image:[UIImage imageNamed:@"reviewsIcon.jpg"] actionBlock:reviewsActionBlock];
+                toolView = [[QRWToolView alloc] initWithName:@""
+                                                       image:[UIImage imageNamed:@"reviewsIcon.jpg"]
+                                               selectedImage:[UIImage imageNamed:@"active_button_reviews.png"]
+                                                 actionBlock:reviewsActionBlock];
                 break;
                 
             case 5:
-                toolView = [[QRWToolView alloc] initWithName:@"" image:[UIImage imageNamed:@"logoutIcon.jpg"] actionBlock:actionBlock];
+                toolView = [[QRWToolView alloc] initWithName:@""
+                                                       image:[UIImage imageNamed:@"logoutIcon.jpg"]
+                                               selectedImage:[UIImage imageNamed:@"active_button_logout.png"]
+                                                 actionBlock:actionBlock];
                 break;
                 
             default:

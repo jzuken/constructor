@@ -64,7 +64,8 @@
 "ORDERS_LIST" = "Orders list";
 "SEND_A_MESSAGE" = "Send a message";
 "TO_THE_BLACK_LIST_WITH_A_MESSAGE" = "To the black list with a message";
-
+"REMOVE_FROM_STORE" = "Edit from the store";
+"FULL_TEXT" = "Full text";
 
 
 // Users

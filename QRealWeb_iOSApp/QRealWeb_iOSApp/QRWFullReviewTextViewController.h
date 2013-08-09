@@ -13,10 +13,10 @@
 
 @property (strong, nonatomic) IBOutlet UILabel *productLable;
 @property (strong, nonatomic) IBOutlet UILabel *userLable;
-@property (strong, nonatomic) IBOutlet UILabel *messageLable;
 
 @property (strong, nonatomic) IBOutlet UIScrollView *messageLableScrollView;
 
+- (IBAction)exitButtonClicked:(id)sender;
 
 - (id)initWithReview: (QRWReview *) review;
 

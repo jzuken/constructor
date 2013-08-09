@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7F3268BA17B535AE00808A45 /* HMSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F3268B917B535AE00808A45 /* HMSegmentedControl.m */; };
 		7F384C9C17956A8500BF7F93 /* QRWMainScrinViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F384C9A17956A8500BF7F93 /* QRWMainScrinViewController.m */; };
 		7F384C9D17956A8500BF7F93 /* QRWMainScrinViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F384C9B17956A8500BF7F93 /* QRWMainScrinViewController.xib */; };
 		7F384CA117956BFD00BF7F93 /* QRWMainStatsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F384C9F17956BFD00BF7F93 /* QRWMainStatsViewController.m */; };
@@ -56,6 +57,12 @@
 		7F7C4CB317B136F100BD60F5 /* TLAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F7C4CB217B136F100BD60F5 /* TLAlertView.m */; };
 		7F9D357717B27D02005E0900 /* QRWFullReviewTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F9D357517B27CFF005E0900 /* QRWFullReviewTextViewController.m */; };
 		7F9D357817B27D02005E0900 /* QRWFullReviewTextViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F9D357617B27D00005E0900 /* QRWFullReviewTextViewController.xib */; };
+		7F9D358017B4FCE7005E0900 /* active_button_dashboard.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F9D357A17B4FCE7005E0900 /* active_button_dashboard.png */; };
+		7F9D358117B4FCE7005E0900 /* active_button_discounts.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F9D357B17B4FCE7005E0900 /* active_button_discounts.png */; };
+		7F9D358217B4FCE7005E0900 /* active_button_logout.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F9D357C17B4FCE7005E0900 /* active_button_logout.png */; };
+		7F9D358317B4FCE7005E0900 /* active_button_products.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F9D357D17B4FCE7005E0900 /* active_button_products.png */; };
+		7F9D358417B4FCE7005E0900 /* active_button_reviews.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F9D357E17B4FCE7005E0900 /* active_button_reviews.png */; };
+		7F9D358517B4FCE7005E0900 /* active_button_users.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F9D357F17B4FCE7005E0900 /* active_button_users.png */; };
 		7FBDFA0317A6AD17004B6CB8 /* QRWTopSellersTopProductsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FBDFA0217A6AD17004B6CB8 /* QRWTopSellersTopProductsTableViewCell.m */; };
 		7FBDFA0517A6AD84004B6CB8 /* QRWTopSellersTopProductsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FBDFA0417A6AD84004B6CB8 /* QRWTopSellersTopProductsTableViewCell.xib */; };
 		7FBDFA0917A6B071004B6CB8 /* QRWTopSellersTopCategoriesTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FBDFA0817A6B071004B6CB8 /* QRWTopSellersTopCategoriesTableViewCell.xib */; };
@@ -130,6 +137,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7F3268B817B535AE00808A45 /* HMSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMSegmentedControl.h; sourceTree = "<group>"; };
+		7F3268B917B535AE00808A45 /* HMSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMSegmentedControl.m; sourceTree = "<group>"; };
 		7F384C9917956A8500BF7F93 /* QRWMainScrinViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRWMainScrinViewController.h; sourceTree = "<group>"; };
 		7F384C9A17956A8500BF7F93 /* QRWMainScrinViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRWMainScrinViewController.m; sourceTree = "<group>"; };
 		7F384C9B17956A8500BF7F93 /* QRWMainScrinViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRWMainScrinViewController.xib; sourceTree = "<group>"; };
@@ -203,6 +212,12 @@
 		7F9D357417B27CFB005E0900 /* QRWFullReviewTextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRWFullReviewTextViewController.h; sourceTree = "<group>"; };
 		7F9D357517B27CFF005E0900 /* QRWFullReviewTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRWFullReviewTextViewController.m; sourceTree = "<group>"; };
 		7F9D357617B27D00005E0900 /* QRWFullReviewTextViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRWFullReviewTextViewController.xib; sourceTree = "<group>"; };
+		7F9D357A17B4FCE7005E0900 /* active_button_dashboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = active_button_dashboard.png; sourceTree = "<group>"; };
+		7F9D357B17B4FCE7005E0900 /* active_button_discounts.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = active_button_discounts.png; sourceTree = "<group>"; };
+		7F9D357C17B4FCE7005E0900 /* active_button_logout.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = active_button_logout.png; sourceTree = "<group>"; };
+		7F9D357D17B4FCE7005E0900 /* active_button_products.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = active_button_products.png; sourceTree = "<group>"; };
+		7F9D357E17B4FCE7005E0900 /* active_button_reviews.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = active_button_reviews.png; sourceTree = "<group>"; };
+		7F9D357F17B4FCE7005E0900 /* active_button_users.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = active_button_users.png; sourceTree = "<group>"; };
 		7FBDFA0117A6AD17004B6CB8 /* QRWTopSellersTopProductsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRWTopSellersTopProductsTableViewCell.h; sourceTree = "<group>"; };
 		7FBDFA0217A6AD17004B6CB8 /* QRWTopSellersTopProductsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRWTopSellersTopProductsTableViewCell.m; sourceTree = "<group>"; };
 		7FBDFA0417A6AD84004B6CB8 /* QRWTopSellersTopProductsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRWTopSellersTopProductsTableViewCell.xib; sourceTree = "<group>"; };
@@ -331,6 +346,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7F3268B717B5359900808A45 /* SegmentedControl */ = {
+			isa = PBXGroup;
+			children = (
+				7F3268B817B535AE00808A45 /* HMSegmentedControl.h */,
+				7F3268B917B535AE00808A45 /* HMSegmentedControl.m */,
+			);
+			name = SegmentedControl;
+			sourceTree = "<group>";
+		};
 		7F384C93179569E200BF7F93 /* ToolsViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -430,6 +454,12 @@
 		7F6FB267179539630024BB12 /* mainWindowImgs */ = {
 			isa = PBXGroup;
 			children = (
+				7F9D357A17B4FCE7005E0900 /* active_button_dashboard.png */,
+				7F9D357B17B4FCE7005E0900 /* active_button_discounts.png */,
+				7F9D357C17B4FCE7005E0900 /* active_button_logout.png */,
+				7F9D357D17B4FCE7005E0900 /* active_button_products.png */,
+				7F9D357E17B4FCE7005E0900 /* active_button_reviews.png */,
+				7F9D357F17B4FCE7005E0900 /* active_button_users.png */,
 				968B1797179DFA4C00D8D8C9 /* topBarBackground.png */,
 				7F6FB2A9179541460024BB12 /* dashboardIcon.jpg */,
 				7F6FB2AA179541460024BB12 /* discountsIcon.jpg */,
@@ -458,6 +488,7 @@
 		7F6FB270179539C70024BB12 /* UTILS */ = {
 			isa = PBXGroup;
 			children = (
+				7F3268B717B5359900808A45 /* SegmentedControl */,
 				7F7C4CB417B136F400BD60F5 /* CustomAlert */,
 				7F7C4CAA17B110E600BD60F5 /* RadioButton */,
 				7FBDFA5F17AFBD6B004B6CB8 /* PullToRefresh */,
@@ -1032,6 +1063,12 @@
 				7FBDFA7A17AFECE3004B6CB8 /* QRWReviewCell.xib in Resources */,
 				968B17B717B0545D00D8D8C9 /* QRWDiscountEditFormViewController.xib in Resources */,
 				7F9D357817B27D02005E0900 /* QRWFullReviewTextViewController.xib in Resources */,
+				7F9D358017B4FCE7005E0900 /* active_button_dashboard.png in Resources */,
+				7F9D358117B4FCE7005E0900 /* active_button_discounts.png in Resources */,
+				7F9D358217B4FCE7005E0900 /* active_button_logout.png in Resources */,
+				7F9D358317B4FCE7005E0900 /* active_button_products.png in Resources */,
+				7F9D358417B4FCE7005E0900 /* active_button_reviews.png in Resources */,
+				7F9D358517B4FCE7005E0900 /* active_button_users.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1097,6 +1134,7 @@
 				7F7C4CB017B1308C00BD60F5 /* QRWUploadResponse.m in Sources */,
 				7F7C4CB317B136F100BD60F5 /* TLAlertView.m in Sources */,
 				7F9D357717B27D02005E0900 /* QRWFullReviewTextViewController.m in Sources */,
+				7F3268BA17B535AE00808A45 /* HMSegmentedControl.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1173,11 +1211,15 @@
 		7F6FB2651795393D0024BB12 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Ivan Afanasiev (JU9SXQ8P9Q)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ivan Afanasiev (JU9SXQ8P9Q)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "QRealWeb_iOSApp/QRealWeb_iOSApp-Prefix.pch";
 				INFOPLIST_FILE = "QRealWeb_iOSApp/QRealWeb_iOSApp-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "9AD93836-1636-4A52-9372-3F9329EDD6AF";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9AD93836-1636-4A52-9372-3F9329EDD6AF";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1185,11 +1227,15 @@
 		7F6FB2661795393D0024BB12 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Ivan Afanasiev (JU9SXQ8P9Q)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ivan Afanasiev (JU9SXQ8P9Q)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "QRealWeb_iOSApp/QRealWeb_iOSApp-Prefix.pch";
 				INFOPLIST_FILE = "QRealWeb_iOSApp/QRealWeb_iOSApp-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "9AD93836-1636-4A52-9372-3F9329EDD6AF";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9AD93836-1636-4A52-9372-3F9329EDD6AF";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

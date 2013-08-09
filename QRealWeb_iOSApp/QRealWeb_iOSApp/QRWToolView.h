@@ -10,6 +10,7 @@
 
 @interface QRWToolView : UIView
 
--(id)initWithName: (NSString *)nameOfTool image:(UIImage *) imageOfTool actionBlock: (void (^)(void))toolButtonAction;
+//-(id)initWithName: (NSString *)nameOfTool image:(UIImage *) imageOfTool actionBlock: (void (^)(void))toolButtonAction;
+-(id)initWithName: (NSString *)nameOfTool image:(UIImage *) imageOfTool selectedImage:(UIImage *) imageOfSelectedTool  actionBlock: (void (^)(void))toolButtonAction;
 
 @end
