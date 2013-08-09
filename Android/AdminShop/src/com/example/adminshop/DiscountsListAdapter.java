@@ -23,12 +23,11 @@ public class DiscountsListAdapter extends ArrayAdapter<Discount> {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View row = convertView;
-		DiscountHolder holder = null;
 
 		LayoutInflater inflater = ((Activity) context).getLayoutInflater();
 		row = inflater.inflate(layoutResourceId, parent, false);
 
-		holder = new DiscountHolder();
+		DiscountHolder holder = new DiscountHolder();
 		holder.discount = items.get(position);
 		
 		holder.deleteButton = (Button) row.findViewById(R.id.delete_button);

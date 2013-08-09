@@ -34,7 +34,7 @@ public class ReviewsListAdapter extends ArrayAdapter<Review> {
 		holder.email = (TextView) row.findViewById(R.id.review_user);
 		holder.product = (TextView) row.findViewById(R.id.review_product);
 		holder.message = (TextView) row.findViewById(R.id.review_message);
-		row.setTag(holder);
+		row.setTag(holder.review);
 		setupItem(holder);
 		return row;
 	}
