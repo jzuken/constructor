@@ -223,11 +223,6 @@ var loadStep = function() {
 }
 
 var initStep1 = function() {
-    $("#editors [step=1] div[screen]").click(function() {
-        var screenName = $(this).attr('screen');
-        screens.loadSelectedScreen(screenName);
-    });
-
     $("#screen-bg-color").ColorPicker({
         onChange: function (hsb, hex, rgb) {
             screens.changeSelectedScreenBgColor(hex);
@@ -241,7 +236,6 @@ var initStep1 = function() {
             $(this).css('backgroundColor', '#' + hex);
         }
     });
-
 
     $("#screen-bg").change(function(e) {
         var file = e.target.files[0];

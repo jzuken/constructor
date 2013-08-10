@@ -336,7 +336,7 @@ var initScreens = function() {
             initView: function($el) {
                 this.$view = $el;
 
-                this.$view.append('<div class="stats-block" param="aboutOrders">' +
+                this.$view.html('<div class="stats-block" param="aboutOrders">' +
                                '<img src="images/stats/about-orders.png">' +
                            '</div>' +
                            '<div class="stats-block" param="lastOrder">' +
@@ -348,11 +348,13 @@ var initScreens = function() {
                            '<div class="stats-block" param="technicalInfo">' +
                                '<img src="images/stats/technical-info.png">' +
                            '</div>');
+
+                this.$view.find(".stats-block").height(126);
             },
             initEditor: function($el) {
                 this.$editor = $el;
 
-                this.$editor.append('<div class="properties-block">' +
+                this.$editor.html('<div class="properties-block">' +
                                '<h2>Выбор свойств для отображения</h2>' +
                                '<div>' +
                                    '<input type="checkbox" param="aboutOrders" checked>Общая информация о заказах' +
@@ -394,8 +396,15 @@ var initScreens = function() {
             loadScreen: function($el) {
             },
             initView: function($el) {
+                this.$view = $el;
+
+                this.$view.css({
+                    "height": "510px",
+                    "background-image": "url(images/users/background.png)"
+                });
             },
             initEditor: function($el) {
+                this.$editor = $el;
             },
             serialize: function() {
                 // !!! To do !!!
@@ -403,15 +412,22 @@ var initScreens = function() {
         })
     );
 
-    screens.addScreen('stock', new Screen({
+    screens.addScreen('discounts', new Screen({
             name: "Акции",
             params: {
             },
             loadScreen: function($el) {
             },
             initView: function($el) {
+                this.$view = $el;
+                
+                this.$view.css({
+                    "height": "510px",
+                    "background-image": "url(images/discounts/background.png)"
+                });
             },
             initEditor: function($el) {
+                this.$editor = $el;
             },
             serialize: function() {
                 // !!! To do !!!
@@ -419,15 +435,22 @@ var initScreens = function() {
         })
     );
 
-    screens.addScreen('goods', new Screen({
+    screens.addScreen('products', new Screen({
             name: "Товары",
             params: {
             },
-            loadScreen: function($el) {
+            loadScreen: function() {
             },
             initView: function($el) {
+                this.$view = $el;
+
+                this.$view.css({
+                    "height": "510px",
+                    "background-image": "url(images/products/background.png)"
+                });
             },
             initEditor: function($el) {
+                this.$editor = $el;
             },
             serialize: function() {
                 // !!! To do !!!
@@ -438,11 +461,18 @@ var initScreens = function() {
             name: "Отзывы",
             params: {
             },
-            loadScreen: function($el) {
+            loadScreen: function() {
             },
             initView: function($el) {
+                this.$view = $el;
+
+                this.$view.css({
+                    "height": "510px",
+                    "background-image": "url(images/reviews/background.png)"
+                });
             },
             initEditor: function($el) {
+                this.$editor = $el;
             },
             serialize: function() {
                 // !!! To do !!!
