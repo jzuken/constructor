@@ -38,14 +38,18 @@
 }
 
 .main-button {
-    width: 155px;
+    width: 156px;
     height: 155px;
     float: left;
     background-color: black;
     color: white;
     text-align: center;
-    border: 1px solid #FFF;
+    border: 2px solid rgba(0, 0, 0, 0);
     font-size: 20pt;
+}
+
+.main-button.selected {
+    border: 2px solid #0C3;
 }
 
 .main-button img {

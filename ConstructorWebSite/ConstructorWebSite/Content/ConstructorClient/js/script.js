@@ -133,7 +133,7 @@ var screens = {
             'background-image': bgImageProperty,
         });
 
-        this.items[id].loadScreen($el);
+        this.items[id].loadScreen();
 
         $("div[screen-editor]").css("display", "none");
         $("div[screen-editor=" + id + "]").css("display", "block");
@@ -184,6 +184,10 @@ var loadStep = function() {
     switch(currentStep) {
     case 0:
         $("#phone-screen [screen-view]").css("display", "none");
+        $("#phone-screen").css({
+            "background-image": "none",
+            "background-color": "#FFFFFF"
+        });
         break;
     case 1:
         $("#editors [step=1] div[screen]").each(function() {
