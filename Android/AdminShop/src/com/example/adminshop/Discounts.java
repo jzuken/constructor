@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
@@ -97,6 +98,7 @@ public class Discounts extends PinSupportNetworkActivity {
 
 	public void deleteClick(final String id) {
 		LinearLayout view = (LinearLayout) getLayoutInflater().inflate(R.layout.confirmation_dialog, null);
+		((TextView) view.findViewById(R.id.confirm_question)).setText("Are you sure you want to delete this discount?");
 		final CustomDialog dialog = new CustomDialog(this, view);
 
 		Button noButton = (Button) view.findViewById(R.id.dialog_no_button);

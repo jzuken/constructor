@@ -133,7 +133,6 @@
 	<string name="add_new_discount">Add new discount</string>
 	<string name="delete">Delete</string>
 	<string name="edit">Edit</string>
-	<string name="confirmation_question">Are you sure you want to delete this discount?</string>
 	<string name="sort_by">Sort by:</string>
 	<string name="last_login_date">Last login</string>
 	<string name="last_order_date">Last order</string>

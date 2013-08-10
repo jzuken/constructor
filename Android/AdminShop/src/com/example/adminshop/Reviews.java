@@ -9,14 +9,17 @@ import org.json.JSONObject;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
@@ -81,6 +84,31 @@ public class Reviews extends PinSupportNetworkActivity {
 	private void addReviewToList(final String id, final String email, final String product, final String message) {
 		adapter.add(new Review(id, "Review " + String.valueOf(position), email, product, message));
 		position++;
+	}
+	
+	public void deleteClick(final String id) {
+		LinearLayout view = (LinearLayout) getLayoutInflater().inflate(R.layout.confirmation_dialog, null);
+		((TextView) view.findViewById(R.id.confirm_question)).setText("Are you sure you want to delete this review?");
+		final CustomDialog dialog = new CustomDialog(this, view);
+
+		Button noButton = (Button) view.findViewById(R.id.dialog_no_button);
+		noButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				dialog.dismiss();
+			}
+		});
+
+		Button yesButton = (Button) view.findViewById(R.id.dialog_yes_button);
+		yesButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				dialog.dismiss();
+				deleteReview(id);
+			}
+		});
+
+		dialog.show();
 	}
 
 	private void deleteReview(String id) {
@@ -156,7 +184,7 @@ public class Reviews extends PinSupportNetworkActivity {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				switch (position) {
 				case 0:
-					deleteReview(review_id);
+					deleteClick(review_id);
 					dialog.dismiss();
 					break;
 				case 1:
