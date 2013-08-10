@@ -10,11 +10,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 public class Discounts extends PinSupportNetworkActivity {
 
@@ -64,6 +71,7 @@ public class Discounts extends PinSupportNetworkActivity {
 					showConnectionErrorMessage();
 				}
 				progressBar.setVisibility(View.GONE);
+				discountsListView.onRefreshComplete();
 			}
 		};
 
@@ -77,8 +85,7 @@ public class Discounts extends PinSupportNetworkActivity {
 		position++;
 	}
 
-	public void editClick(View v) {
-		Discount itemToEdit = (Discount) v.getTag();
+	public void editClick(Discount itemToEdit) {
 		Intent intent = new Intent(getBaseContext(), DiscountEditor.class);
 		intent.putExtra("id", itemToEdit.getId());
 		intent.putExtra("orderSub", itemToEdit.getOrderSubtotal());
@@ -88,7 +95,7 @@ public class Discounts extends PinSupportNetworkActivity {
 		startActivityForResult(intent, 1);
 	}
 
-	public void deleteClick(final View currentView) {
+	public void deleteClick(final String id) {
 		LinearLayout view = (LinearLayout) getLayoutInflater().inflate(R.layout.confirmation_dialog, null);
 		final CustomDialog dialog = new CustomDialog(this, view);
 
@@ -105,8 +112,7 @@ public class Discounts extends PinSupportNetworkActivity {
 			@Override
 			public void onClick(View v) {
 				dialog.dismiss();
-				Discount itemToRemove = (Discount) currentView.getTag();
-				deleteDiscount(itemToRemove.getId());
+				deleteDiscount(id);
 			}
 		});
 
@@ -131,8 +137,56 @@ public class Discounts extends PinSupportNetworkActivity {
 
 	private void setupListViewAdapter() {
 		adapter = new DiscountsListAdapter(this, R.layout.discount_item, new ArrayList<Discount>());
-		ListView discountsListView = (ListView) findViewById(R.id.discounts);
+		discountsListView = (PullToRefreshListView) findViewById(R.id.discounts);
+
+		discountsListView.setOnRefreshListener(new OnRefreshListener<ListView>() {
+			@Override
+			public void onRefresh(PullToRefreshBase<ListView> refreshView) {
+				updateDiscountsTable();
+			}
+		});
+
+		discountsListView.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				showActionDialog(((Discount) view.getTag()));
+			}
+		});
+
 		discountsListView.setAdapter(adapter);
+	}
+
+	private void showActionDialog(final Discount item) {
+		LinearLayout action_view = (LinearLayout) getLayoutInflater().inflate(R.layout.action_dialog, null);
+		final CustomDialog dialog = new CustomDialog(this, action_view);
+
+		ListView actionList = (ListView) action_view.findViewById(R.id.action_list);
+
+		String[] actions = { "Edit", "Delete", "Cancel" };
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.action_item, R.id.textItem, actions);
+
+		actionList.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				switch (position) {
+				case 0:
+					editClick(item);
+					dialog.dismiss();
+					break;
+				case 1:
+					deleteClick(item.getId());
+					dialog.dismiss();
+					break;
+				case 2:
+					dialog.dismiss();
+				default:
+					break;
+				}
+
+			}
+		});
+
+		actionList.setAdapter(adapter);
+
+		dialog.show();
 	}
 
 	private void clearList() {
@@ -148,4 +202,5 @@ public class Discounts extends PinSupportNetworkActivity {
 	private int position = 1;
 	private ProgressBar progressBar;
 	private DiscountsListAdapter adapter;
+	PullToRefreshListView discountsListView;
 }

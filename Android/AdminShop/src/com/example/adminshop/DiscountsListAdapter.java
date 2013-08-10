@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.TextView;
 
 public class DiscountsListAdapter extends ArrayAdapter<Discount> {
@@ -30,18 +29,12 @@ public class DiscountsListAdapter extends ArrayAdapter<Discount> {
 		DiscountHolder holder = new DiscountHolder();
 		holder.discount = items.get(position);
 		
-		holder.deleteButton = (Button) row.findViewById(R.id.delete_button);
-		holder.deleteButton.setTag(holder.discount);
-		
-		holder.editButton = (Button) row.findViewById(R.id.edit_button);
-		holder.editButton.setTag(holder.discount);
-		
 		holder.title = (TextView) row.findViewById(R.id.title);
 		holder.orderSubtotal = (TextView) row.findViewById(R.id.order_subtotal);
 		holder.discountValue = (TextView) row.findViewById(R.id.discount);
 		holder.discountType = (TextView) row.findViewById(R.id.discount_type);
 		holder.membership = (TextView) row.findViewById(R.id.membership);
-		row.setTag(holder);
+		row.setTag(holder.discount);
 		setupItem(holder);
 		return row;
 	}
@@ -61,8 +54,6 @@ public class DiscountsListAdapter extends ArrayAdapter<Discount> {
 		TextView discountValue;
 		TextView discountType;
 		TextView membership;
-		Button deleteButton;
-		Button editButton;
 	}
 	
 	private List<Discount> items;

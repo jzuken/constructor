@@ -144,13 +144,13 @@ public class Reviews extends PinSupportNetworkActivity {
 	}
 
 	private void showActionDialog(final String review_id) {
-		LinearLayout action_view = (LinearLayout) getLayoutInflater().inflate(R.layout.review_action_dialog, null);
+		LinearLayout action_view = (LinearLayout) getLayoutInflater().inflate(R.layout.action_dialog, null);
 		final CustomDialog dialog = new CustomDialog(this, action_view);
 
 		ListView actionList = (ListView) action_view.findViewById(R.id.action_list);
 
-		String[] actions = { "Delete", "Cancel" };
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, actions);
+		String[] actions = { "Delete", "Cancel"};
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.action_item, R.id.textItem, actions);
 
 		actionList.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
