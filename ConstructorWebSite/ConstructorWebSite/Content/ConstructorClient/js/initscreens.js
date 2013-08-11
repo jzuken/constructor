@@ -302,7 +302,24 @@ var initScreens = function() {
                 });
             },
             serialize: function() {
-                // !!! To do !!!
+                var res = [];
+
+                var items = this.params.items;
+                for (var i = 0, l = items.length; i < l; ++i) {
+                    var item = items[i];
+
+                    if (!items.disabled && item.hasButton) {
+                        res.push({
+                            id: item.id,
+                            bgColor: item.buttonBgColor,
+                            textColor: item.buttonTextColor,
+                            text: item.buttonText
+                            // TO DO: service for send images
+                        });
+                    }
+                }
+
+                return res;
             }
         })
     );
@@ -384,7 +401,12 @@ var initScreens = function() {
                 });
             },
             serialize: function() {
-                // !!! To do !!!
+                return {
+                    aboutOrders: this.params.aboutOrders,
+                    lastOrder: this.params.lastOrder,
+                    leadersOfSales: this.params.leadersOfSales,
+                    technicalInfo: this.params.technicalInfo
+                };
             }
         })
     );
@@ -407,7 +429,6 @@ var initScreens = function() {
                 this.$editor = $el;
             },
             serialize: function() {
-                // !!! To do !!!
             }
         })
     );
@@ -430,7 +451,6 @@ var initScreens = function() {
                 this.$editor = $el;
             },
             serialize: function() {
-                // !!! To do !!!
             }
         })
     );
@@ -453,7 +473,6 @@ var initScreens = function() {
                 this.$editor = $el;
             },
             serialize: function() {
-                // !!! To do !!!
             }
         })
     );
@@ -475,7 +494,6 @@ var initScreens = function() {
                 this.$editor = $el;
             },
             serialize: function() {
-                // !!! To do !!!
             }
         })
     );

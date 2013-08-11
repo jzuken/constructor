@@ -11,14 +11,16 @@ var Screen = function(data) {
     this.loadScreen = data.loadScreen;
     this.initView = data.initView;
     this.initEditor = data.initEditor;
-    
+
     this.serialize = data.serialize;
 }
 
 var screens = {
+    keys: [],
     items: {},
     addScreen: function(id, screen) {
         this.items[id] = screen;
+        this.keys.push(id);
 
         var me = this;
 
@@ -175,6 +177,30 @@ var screens = {
         })(file);
 
         reader.readAsDataURL(file);
+    },
+    serialize: function() {
+        var res = [];
+
+        for (var i = 0, l = this.keys.length; i < l; ++i) {
+            var key = this.keys[i];
+            var screen = this.items[key];
+
+            if (!screen.disabled) {
+                res.push({
+                    id: key,
+                    common: {
+                        bgColor: screen.bgColor,
+                        textColor: screen.textColor,
+                        name: screen.name
+                        // TO DO: service for send images
+                    },
+                    data: screen.serialize()
+                });
+            }
+        }
+
+        console.log(res);
+        return JSON.stringify(res);
     }
 };
 
