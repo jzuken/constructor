@@ -14,6 +14,15 @@ public class Settings extends PreferenceActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.settings);
+
+		setupPasswordEditText();
+		setupUsersAmountEditText();
+		setupReviewsAmountEditText();
+		setupProductsAmountEditText();
+	}
+
+	@SuppressWarnings("deprecation")
+	private void setupPasswordEditText() {
 		EditTextPreference password = (EditTextPreference) findPreference("password");
 		password.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
 
@@ -28,21 +37,55 @@ public class Settings extends PreferenceActivity {
 			}
 		});
 	}
-	
+
+	@SuppressWarnings("deprecation")
+	private void setupUsersAmountEditText() {
+		EditTextPreference usersAmount = (EditTextPreference) findPreference("users_amount");
+		setPackChangeListener(usersAmount, 5);
+	}
+
+	@SuppressWarnings("deprecation")
+	private void setupReviewsAmountEditText() {
+		EditTextPreference reviewsAmount = (EditTextPreference) findPreference("reviews_amount");
+		setPackChangeListener(reviewsAmount, 10);
+	}
+
+	@SuppressWarnings("deprecation")
+	private void setupProductsAmountEditText() {
+		EditTextPreference productsAmount = (EditTextPreference) findPreference("products_amount");
+		setPackChangeListener(productsAmount, 5);
+	}
+
+	private void setPackChangeListener(EditTextPreference editText, final int minPackSize) {
+		editText.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+
+			@Override
+			public boolean onPreferenceChange(Preference preference, Object newValue) {
+				if (Integer.parseInt((String) newValue) < minPackSize) {
+					Toast.makeText(getBaseContext(), "Pack must be bigger than " + String.valueOf(minPackSize - 1),
+							Toast.LENGTH_LONG).show();
+					return false;
+				}
+				return true;
+			}
+		});
+	}
+
 	@Override
 	public void onBackPressed() {
 		setResult(RESULT_OK);
 		super.onBackPressed();
 	}
+
 	private boolean isPaused;
 	private boolean fromPin;
-	
+
 	@Override
 	protected void onPause() {
 		super.onPause();
 		isPaused = true;
 	}
-	
+
 	@Override
 	protected void onStart() {
 		super.onStart();
@@ -54,7 +97,7 @@ public class Settings extends PreferenceActivity {
 		isPaused = false;
 		fromPin = false;
 	}
-	
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode == 2) {
