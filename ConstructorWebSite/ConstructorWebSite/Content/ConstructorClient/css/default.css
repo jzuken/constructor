@@ -1,9 +1,9 @@
 #controls {
-    width: 500px;
+    width: 860px;
     height: 540px;
 }
 
-#phone {
+.phone {
     border: 1px solid #000;
     border-radius: 11px;
     background-color: #232323;
@@ -17,10 +17,6 @@
     background-color: white;
     width: 100%;
     height: 100%;
-}
-
-#steps {
-    width: 100%;
 }
 
 #screens {
@@ -113,4 +109,12 @@
     width: 30px;
     height: 30px;
     background: url(../images/select.png) center;
+}
+
+.step {
+    display: none;
+}
+
+.step.active {
+    display: block;
 }

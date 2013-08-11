@@ -312,7 +312,9 @@ var initScreens = function() {
                         res.push({
                             id: item.id,
                             bgColor: item.buttonBgColor,
+                            bgColorRGB: hexToRGB(item.buttonBgColor),
                             textColor: item.buttonTextColor,
+                            textColorRGB: hexToRGB(item.buttonTextColor),
                             text: item.buttonText
                             // TO DO: service for send images
                         });

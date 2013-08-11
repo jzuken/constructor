@@ -190,7 +190,9 @@ var screens = {
                     id: key,
                     common: {
                         bgColor: screen.bgColor,
+                        bgColorRGB: hexToRGB(screen.bgColor),
                         textColor: screen.textColor,
+                        textColorRGB: hexToRGB(screen.textColor),
                         name: screen.name
                         // TO DO: service for send images
                     },
@@ -206,14 +208,13 @@ var screens = {
 
 var currentStep = 0;
 
-var loadStep = function() {
+var loadStep = function(step) {
+    if (typeof(step) === "number") {
+        currentStep = step;
+    }
+
     switch(currentStep) {
     case 0:
-        $("#phone-screen [screen-view]").css("display", "none");
-        $("#phone-screen").css({
-            "background-image": "none",
-            "background-color": "#FFFFFF"
-        });
         break;
     case 1:
         $("#editors [step=1] div[screen]").each(function() {
@@ -240,12 +241,17 @@ var loadStep = function() {
         screens.loadScreens();
         screens.loadSelectedScreen("main");
         break;
+    case 2:
+        break;
     default:
         break;
     }
 
     $("#editors [step]").css("display", "none");
     $("#editors [step=" + currentStep + "]").css("display", "block");
+
+    $(".step").removeClass("active");
+    $(".step[step=" + currentStep + "]").addClass("active");
 }
 
 var initStep1 = function() {
