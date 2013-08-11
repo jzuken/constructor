@@ -16,5 +16,9 @@ var templates = {
     },
     mainButton: function(id) {
         return "<div class='main-button' screen='" + id + "'></div>";
-    }
+    },
+    confirmDataSend: "Подтвердите отправку данных",
+    successDataSend: "Данные успешно отправлены",
+    waitDataSend: "Отправка данных...",
+    errorDataSend: "Ошибка отпрапвки данных"
 }

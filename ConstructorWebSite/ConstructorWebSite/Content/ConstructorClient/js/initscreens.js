@@ -5,7 +5,7 @@ var initScreens = function() {
                 items: [],
                 getScreen: function(id) {
                     if (id == "main") {
-                        return this.mainScreen;
+                        return null;
                     }
 
                     for (var key in this.items) {
@@ -25,21 +25,25 @@ var initScreens = function() {
                     if (screen.disabled) {
                         $el.hide();
                     } else {
-                        $el.show();
+                        if (screen.hasButton) {
+                            $el.show();
 
-                        var imgSrc = "";
-                        if (screen.buttonImage) {
-                            imgSrc = ' src="' + screen.buttonImageSrc + '"';
+                            var imgSrc = "";
+                            if (screen.buttonImage) {
+                                imgSrc = ' src="' + screen.buttonImageSrc + '"';
+                            }
+
+                            var imgBlock = "<img" + imgSrc + "></img>";
+                            var textBlock = '<div class="main-button-text">' + screen.buttonText + '</div>';
+
+                            $el.html(imgBlock + textBlock);
+                            $el.css({
+                                'color': "#" + screen.buttonTextColor,
+                                'background-color': "#" + screen.buttonBgColor
+                            });
+                        } else {
+                            $el.hide();
                         }
-
-                        var imgBlock = "<img" + imgSrc + "></img>";
-                        var textBlock = '<div class="main-button-text">' + screen.buttonText + '</div>';
-
-                        $el.html(imgBlock + textBlock);
-                        $el.css({
-                            'color': "#" + screen.buttonTextColor,
-                            'background-color': "#" + screen.buttonBgColor
-                        });
                     }
                 },
                 selectedButton: "",
@@ -91,7 +95,7 @@ var initScreens = function() {
                     var finded = false;
                     for (var i = 0, l = this.items.length; !finded && i < l; ++i) {
                         var screen = this.items[i];
-                
+
                         if (screen.id == this.selectedButton) {
                             finded = true;
                         } else {
@@ -197,6 +201,9 @@ var initScreens = function() {
             },
             loadScreen: function() {
                 this.$view.find(".main-button").remove();
+                this.$editor.find(".removed-button").remove();
+
+                var me = this;
 
                 for (var i = 0, l = this.params.items.length; i < l; ++i) {
                     var screen = this.params.items[i];
@@ -204,9 +211,20 @@ var initScreens = function() {
                     if (!screen.disabled) {
                         this.$view.append("<div class='main-button' screen='" + screen.id + "'></div>");
                     }
+
+                    if (!screen.hasButton) {
+                        this.$editor.find("#removed-buttons").append("<div class=\"removed-button\" screen=\"" + screen.id + "\">" + screen.buttonText + "</div>");
+
+                        this.$editor.find(".removed-button[screen=" + screen.id + "]").button();
+                        this.$editor.find(".removed-button[screen=" + screen.id + "]").click(function() {
+                            screen.hasButton = true;
+                            me.$view.find(".main-button[screen=" + screen.id + "]").fadeIn();
+
+                            $(this).remove();
+                        });
+                    }
                 }
 
-                var me = this;
                 this.$view.find(".main-button").each(function() {
                     me.params.loadMainButton($(this).attr("screen"));
                 });
@@ -308,7 +326,7 @@ var initScreens = function() {
                 for (var i = 0, l = items.length; i < l; ++i) {
                     var item = items[i];
 
-                    if (!items.disabled && item.hasButton) {
+                    if (!item.disabled && item.hasButton) {
                         res.push({
                             id: item.id,
                             bgColor: item.buttonBgColor,
@@ -322,6 +340,23 @@ var initScreens = function() {
                 }
 
                 return res;
+            },
+            loadSaved: function(data) {
+                for (var i = 0, l = data.length; i < l; ++i) {
+                    var dataItem = data[i];
+
+                    this.params.swapMainButtons(dataItem.id, this.params.items[i].id);
+
+                    var item = this.params.items[i];
+                    item.hasButton = true;
+                    item.buttonBgColor = dataItem.bgColor;
+                    item.buttonTextColor = dataItem.textColor;
+                    item.buttonText = dataItem.text;
+                }
+
+                for (var i = data.length, l = this.params.items.length; i < l; ++i) {
+                    this.params.items[i].hasButton = false;
+                }
             }
         })
     );
@@ -409,6 +444,14 @@ var initScreens = function() {
                     leadersOfSales: this.params.leadersOfSales,
                     technicalInfo: this.params.technicalInfo
                 };
+            },
+            loadSaved: function(data) {
+                this.params = {
+                    aboutOrders: data.aboutOrders,
+                    lastOrder: data.lastOrder,
+                    leadersOfSales: data.leadersOfSales,
+                    technicalInfo: data.technicalInfo
+                }
             }
         })
     );
@@ -431,6 +474,9 @@ var initScreens = function() {
                 this.$editor = $el;
             },
             serialize: function() {
+                return null;
+            },
+            loadSaved: function(data) {
             }
         })
     );
@@ -453,6 +499,9 @@ var initScreens = function() {
                 this.$editor = $el;
             },
             serialize: function() {
+                return null;
+            },
+            loadSaved: function(data) {
             }
         })
     );
@@ -475,6 +524,9 @@ var initScreens = function() {
                 this.$editor = $el;
             },
             serialize: function() {
+                return null;
+            },
+            loadSaved: function(data) {
             }
         })
     );
@@ -496,6 +548,9 @@ var initScreens = function() {
                 this.$editor = $el;
             },
             serialize: function() {
+                return null;
+            },
+            loadSaved: function(data) {
             }
         })
     );

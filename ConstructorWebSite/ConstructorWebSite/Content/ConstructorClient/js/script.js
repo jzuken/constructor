@@ -13,6 +13,7 @@ var Screen = function(data) {
     this.initEditor = data.initEditor;
 
     this.serialize = data.serialize;
+    this.loadSaved = data.loadSaved;
 }
 
 var screens = {
@@ -201,8 +202,37 @@ var screens = {
             }
         }
 
-        console.log(res);
         return JSON.stringify(res);
+    },
+    loadSaved: function(data) {
+        for (var i = 0, l = this.keys.length; i < l; ++i) {
+            var key = this.keys[i];
+            var screen = this.items[key];
+
+            screen.disabled = true;
+
+            var mainItem = this.items.main.params.getScreen(key);
+            if (mainItem) {
+                mainItem.disabled = true;
+            }
+        }
+
+        for (var i = 0, l = data.length; i < l; ++i) {
+            var item = data[i];
+            var screen = this.items[item.id];
+            screen.disabled = false;
+            var mainItem = this.items.main.params.getScreen(item.id);
+            if (mainItem) {
+                mainItem.disabled = false;
+            }
+
+            var commonData = item.common;
+            screen.bgColor = commonData.bgColor;
+            screen.textColor = commonData.textColor;
+            screen.name = commonData.name;
+
+            screen.loadSaved(item.data);
+        }
     }
 };
 
@@ -215,6 +245,17 @@ var loadStep = function(step) {
 
     switch(currentStep) {
     case 0:
+        $(".chose-screen-trigger").each(function() {
+            var screenId = $(this).attr("screen");
+
+            if (screens.items[screenId].disabled) {
+                $(this).addClass("screen-disabled");
+                $(this).removeClass("screen-enabled");
+            } else {
+                $(this).removeClass("screen-disabled");
+                $(this).addClass("screen-enabled");
+            }
+        });
         break;
     case 1:
         $("#editors [step=1] div[screen]").each(function() {
@@ -242,6 +283,7 @@ var loadStep = function(step) {
         screens.loadSelectedScreen("main");
         break;
     case 2:
+        $(".send-status").html(templates.confirmDataSend);
         break;
     default:
         break;
@@ -276,16 +318,39 @@ var initStep1 = function() {
     });
 }
 
+var initStep2 = function() {
+    $("#send-button").button();
+    $("#send-button").click(function() {
+        $(".send-status").html(templates.waitDataSend);
+
+        var data = screens.serialize();
+
+        $.post("url", data, function(data) {
+            if (data.success) {
+                $(".send-status").html(templates.successDataSend);
+            } else {
+                $(".send-status").html(templates.failDataSend);
+            }
+        }, "json")
+        .fail(function() {
+            $(".send-status").html(templates.failDataSend);
+        });
+    });
+}
+
 $(document).ready(function() {
     $(".button").button();
 
     initScreens();
 
     initStep1();
+    initStep2();
 
     $("#next-step-button").click(function() {
-        ++currentStep;
-        loadStep();
+        if (currentStep < 2) {
+            ++currentStep;
+            loadStep();
+        }
     });
 
     $("#prev-step-button").click(function() {
@@ -293,6 +358,14 @@ $(document).ready(function() {
             --currentStep;
             loadStep();
         }
+    });
+
+    $("#load-data-button").click(function() {
+        $.post("url", "", function(data) {
+            screens.loadData(data);
+
+            loadStep(0);
+        }, "json");
     });
 
     loadStep();
