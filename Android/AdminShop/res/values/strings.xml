@@ -146,5 +146,6 @@
 	<string name="message_text">Message:</string>
 	<string name="gross_total">Gross total:</string>
 	<string name="action">Choose an action</string>
+	<string name="enter_to_app">Enter into admin area</string>
 	
 </resources>
