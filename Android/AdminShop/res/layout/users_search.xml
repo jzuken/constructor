@@ -18,6 +18,7 @@
         android:id="@+id/users_list"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:listSelector="@android:color/transparent"
         tools:listitem="@layout/user_item" >
     </com.handmark.pulltorefresh.library.PullToRefreshListView>
 

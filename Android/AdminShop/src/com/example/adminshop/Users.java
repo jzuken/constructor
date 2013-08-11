@@ -8,7 +8,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AbsListView;
@@ -37,6 +36,8 @@ public class Users extends PinSupportNetworkActivity {
 
 	@Override
 	protected void withoutPinAction() {
+		registered.setText("");
+		online.setText("");
 		clearData();
 		updateUsersList();
 	}
@@ -64,13 +65,14 @@ public class Users extends PinSupportNetworkActivity {
 						}
 						for (int i = 0; i < length; i++) {
 							JSONObject obj = array.getJSONObject(i);
+							String id = obj.getString("id");
 							String name = obj.getString("title") + " " + obj.getString("firstname") + " "
 									+ obj.getString("lastname");
 							String login = obj.getString("login");
 							String type = obj.getString("usertype");
 							String lastLogin = getFormatDate(Long.parseLong(obj.getString("last_login")));
 							String totalOrder = obj.optString("orders_count");
-							addUserToList(name, login, type, lastLogin, totalOrder);
+							addUserToList(id, name, login, type, lastLogin, totalOrder);
 						}
 					} catch (JSONException e) {
 						e.printStackTrace();
@@ -91,8 +93,6 @@ public class Users extends PinSupportNetworkActivity {
 
 	private void clearData() {
 		adapter.clear();
-		registered.setText("");
-		online.setText("");
 		currentAmount = 0;
 	}
 
@@ -130,9 +130,9 @@ public class Users extends PinSupportNetworkActivity {
 		}
 	}
 
-	private void addUserToList(final String name, final String login, final String type, final String lastLogin,
-			final String totalOrders) {
-		adapter.add(new User(name, login, type, lastLogin, totalOrders));
+	private void addUserToList(final String id, final String name, final String login, final String type,
+			final String lastLogin, final String totalOrders) {
+		adapter.add(new User(id, name, login, type, lastLogin, totalOrders));
 	}
 
 	private void setupListViewAdapter() {
@@ -170,6 +170,8 @@ public class Users extends PinSupportNetworkActivity {
 		usersListView.setOnRefreshListener(new OnRefreshListener<ListView>() {
 			@Override
 			public void onRefresh(PullToRefreshBase<ListView> refreshView) {
+				registered.setText("");
+				online.setText("");
 				clearData();
 				updateUsersList();
 			}
