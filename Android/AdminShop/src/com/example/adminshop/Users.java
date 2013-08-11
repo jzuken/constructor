@@ -7,7 +7,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AbsListView;
@@ -30,6 +32,8 @@ public class Users extends PinSupportNetworkActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.users_search);
+		SharedPreferences settingsData = PreferenceManager.getDefaultSharedPreferences(this);
+		packAmount = Integer.parseInt(settingsData.getString("users_amount", "10"));
 		setupListViewAdapter();
 		setupSortSpinner();
 	}
@@ -217,7 +221,7 @@ public class Users extends PinSupportNetworkActivity {
 	private final String[] sortOptions = { "Last login", "Last order", "Total orders", "None" };
 	private int currentSortOption;
 	private boolean hasNext;
-	private int packAmount = 10;
+	private int packAmount;
 	private final int startItemCount = 4;
 	PullToRefreshListView usersListView;
 }

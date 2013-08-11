@@ -6,7 +6,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -32,7 +34,10 @@ public class Reviews extends PinSupportNetworkActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.reviews);
+		SharedPreferences settingsData = PreferenceManager.getDefaultSharedPreferences(this);
+		packAmount = Integer.parseInt(settingsData.getString("reviews_amount", "10"));
 		setupListViewAdapter();
+		
 	}
 
 	@Override
@@ -214,7 +219,7 @@ public class Reviews extends PinSupportNetworkActivity {
 	private int currentAmount;
 	private boolean isDownloading;
 	private boolean hasNext;
-	private int packAmount = 10;
+	private int packAmount;
 	private final int startItemCount = 3;
 	PullToRefreshListView reviewsListView;
 }

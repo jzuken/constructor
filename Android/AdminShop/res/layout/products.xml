@@ -32,6 +32,6 @@
         android:layout_marginTop="8dp"
         android:background="@drawable/edit_text"
         android:drawableRight="@drawable/loupe"
-        android:inputType="text" />
+        android:inputType="textFilter|textNoSuggestions" />
 
 </LinearLayout>
