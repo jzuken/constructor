@@ -16,6 +16,4 @@
 @property (strong, nonatomic) IBOutlet UILabel *messageLable;
 
 
-- (float) heightOfLabel;
-
 @end

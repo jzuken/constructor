@@ -11,14 +11,17 @@ var Screen = function(data) {
     this.loadScreen = data.loadScreen;
     this.initView = data.initView;
     this.initEditor = data.initEditor;
-    
+
     this.serialize = data.serialize;
+    this.loadSaved = data.loadSaved;
 }
 
 var screens = {
+    keys: [],
     items: {},
     addScreen: function(id, screen) {
         this.items[id] = screen;
+        this.keys.push(id);
 
         var me = this;
 
@@ -37,13 +40,7 @@ var screens = {
 
             mainScreen.params.items.push(mainScreenItem);
 
-            $("#chose-screens").append('<div screen="' + id + '">' +
-                                            '<input value="' + screen.name + '"></input>' +
-                                            '<a href="javascript:void(0)" class="remove-screen">' +
-                                                '<img class="remove-screen-image" src="images/remove-screen.png"></img>' +
-                                                '<img class="add-screen-image" src="images/add-screen.png"></img>' +
-                                            '</a>' +
-                                        '</div>');
+            $("#chose-screens").append(templates.choseScreenTrigger(id, screen.name));
 
             $("#chose-screens [screen=" + id + "] input").change(function() {
                 screens.changeScreenTitle(id, $(this).val());
@@ -58,11 +55,11 @@ var screens = {
 
                 var isDisabled = screen.disabled;
                 if (isDisabled) {
-                    $(this).removeClass("add-screen");
-                    $(this).addClass("remove-screen");
+                    $(this).parent().removeClass("screen-disabled");
+                    $(this).parent().addClass("screen-enabled");
                 } else {
-                    $(this).removeClass("remove-screen");
-                    $(this).addClass("add-screen");
+                    $(this).parent().removeClass("screen-enabled");
+                    $(this).parent().addClass("screen-disabled");
                 }
 
                 screen.disabled = !isDisabled;
@@ -70,16 +67,16 @@ var screens = {
             });
         }
 
-        $("#phone-screen").append("<div screen-view='" + id + "'><div class='screen-name'></div><div class='screen-controls'></div></div>");
+        $("#phone-screen").append(templates.screenView(id));
         screen.initView($("#phone-screen [screen-view=" + id + "] .screen-controls"));
 
-        $("#screens").append("<div screen='" + id + "'>" + screen.name + "</div>");
+        $("#screens").append(templates.screen(id, screen.name));
         $("#screens [screen=" + id + "]").button();
         $("#screens [screen=" + id + "]").click(function() {
             me.loadSelectedScreen(id);
         });
 
-        $("#screen-editors").append("<div screen-editor='" + id + "'></div>");
+        $("#screen-editors").append(templates.screenEditor(id));
         screen.initEditor($("#screen-editors [screen-editor=" + id + "]"));
     },
     changeScreenTitle: function(id, title) {
@@ -95,8 +92,7 @@ var screens = {
             var screen = this.items[i];
 
             if (!screen.disabled) {
-                var newEl = "<div class='main-button' screen='" + screen.id + "'></div>";
-                $el.append(newEl);
+                $el.append(templates.mainButton(screen.id));
             }
         }
 
@@ -140,7 +136,10 @@ var screens = {
             'background-image': bgImageProperty,
         });
 
-        this.items[id].loadScreen($el);
+        this.items[id].loadScreen();
+
+        $("div[screen-editor]").css("display", "none");
+        $("div[screen-editor=" + id + "]").css("display", "block");
     },
     changeSelectedScreenBgColor: function (hex) {
         var screen = this.items[this.selectedScreen];
@@ -179,15 +178,84 @@ var screens = {
         })(file);
 
         reader.readAsDataURL(file);
+    },
+    serialize: function() {
+        var res = [];
+
+        for (var i = 0, l = this.keys.length; i < l; ++i) {
+            var key = this.keys[i];
+            var screen = this.items[key];
+
+            if (!screen.disabled) {
+                res.push({
+                    id: key,
+                    common: {
+                        bgColor: screen.bgColor,
+                        bgColorRGB: hexToRGB(screen.bgColor),
+                        textColor: screen.textColor,
+                        textColorRGB: hexToRGB(screen.textColor),
+                        name: screen.name
+                        // TO DO: service for send images
+                    },
+                    data: screen.serialize()
+                });
+            }
+        }
+
+        return JSON.stringify(res);
+    },
+    loadSaved: function(data) {
+        for (var i = 0, l = this.keys.length; i < l; ++i) {
+            var key = this.keys[i];
+            var screen = this.items[key];
+
+            screen.disabled = true;
+
+            var mainItem = this.items.main.params.getScreen(key);
+            if (mainItem) {
+                mainItem.disabled = true;
+            }
+        }
+
+        for (var i = 0, l = data.length; i < l; ++i) {
+            var item = data[i];
+            var screen = this.items[item.id];
+            screen.disabled = false;
+            var mainItem = this.items.main.params.getScreen(item.id);
+            if (mainItem) {
+                mainItem.disabled = false;
+            }
+
+            var commonData = item.common;
+            screen.bgColor = commonData.bgColor;
+            screen.textColor = commonData.textColor;
+            screen.name = commonData.name;
+
+            screen.loadSaved(item.data);
+        }
     }
 };
 
 var currentStep = 0;
 
-var loadStep = function() {
+var loadStep = function(step) {
+    if (typeof(step) === "number") {
+        currentStep = step;
+    }
+
     switch(currentStep) {
     case 0:
-        $("#phone-screen [screen-view]").css("display", "none");
+        $(".chose-screen-trigger").each(function() {
+            var screenId = $(this).attr("screen");
+
+            if (screens.items[screenId].disabled) {
+                $(this).addClass("screen-disabled");
+                $(this).removeClass("screen-enabled");
+            } else {
+                $(this).removeClass("screen-disabled");
+                $(this).addClass("screen-enabled");
+            }
+        });
         break;
     case 1:
         $("#editors [step=1] div[screen]").each(function() {
@@ -214,41 +282,59 @@ var loadStep = function() {
         screens.loadScreens();
         screens.loadSelectedScreen("main");
         break;
+    case 2:
+        $(".send-status").html(templates.confirmDataSend);
+        break;
     default:
         break;
     }
 
     $("#editors [step]").css("display", "none");
     $("#editors [step=" + currentStep + "]").css("display", "block");
+
+    $(".step").removeClass("active");
+    $(".step[step=" + currentStep + "]").addClass("active");
 }
 
 var initStep1 = function() {
-    $("#editors [step=1] div[screen]").click(function() {
-        var screenName = $(this).attr('screen');
-        screens.loadSelectedScreen(screenName);
-
-        $("div[screen-editor]").css("display", "none");
-        $("div[screen-editor=" + screenName + "]").css("display", "block");
-    });
-
-
     $("#screen-bg-color").ColorPicker({
         onChange: function (hsb, hex, rgb) {
             screens.changeSelectedScreenBgColor(hex);
+            $(this).css('backgroundColor', '#' + hex);
         }
     });
 
     $("#screen-text-color").ColorPicker({
         onChange: function (hsb, hex, rgb) {
             screens.changeSelectedScreenTextColor(hex);
+            $(this).css('backgroundColor', '#' + hex);
         }
     });
-
 
     $("#screen-bg").change(function(e) {
         var file = e.target.files[0];
 
         screens.loadScreenBgImage(file);
+    });
+}
+
+var initStep2 = function() {
+    $("#send-button").button();
+    $("#send-button").click(function() {
+        $(".send-status").html(templates.waitDataSend);
+
+        var data = screens.serialize();
+
+        $.post("url", data, function(data) {
+            if (data.success) {
+                $(".send-status").html(templates.successDataSend);
+            } else {
+                $(".send-status").html(templates.failDataSend);
+            }
+        }, "json")
+        .fail(function() {
+            $(".send-status").html(templates.failDataSend);
+        });
     });
 }
 
@@ -258,10 +344,13 @@ $(document).ready(function() {
     initScreens();
 
     initStep1();
+    initStep2();
 
     $("#next-step-button").click(function() {
-        ++currentStep;
-        loadStep();
+        if (currentStep < 2) {
+            ++currentStep;
+            loadStep();
+        }
     });
 
     $("#prev-step-button").click(function() {
@@ -269,6 +358,14 @@ $(document).ready(function() {
             --currentStep;
             loadStep();
         }
+    });
+
+    $("#load-data-button").click(function() {
+        $.post("url", "", function(data) {
+            screens.loadData(data);
+
+            loadStep(0);
+        }, "json");
     });
 
     loadStep();

@@ -22,12 +22,11 @@ public class UsersListAdapter extends ArrayAdapter<User> {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View row = convertView;
-		UserHolder holder = null;
 
 		LayoutInflater inflater = ((Activity) context).getLayoutInflater();
 		row = inflater.inflate(layoutResourceId, parent, false);
 
-		holder = new UserHolder();
+		UserHolder holder = new UserHolder();
 		holder.user = items.get(position);
 		
 		holder.name = (TextView) row.findViewById(R.id.user_name);

@@ -49,9 +49,9 @@
     loadMoreDataAvaliable = YES;
     
     self.navigationController.navigationBarHidden = NO;
-    self.navigationItem.title = @"Users";
+    self.navigationItem.title = NSLocalizedString(@"USERS", nil);
     _currentSort = @"orders";
-    [self.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithTitle:@"Sort by:" style:UIBarButtonItemStyleBordered target:self action:@selector(openSortedByPopover)]];
+    [self.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"SORT_BY", nil) style:UIBarButtonItemStyleBordered target:self action:@selector(openSortedByPopover)]];
     
     __weak QRWUsersViewController *weakSelf = self;
     
@@ -127,9 +127,9 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     UIActionSheet *userActionSheet = [[UIActionSheet alloc] initWithTitle:nil
                                                                  delegate:self
-                                                        cancelButtonTitle:@"Cancel"
+                                                        cancelButtonTitle:NSLocalizedString(@"CANCEL", nil)
                                                    destructiveButtonTitle:nil
-                                                        otherButtonTitles:@"Full info", @"Orders list", @"Send a message", @"To the black list with a message", nil];
+                                                        otherButtonTitles:NSLocalizedString(@"FULL_INFO", nil), NSLocalizedString(@"ORDERS_LIST", nil), NSLocalizedString(@"SEND_A_MESSAGE", nil), NSLocalizedString(@"TO_THE_BLACK_LIST_WITH_A_MESSAGE", nil), nil];
     [userActionSheet showInView:self.view];
 }
 
@@ -164,11 +164,11 @@
 
 - (void)configureProductCell:(QRWUserCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    cell.userLable.text = [NSString stringWithFormat:@"%@ %@", [(QRWUser *)_users[indexPath.row] firstname], [(QRWUser *)_users[indexPath.row] lastname]];
-    cell.loginLable.text = [NSString stringWithFormat:@"Login: %@",[(QRWUser *)_users[indexPath.row] login]];
-    cell.typeLable.text = [NSString stringWithFormat:@"User type: %@",[(QRWUser *)_users[indexPath.row] usertype]];
-    cell.firstLoginLable.text = [NSString stringWithFormat:@"First login: %@", [(QRWUser *)_users[indexPath.row] firstLogin]];
-    cell.ordersCountLable.text = [NSString stringWithFormat:@"Oreders count: %d", [[(QRWUser *)_users[indexPath.row] ordersCount] intValue]];
+    cell.userLable.text = [NSString stringWithFormat:NSLocalizedString(@"USER_LABLE_TEXT", nil), [(QRWUser *)_users[indexPath.row] firstname], [(QRWUser *)_users[indexPath.row] lastname]];
+    cell.loginLable.text = [NSString stringWithFormat:NSLocalizedString(@"LOGIN_LABLE_TEXT", nil),[(QRWUser *)_users[indexPath.row] login]];
+    cell.typeLable.text = [NSString stringWithFormat:NSLocalizedString(@"TYPE_LABLE_TEXT", nil),[(QRWUser *)_users[indexPath.row] usertype]];
+    cell.firstLoginLable.text = [NSString stringWithFormat:NSLocalizedString(@"FIRST_LOGIN_LABLE_TEXT", nil), [(QRWUser *)_users[indexPath.row] firstLogin]];
+    cell.ordersCountLable.text = [NSString stringWithFormat:NSLocalizedString(@"ORDERS_COUNT_LABLE_TEXT", nil), [[(QRWUser *)_users[indexPath.row] ordersCount] intValue]];
 }
 
 

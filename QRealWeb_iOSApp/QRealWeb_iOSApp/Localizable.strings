@@ -42,3 +42,72 @@
 "ERROR_ALERT_TITLE" = "No data!";//"Неправильная логин/пароль комбинация";
 
 "NO_DATA_FOR_PERIOD_ALERT_MESSAGE" = "No data available for this time period";//"Пожалуйста воспользуйтесь правильной комбинацией";
+
+
+
+// Upload alert
+
+"SUCCESS_TITLE" = "Success!";
+"SUCCESS_DELETE_MESSAGE" = "Discount data was deleted";
+"FAIL_TITLE" = "Fail!";
+"FAIL_DELETE_MESSAGE" = "Discount data was not deleted";
+"SUCCESS_UPLOAD_MESSAGE" = "Discount data was uploaded";
+"FAIL_UPLOAD_MESSAGE" = "Discount data was not uploaded";
+
+
+// Action sheet
+
+"CANCEL" = "Cancel";
+"EDIT" = "Edit";
+"DELETE" = "Delete";
+"FULL_INFO" = "Full info";
+"ORDERS_LIST" = "Orders list";
+"SEND_A_MESSAGE" = "Send a message";
+"TO_THE_BLACK_LIST_WITH_A_MESSAGE" = "To the black list with a message";
+"REMOVE_FROM_STORE" = "Edit from the store";
+"FULL_TEXT" = "Full text";
+
+
+// Users
+
+"USERS" = "Users";
+"USER_LABLE_TEXT" = "%@ %@";
+"LOGIN_LABLE_TEXT" = "Login: %@";
+"TYPE_LABLE_TEXT" = "User type: %@";
+"FIRST_LOGIN_LABLE_TEXT" = "First login: %@";
+"ORDERS_COUNT_LABLE_TEXT" = "Oreders count: %d";
+
+"SORT_BY" = "Sort by:";
+
+
+// Discount
+
+"DISCOUNTS" = "Discounts";
+
+"MIN_PRICE" = "Min price: %.2f$";
+"DISCOUNT" = "Discount: %.2f$";
+"TYPE" = "Type: %@";
+"ALL" = "All";
+"PREMIUM" = "Premium";
+"WHOLESALER" = "Wholesaler";
+"MEMBERSHIP" = "Memebership: %@";
+
+// Reviews
+
+"REVIEWS" = "Reviews";
+"REVIEW" = "Review";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

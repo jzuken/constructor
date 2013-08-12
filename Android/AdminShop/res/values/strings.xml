@@ -13,7 +13,7 @@
     <string name="ok">OK</string>
     <string name="add">Add new</string>
     <string name="logout">Log out</string>
-    <string name="search_for">Search for pattern:</string>
+    <string name="search_for">Search for pattern</string>
     <string name="search">Search</string>
     <string name="serach_in">Search in:</string>
     <string name="product_images">Product images</string>
@@ -133,7 +133,6 @@
 	<string name="add_new_discount">Add new discount</string>
 	<string name="delete">Delete</string>
 	<string name="edit">Edit</string>
-	<string name="confirmation_question">Are you sure you want to delete this discount?</string>
 	<string name="sort_by">Sort by:</string>
 	<string name="last_login_date">Last login</string>
 	<string name="last_order_date">Last order</string>
@@ -142,5 +141,11 @@
 	<string name="login_text">Login:</string>
 	<string name="user_type">User type:</string>
 	<string name="last_login_text">Last login:</string>
-    
+    <string name="user_email_text">User\'s email:</string>
+	<string name="review_product_text">Product:</string>
+	<string name="message_text">Message:</string>
+	<string name="gross_total">Gross total:</string>
+	<string name="action">Choose an action</string>
+	<string name="enter_to_app">Enter into admin area</string>
+	
 </resources>

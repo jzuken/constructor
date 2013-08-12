@@ -43,6 +43,8 @@
 
 -(void) respondsForReviewsRequest:(NSArray *)reviews;
 
+-(void) respondsForUploadingRequest:(BOOL)status;
+
 @end
 
 
@@ -90,15 +92,18 @@
  */
 - (void) sendDiscountsRequest;
 
+- (void) uploadNewDiscountWithDiscount:(QRWDiscount *) discount;
 
+- (void) uploadEditedDiscountWithDiscount:(QRWDiscount *) discount;
 
+- (void) uploadDeletedDiscountWithDiscount:(QRWDiscount *) discount;
 
 /*
- Discounts
+ Reviews
  */
-- (void) sendReviewsRequest;
+- (void) sendReviewsRequestWithStartPoint:(NSInteger) startPoint lenght:(NSInteger) lenght;
 
-
+- (void) uploadDeletedReviewWithReview:(QRWReview *) review;
 
 
 

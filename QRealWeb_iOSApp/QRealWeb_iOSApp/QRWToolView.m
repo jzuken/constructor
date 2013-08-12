@@ -24,7 +24,7 @@
 }
 
 
--(id)initWithName: (NSString *)nameOfTool image:(UIImage *) imageOfTool actionBlock: (void (^)(void))toolButtonAction
+-(id)initWithName: (NSString *)nameOfTool image:(UIImage *) imageOfTool selectedImage:(UIImage *) imageOfSelectedTool  actionBlock: (void (^)(void))toolButtonAction
 {
     self = [self initWithFrame:CGRectMake(0, 0, kSideOfToolView, kSideOfToolView)];
     
@@ -36,12 +36,14 @@
     [actionButton setAction:@"TouchInside" withBlock:toolButtonAction];
     
     [actionButton setFrame:self.frame];
+    [actionButton setImage: imageOfSelectedTool forState:UIControlStateHighlighted];
+    [actionButton setImage: imageOfTool forState:UIControlStateNormal];
     [imageOfToolView setImage:imageOfTool];
     [nameOfToolLabel setText:nameOfTool];
     [nameOfToolLabel setTextAlignment:NSTextAlignmentCenter];
     [nameOfToolLabel setBackgroundColor:[UIColor clearColor]];
     
-    [self addSubview:imageOfToolView];
+//    [self addSubview:imageOfToolView];
     [self addSubview:nameOfToolLabel];
     [self addSubview:actionButton];
     

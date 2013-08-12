@@ -49,6 +49,7 @@ public class Dashboard extends PinSupportNetworkActivity {
 		declinedOrders = (TextView) page2.findViewById(R.id.declined_orders);
 		failedOrders = (TextView) page2.findViewById(R.id.failed_orders);
 		totalPaid = (TextView) page2.findViewById(R.id.total_paid);
+		grossTotal = (TextView) page2.findViewById(R.id.gross_total);
 
 		ordersInfoPeriod = 1;
 		TabHost ordersTabHost = (TabHost) page2.findViewById(android.R.id.tabhost);
@@ -298,6 +299,8 @@ public class Dashboard extends PinSupportNetworkActivity {
 						declinedOrders.setText(currentPeriodObj.getString("D"));
 						failedOrders.setText(currentPeriodObj.getString("F"));
 						totalOrders.setText(currentPeriodObj.getString("Total"));
+						totalPaid.setText(currentPeriodObj.getString("total_paid"));
+						grossTotal.setText(currentPeriodObj.getString("gross_total"));	
 					} catch (JSONException e) {
 						e.printStackTrace();
 					}
@@ -323,6 +326,7 @@ public class Dashboard extends PinSupportNetworkActivity {
 		failedOrders.setText("");
 		totalOrders.setText("");
 		totalPaid.setText("");
+		grossTotal.setText("");
 	}
 
 	private void updateTopSellersData() {
@@ -484,6 +488,7 @@ public class Dashboard extends PinSupportNetworkActivity {
 	private TextView declinedOrders;
 	private TextView failedOrders;
 	private TextView totalPaid;
+	private TextView grossTotal;
 	private TextView noProducts;
 	private TextView noCategories;
 	private StatisticTable topSellersTable;

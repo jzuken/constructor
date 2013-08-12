@@ -12,8 +12,6 @@
 
 @interface QRWProductsViewControllerForModalPresent ()
 
-
-@property (nonatomic, strong) NSArray *productsArray;
 @property (nonatomic, strong) NSNumber *userID;
 
 @end

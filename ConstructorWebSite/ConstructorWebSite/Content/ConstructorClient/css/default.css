@@ -1,9 +1,9 @@
 #controls {
-    width: 500px;
+    width: 860px;
     height: 540px;
 }
 
-#phone {
+.phone {
     border: 1px solid #000;
     border-radius: 11px;
     background-color: #232323;
@@ -19,29 +19,33 @@
     height: 100%;
 }
 
-#steps {
-    width: 100%;
-}
-
 #screens {
     width: 200px;
     float: left;
 }
 
 #editors {
-    width: 300px;
+    width: 100%;
     float: left;
 }
 
+.center {
+    height: 600px;
+}
+
 .main-button {
-    width: 155px;
+    width: 156px;
     height: 155px;
     float: left;
     background-color: black;
     color: white;
     text-align: center;
-    border: 1px solid #FFF;
+    border: 2px solid rgba(0, 0, 0, 0);
     font-size: 20pt;
+}
+
+.main-button.selected {
+    border: 2px solid #0C3;
 }
 
 .main-button img {
@@ -53,24 +57,64 @@
     width: 100%;
 }
 
-.remove-screen .remove-screen-image {
+.chose-screen-trigger span {
     display: block;
+    overflow: hidden;
 }
 
-.remove-screen .add-screen-image {
-    display: none;
+.chose-screen-trigger input {
+    width: 100%;
 }
 
-.add-screen .remove-screen-image {
-    display: none;
+.chose-screen-trigger a {
+    width: 23px;
+    height: 22px;
+    float: right;
 }
 
-.add-screen .add-screen-image {
-    display: block;
+.screen-enabled a {
+    background-image: url(../images/remove-screen.png);
+}
+
+.screen-disabled a {
+    background-image: url(../images/add-screen.png);
+}
+
+.screen-disabled input {
+    color: #AAAAAA;
 }
 
 #phone-screen .screen-name {
     border: 1px solid #000000;
     text-align: center;
     font-size: 18pt;
+}
+
+.step-editor {
+    width: 100%;
+}
+
+#screen-editors {
+    float: left;
+    width: 280px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.properties-block {
+    padding-bottom: 5px;
+}
+
+.color-selector {
+    width: 30px;
+    height: 30px;
+    background: url(../images/select.png) center;
+}
+
+.step {
+    display: none;
+}
+
+.step.active {
+    display: block;
 }
