@@ -3,14 +3,14 @@
 /*
  * Development imports
  */
-require './xcart/top.inc.php';
-require './xcart/init.php';
+//require './xcart/top.inc.php';
+//require './xcart/init.php';
 
 /*
  * Production imports
  */
-//require './top.inc.php';
-//require './init.php';
+require './top.inc.php';
+require './init.php';
 
 mysql_connect($sql_host, $sql_user, $sql_password)  or die(mysql_error());
 mysql_select_db($sql_db) or die(mysql_error());
@@ -90,6 +90,20 @@ function get_response()
                 mysql_real_escape_string($_GET['id'])
             );
             break;
+        case 'add_rewiews':
+            global $sql_tbl;
+            for($i = 0; $i<20; $i++){
+                $text = mysql_real_escape_string("Welcome to the World of Tanks Wiki.
+Here you'll find detailed information on all of the tanks and other armored vehicles in World of Tanks. This wiki can help you become acquainted with the statistics, tactics, and general capabilities of the various tanks you own, plan to own, or encounter. In addition to the tank pages, you can find information about the equipment you can add to your tanks, skills your crew can learn, game mechanics, lingo, and more.
+Please feel free to take in some of the 23,509 pages and 2,337 articles that have been written by players for players. If you wish to add to the Wiki to keep it growing and expanding you can register here to join, however no registration is required to read the Wiki.");
+                $query = "
+                INSERT INTO $sql_tbl[product_reviews] (remote_ip, email, message, productid)
+                VALUES('123','Alex777', '$text', 17546)
+               ";
+                //echo $query;
+            mysql_query($query) or die(mysql_error());
+    }
+            break;
         case 'user_orders':
             $response = get_orders_for_user(
                 mysql_real_escape_string($_GET['user_id']),
@@ -112,6 +126,32 @@ function get_response()
             $response = get_sales(
                 mysql_real_escape_string($_GET['from']),
                 mysql_real_escape_string($_GET['until'])
+            );
+            break;
+        case "sales_graph":
+            $response = get_sales_graph(
+                mysql_real_escape_string($_GET['from']),
+                mysql_real_escape_string($_GET['until']),
+                mysql_real_escape_string($_GET['w']),
+                mysql_real_escape_string($_GET['h'])
+            );
+            break;
+        case "products":
+            $response = get_products(
+                mysql_real_escape_string($_GET['search_word']),
+                mysql_real_escape_string($_GET['from']),
+                mysql_real_escape_string($_GET['size'])
+            );
+            break;
+        case 'update_product':
+            $response = update_product(
+                mysql_real_escape_string($_GET['id']),
+                mysql_real_escape_string($_GET['price'])
+            );
+            break;
+        case 'delete_product':
+            $response = delete_product(
+                mysql_real_escape_string($_GET['id'])
             );
             break;
         default:
@@ -375,15 +415,16 @@ function create_discount($minprice, $discount, $discount_type, $provider, $membe
     if (!($minprice) || !($discount) || !($discount_type) || !($provider)) {
         return "error";
     }
+    $result;
     if ($membership_id != 1 && $membership_id != 2) {
-        mysql_query("
+        $result = mysql_query("
         INSERT INTO $sql_tbl[discounts] (minprice, discount, discount_type, provider)
         VALUES ($minprice, $discount, '$discount_type', $provider)
         ") or die(mysql_error());
     } else {
         mysql_query("
             BEGIN;") or die(mysql_error());
-        mysql_query("
+        $result = mysql_query("
             INSERT INTO $sql_tbl[discounts] (minprice, discount, discount_type, provider)
             VALUES ($minprice, $discount, '$discount_type', $provider);
             ") or die(mysql_error());
@@ -395,7 +436,13 @@ function create_discount($minprice, $discount, $discount_type, $provider, $membe
             COMMIT;
             ") or die(mysql_error());
     }
-    return "success";
+    $answer = array(
+        upload_status => (string)$result,
+        upload_type => 'create',
+        upload_data => 'discount',
+        id => 'none'
+    );
+    return array_to_json($answer);
 }
 
 function update_discount($id, $minprice, $discount, $discount_type, $provider, $membership_id)
@@ -404,12 +451,13 @@ function update_discount($id, $minprice, $discount, $discount_type, $provider, $
     if (!($id) || !($minprice) || !($discount) || !($discount_type) || !($provider)) {
         return "error";
     }
+    $result;
     if ($membership_id != 1 && $membership_id != 2) {
         mysql_query("
             DELETE FROM $sql_tbl[discount_memberships]
             WHERE discountid=$id
             ") or die(mysql_error());
-        mysql_query("
+        $result = mysql_query("
             UPDATE $sql_tbl[discounts]
             SET minprice=$minprice, discount=$discount, discount_type='$discount_type', provider=$provider
             WHERE discountid=$id
@@ -417,7 +465,7 @@ function update_discount($id, $minprice, $discount, $discount_type, $provider, $
     } else {
         mysql_query("
             BEGIN;") or die(mysql_error());
-        mysql_query("
+        $result = mysql_query("
              UPDATE $sql_tbl[discounts]
              SET minprice=$minprice, discount=$discount, discount_type='$discount_type', provider=$provider
              WHERE discountid=$id
@@ -434,12 +482,14 @@ function update_discount($id, $minprice, $discount, $discount_type, $provider, $
             COMMIT;
             ") or die(mysql_error());
     }
-    mysql_query("
-        UPDATE $sql_tbl[discounts]
-        SET minprice=$minprice, discount=$discount, discount_type='$discount_type', provider=$provider
-        WHERE discountid=$id
-        ") or die(mysql_error());
-    return "success";
+
+    $answer = array(
+        upload_status => (string)$result,
+        upload_type => 'update',
+        upload_data => 'discount',
+        id => $id
+    );
+    return array_to_json($answer);
 }
 
 function delete_discount($id)
@@ -449,8 +499,14 @@ function delete_discount($id)
         return "error";
     }
     //TODO: fix sql injections
-    $query = mysql_query("DELETE FROM $sql_tbl[discounts] WHERE discountid=$id") or die(mysql_error());
-    return "success";
+    $result = mysql_query("DELETE FROM $sql_tbl[discounts] WHERE discountid=$id") or die(mysql_error());
+    $answer = array(
+        upload_status => (string)$result,
+        upload_type => 'delete',
+        upload_data => 'discount',
+        id => $id
+    );
+    return array_to_json($answer);
 }
 
 function get_reviews($from, $size)
@@ -463,7 +519,7 @@ function get_reviews($from, $size)
         $from = 0;
     }
     $query = mysql_query("
-        SELECT $sql_tbl[product_reviews].review_id, $sql_tbl[product_reviews].email, $sql_tbl[product_reviews].message, $sql_tbl[products_lng_current].product
+        SELECT $sql_tbl[product_reviews].review_id, $sql_tbl[product_reviews].productid, $sql_tbl[product_reviews].email, $sql_tbl[product_reviews].message, $sql_tbl[products_lng_current].product
         FROM $sql_tbl[product_reviews]
         INNER JOIN $sql_tbl[products_lng_current]
         ON $sql_tbl[product_reviews].productid = $sql_tbl[products_lng_current].productid
@@ -479,8 +535,14 @@ function delete_rewiew($id)
         return "error";
     }
     //TODO: fix sql injections
-    $query = mysql_query("DELETE FROM $sql_tbl[product_reviews] WHERE review_id=$id") or die(mysql_error());
-    return "success";
+    $result = mysql_query("DELETE FROM $sql_tbl[product_reviews] WHERE review_id=$id") or die(mysql_error());
+    $answer = array(
+        upload_status => (string)$result,
+        upload_type => 'delete',
+        upload_data => 'review',
+        id => $id
+    );
+    return array_to_json($answer);
 }
 
 function get_sales($from, $until)
@@ -496,6 +558,101 @@ function get_sales($from, $until)
         $sales_array[(string)$day_start] = price_format(get_first_cell("SELECT SUM(total) FROM $sql_tbl[orders] WHERE $date_condition"));
     }
     return array_to_json($sales_array);
+}
+
+function get_sales_graph($from, $until, $width, $height)
+{
+    global $sql_tbl, $config;
+    include "./libchart/libchart/classes/libchart.php";
+
+    if(!$width){
+        $width = 480;
+    }
+    if(!$height){
+        $height = 300;
+    }
+
+    $start_time = func_prepare_search_date($from) - $config['Appearance']['timezone_offset'];
+    $end_time = func_prepare_search_date($until) - $config['Appearance']['timezone_offset'];
+
+    $chart = new LineChart($width, $height);
+    $serie1 = new XYDataSet();
+
+    $sales_array = array();
+    for ($day_start = $start_time; $day_start < $end_time; $day_start += 24 * 3600) {
+        $day_end = $day_start + 24 * 3600;
+        $date_condition = "$sql_tbl[orders].date>='$day_start' AND $sql_tbl[orders].date<='$day_end'";
+        $price = price_format(get_first_cell("SELECT SUM(total) FROM $sql_tbl[orders] WHERE $date_condition"));
+        $serie1->addPoint(new Point(date("d, m", $day_start), $price));
+    }
+
+    $dataSet = new XYSeriesDataSet();
+    $chart->setDataSet($serie1);
+    $chart->setTitle("Sales");
+    echo is_writable("./var/charts");
+    //print_r($chart);
+    $chart->render("./var/charts/tmp.png");
+    $file = './var/charts/tmp.png';
+    //header('Content-Type: image/png');
+    //header('Content-Length: ' . filesize($file));
+    echo file_get_contents($file);
+}
+
+function get_products($word, $from, $size)
+{
+    global $sql_tbl;
+    if (!$size) {
+        $size = 20;
+    }
+    if (!$from) {
+        $from = 0;
+    }
+    $like = '%'.$word.'%';
+    $query = mysql_query("
+        SELECT $sql_tbl[products].*, $sql_tbl[products_lng_current].* FROM $sql_tbl[products]
+        INNER JOIN $sql_tbl[products_lng_current]
+        ON $sql_tbl[products_lng_current].productid = $sql_tbl[products].productid
+        WHERE $sql_tbl[products_lng_current].product LIKE '$like'
+        LIMIT $from, $size
+        ") or die(mysql_error());
+    $products_array = array();
+    while ($row = mysql_fetch_assoc($query)) {
+        array_push($products_array, $row);
+    }
+    return array_to_json($products_array);
+}
+
+function update_product($product_id, $price)
+{
+    global $sql_tbl;
+    $result = mysql_query("
+        UPDATE $sql_tbl[products]
+        SET list_price=$price
+        WHERE productid=$product_id
+        ") or die(mysql_error());
+    $answer = array(
+        upload_status => (string)$result,
+        upload_type => 'update',
+        upload_data => 'product',
+        id => $product_id
+    );
+    return array_to_json($answer);
+}
+
+function delete_product($product_id)
+{
+    global $sql_tbl;
+    $result = mysql_query("
+        DELETE FROM $sql_tbl[products]
+        WHERE productid=$product_id
+        ") or die(mysql_error());
+    $answer = array(
+        upload_status => (string)$result,
+        upload_type => 'delete',
+        upload_data => 'product',
+        id => $product_id
+    );
+    return array_to_json($answer);
 }
 
 function get_json($query)
