@@ -6,6 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -132,6 +133,12 @@ public class Reviews extends PinSupportNetworkActivity {
 			showConnectionErrorMessage();
 		}
 	}
+	
+	private void showFullMessage(String message)  {
+		Intent intent = new Intent(getBaseContext(), FullMessage.class);
+		intent.putExtra("message", message);
+		startActivityForResult(intent, 1);
+	}
 
 	private void setupListViewAdapter() {
 		adapter = new ReviewsListAdapter(this, R.layout.review_item, new ArrayList<Review>());
@@ -169,30 +176,34 @@ public class Reviews extends PinSupportNetworkActivity {
 
 		reviewsListView.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				showActionDialog(((Review) view.getTag()).getId());
+				showActionDialog(((Review) view.getTag()));
 			}
 		});
 
 		reviewsListView.setAdapter(adapter);
 	}
 
-	private void showActionDialog(final String review_id) {
+	private void showActionDialog(final Review review) {
 		LinearLayout action_view = (LinearLayout) getLayoutInflater().inflate(R.layout.action_dialog, null);
 		final CustomDialog dialog = new CustomDialog(this, action_view);
 
 		ListView actionList = (ListView) action_view.findViewById(R.id.action_list);
 
-		String[] actions = { "Delete", "Cancel"};
+		String[] actions = { "Full message", "Delete", "Cancel"};
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.action_item, R.id.textItem, actions);
 
 		actionList.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				switch (position) {
 				case 0:
-					deleteClick(review_id);
 					dialog.dismiss();
+					showFullMessage(review.getMessage());
 					break;
 				case 1:
+					deleteClick(review.getId());
+					dialog.dismiss();
+					break;
+				case 2:
 					dialog.dismiss();
 					break;
 				default:
