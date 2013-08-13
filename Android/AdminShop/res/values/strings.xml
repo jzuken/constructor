@@ -147,5 +147,8 @@
 	<string name="gross_total">Gross total:</string>
 	<string name="action">Choose an action</string>
 	<string name="enter_to_app">Enter into admin area</string>
+	<string name="product_available">Available:</string>
+	<string name="product_sold">Sold:</string>
+	<string name="enter_price">Enter the new price:</string>
 	
 </resources>

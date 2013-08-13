@@ -41,19 +41,19 @@ public class Settings extends PreferenceActivity {
 	@SuppressWarnings("deprecation")
 	private void setupUsersAmountEditText() {
 		EditTextPreference usersAmount = (EditTextPreference) findPreference("users_amount");
-		setPackChangeListener(usersAmount, 5);
+		setPackChangeListener(usersAmount, 7);
 	}
 
 	@SuppressWarnings("deprecation")
 	private void setupReviewsAmountEditText() {
 		EditTextPreference reviewsAmount = (EditTextPreference) findPreference("reviews_amount");
-		setPackChangeListener(reviewsAmount, 10);
+		setPackChangeListener(reviewsAmount, 7);
 	}
 
 	@SuppressWarnings("deprecation")
 	private void setupProductsAmountEditText() {
 		EditTextPreference productsAmount = (EditTextPreference) findPreference("products_amount");
-		setPackChangeListener(productsAmount, 5);
+		setPackChangeListener(productsAmount, 7);
 	}
 
 	private void setPackChangeListener(EditTextPreference editText, final int minPackSize) {

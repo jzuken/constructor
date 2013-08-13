@@ -86,7 +86,7 @@ public class Discounts extends PinSupportNetworkActivity {
 		position++;
 	}
 
-	public void editClick(Discount itemToEdit) {
+	private void editClick(Discount itemToEdit) {
 		Intent intent = new Intent(getBaseContext(), DiscountEditor.class);
 		intent.putExtra("id", itemToEdit.getId());
 		intent.putExtra("orderSub", itemToEdit.getOrderSubtotal());
@@ -96,7 +96,7 @@ public class Discounts extends PinSupportNetworkActivity {
 		startActivityForResult(intent, 1);
 	}
 
-	public void deleteClick(final String id) {
+	private void deleteClick(final String id) {
 		LinearLayout view = (LinearLayout) getLayoutInflater().inflate(R.layout.confirmation_dialog, null);
 		((TextView) view.findViewById(R.id.confirm_question)).setText("Are you sure you want to delete this discount?");
 		final CustomDialog dialog = new CustomDialog(this, view);
