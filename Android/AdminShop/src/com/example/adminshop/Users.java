@@ -58,6 +58,7 @@ public class Users extends PinSupportNetworkActivity {
 						JSONObject responseObj = new JSONObject(result);
 						JSONObject userCount = responseObj.getJSONObject("users_count");
 						registered.setText(userCount.getString("registered"));
+						online.setText(userCount.getString("online"));
 						JSONArray array = responseObj.getJSONArray("users");
 						int length = array.length();
 						if (length == packAmount) {
