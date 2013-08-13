@@ -7,12 +7,15 @@
 //
 
 #import "QRWProductsViewController.h"
+#import "QRWProductCell.h"
 
 
 @interface QRWProductsViewController ()
 {
     int lastSelectedRow;
 }
+
+@property (nonatomic, strong) NSMutableArray *productsArray;
 
 @end
 
@@ -37,11 +40,54 @@
     [super viewDidLoad];
     self.navigationController.navigationBarHidden = NO;
     self.navigationItem.title = NSLocalizedString(@"PRODUCTS", nil);
+    
+    __weak QRWProductsViewController *weakSelf = self;
+    
+    [_productsTableView addPullToRefreshWithActionHandler:^{
+        [weakSelf reloadsTableView];
+    }];
+    
+    [_productsTableView addInfiniteScrollingWithActionHandler:^{
+        [weakSelf addDataAndReloadsTableView];
+    }];
+    
+    [self addDataAndReloadsTableView];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
+}
+
+
+- (void) addDataAndReloadsTableView
+{
+    [dataManager sendProductsRequestWithStartPoint:[_productsTableView numberOfRowsInSection:0] lenght:10];
+    if (isFirstDataLoading) {
+        isFirstDataLoading = NO;
+        [self startLoadingAnimation];
+    }
+}
+
+
+- (void) reloadsTableView
+{
+    [self addDataAndReloadsTableView];
+    [_productsArray removeAllObjects];
+    [_productsTableView reloadData];
+}
+
+- (void)respondsForProductsRequest:(NSArray *)products
+{
+    [self stopLoadingAnimation];
+    if (products.count == 0) {
+        _productsArray = [NSMutableArray arrayWithArray:products];
+    } else {
+        [_productsArray addObjectsFromArray:products];
+    }
+    [_productsTableView reloadData];
+    [_productsTableView.pullToRefreshView stopAnimating];
+    [_productsTableView.infiniteScrollingView stopAnimating];
 }
 
 
@@ -98,21 +144,25 @@
 }
 
 
-//- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:@"QRWReviewCell" owner:self options:nil];
-//    QRWReviewCell *cell = [topLevelObjects objectAtIndex:0];
-//    
-//    [self configureProductCell:cell atIndexPath:indexPath];
-//    
-//    return cell;
-//}
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:@"QRWProductCell" owner:self options:nil];
+    QRWProductCell *cell = [topLevelObjects objectAtIndex:0];
+    
+    [self configureProductCell:cell atIndexPath:indexPath];
+    
+    return cell;
+}
 
-//- (void)configureProductCell:(QRWReviewCell *)cell atIndexPath:(NSIndexPath *)indexPath
-//{
-//    cell.productLable.text = [(QRWReview *)_reviews[indexPath.row] product];
-//    cell.userLable.text = [NSString stringWithFormat:@"User: %@", [(QRWReview *)_reviews[indexPath.row] email]];
-//    cell.messageLable.text = [(QRWReview *)_reviews[indexPath.row] message];
-//    
-//}
+
+
+- (void)configureProductCell:(QRWProductCell *)cell atIndexPath:(NSIndexPath *)indexPath
+{
+    cell.productLable.text = [(QRWProduct *)_productsArray[indexPath.row] product];
+    cell.priceLable.text = [NSString stringWithFormat:@"%.2f$", [[(QRWProduct *)_productsArray[indexPath.row] price] floatValue]];
+    cell.freeShipingLable.text = [NSString stringWithFormat:NSLocalizedString(@"FREE_SHIPPING", nil), [[(QRWProduct *)_productsArray[indexPath.row] freeShiping] isEqualToString:@"N" ] ? @"NO" : @"YES"];
+    cell.avaliableLable.text = [NSString stringWithFormat:NSLocalizedString(@"AVALIABLE", nil), [[(QRWProduct *)_productsArray[indexPath.row] avaliable] intValue]];
+    cell.minAmountLable.text = [NSString stringWithFormat:NSLocalizedString(@"MIN_AMOUNT", nil), [[(QRWProduct *)_productsArray[indexPath.row] count] intValue]];
+    cell.minAmountLable.text = [NSString stringWithFormat:NSLocalizedString(@"CODE", nil), [(QRWProduct *)_productsArray[indexPath.row] productcode]];
+}
 @end

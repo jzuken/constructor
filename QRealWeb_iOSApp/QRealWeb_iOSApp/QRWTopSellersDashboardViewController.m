@@ -16,7 +16,8 @@
 
 @interface QRWTopSellersDashboardViewController ()
 {
-    NSArray *segmentImageNamesArray;
+    BOOL loadingProdusctsFinished;
+    BOOL loadingCategoriesFinished;
 }
 
 @property (nonatomic, strong) QRWTopProducts *topProducts;
@@ -24,6 +25,8 @@
 
 @property (nonatomic, strong) NSArray *productsArray;
 @property (nonatomic, strong) NSArray *categoriesArray;
+
+@property (nonatomic, strong) HMSegmentedControl *segmentedControl;
 
 @end
 
@@ -42,25 +45,39 @@
 {
     [super viewDidLoad];
     _topSellersTableView.hidden = YES;
+    
+    _segmentedControl = [[HMSegmentedControl alloc] initWithSectionImages:self.segmentImageNamesArray sectionSelectedImages:self.segmentSelectedImageNamesArray];
+    _segmentedControl.frame = self.timeAndTypeSegmentedControlArea.frame;
+    _segmentedControl.segmentEdgeInset = UIEdgeInsetsMake(0, 0, 0, 0);
+    [_segmentedControl setSelectionStyle:HMSegmentedControlSelectionStyleTextWidthStrip];
+    [_segmentedControl setSelectionLocation:HMSegmentedControlSelectionLocationDown];
+    [_segmentedControl setSelectedSegmentIndex:0];
+    
+    __weak QRWTopSellersDashboardViewController *weakSelf = self;
+    [_segmentedControl setIndexChangeBlock:^(NSInteger index) {
+        [weakSelf selectedControlEvent];
+        [weakSelf.segmentedControl setSelectedSegmentIndex:index animated:YES];
+    }];
+    [self.view addSubview:_segmentedControl];
+
+    self.currentSegment = @"last_login";
+    
     [dataManager sendTopCategoriesRequest];
     [dataManager sendTopProductsRequest];
-    [self.timeAndTypeSegmentedControl setSelectedSegmentIndex:0];
-    [self.timeAndTypeSegmentedControl addTarget:self action:@selector(selectedControlEvent) forControlEvents:UIControlEventValueChanged];
-    self.currentSegment = @"last_login";
+    loadingCategoriesFinished = NO;
+    loadingCategoriesFinished = NO;
 }
 
 
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self presentSegmentedControl];
 }
 
 
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [self dismissSegmentedControl];
 }
 
 - (void)didReceiveMemoryWarning
@@ -73,7 +90,7 @@
 {
     _topProducts = topProducts;
 
-    switch (self.timeAndTypeSegmentedControl.selectedSegmentIndex) {
+    switch (self.segmentedControl.selectedSegmentIndex) {
         case 0:
             _productsArray = [NSArray arrayWithArray:_topProducts.lastLoginTopArray];
             break;
@@ -91,12 +108,13 @@
             break;
     }
     [self reloadDataInTableView];
+    loadingProdusctsFinished = YES;
 }
 
 - (void) setTopCategories: (QRWTopCategories *) topCategories
 {
     _topCategories = topCategories;
-    switch (self.timeAndTypeSegmentedControl.selectedSegmentIndex) {
+    switch (self.segmentedControl.selectedSegmentIndex) {
         case 0:
             _categoriesArray = [NSArray arrayWithArray:_topCategories.lastLoginTopArray];
             break;
@@ -115,6 +133,7 @@
     }
     
     [self reloadDataInTableView];
+    loadingCategoriesFinished = YES;
 }
 
 
@@ -122,12 +141,17 @@
 - (void) reloadDataInTableView
 {
     if ((_categoriesArray.count == 0) && (_productsArray.count == 0)) {
-        _topSellersTableView.hidden = YES;
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"ERROR_ALERT_TITLE", nil)
-                                                        message:NSLocalizedString(@"NO_DATA_FOR_PERIOD_ALERT_MESSAGE", nil)
-                                                       delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil)
-                                              otherButtonTitles:nil, nil];
-        [alert show];
+        if (loadingCategoriesFinished || loadingProdusctsFinished) {
+            _topSellersTableView.hidden = YES;
+            
+//            TLAlertView *alert = [[TLAlertView alloc] initWithTitle: NSLocalizedString(@"ERROR_ALERT_TITLE", nil) message:NSLocalizedString(@"NO_DATA_FOR_PERIOD_ALERT_MESSAGE", nil) inView:self.view cancelButtonTitle:NSLocalizedString(@"OK", nil) confirmButton:nil];
+            
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"ERROR_ALERT_TITLE", nil)
+                                                            message:NSLocalizedString(@"NO_DATA_FOR_PERIOD_ALERT_MESSAGE", nil)
+                                                           delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil)
+                                                  otherButtonTitles:nil, nil];
+            [alert show];
+        }
     } else {
         _topSellersTableView.hidden = NO;
     }
@@ -136,6 +160,8 @@
 
 - (void) selectedControlEvent
 {
+    loadingProdusctsFinished = NO;
+    loadingCategoriesFinished = NO;
     [self setTopCategories:_topCategories];
     [self setTopProducts:_topProducts];
 }

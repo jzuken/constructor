@@ -63,7 +63,7 @@
         [weakSelf addsDataAndReloadsTableView];
     }];
     
-    [dataManager sendUsersRequestWithSort:_currentSort startPoint:0 lenght:10];
+    [self addsDataAndReloadsTableView];
 }
 
 - (void)respondsForUserRequest:(QRWUsers *)usersObject
@@ -77,6 +77,7 @@
     [_usersTableView reloadData];
     loadMoreDataAvaliable = YES;
     [_usersTableView.pullToRefreshView stopAnimating];
+    [self stopLoadingAnimation];
 }
 
 - (void) openSortedByPopover
@@ -96,12 +97,20 @@
 - (void) addsDataAndReloadsTableView
 {
     [dataManager sendUsersRequestWithSort:_currentSort startPoint:[_usersTableView numberOfRowsInSection:0] lenght:10];
+    if (isFirstDataLoading) {
+        isFirstDataLoading = NO;
+        [self startLoadingAnimation];
+    }
 }
 
 
 - (void) reloadsTableViewData
 {
     [dataManager sendUsersRequestWithSort:_currentSort startPoint:[_usersTableView numberOfRowsInSection:0] lenght:10];
+    if (isFirstDataLoading) {
+        isFirstDataLoading = NO;
+        [self startLoadingAnimation];
+    }
     [_users removeAllObjects];
     [_usersTableView reloadData];
 }

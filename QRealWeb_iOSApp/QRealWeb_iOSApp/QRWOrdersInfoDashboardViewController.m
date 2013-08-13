@@ -37,7 +37,7 @@
     _timesArray = @[@"last_login", @"today", @"week", @"month"];
     
     [dataManager sendOrdersStatisticRequest];
-    [self.timeAndTypeSegmentedControl removeFromSuperview];
+//    [self.timeAndTypeSegmentedControl removeFromSuperview];
 }
 
 - (void)didReceiveMemoryWarning

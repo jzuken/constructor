@@ -10,7 +10,7 @@
 
 
 //CONSTANTS
-static const NSInteger kTopYCoordinateLoginBoxFor4 = 44;
+static const NSInteger kTopYCoordinateLoginBoxFor4 = 55;
 static const NSInteger kTopYCoordinateLoginBoxFor3_5 = 10;
 static const NSInteger kBottomYCoordinateLoginBoxFor4 = 164;
 static const NSInteger kBottomYCoordinateLoginBoxFor3_5 = 120;

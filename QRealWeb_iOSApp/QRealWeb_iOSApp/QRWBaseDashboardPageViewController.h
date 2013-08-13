@@ -7,6 +7,7 @@
 //
 
 #import "QRWBaseViewController.h"
+#import "HMSegmentedControl.h"
 
 @interface QRWBaseDashboardPageViewController : QRWBaseViewController
 

@@ -22,7 +22,7 @@
 #import "QRWDiscountsViewController.h"
 #import "QRWReviewsViewController.h"
 
-
+#import "QRWBaseViewController.h"
 
 @interface QRWDataManager ()
 {
@@ -34,6 +34,11 @@
     
     NSString *reviewUrl;
     NSString *deletedReviewUrl;
+    
+    NSString *productsUrl;
+    NSString *deletedProductUrl;
+    NSString *editedProductUrl;
+    NSString *searchedProductUrl;
 }
 
 @end
@@ -162,6 +167,16 @@ static QRWDataManager *_instance;
     
 }
 
+#pragma mark Products
+
+- (void) sendProductsRequestWithStartPoint:(NSInteger) startPoint lenght:(NSInteger) lenght
+{
+    productsUrl = [NSString stringWithFormat:url_productsURL, startPoint, lenght];
+    [self sendRequestUseDownloaderWithURL:productsUrl];
+}
+
+
+
 #pragma mark Reviews
 
 - (void) sendReviewsRequestWithStartPoint:(NSInteger) startPoint lenght:(NSInteger) lenght
@@ -241,6 +256,44 @@ static QRWDataManager *_instance;
 #pragma mark SEND OBJECTS TO CONTROLLERS
 
 
+#pragma mark Products
+
+
+- (void) sendResponseForProductsRequest:(NSData *)jsonObject
+{
+    NSError *error;
+    NSArray *jsonObjects = [NSJSONSerialization JSONObjectWithData:jsonObject options:kNilOptions error:&error];
+    
+    NSMutableArray *products = [[NSMutableArray alloc] init];
+    
+    NSNumberFormatter * formatter = [[NSNumberFormatter alloc] init];
+    [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
+    
+    
+    for (NSDictionary *productInJSON in jsonObjects) {
+        
+        NSNumberFormatter * formatter = [[NSNumberFormatter alloc] init];
+        [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
+        
+        QRWProduct *product = [[QRWProduct alloc] init];
+        
+        product.avaliable = [formatter numberFromString: (NSString *)[productInJSON objectForKey:@"avail"]];
+        product.product = [productInJSON objectForKey:@"product"];
+        product.productcode = [productInJSON objectForKey:@"productcode"];
+        product.productid = [formatter numberFromString: (NSString *)[productInJSON objectForKey:@"productid"]];
+        product.count = [formatter numberFromString: (NSString *)[productInJSON objectForKey:@"min_amount"]];
+        product.freeShiping = [productInJSON objectForKey:@"free_shipping"];
+        product.price = [formatter numberFromString: (NSString *)[productInJSON objectForKey:@"list_price"]];
+        product.provider = [productInJSON objectForKey:@"provider"];
+        
+        
+        [products addObject:product];
+    }
+    
+    if ([_delegate respondsToSelector:@selector(respondsForProductsRequest:)]) {
+        [_delegate respondsForProductsRequest:products];
+    }
+}
 
 #pragma mark Review
 
@@ -272,7 +325,9 @@ static QRWDataManager *_instance;
         [reviews addObject:review];
     }
     
-    [_delegate respondsForReviewsRequest:reviews];
+    if ([_delegate respondsToSelector:@selector(respondsForReviewsRequest:)]) {
+        [_delegate respondsForReviewsRequest:reviews];
+    }
 }
 
 #pragma mark Discounts
@@ -310,8 +365,10 @@ static QRWDataManager *_instance;
         
         [discounts addObject:discount];
     }
-
-    [_delegate respondsForDiscountsRequest:discounts];
+    
+    if ([_delegate respondsToSelector:@selector(respondsForDiscountsRequest:)]) {
+        [_delegate respondsForDiscountsRequest:discounts];
+    }
 }
 
 
@@ -328,7 +385,9 @@ static QRWDataManager *_instance;
     users.registered = [[jsonDictionary objectForKey:@"users_count"] objectForKey:@"registered"];
     users.users = [NSArray arrayWithArray:[self arrayUsersInUsersJson:jsonDictionary]];
     
-    [_delegate respondsForUserRequest:users];
+    if ([_delegate respondsToSelector:@selector(respondsForUserRequest:)]) {
+        [_delegate respondsForUserRequest:users];
+    }
 }
 
 
@@ -389,8 +448,9 @@ static QRWDataManager *_instance;
             [resultsDictionary setObject:[staticticInTime objectForKey:inTimeKey] forKey:totalKey];
         }
     }
-    
-    [_delegate respondsForOrdersStatisticRequest:resultsDictionary withArratOfKeys:keysArray];
+    if ([_delegate respondsToSelector:@selector(respondsForOrdersStatisticRequest:withArratOfKeys:)]) {
+        [_delegate respondsForOrdersStatisticRequest:resultsDictionary withArratOfKeys:keysArray];
+    }
 }
 
 //#####################  DASHBOARD - Last order  #####################
@@ -415,7 +475,9 @@ static QRWDataManager *_instance;
     
     lastOrder.products = [NSArray arrayWithArray:[self arrayOfProductsInLastOrderInJson:jsonDictionary]];
     
-    [_delegate respondsForLastOrderRequest:lastOrder];
+    if ([_delegate respondsToSelector:@selector(respondsForLastOrderRequest:)]) {
+        [_delegate respondsForLastOrderRequest:lastOrder];
+    }
 }
 
 
@@ -464,8 +526,10 @@ static QRWDataManager *_instance;
     topProducts.lastLoginTopArray = [NSArray arrayWithArray:[self arrayOfProductsForTag:@"last_login" inJson:jsonDictionary]];
     topProducts.weekTopArray = [NSArray arrayWithArray:[self arrayOfProductsForTag:@"week" inJson:jsonDictionary]];
     topProducts.monthTopArray = [NSArray arrayWithArray:[self arrayOfProductsForTag:@"month" inJson:jsonDictionary]];
-       
-    [_delegate respondsForTopProductsRequest:topProducts];
+    
+    if ([_delegate respondsToSelector:@selector(respondsForTopProductsRequest:)]) {
+        [_delegate respondsForTopProductsRequest:topProducts];
+    }
 }
 
 - (NSArray *) arrayOfProductsForTag: (NSString *) tag inJson: (NSDictionary *)jsonDictionary
@@ -511,7 +575,9 @@ static QRWDataManager *_instance;
     topCateroies.weekTopArray = [NSArray arrayWithArray:[self arrayOfCategoriesForTag:@"week" inJson:jsonDictionary]];
     topCateroies.monthTopArray = [NSArray arrayWithArray:[self arrayOfCategoriesForTag:@"month" inJson:jsonDictionary]];
     
-    [_delegate respondsForTopCategoriesRequest:topCateroies];
+    if ([_delegate respondsToSelector:@selector(respondsForTopCategoriesRequest:)]) {
+        [_delegate respondsForTopCategoriesRequest:topCateroies];
+    }
 }
 
 - (NSArray *) arrayOfCategoriesForTag: (NSString *) tag inJson: (NSDictionary *)jsonDictionary
@@ -546,7 +612,9 @@ static QRWDataManager *_instance;
 
 - (void) sendUploadStatus:(NSDictionary *)jsonDictionary
 {
-    [_delegate respondsForUploadingRequest:[@"1" isEqualToString:[jsonDictionary objectForKey:@"upload_status"]]];
+    if ([_delegate respondsToSelector:@selector(respondsForUploadingRequest:)]) {
+        [_delegate respondsForUploadingRequest:[@"1" isEqualToString:[jsonDictionary objectForKey:@"upload_status"]]];
+    }
 }
 
 
@@ -591,6 +659,10 @@ static QRWDataManager *_instance;
         [self sendResponseForReviewsRequest:jsonData];
     }
     
+    if ([productsUrl isEqualToString:requesrURL.absoluteString]) {
+        [self sendResponseForProductsRequest:jsonData];
+    }
+    
     if ([newDiscountUrl isEqualToString:requesrURL.absoluteString] ||
         [editedDiscountUrl isEqualToString:requesrURL.absoluteString] ||
         [deletedDiscountUrl isEqualToString:requesrURL.absoluteString] ||
@@ -598,13 +670,12 @@ static QRWDataManager *_instance;
         [self sendUploadStatus:jsonDictionary];
     }
     
-
 }
 
 
 - (void)downloadWasFailedWithError:(NSError *)error forRequestURL:(NSURL *)requesrURL
 {
-    
+    [(QRWBaseViewController *)_delegate stopLoadingAnimation];
 }
 
 
