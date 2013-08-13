@@ -91,7 +91,7 @@ public class Reviews extends PinSupportNetworkActivity {
 		position++;
 	}
 	
-	public void deleteClick(final String id) {
+	private void deleteClick(final String id) {
 		LinearLayout view = (LinearLayout) getLayoutInflater().inflate(R.layout.confirmation_dialog, null);
 		((TextView) view.findViewById(R.id.confirm_question)).setText("Are you sure you want to delete this review?");
 		final CustomDialog dialog = new CustomDialog(this, view);

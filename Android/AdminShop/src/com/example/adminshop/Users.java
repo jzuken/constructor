@@ -46,10 +46,6 @@ public class Users extends PinSupportNetworkActivity {
 		updateUsersList();
 	}
 
-	public void showMoreClick(View v) {
-
-	}
-
 	private void updateUsersList() {
 		progressBar.setVisibility(View.VISIBLE);
 		isDownloading = true;
