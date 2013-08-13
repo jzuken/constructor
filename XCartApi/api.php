@@ -274,7 +274,10 @@ function get_users_count()
 {
     global $sql_tbl;
     $count = get_first_cell("SELECT COUNT(*) FROM $sql_tbl[customers]");
-    $array = array('registered' => $count);
+    $online = get_first_cell("SELECT COUNT(*) FROM $sql_tbl[users_online]");
+    $array = array(
+        'registered' => $count,
+        'online' => $online);
     return $array;
 }
 
