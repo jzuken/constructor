@@ -98,6 +98,15 @@
 "REVIEW" = "Review";
 
 
+// Products
+
+"PRODUCTS" = "Products";
+"FREE_SHIPPING" = "Free shipping: %@";
+"MIN_AMOUNT" = "Min amount: %d";
+"AVALIABLE" = "Avaliable: %d";
+"CODE" = "Code: %@";
+
+
 
 
 

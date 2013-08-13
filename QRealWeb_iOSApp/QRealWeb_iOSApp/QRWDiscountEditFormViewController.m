@@ -181,6 +181,7 @@
     } else {
         [dataManager uploadNewDiscountWithDiscount:_discount];
     }
+    [self startLoadingAnimation];
 }
 
 
@@ -188,10 +189,7 @@
 
 - (void)respondsForUploadingRequest:(BOOL)status
 {
-
-    
-    
-        NSString *titleString;
+    NSString *titleString;
     NSString *messageString;
     TLCompletionBlock cencelBlock;
     
@@ -210,6 +208,8 @@
     TLAlertView *alert = [[TLAlertView alloc] initWithTitle:titleString message:messageString inView:self.view cancelButtonTitle:NSLocalizedString(@"CANCEL", nil) confirmButton:nil];
     [alert handleCancel:cencelBlock handleConfirm:nil];
     [alert show];
+    
+    [self stopLoadingAnimation];
 }
 
 #pragma mark - GestureRecognizer delegate

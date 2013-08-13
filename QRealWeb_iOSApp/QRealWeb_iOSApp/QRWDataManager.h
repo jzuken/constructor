@@ -19,6 +19,8 @@
 
 #import "QRWReview.h"
 
+#import "QRWProduct.h"
+
 
 
 @protocol QRWDataManagerDelegate <NSObject>
@@ -44,6 +46,8 @@
 -(void) respondsForReviewsRequest:(NSArray *)reviews;
 
 -(void) respondsForUploadingRequest:(BOOL)status;
+
+-(void) respondsForProductsRequest:(NSArray *)discounts;
 
 @end
 
@@ -105,6 +109,9 @@
 
 - (void) uploadDeletedReviewWithReview:(QRWReview *) review;
 
-
+/*
+ Products
+ */
+- (void) sendProductsRequestWithStartPoint:(NSInteger) startPoint lenght:(NSInteger) lenght;
 
 @end

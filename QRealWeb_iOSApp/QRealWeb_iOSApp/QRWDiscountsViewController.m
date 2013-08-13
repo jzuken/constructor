@@ -83,6 +83,10 @@
 - (void) reloadsTableView
 {
     [dataManager sendDiscountsRequest];
+    if (isFirstDataLoading) {
+        isFirstDataLoading = NO;
+        [self startLoadingAnimation];
+    }
     [_discounts removeAllObjects];
     [_discountsTableView reloadData];
 }
@@ -97,6 +101,7 @@
     }
     [_discountsTableView reloadData];
     [_discountsTableView.pullToRefreshView stopAnimating];
+    [self stopLoadingAnimation];
 }
 
 - (void)respondsForUploadingRequest:(BOOL)status
@@ -120,6 +125,7 @@
     TLAlertView *alert = [[TLAlertView alloc] initWithTitle:titleString message:messageString inView:self.view cancelButtonTitle:NSLocalizedString(@"CANCEL", nil) confirmButton:nil];
     [alert handleCancel:cencelBlock handleConfirm:nil];
     [alert show];
+    [self stopLoadingAnimation];
 }
 
 
@@ -136,6 +142,7 @@
             
         case 1:
             [dataManager uploadDeletedDiscountWithDiscount:[_discounts objectAtIndex:lastSelectedRow]];
+            [self startLoadingAnimation];
             break;
     }
 }

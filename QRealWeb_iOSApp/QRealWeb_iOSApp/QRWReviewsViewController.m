@@ -47,7 +47,6 @@
     
     self.navigationController.navigationBarHidden = NO;
     self.navigationItem.title = NSLocalizedString(@"REVIEWS", nil);
-//    [self.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(openAddDiscountView)]];
     
     __weak QRWReviewsViewController *weakSelf = self;
     
@@ -78,10 +77,15 @@
 - (void) addDataAndReloadsTableView
 {
     [dataManager sendReviewsRequestWithStartPoint:[_reviewsTableView numberOfRowsInSection:0] lenght:10];
+    if (isFirstDataLoading) {
+        isFirstDataLoading = NO;
+        [self startLoadingAnimation];
+    }
 }
 
 - (void)respondsForReviewsRequest:(NSArray *)reviews
 {
+    [self stopLoadingAnimation];
     if (_reviews.count == 0) {
         _reviews = [NSMutableArray arrayWithArray:reviews];
     } else {
