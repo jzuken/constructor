@@ -114,4 +114,10 @@
  */
 - (void) sendProductsRequestWithStartPoint:(NSInteger) startPoint lenght:(NSInteger) lenght;
 
+- (void) sendProductsRequestWithSearchWord: (NSString *)word startPoint:(NSInteger) startPoint lenght:(NSInteger) lenght;
+
+- (void) uploadEditedProductWithProduct:(QRWProduct *) product;
+
+- (void) uploadDeletedProductWithProduct:(QRWProduct *) product;
+
 @end

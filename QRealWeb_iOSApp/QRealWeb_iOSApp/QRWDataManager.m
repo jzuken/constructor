@@ -175,7 +175,23 @@ static QRWDataManager *_instance;
     [self sendRequestUseDownloaderWithURL:productsUrl];
 }
 
+- (void) sendProductsRequestWithSearchWord:(NSString *)word startPoint:(NSInteger) startPoint lenght:(NSInteger) lenght
+{
+    searchedProductUrl = [NSString stringWithFormat:url_productsSearchURL, word, startPoint, lenght];
+    [self sendRequestUseDownloaderWithURL:searchedProductUrl];
+}
 
+- (void) uploadEditedProductWithProduct:(QRWProduct *) product
+{
+    editedProductUrl = [NSString stringWithFormat:url_productEditURL,[product.productid intValue], [product.price floatValue]];
+    [self sendRequestUseDownloaderWithURL:editedProductUrl];
+}
+
+- (void) uploadDeletedProductWithProduct:(QRWProduct *) product
+{
+    deletedProductUrl = [NSString stringWithFormat:url_productDeleteURL,[product.productid intValue]];
+    [self sendRequestUseDownloaderWithURL:deletedProductUrl];
+}
 
 #pragma mark Reviews
 
@@ -659,14 +675,17 @@ static QRWDataManager *_instance;
         [self sendResponseForReviewsRequest:jsonData];
     }
     
-    if ([productsUrl isEqualToString:requesrURL.absoluteString]) {
+    if ([productsUrl isEqualToString:requesrURL.absoluteString] || [searchedProductUrl isEqualToString:requesrURL.absoluteString]) {
         [self sendResponseForProductsRequest:jsonData];
     }
     
     if ([newDiscountUrl isEqualToString:requesrURL.absoluteString] ||
         [editedDiscountUrl isEqualToString:requesrURL.absoluteString] ||
         [deletedDiscountUrl isEqualToString:requesrURL.absoluteString] ||
-        [deletedReviewUrl isEqualToString:requesrURL.absoluteString]) {
+        [deletedReviewUrl isEqualToString:requesrURL.absoluteString] ||
+        [deletedProductUrl isEqualToString:requesrURL.absoluteString] ||
+        [editedProductUrl isEqualToString:requesrURL.absoluteString]) {
+        
         [self sendUploadStatus:jsonDictionary];
     }
     

@@ -6,10 +6,10 @@
 //  Copyright (c) 2013 Ivan Afanasiev. All rights reserved.
 //
 
-#import "QRWBaseViewController.h"
+#import "QRWEditItemViewController.h"
 #import "VCRadioButton.h"
 
-@interface QRWDiscountEditFormViewController : QRWBaseViewController<UIGestureRecognizerDelegate>
+@interface QRWDiscountEditFormViewController : QRWEditItemViewController
 
 
 @property (nonatomic, strong) IBOutlet UITextField *minPriceTextView;
@@ -24,12 +24,9 @@
 @property (nonatomic, strong) IBOutlet VCRadioButton *allMembershipRadioButton;
 
 
-@property (nonatomic, strong) IBOutlet UIButton *exitButton;
-@property (nonatomic, strong) IBOutlet UIButton *uploadButton;
+//@property (nonatomic, strong) IBOutlet UIButton *exitButton;
+//@property (nonatomic, strong) IBOutlet UIButton *uploadButton;
 
-
-- (IBAction)exitButtonClicked:(id)sender;
-- (IBAction)uploadButtonClicked:(id)sender;
 
 - (id)initWithDiscount: (QRWDiscount *) discount;
 

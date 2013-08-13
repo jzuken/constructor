@@ -35,9 +35,7 @@
     [super viewDidLoad];
     _titlesArray = @[@"C", @"P", @"F", @"D", @"I", @"X", @"Q", @"Total"];
     _timesArray = @[@"last_login", @"today", @"week", @"month"];
-    
-    [dataManager sendOrdersStatisticRequest];
-//    [self.timeAndTypeSegmentedControl removeFromSuperview];
+
 }
 
 - (void)didReceiveMemoryWarning

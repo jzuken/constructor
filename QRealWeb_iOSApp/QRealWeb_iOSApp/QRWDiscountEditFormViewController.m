@@ -58,10 +58,6 @@
 {
     [super viewDidLoad];
     
-    UITapGestureRecognizer *tapRecog = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(userTapOnScreen:)];
-    [self.view addGestureRecognizer:tapRecog];
-    tapRecog.delegate = self;
-    
     [self radioButtonDidLoad];
     if (isEditMode) {
         [_minPriceTextView setText:[NSString stringWithFormat:@"%.2f", [_discount.minprice floatValue]]];
@@ -80,17 +76,6 @@
 }
 
 
-
-- (void)viewWillAppear:(BOOL)animtated
-{
-    [super viewWillAppear:animtated];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardDidShowNotification object:nil];
-}
-
-- (void)viewWillDisappear:(BOOL)animtated
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
 
 
 #pragma mark view elements methods
@@ -169,48 +154,51 @@
 
 #pragma mark Actions
 
-- (IBAction)exitButtonClicked:(id)sender
-{
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
 - (IBAction)uploadButtonClicked:(id)sender
 {
-    if (isEditMode) {
-        [dataManager uploadEditedDiscountWithDiscount:_discount];
-    } else {
-        [dataManager uploadNewDiscountWithDiscount:_discount];
+    NSNumberFormatter * formatter = [[NSNumberFormatter alloc] init];
+    [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
+    
+    _discount.minprice = [NSNumber numberWithFloat:[[formatter numberFromString:_minPriceTextView.text] floatValue]];
+    _discount.discount = [NSNumber numberWithFloat:[[formatter numberFromString:_discountTextView.text] floatValue]];
+    
+    if ([self isDiscountValid]) {
+        if (isEditMode) {
+            [dataManager uploadEditedDiscountWithDiscount:_discount];
+        } else {
+            [dataManager uploadNewDiscountWithDiscount:_discount];
+        }
+        [self startLoadingAnimation];
     }
-    [self startLoadingAnimation];
 }
 
-
-#pragma mark DataManager delegate
-
-- (void)respondsForUploadingRequest:(BOOL)status
+- (BOOL) isDiscountValid
 {
-    NSString *titleString;
-    NSString *messageString;
-    TLCompletionBlock cencelBlock;
-    
-    if (status) {
-        titleString = NSLocalizedString(@"SUCCESS_TITLE", nil);
-        messageString = NSLocalizedString(@"SUCCESS_UPLOAD_MESSAGE", nil);
-        cencelBlock = ^{
-            [self exitButtonClicked:nil];
-        };
+    BOOL answer = YES;
 
+    if ([_discount.discountType isEqualToString: @"percent"]) {
+        if ([_discount.discount floatValue] >= 100.0) {
+            answer = NO;
+            TLAlertView *alert = [[TLAlertView alloc] initWithTitle:NSLocalizedString(@"ERROR", nil) message:NSLocalizedString(@"BIG_PERCENTS_DISCOUNT", nil) inView:self.view cancelButtonTitle:NSLocalizedString(@"OK", nil) confirmButton:nil];
+            [alert show];
+        }
     } else {
-        titleString = NSLocalizedString(@"FAIL_TITLE", nil);
-        messageString = NSLocalizedString(@"FAIL_UPLOAD_MESSAGE", nil);
+        if ([_discount.minprice floatValue] <= [_discount.discount floatValue]) {
+            answer = NO;
+            TLAlertView *alert = [[TLAlertView alloc] initWithTitle:NSLocalizedString(@"ERROR", nil) message:NSLocalizedString(@"BIG_DISCOUNT", nil) inView:self.view cancelButtonTitle:NSLocalizedString(@"OK", nil) confirmButton:nil];
+            [alert show];
+        }
     }
     
-    TLAlertView *alert = [[TLAlertView alloc] initWithTitle:titleString message:messageString inView:self.view cancelButtonTitle:NSLocalizedString(@"CANCEL", nil) confirmButton:nil];
-    [alert handleCancel:cencelBlock handleConfirm:nil];
-    [alert show];
-    
-    [self stopLoadingAnimation];
+    if ([_discount.minprice floatValue] == 0.0 || [_discount.discount floatValue] == 0.0) {
+        answer = NO;
+        TLAlertView *alert = [[TLAlertView alloc] initWithTitle:NSLocalizedString(@"ERROR", nil) message:NSLocalizedString(@"ZERO_FIELDS", nil) inView:self.view cancelButtonTitle:NSLocalizedString(@"OK", nil) confirmButton:nil];
+        [alert show];
+    }
+    return answer;
 }
+
+
 
 #pragma mark - GestureRecognizer delegate
 
@@ -223,7 +211,7 @@
 
 -(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
 {
-    if ((touch.view.class == [VCRadioButton class]) || (touch.view == _exitButton) || (touch.view == _uploadButton))  {
+    if ((touch.view.class == [VCRadioButton class]) || (touch.view == self.exitButton) || (touch.view == self.uploadButton))  {
         return NO;
     }
     return YES;
@@ -238,62 +226,5 @@
     return YES;
 }
 
-#pragma mark - DOT on keyboard methods
-
-- (void)keyboardWillShow:(NSNotification *)notification
-{
-    UIWindow *tempWindow = [[[UIApplication sharedApplication] windows] objectAtIndex:1];
-    UIView *keyboard;
-    
-    UIButton * utilityButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    utilityButton.frame = CGRectMake(0, 163, 105, 53);
-    
-    [utilityButton.titleLabel setFont:[UIFont systemFontOfSize:35]];
-    [utilityButton setTitle:@"." forState:UIControlStateNormal];
-    
-    [utilityButton setTitleColor:[UIColor colorWithRed:77.0f/255.0f green:84.0f/255.0f blue:98.0f/255.0f alpha:1.0] forState:UIControlStateNormal];
-    [utilityButton setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
-    
-    [utilityButton setBackgroundImage:[UIImage imageNamed:@"background.png"] forState:UIControlStateHighlighted];
-    
-    [utilityButton addTarget:self action:@selector(addDecimalPointToField) forControlEvents:UIControlEventTouchUpInside];
-    
-    [utilityButton setAutoresizingMask:(UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleHeight)];
-    
-    for(int i = 0; i < [tempWindow.subviews count]; i++){
-        keyboard = [tempWindow.subviews objectAtIndex:i];
-        
-        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 3.2){
-            if([[keyboard description] hasPrefix:@"<UIPeripheralHost"] == YES) {
-                [keyboard addSubview:utilityButton];
-            }
-        } else {
-            if([[keyboard description] hasPrefix:@"<UIKeyboard"] == YES) {
-                [keyboard addSubview:utilityButton];
-            }
-        }
-    }
-}
-
-- (void)addDecimalPointToField
-{
-    UITextField * objectToEdit = nil;
-    
-    for (UITextField * localView in self.view.subviews){
-        if ([localView isFirstResponder]){
-            objectToEdit = localView;
-        }
-    }
-
-    if (objectToEdit != nil) {
-        NSString * localText = [(UITextField *)objectToEdit text];
-        
-        NSRange separatorPosition = [localText rangeOfString:@"."];
-        
-        if (separatorPosition.location == NSNotFound){
-            [objectToEdit insertText:[NSString stringWithFormat:@"."]];
-        }
-    }
-}
 
 @end

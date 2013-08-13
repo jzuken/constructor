@@ -106,13 +106,13 @@
 
 - (void) reloadsTableViewData
 {
-    [dataManager sendUsersRequestWithSort:_currentSort startPoint:[_usersTableView numberOfRowsInSection:0] lenght:10];
     if (isFirstDataLoading) {
         isFirstDataLoading = NO;
         [self startLoadingAnimation];
     }
     [_users removeAllObjects];
     [_usersTableView reloadData];
+    [self addsDataAndReloadsTableView];
 }
 
 #pragma mark QRWUsersSortedByTableViewControllerDelegate
@@ -137,8 +137,8 @@
     UIActionSheet *userActionSheet = [[UIActionSheet alloc] initWithTitle:nil
                                                                  delegate:self
                                                         cancelButtonTitle:NSLocalizedString(@"CANCEL", nil)
-                                                   destructiveButtonTitle:nil
-                                                        otherButtonTitles:NSLocalizedString(@"FULL_INFO", nil), NSLocalizedString(@"ORDERS_LIST", nil), NSLocalizedString(@"SEND_A_MESSAGE", nil), NSLocalizedString(@"TO_THE_BLACK_LIST_WITH_A_MESSAGE", nil), nil];
+                                                   destructiveButtonTitle:NSLocalizedString(@"TO_THE_BLACK_LIST_WITH_A_MESSAGE", nil)
+                                                        otherButtonTitles:NSLocalizedString(@"FULL_INFO", nil), NSLocalizedString(@"ORDERS_LIST", nil), NSLocalizedString(@"SEND_A_MESSAGE", nil), nil];
     [userActionSheet showInView:self.view];
 }
 

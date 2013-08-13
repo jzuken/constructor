@@ -50,7 +50,7 @@
 }
 
 
-
+#pragma mark Loading view
 
 - (void)startLoadingAnimation
 {
@@ -81,6 +81,35 @@
         [_loadingActivityIndicator stopAnimating];
         [_backgroundLoadingView removeFromSuperview];
     }];
+}
+
+#pragma mark Alerts
+
+- (void) showSureToDeleteItemAlertWithHandleCancel:(TLCompletionBlock)cancelBlock handleConfirm:(TLCompletionBlock)confirmBlock
+{
+    TLAlertView *alert = [[TLAlertView alloc] initWithTitle:NSLocalizedString(@"ATTENTION", nil) message:NSLocalizedString(@"SURE_TO_DELETE", nil) inView:self.view cancelButtonTitle:NSLocalizedString(@"CANCEL", nil) confirmButton:NSLocalizedString(@"OK", nil)];
+    [alert handleCancel:cancelBlock handleConfirm:confirmBlock];
+    [alert show];
+}
+
+
+- (void) showAfterDeletedAlertWithSuccessStatus: (BOOL) status
+{
+    NSString *titleString;
+    NSString *messageString;
+    
+    if (status) {
+        titleString = NSLocalizedString(@"SUCCESS_TITLE", nil);
+        messageString = NSLocalizedString(@"SUCCESS_DELETE_MESSAGE", nil);
+        
+    } else {
+        titleString = NSLocalizedString(@"FAIL_TITLE", nil);
+        messageString = NSLocalizedString(@"FAIL_DELETE_MESSAGE", nil);
+    }
+    
+    TLAlertView *alert = [[TLAlertView alloc] initWithTitle:titleString message:messageString inView:self.view cancelButtonTitle:NSLocalizedString(@"CANCEL", nil) confirmButton:nil];
+    [alert show];
+    [self stopLoadingAnimation];
 }
 
 @end

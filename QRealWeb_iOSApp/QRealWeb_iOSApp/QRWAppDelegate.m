@@ -20,9 +20,6 @@
 
 
 
-
-
-
 -(void)setCustomAppearance
 {
     UINavigationBar *navbarAppearance = [UINavigationBar appearance];
@@ -49,7 +46,8 @@
     if ([[UIDevice currentDevice] resolution] == UIDeviceResolution_iPhoneRetina5) {
         _firstEnterViewController = [[QRWLoginScrinViewController alloc] initWithNibName:@"QRWLoginScrinViewController" bundle:nil];
     } else {
-        _firstEnterViewController = [[QRWLoginScrinViewController alloc] initWithNibName:@"QRWLoginScrinViewController" bundle:nil];
+        abort();
+//        _firstEnterViewController = [[QRWLoginScrinViewController alloc] initWithNibName:@"QRWLoginScrinViewController" bundle:nil];
     }
     
     _fastAuthViewController = [[QRWDeployScrinViewController alloc] init];

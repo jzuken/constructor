@@ -62,10 +62,8 @@
 
     self.currentSegment = @"last_login";
     
-    [dataManager sendTopCategoriesRequest];
-    [dataManager sendTopProductsRequest];
     loadingCategoriesFinished = NO;
-    loadingCategoriesFinished = NO;
+    loadingProdusctsFinished = NO;
 }
 
 
