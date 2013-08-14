@@ -8,14 +8,20 @@
 
 #import "QRWProductsViewController.h"
 #import "QRWProductCell.h"
+#import "QRWEditProductViewController.h"
+
 
 
 @interface QRWProductsViewController ()
 {
     int lastSelectedRow;
+    BOOL isSearchMode;
+    BOOL keyboardIsShown;
 }
 
 @property (nonatomic, strong) NSMutableArray *productsArray;
+@property (nonatomic, strong) QRWEditProductViewController *editProductViewController;
+
 
 @end
 
@@ -51,6 +57,9 @@
         [weakSelf addDataAndReloadsTableView];
     }];
     
+    isSearchMode = NO;
+    keyboardIsShown = NO;
+    
     [self addDataAndReloadsTableView];
 }
 
@@ -59,28 +68,37 @@
     [super didReceiveMemoryWarning];
 }
 
-
-- (void) addDataAndReloadsTableView
+- (void)viewDidAppear:(BOOL)animated
 {
-    [dataManager sendProductsRequestWithStartPoint:[_productsTableView numberOfRowsInSection:0] lenght:10];
-    if (isFirstDataLoading) {
-        isFirstDataLoading = NO;
-        [self startLoadingAnimation];
-    }
+    [super viewDidAppear:animated];
+    [self reloadsTableView];
 }
 
 
+- (void) addDataAndReloadsTableView
+{
+    if (isSearchMode) {
+        [dataManager sendProductsRequestWithSearchWord:_productsSearchBar.text startPoint:[_productsTableView numberOfRowsInSection:0] lenght:10];
+    } else {
+        [dataManager sendProductsRequestWithStartPoint:[_productsTableView numberOfRowsInSection:0] lenght:10];
+        if (isFirstDataLoading) {
+            isFirstDataLoading = NO;
+            [self startLoadingAnimation];
+        }
+    }
+}
+
 - (void) reloadsTableView
 {
-    [self addDataAndReloadsTableView];
     [_productsArray removeAllObjects];
     [_productsTableView reloadData];
+    [self addDataAndReloadsTableView];
 }
 
 - (void)respondsForProductsRequest:(NSArray *)products
 {
     [self stopLoadingAnimation];
-    if (products.count == 0) {
+    if (_productsArray.count == 0) {
         _productsArray = [NSMutableArray arrayWithArray:products];
     } else {
         [_productsArray addObjectsFromArray:products];
@@ -90,39 +108,85 @@
     [_productsTableView.infiniteScrollingView stopAnimating];
 }
 
+- (void)respondsForUploadingRequest:(BOOL)status
+{
+    [self showAfterDeletedAlertWithSuccessStatus:status];
+    if (status) {
+        [_productsArray removeObjectAtIndex:lastSelectedRow];
+        [_productsTableView reloadData];
+    }
+}
 
 #pragma mark Action sheet methods
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-//    switch (buttonIndex) {
-//        case 0:{
-//            _fullReviewTextViewController = [[QRWFullReviewTextViewController alloc] initWithReview:[_reviews objectAtIndex:lastSelectedRow]];
-//            [self.navigationController pushViewController:_fullReviewTextViewController animated:YES];
-//        }
-//            break;
-//        case 1:{
-//            [dataManager uploadDeletedReviewWithReview:[_reviews objectAtIndex:lastSelectedRow]];
-//        }
-//            break;
-//    }
+    if (buttonIndex == actionSheet.destructiveButtonIndex) {
+        [self showSureToDeleteItemAlertWithHandleCancel:nil handleConfirm:^{
+            [dataManager uploadDeletedProductWithProduct:[_productsArray objectAtIndex:lastSelectedRow]];
+            [self startLoadingAnimation];
+        }];
+    } else if (buttonIndex != actionSheet.cancelButtonIndex){
+        _editProductViewController = [[QRWEditProductViewController alloc] initWithProduct:[_productsArray objectAtIndex:lastSelectedRow]];
+        [self presentViewController:_editProductViewController animated:YES completion:nil];
+    }
 }
 
+#pragma mark Search bar methods
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar; 
+{
+    [self reloadsTableView];
+}
+
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
+{
+    isSearchMode = YES;
+    keyboardIsShown = YES;
+    _productsSearchBar.showsCancelButton = YES;
+    _productsTableView.scrollEnabled = NO;
+}
+
+
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *) searchBar
+{
+    if ([searchBar.text isEqualToString:@""]) {
+        isSearchMode = NO;
+        [self reloadsTableView];
+    }
+    [self dismissSearchFronView];
+}
+
+
+- (void) dismissSearchFronView
+{
+    [_productsSearchBar resignFirstResponder];
+    
+    _productsSearchBar.showsCancelButton = NO;
+    _productsTableView.scrollEnabled = YES;
+    _productsTableView.userInteractionEnabled = YES;
+    
+    keyboardIsShown = NO;
+}
 
 #pragma mark Table view methods
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    lastSelectedRow = indexPath.row;
-    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    UIActionSheet *userActionSheet = [[UIActionSheet alloc] initWithTitle:nil
-                                                                 delegate:self
-                                                        cancelButtonTitle: NSLocalizedString(@"CANCEL", nil)
-                                                   destructiveButtonTitle:nil
-                                                        otherButtonTitles: NSLocalizedString(@"EDIT", nil), NSLocalizedString(@"REMOVE_FROM_STORE", nil), nil];
-    [userActionSheet showInView:self.view];
+    
+    if (!keyboardIsShown) {
+        lastSelectedRow = indexPath.row;
+        
+        UIActionSheet *productsActionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                                         delegate:self
+                                                                cancelButtonTitle: NSLocalizedString(@"CANCEL", nil)
+                                                           destructiveButtonTitle: NSLocalizedString(@"DELETE", nil)
+                                                                otherButtonTitles: NSLocalizedString(@"EDIT_PRICE", nil), nil];
+        [productsActionSheet showInView:self.view];
+    }
 }
 
 
@@ -163,6 +227,6 @@
     cell.freeShipingLable.text = [NSString stringWithFormat:NSLocalizedString(@"FREE_SHIPPING", nil), [[(QRWProduct *)_productsArray[indexPath.row] freeShiping] isEqualToString:@"N" ] ? @"NO" : @"YES"];
     cell.avaliableLable.text = [NSString stringWithFormat:NSLocalizedString(@"AVALIABLE", nil), [[(QRWProduct *)_productsArray[indexPath.row] avaliable] intValue]];
     cell.minAmountLable.text = [NSString stringWithFormat:NSLocalizedString(@"MIN_AMOUNT", nil), [[(QRWProduct *)_productsArray[indexPath.row] count] intValue]];
-    cell.minAmountLable.text = [NSString stringWithFormat:NSLocalizedString(@"CODE", nil), [(QRWProduct *)_productsArray[indexPath.row] productcode]];
+    cell.codeLable.text = [NSString stringWithFormat:NSLocalizedString(@"CODE", nil), [(QRWProduct *)_productsArray[indexPath.row] productcode]];
 }
 @end

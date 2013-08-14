@@ -21,11 +21,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "QRealWeb_iOSApp/QRWDataManager.m"
-         timestampString = "398097213.535741"
+         timestampString = "398182080.580474"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "676"
-         endingLineNumber = "676"
+         startingLineNumber = "716"
+         endingLineNumber = "716"
          landmarkName = "-downloadWasFailedWithError:forRequestURL:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -34,12 +34,12 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "QRealWeb_iOSApp/QRWProductsViewController.m"
-         timestampString = "398097571.687631"
+         timestampString = "398170991.265618"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "161"
-         endingLineNumber = "161"
-         landmarkName = "-configureProductCell:atIndexPath:"
+         startingLineNumber = "164"
+         endingLineNumber = "164"
+         landmarkName = "-dismissSearchFronView"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -47,13 +47,13 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "QRealWeb_iOSApp/QRWProductsViewController.m"
-         timestampString = "398097586.535729"
+         timestampString = "398170991.265618"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "117"
-         endingLineNumber = "117"
-         landmarkName = "-tableView:didSelectRowAtIndexPath:"
-         landmarkType = "5">
+         startingLineNumber = "119"
+         endingLineNumber = "119"
+         landmarkName = "@implementation QRWProductsViewController"
+         landmarkType = "3">
       </FileBreakpoint>
    </FileBreakpoints>
 </Bucket>

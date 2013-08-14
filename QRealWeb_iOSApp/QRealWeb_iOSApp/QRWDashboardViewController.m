@@ -66,6 +66,13 @@
         pageViewController.view.frame = frame;
         [_dashboardPagesScrollView addSubview:pageViewController.view];
     }
+    
+    
+    [dataManager sendTopCategoriesRequest];
+    [dataManager sendTopProductsRequest];
+    [dataManager sendLastOrderRequest];
+    [dataManager sendOrdersStatisticRequest];
+    [self startLoadingAnimation];
 }
 
 - (void)didReceiveMemoryWarning
@@ -77,21 +84,25 @@
 
 - (void)respondsForLastOrderRequest:(QRWLastOrder *)lastOrder
 {
+    [self stopLoadingAnimation];
     [_lastOrderDashboardViewController setLastOrder:lastOrder];
 }
 
 - (void)respondsForTopProductsRequest:(QRWTopProducts *)topProducts
 {
+    [self stopLoadingAnimation];
     [_topSellersDashboardViewController setTopProducts:topProducts];
 }
 
 - (void)respondsForTopCategoriesRequest:(QRWTopCategories *)topCategories
 {
+    [self stopLoadingAnimation];
     [_topSellersDashboardViewController setTopCategories:topCategories];
 }
 
 - (void)respondsForOrdersStatisticRequest:(NSDictionary *)statistic withArratOfKeys:(NSArray *)keys
 {
+    [self stopLoadingAnimation];
     [_ordersInfoDashboardViewController setStatistic:statistic];
 }
 

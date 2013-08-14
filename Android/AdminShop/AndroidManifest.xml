@@ -51,6 +51,7 @@
         <activity
             android:name=".DiscountAdder"
             android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".FullMessage" />
     </application>
 
 </manifest>

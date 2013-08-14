@@ -14,7 +14,6 @@
 
 @property (strong, nonatomic) IBOutlet UIView *timeAndTypeSegmentedControlArea;
 @property (strong, nonatomic) IBOutlet UIImageView *nameOfPageImageView;
-@property (strong, nonatomic) UISegmentedControl *timeAndTypeSegmentedControl;
 @property (strong, nonatomic) NSString *currentSegment;
 
 @property (strong, nonatomic) NSArray *segmentImageNamesArray;
@@ -23,7 +22,5 @@
 
 - (id)initWithNameOfPageImage: (NSString *) nameOfPageImage nibName: (NSString *) nibName;
 
-- (void) presentSegmentedControl;
-- (void) dismissSegmentedControl;
 
 @end

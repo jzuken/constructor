@@ -150,5 +150,6 @@
 	<string name="product_available">Available:</string>
 	<string name="product_sold">Sold:</string>
 	<string name="enter_price">Enter the new price:</string>
+	<string name="message">Message</string>
 	
 </resources>

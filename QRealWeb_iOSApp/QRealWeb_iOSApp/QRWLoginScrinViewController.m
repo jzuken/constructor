@@ -7,8 +7,9 @@
 //
 
 #import "QRWLoginScrinViewController.h"
-#import "QRWToolsScrinViewController.h"
-#import "QRWDeployScrinViewController.h"
+
+#import "QRWMainScrinViewController.h"
+
 #import <QuartzCore/QuartzCore.h>
 
 @interface QRWLoginScrinViewController ()
@@ -16,6 +17,12 @@
 @end
 
 @implementation QRWLoginScrinViewController
+
+
+- (id)init
+{
+    return [self initWithNibName:@"QRWLoginScrinViewController" bundle:nil];
+}
 
 - (void)viewDidLoad
 {
@@ -76,12 +83,10 @@
         [_loginTextField resignFirstResponder];
         [_passwordTextField resignFirstResponder];
         
-        QRWDeployScrinViewController *fastAuthViewController = [[QRWDeployScrinViewController alloc] init];
-        [fastAuthViewController showFirstRunMessage];
-        [self.navigationController pushViewController:fastAuthViewController animated:YES];
+        [[NSUserDefaults standardUserDefaults] setObject:kUserDefaults_isLogInObject forKey:kUserDefaults_isLogInKey];
         
-//        QWDToolsScrinViewController *listOfDocumentsViewController = [[QWDToolsScrinViewController alloc] init];
-//        [self.navigationController pushViewController:listOfDocumentsViewController animated:YES];
+        QRWMainScrinViewController *mainScrinViewController = [[QRWMainScrinViewController alloc] init];
+        [self.navigationController pushViewController:mainScrinViewController animated:YES];
     } else {
         [_passwordTextField setText:@""];
         [_loginTextField setText:@""];

@@ -31,4 +31,7 @@
 - (void) startLoadingAnimation;
 - (void) stopLoadingAnimation;
 
+- (void) showAfterDeletedAlertWithSuccessStatus: (BOOL) status;
+- (void) showSureToDeleteItemAlertWithHandleCancel:(TLCompletionBlock)cancelBlock handleConfirm:(TLCompletionBlock)confirmBlock;
+
 @end

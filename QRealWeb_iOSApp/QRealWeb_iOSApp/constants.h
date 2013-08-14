@@ -22,3 +22,8 @@ static NSString *const kTestUsername = @"1";
 static NSString *const kTestPassword = @"1";
 
 static const NSInteger kSideOfToolView = 140;
+
+
+static NSString *const kUserDefaults_isLogInKey = @"isLoginIn";
+static NSString *const kUserDefaults_isLogInObject = @"Login=YES";
+static NSString *const kUserDefaults_isLogOutObject = @"Login=NO";

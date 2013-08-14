@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "QRWBaseViewController.h"
 
-@interface QRWProductsViewController : QRWBaseViewController<UIActionSheetDelegate>
+@interface QRWProductsViewController : QRWBaseViewController<UIActionSheetDelegate, UISearchBarDelegate>
 
 @property (nonatomic, strong) IBOutlet UITableView *productsTableView;
+@property (nonatomic, strong) IBOutlet UISearchBar *productsSearchBar;
 
 @end

@@ -84,7 +84,7 @@
         UIView *numberView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 60, 60)];
         
         UIImageView *placeholderNumberView = [[UIImageView alloc] initWithFrame:numberView.frame];
-        [placeholderNumberView setImage:[UIImage imageNamed:@"Black_white_Apple_background.jpg"]];
+        [placeholderNumberView setImage:[UIImage imageNamed:@"topBarBackground.png"]];
         
         UILabel *numberLabel = [[UILabel alloc] initWithFrame:numberView.frame];
         [numberLabel setText:[NSString stringWithFormat:@"%d", index]];
@@ -149,7 +149,12 @@
 
 - (IBAction)enterToShopAction:(id)sender
 {
-    QRWMainScrinViewController *mainScrinViewController = [[QRWMainScrinViewController alloc] init];
-    [self.navigationController pushViewController:mainScrinViewController animated:YES];
+    [UIView animateWithDuration:0.5 animations:^{
+        CGRect frame = self.view.frame;
+        frame.origin.y = frame.size.height;
+        self.view.frame = frame;
+    } completion:^(BOOL finished) {
+        [self.view removeFromSuperview];
+    }];
 }
 @end

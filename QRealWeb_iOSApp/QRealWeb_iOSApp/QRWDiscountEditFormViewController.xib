@@ -131,7 +131,7 @@
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">1</int>
-							<bytes key="NSRGB">MSAwLjUwMTk2MDgxNCAwAA</bytes>
+							<bytes key="NSRGB">MC4xOTIxNTY4NjI3IDAuNDM5MjE1Njg2MyAwLjYwMzkyMTU2ODYAA</bytes>
 						</object>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -139,7 +139,10 @@
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<string key="IBUIText">Min price:</string>
-						<nil key="IBUITextColor"/>
+						<object class="NSColor" key="IBUITextColor" id="1044017104">
+							<int key="NSColorSpace">3</int>
+							<bytes key="NSWhite">MQA</bytes>
+						</object>
 						<nil key="IBUIHighlightedColor"/>
 						<int key="IBUIBaselineAdjustment">0</int>
 						<int key="IBUITextAlignment">1</int>
@@ -164,7 +167,7 @@
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">1</int>
-							<bytes key="NSRGB">MSAwLjUwMTk2MDgxNCAwAA</bytes>
+							<bytes key="NSRGB">MC4xOTIxNTY4NjI3IDAuNDM5MjE1Njg2MyAwLjYwMzkyMTU2ODYAA</bytes>
 						</object>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -172,7 +175,7 @@
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<string key="IBUIText">Discount:</string>
-						<nil key="IBUITextColor"/>
+						<reference key="IBUITextColor" ref="1044017104"/>
 						<nil key="IBUIHighlightedColor"/>
 						<int key="IBUIBaselineAdjustment">0</int>
 						<int key="IBUITextAlignment">1</int>
@@ -192,10 +195,7 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<int key="IBUIContentHorizontalAlignment">0</int>
 						<int key="IBUIContentVerticalAlignment">0</int>
-						<object class="NSColor" key="IBUIHighlightedTitleColor" id="1044017104">
-							<int key="NSColorSpace">3</int>
-							<bytes key="NSWhite">MQA</bytes>
-						</object>
+						<reference key="IBUIHighlightedTitleColor" ref="1044017104"/>
 						<object class="NSColor" key="IBUINormalTitleColor">
 							<int key="NSColorSpace">1</int>
 							<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
@@ -228,13 +228,13 @@
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">1</int>
-							<bytes key="NSRGB">MC4yMDc4NDMxMzczIDAuNTM3MjU0OTAyIDAuNzY0NzA1ODgyNAA</bytes>
+							<bytes key="NSRGB">MC4xOTIxNTY4NjI3IDAuNDM5MjE1Njg2MyAwLjYwMzkyMTU2ODYAA</bytes>
 						</object>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<int key="IBUIContentHorizontalAlignment">0</int>
 						<int key="IBUIContentVerticalAlignment">0</int>
-						<string key="IBUINormalTitle">Upload</string>
+						<string key="IBUINormalTitle">Save</string>
 						<reference key="IBUIHighlightedTitleColor" ref="1044017104"/>
 						<reference key="IBUINormalTitleColor" ref="1044017104"/>
 						<reference key="IBUINormalTitleShadowColor" ref="224335361"/>
@@ -324,9 +324,9 @@
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="630993591"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
-						<object class="NSColor" key="IBUIBackgroundColor">
+						<object class="NSColor" key="IBUIBackgroundColor" id="537459357">
 							<int key="NSColorSpace">1</int>
-							<bytes key="NSRGB">MSAwLjUwMTk2MDgxNCAwAA</bytes>
+							<bytes key="NSRGB">MC4xOTIxNTY4NjI3IDAuNDM5MjE1Njg2MyAwLjYwMzkyMTU2ODYAA</bytes>
 						</object>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -334,11 +334,7 @@
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<string key="IBUIText">Absolute: </string>
-						<object class="NSColor" key="IBUITextColor" id="136619735">
-							<int key="NSColorSpace">1</int>
-							<bytes key="NSRGB">MCAwIDAAA</bytes>
-							<string key="IBUIColorCocoaTouchKeyPath">darkTextColor</string>
-						</object>
+						<reference key="IBUITextColor" ref="1044017104"/>
 						<nil key="IBUIHighlightedColor"/>
 						<int key="IBUIBaselineAdjustment">0</int>
 						<int key="IBUITextAlignment">1</int>
@@ -354,17 +350,14 @@
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="504823785"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
-						<object class="NSColor" key="IBUIBackgroundColor">
-							<int key="NSColorSpace">1</int>
-							<bytes key="NSRGB">MSAwLjUwMTk2MDgxNCAwAA</bytes>
-						</object>
+						<reference key="IBUIBackgroundColor" ref="537459357"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<int key="IBUIContentMode">7</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<string key="IBUIText">Premium: </string>
-						<reference key="IBUITextColor" ref="136619735"/>
+						<reference key="IBUITextColor" ref="1044017104"/>
 						<nil key="IBUIHighlightedColor"/>
 						<int key="IBUIBaselineAdjustment">0</int>
 						<int key="IBUITextAlignment">1</int>
@@ -380,17 +373,14 @@
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="445498567"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
-						<object class="NSColor" key="IBUIBackgroundColor">
-							<int key="NSColorSpace">1</int>
-							<bytes key="NSRGB">MSAwLjUwMTk2MDgxNCAwAA</bytes>
-						</object>
+						<reference key="IBUIBackgroundColor" ref="537459357"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<int key="IBUIContentMode">7</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<string key="IBUIText">All: </string>
-						<reference key="IBUITextColor" ref="136619735"/>
+						<reference key="IBUITextColor" ref="1044017104"/>
 						<nil key="IBUIHighlightedColor"/>
 						<int key="IBUIBaselineAdjustment">0</int>
 						<int key="IBUITextAlignment">1</int>
@@ -406,17 +396,14 @@
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="27787818"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
-						<object class="NSColor" key="IBUIBackgroundColor">
-							<int key="NSColorSpace">1</int>
-							<bytes key="NSRGB">MSAwLjUwMTk2MDgxNCAwAA</bytes>
-						</object>
+						<reference key="IBUIBackgroundColor" ref="537459357"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<int key="IBUIContentMode">7</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<string key="IBUIText">Wholesaler: </string>
-						<reference key="IBUITextColor" ref="136619735"/>
+						<reference key="IBUITextColor" ref="1044017104"/>
 						<nil key="IBUIHighlightedColor"/>
 						<int key="IBUIBaselineAdjustment">0</int>
 						<int key="IBUITextAlignment">1</int>
@@ -432,17 +419,14 @@
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="1021170118"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
-						<object class="NSColor" key="IBUIBackgroundColor">
-							<int key="NSColorSpace">1</int>
-							<bytes key="NSRGB">MSAwLjUwMTk2MDgxNCAwAA</bytes>
-						</object>
+						<reference key="IBUIBackgroundColor" ref="537459357"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<int key="IBUIContentMode">7</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<string key="IBUIText">Percents: </string>
-						<reference key="IBUITextColor" ref="136619735"/>
+						<reference key="IBUITextColor" ref="1044017104"/>
 						<nil key="IBUIHighlightedColor"/>
 						<int key="IBUIBaselineAdjustment">0</int>
 						<int key="IBUITextAlignment">1</int>
@@ -2201,6 +2185,64 @@
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">QRWDiscountEditFormViewController</string>
+					<string key="superclassName">QRWEditItemViewController</string>
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">uploadButtonClicked:</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<string key="NS.key.0">uploadButtonClicked:</string>
+						<object class="IBActionInfo" key="NS.object.0">
+							<string key="name">uploadButtonClicked:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</object>
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="absoluteTypeRadioButton">VCRadioButton</string>
+						<string key="allMembershipRadioButton">VCRadioButton</string>
+						<string key="discountTextView">UITextField</string>
+						<string key="minPriceTextView">UITextField</string>
+						<string key="percentTypeRadioButton">VCRadioButton</string>
+						<string key="premiumMembershipRadioButton">VCRadioButton</string>
+						<string key="wholesalerMembershipRadioButton">VCRadioButton</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="absoluteTypeRadioButton">
+							<string key="name">absoluteTypeRadioButton</string>
+							<string key="candidateClassName">VCRadioButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="allMembershipRadioButton">
+							<string key="name">allMembershipRadioButton</string>
+							<string key="candidateClassName">VCRadioButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="discountTextView">
+							<string key="name">discountTextView</string>
+							<string key="candidateClassName">UITextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="minPriceTextView">
+							<string key="name">minPriceTextView</string>
+							<string key="candidateClassName">UITextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="percentTypeRadioButton">
+							<string key="name">percentTypeRadioButton</string>
+							<string key="candidateClassName">VCRadioButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="premiumMembershipRadioButton">
+							<string key="name">premiumMembershipRadioButton</string>
+							<string key="candidateClassName">VCRadioButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="wholesalerMembershipRadioButton">
+							<string key="name">wholesalerMembershipRadioButton</string>
+							<string key="candidateClassName">VCRadioButton</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/QRWDiscountEditFormViewController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">QRWEditItemViewController</string>
 					<string key="superclassName">QRWBaseViewController</string>
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="exitButtonClicked:">id</string>
@@ -2217,57 +2259,22 @@
 						</object>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="absoluteTypeRadioButton">VCRadioButton</string>
-						<string key="allMembershipRadioButton">VCRadioButton</string>
-						<string key="discountTextView">UITextField</string>
 						<string key="exitButton">UIButton</string>
-						<string key="minPriceTextView">UITextField</string>
-						<string key="percentTypeRadioButton">VCRadioButton</string>
-						<string key="premiumMembershipRadioButton">VCRadioButton</string>
 						<string key="uploadButton">UIButton</string>
-						<string key="wholesalerMembershipRadioButton">VCRadioButton</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="absoluteTypeRadioButton">
-							<string key="name">absoluteTypeRadioButton</string>
-							<string key="candidateClassName">VCRadioButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="allMembershipRadioButton">
-							<string key="name">allMembershipRadioButton</string>
-							<string key="candidateClassName">VCRadioButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="discountTextView">
-							<string key="name">discountTextView</string>
-							<string key="candidateClassName">UITextField</string>
-						</object>
 						<object class="IBToOneOutletInfo" key="exitButton">
 							<string key="name">exitButton</string>
 							<string key="candidateClassName">UIButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="minPriceTextView">
-							<string key="name">minPriceTextView</string>
-							<string key="candidateClassName">UITextField</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="percentTypeRadioButton">
-							<string key="name">percentTypeRadioButton</string>
-							<string key="candidateClassName">VCRadioButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="premiumMembershipRadioButton">
-							<string key="name">premiumMembershipRadioButton</string>
-							<string key="candidateClassName">VCRadioButton</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="uploadButton">
 							<string key="name">uploadButton</string>
 							<string key="candidateClassName">UIButton</string>
 						</object>
-						<object class="IBToOneOutletInfo" key="wholesalerMembershipRadioButton">
-							<string key="name">wholesalerMembershipRadioButton</string>
-							<string key="candidateClassName">VCRadioButton</string>
-						</object>
 					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/QRWDiscountEditFormViewController.h</string>
+						<string key="minorKey">./Classes/QRWEditItemViewController.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">

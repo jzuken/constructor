@@ -272,6 +272,7 @@ public class Products extends PinSupportNetworkActivity {
 				// If the event is a key-down event on the "enter" button
 				if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
 					searchWord = productsSearchLine.getText().toString();
+					hideKeyboard(productsSearchLine);
 					clearList();
 					updateProductsList();
 					return true;

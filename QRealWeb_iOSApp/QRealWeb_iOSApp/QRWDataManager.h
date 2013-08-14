@@ -49,6 +49,8 @@
 
 -(void) respondsForProductsRequest:(NSArray *)discounts;
 
+-(void) respondsForUserOrdersRequest:(NSArray *)userOrders;
+
 @end
 
 
@@ -77,11 +79,8 @@
  */
 
 - (void) sendLastOrderRequest;
-
 - (void) sendTopProductsRequest;
-
 - (void) sendTopCategoriesRequest;
-
 - (void) sendOrdersStatisticRequest;
 
 /*
@@ -89,29 +88,28 @@
  */
 
 - (void) sendUsersRequestWithSort: (NSString *) sort startPoint: (NSInteger) startPoint lenght: (NSInteger) lenght;
-
+- (void) sendOrdersOfUserRequestWithUser:(QRWUser *) user startPoint:(NSInteger) startPoint lenght:(NSInteger) lenght;
 
 /*
  Discounts
  */
 - (void) sendDiscountsRequest;
-
 - (void) uploadNewDiscountWithDiscount:(QRWDiscount *) discount;
-
 - (void) uploadEditedDiscountWithDiscount:(QRWDiscount *) discount;
-
 - (void) uploadDeletedDiscountWithDiscount:(QRWDiscount *) discount;
 
 /*
  Reviews
  */
 - (void) sendReviewsRequestWithStartPoint:(NSInteger) startPoint lenght:(NSInteger) lenght;
-
 - (void) uploadDeletedReviewWithReview:(QRWReview *) review;
 
 /*
  Products
  */
 - (void) sendProductsRequestWithStartPoint:(NSInteger) startPoint lenght:(NSInteger) lenght;
+- (void) sendProductsRequestWithSearchWord: (NSString *)word startPoint:(NSInteger) startPoint lenght:(NSInteger) lenght;
+- (void) uploadEditedProductWithProduct:(QRWProduct *) product;
+- (void) uploadDeletedProductWithProduct:(QRWProduct *) product;
 
 @end

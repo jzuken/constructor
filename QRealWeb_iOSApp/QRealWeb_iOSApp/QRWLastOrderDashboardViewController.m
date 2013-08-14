@@ -31,8 +31,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [dataManager sendLastOrderRequest];
-    [self.timeAndTypeSegmentedControl removeFromSuperview];
 }
 
 - (void)didReceiveMemoryWarning
