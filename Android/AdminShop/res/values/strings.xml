@@ -154,5 +154,6 @@
 	<string name="last">Last</string>
 	<string name="week">Week</string>
 	<string name="month">Month</string>
+	<string name="news">News</string>
 	
 </resources>

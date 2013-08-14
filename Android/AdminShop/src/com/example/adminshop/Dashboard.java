@@ -55,7 +55,8 @@ public class Dashboard extends PinSupportNetworkActivity {
 			}
 		});
 
-		pages.add(page3);
+		// temporarily hidden
+		// pages.add(page3);
 
 		View page4 = inflater.inflate(R.layout.top_sellers, null);
 

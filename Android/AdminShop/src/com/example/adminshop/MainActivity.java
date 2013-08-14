@@ -1,9 +1,15 @@
 package com.example.adminshop;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -15,6 +21,37 @@ public class MainActivity extends PinSupportActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
+
+		LayoutInflater inflater = LayoutInflater.from(this);
+		List<View> pages = new ArrayList<View>();
+
+		View page1 = inflater.inflate(R.layout.menu, null);
+		pages.add(page1);
+
+		View page2 = inflater.inflate(R.layout.news, null);
+		pages.add(page2);
+		SwipingPagerAdapter pagerAdapter = new SwipingPagerAdapter(pages);
+		ViewPager viewPager = (ViewPager) findViewById(R.id.dashbroad_view_pager);
+		viewPager.setAdapter(pagerAdapter);
+		viewPager.setCurrentItem(0);
+
+		currentPage = 0;
+
+		viewPager.setOnPageChangeListener(new OnPageChangeListener() {
+
+			@Override
+			public void onPageSelected(int position) {
+				currentPage = position;
+			}
+
+			@Override
+			public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+			}
+
+			@Override
+			public void onPageScrollStateChanged(int state) {
+			}
+		});
 	}
 
 	public void productsButtonClick(View v) {
@@ -74,4 +111,6 @@ public class MainActivity extends PinSupportActivity {
 		}
 		return false;
 	}
+	
+	private int currentPage;
 }
