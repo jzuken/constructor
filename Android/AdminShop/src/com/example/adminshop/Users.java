@@ -7,6 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -15,8 +16,10 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
@@ -178,7 +181,53 @@ public class Users extends PinSupportNetworkActivity {
 			}
 		});
 
+		usersListView.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				showActionDialog(((User) view.getTag()));
+			}
+		});
+
 		usersListView.setAdapter(adapter);
+	}
+	
+	private void showOrders(String id)  {
+		Intent intent = new Intent(getBaseContext(), UserOrders.class);
+		intent.putExtra("userId", id);
+		startActivityForResult(intent, 1);
+	}
+
+	private void showActionDialog(final User user) {
+		LinearLayout action_view = (LinearLayout) getLayoutInflater().inflate(R.layout.action_dialog, null);
+		final CustomDialog dialog = new CustomDialog(this, action_view);
+
+		ListView actionList = (ListView) action_view.findViewById(R.id.action_list);
+
+		String[] actions = { "Orders list", "To the black list", "Cancel" };
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.action_item, R.id.textItem, actions);
+
+		actionList.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				switch (position) {
+				case 0:
+					dialog.dismiss();
+					showOrders(user.getId());
+					break;
+				case 1:
+					dialog.dismiss();
+					break;
+				case 2:
+					dialog.dismiss();
+					break;
+				default:
+					break;
+				}
+
+			}
+		});
+
+		actionList.setAdapter(adapter);
+
+		dialog.show();
 	}
 
 	private void setupSortSpinner() {

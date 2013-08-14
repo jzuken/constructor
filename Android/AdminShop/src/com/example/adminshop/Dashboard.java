@@ -197,32 +197,7 @@ public class Dashboard extends PinSupportNetworkActivity {
 						user.setText(obj.getString("title") + " " + obj.getString("firstname") + " "
 								+ obj.getString("lastname"));
 						StatusSymbols statusSymbol = StatusSymbols.valueOf(obj.getString("status"));
-
-						switch (statusSymbol) {
-						case I:
-							status.setText("Not finished");
-							break;
-						case Q:
-							status.setText("Queued");
-							break;
-						case P:
-							status.setText("Processed");
-							break;
-						case X:
-							status.setText("Backordered");
-							break;
-						case D:
-							status.setText("Declined");
-							break;
-						case F:
-							status.setText("Failed");
-							break;
-						case C:
-							status.setText("Comlete");
-							break;
-						default:
-							break;
-						}
+						status.setText(getStatusBySymbol(statusSymbol));
 
 						JSONArray detailsArray = obj.getJSONArray("details");
 						StringBuilder productsInfo = new StringBuilder();
@@ -253,6 +228,43 @@ public class Dashboard extends PinSupportNetworkActivity {
 		};
 
 		dataRequester.execute("http://54.213.38.9/xcart/api.php?request=last_order");
+	}
+
+	private String getFormatDate(Long seconds) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTimeInMillis(seconds * 1000L);
+		return dateNumber(calendar.get(Calendar.DAY_OF_MONTH)) + "/" + dateNumber(calendar.get(Calendar.MONTH) + 1)
+				+ "/" + calendar.get(Calendar.YEAR) + " " + dateNumber(calendar.get(Calendar.HOUR_OF_DAY)) + ":"
+				+ dateNumber(calendar.get(Calendar.MINUTE));
+	}
+
+	private String dateNumber(int number) {
+		if (number < 10) {
+			return "0" + String.valueOf(number);
+		} else {
+			return String.valueOf(number);
+		}
+	}
+
+	private String getStatusBySymbol(StatusSymbols symbol) {
+		switch (symbol) {
+		case I:
+			return "Not finished";
+		case Q:
+			return "Queued";
+		case P:
+			return "Processed";
+		case X:
+			return "Backordered";
+		case D:
+			return "Declined";
+		case F:
+			return "Failed";
+		case C:
+			return "Complete";
+		default:
+			return "";
+		}
 	}
 
 	private void clearLastOrderInfo() {
@@ -300,7 +312,7 @@ public class Dashboard extends PinSupportNetworkActivity {
 						failedOrders.setText(currentPeriodObj.getString("F"));
 						totalOrders.setText(currentPeriodObj.getString("Total"));
 						totalPaid.setText(currentPeriodObj.getString("total_paid"));
-						grossTotal.setText(currentPeriodObj.getString("gross_total"));	
+						grossTotal.setText(currentPeriodObj.getString("gross_total"));
 					} catch (JSONException e) {
 						e.printStackTrace();
 					}
@@ -407,7 +419,7 @@ public class Dashboard extends PinSupportNetworkActivity {
 						case 1:
 							if (obj.optString("last_login").equals("none")) {
 								noCategories.setText("No categories statistic during this period");
-							} else {							
+							} else {
 								currentPeriodArray = obj.getJSONArray("last_login");
 							}
 							break;
@@ -455,22 +467,6 @@ public class Dashboard extends PinSupportNetworkActivity {
 		};
 
 		dataRequester.execute("http://54.213.38.9/xcart/api.php?request=top_categories");
-	}
-
-	private String getFormatDate(Long seconds) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTimeInMillis(seconds * 1000L);
-		return dateNumber(calendar.get(Calendar.DAY_OF_MONTH)) + "/" + dateNumber(calendar.get(Calendar.MONTH) + 1)
-				+ "/" + calendar.get(Calendar.YEAR) + " " + dateNumber(calendar.get(Calendar.HOUR_OF_DAY)) + ":"
-				+ dateNumber(calendar.get(Calendar.MINUTE));
-	}
-
-	private String dateNumber(int number) {
-		if (number < 10) {
-			return "0" + String.valueOf(number);
-		} else {
-			return String.valueOf(number);
-		}
 	}
 
 	private TextView id;

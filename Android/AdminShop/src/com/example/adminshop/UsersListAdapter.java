@@ -34,7 +34,7 @@ public class UsersListAdapter extends ArrayAdapter<User> {
 		holder.type = (TextView) row.findViewById(R.id.user_type);
 		holder.lastLogin = (TextView) row.findViewById(R.id.last_login);
 		holder.totalOrders = (TextView) row.findViewById(R.id.total_orders);
-		row.setTag(holder);
+		row.setTag(holder.user);
 		setupItem(holder);
 		return row;
 	}

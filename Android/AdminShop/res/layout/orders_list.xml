@@ -10,15 +10,16 @@
         android:layout_height="wrap_content"
         android:background="@color/dark_grey"
         android:gravity="center"
-        android:text="@string/users"
+        android:text="@string/orders"
         android:textColor="@color/white"
         android:textSize="30sp" />
 
     <com.handmark.pulltorefresh.library.PullToRefreshListView
-        android:id="@+id/users_list"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        tools:listitem="@layout/user_item" >
+        android:id="@+id/user_orders_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:listSelector="@android:color/transparent"
+        tools:listitem="@layout/user_orders_item" >
     </com.handmark.pulltorefresh.library.PullToRefreshListView>
 
 </LinearLayout>
