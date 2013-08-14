@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.LayoutInflater;
@@ -24,17 +25,27 @@ public class MainActivity extends PinSupportActivity {
 
 		LayoutInflater inflater = LayoutInflater.from(this);
 		List<View> pages = new ArrayList<View>();
+		
+		View page1 = null;
+		View page2 = null;
+		SharedPreferences settingsData = PreferenceManager.getDefaultSharedPreferences(this);
+		int firstPage = Integer.parseInt(settingsData.getString("screens_list", "0"));
+		if (firstPage == 0) {
+			page1 = inflater.inflate(R.layout.menu, null);
+			page2 = inflater.inflate(R.layout.news, null);
+		} else {
+			page2 = inflater.inflate(R.layout.menu, null);
+			page1 = inflater.inflate(R.layout.news, null);
+		}
 
-		View page1 = inflater.inflate(R.layout.menu, null);
 		pages.add(page1);
-
-		View page2 = inflater.inflate(R.layout.news, null);
 		pages.add(page2);
+		
 		SwipingPagerAdapter pagerAdapter = new SwipingPagerAdapter(pages);
-		ViewPager viewPager = (ViewPager) findViewById(R.id.dashbroad_view_pager);
+		ViewPager viewPager = (ViewPager) findViewById(R.id.start_view_pager);
 		viewPager.setAdapter(pagerAdapter);
-		viewPager.setCurrentItem(0);
 
+		viewPager.setCurrentItem(0);
 		currentPage = 0;
 
 		viewPager.setOnPageChangeListener(new OnPageChangeListener() {
@@ -111,6 +122,6 @@ public class MainActivity extends PinSupportActivity {
 		}
 		return false;
 	}
-	
+
 	private int currentPage;
 }
