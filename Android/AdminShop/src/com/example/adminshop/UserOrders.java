@@ -42,7 +42,9 @@ public class UserOrders extends PinSupportNetworkActivity {
 
 	private void updateOrdersList() {
 		progressBar.setVisibility(View.VISIBLE);
-		isDownloading = true;
+		synchronized(lock) {
+			isDownloading = true;
+		}
 		hasNext = false;
 		GetRequester dataRequester = new GetRequester() {
 			protected void onPostExecute(String result) {
@@ -65,7 +67,9 @@ public class UserOrders extends PinSupportNetworkActivity {
 				}
 				progressBar.setVisibility(View.GONE);
 				ordersListView.onRefreshComplete();
-				isDownloading = false;
+				synchronized(lock) {
+					isDownloading = false;
+				}
 			}
 		};
 
@@ -199,4 +203,5 @@ public class UserOrders extends PinSupportNetworkActivity {
 	private int packAmount = 10;
 	private final int startItemCount = 3;
 	PullToRefreshListView ordersListView;
+	private Object lock = new Object();
 }

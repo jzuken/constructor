@@ -52,7 +52,9 @@ public class Products extends PinSupportNetworkActivity {
 
 	private void updateProductsList() {
 		progressBar.setVisibility(View.VISIBLE);
-		isDownloading = true;
+		synchronized(lock) {
+			isDownloading = true;
+		}
 		hasNext = false;
 		GetRequester dataRequester = new GetRequester() {
 			@Override
@@ -81,7 +83,9 @@ public class Products extends PinSupportNetworkActivity {
 				}
 				progressBar.setVisibility(View.GONE);
 				productsListView.onRefreshComplete();
-				isDownloading = false;
+				synchronized(lock) {
+					isDownloading = false;
+				}
 			}
 		};
 
@@ -292,4 +296,5 @@ public class Products extends PinSupportNetworkActivity {
 	private final int startItemCount = 4;
 	private String searchWord = "";
 	PullToRefreshListView productsListView;
+	private Object lock = new Object();
 }

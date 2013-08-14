@@ -49,7 +49,9 @@ public class Reviews extends PinSupportNetworkActivity {
 
 	private void updateReviewsList() {
 		progressBar.setVisibility(View.VISIBLE);
-		isDownloading = true;
+		synchronized(lock) {
+			isDownloading = true;
+		}
 		hasNext = false;
 		GetRequester dataRequester = new GetRequester() {
 			@Override
@@ -77,7 +79,9 @@ public class Reviews extends PinSupportNetworkActivity {
 				}
 				progressBar.setVisibility(View.GONE);
 				reviewsListView.onRefreshComplete();
-				isDownloading = false;
+				synchronized(lock) {
+					isDownloading = false;
+				}
 			}
 		};
 
@@ -233,4 +237,5 @@ public class Reviews extends PinSupportNetworkActivity {
 	private int packAmount;
 	private final int startItemCount = 3;
 	PullToRefreshListView reviewsListView;
+	private Object lock = new Object();
 }
