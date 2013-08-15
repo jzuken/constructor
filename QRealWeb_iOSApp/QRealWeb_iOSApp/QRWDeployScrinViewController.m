@@ -155,6 +155,7 @@
         self.view.frame = frame;
     } completion:^(BOOL finished) {
         [self.view removeFromSuperview];
+        _isPresented = NO;
     }];
 }
 @end

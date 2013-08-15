@@ -30,7 +30,7 @@
 
 - (id)initWithProducts: (NSArray *) products
 {
-    self = [self initWithNibName:@"QRWProductsViewControllerForModalPresent" bundle:nil];
+    self = [self initWithNibName:@"QRWProductsViewControllerForModalPresent" oldNibName:@"QRWProductsViewControllerForModalPresentOld"];
     self.productsArray = [NSArray arrayWithArray:products];
     return self;
 }
@@ -38,7 +38,7 @@
 
 - (id)initWithUserID: (NSNumber *) userID
 {
-    self = [self initWithNibName:@"QRWProductsViewControllerForModalPresent" bundle:nil];
+    self = [self initWithNibName:@"QRWProductsViewControllerForModalPresent" oldNibName:@"QRWProductsViewControllerForModalPresentOld"];
     self.userID = [NSNumber numberWithInt:[userID intValue]];
     return self;
 }

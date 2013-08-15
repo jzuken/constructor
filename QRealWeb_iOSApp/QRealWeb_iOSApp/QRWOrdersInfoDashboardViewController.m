@@ -87,14 +87,7 @@
         [fullOrdersInfoLabel setFont:[UIFont boldSystemFontOfSize:13]];
         fullOrdersInfoLabel.text = @"Last login  Today  Week  Month";
         [headerView addSubview:fullOrdersInfoLabel];
-    } else {
-//        UILabel *todayOrdersInfoLabel = [[UILabel alloc] initWithFrame:CGRectMake(235, 0, 45, 21)];
-//        todayOrdersInfoLabel.backgroundColor = [UIColor clearColor];
-//        [todayOrdersInfoLabel setFont:[UIFont boldSystemFontOfSize:13]];
-//        todayOrdersInfoLabel.text = @"Today";
-//        [headerView addSubview:todayOrdersInfoLabel];
     }
-    
     return headerView;
 }
 

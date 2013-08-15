@@ -37,7 +37,7 @@
 
 - (id)init
 {
-    return [self initWithNibName:@"QRWProductsViewController" bundle:nil];
+    return [self initWithNibName:@"QRWProductsViewController" oldNibName:@"QRWProductsViewControllerOld"];
 }
 
 

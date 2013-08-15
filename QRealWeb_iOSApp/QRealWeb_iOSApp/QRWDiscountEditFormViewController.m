@@ -39,15 +39,20 @@
 
 - (id)init
 {
-    self = [self initWithNibName:@"QRWDiscountEditFormViewController" bundle:nil];
+    self = [self initWithNibName:@"QRWDiscountEditFormViewController" oldNibName:@"QRWDiscountEditFormViewControllerOld"];
     isEditMode = NO;
+    
+    _discount = [[QRWDiscount alloc] init];
+    _discount.discount = [NSNumber numberWithInt:1];
+    _discount.discountType = @"absolute";
+    
     return self;
 }
 
 
 - (id)initWithDiscount: (QRWDiscount *) discount
 {
-    self = [self initWithNibName:@"QRWDiscountEditFormViewController" bundle:nil];
+    self = [self initWithNibName:@"QRWDiscountEditFormViewController" oldNibName:@"QRWDiscountEditFormViewControllerOld"];
     isEditMode = YES;
     _discount = discount;
     return self;
@@ -157,11 +162,8 @@
 
 - (IBAction)uploadButtonClicked:(id)sender
 {
-    NSNumberFormatter * formatter = [[NSNumberFormatter alloc] init];
-    [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
-    
-    _discount.minprice = [NSNumber numberWithFloat:[[formatter numberFromString:_minPriceTextView.text] floatValue]];
-    _discount.discount = [NSNumber numberWithFloat:[[formatter numberFromString:_discountTextView.text] floatValue]];
+    _discount.minprice = [NSNumber numberWithDouble:[_minPriceTextView.text doubleValue]];
+    _discount.discount = [NSNumber numberWithDouble:[_discountTextView.text doubleValue]];
     
     if ([self isDiscountValid]) {
         if (isEditMode) {

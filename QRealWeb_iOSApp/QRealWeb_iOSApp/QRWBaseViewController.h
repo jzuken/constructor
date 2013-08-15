@@ -34,4 +34,7 @@
 - (void) showAfterDeletedAlertWithSuccessStatus: (BOOL) status;
 - (void) showSureToDeleteItemAlertWithHandleCancel:(TLCompletionBlock)cancelBlock handleConfirm:(TLCompletionBlock)confirmBlock;
 
+
+- (id)initWithNibName:(NSString *)nibNameOrNil oldNibName:(NSString *)oldNibNameOrNil;
+
 @end

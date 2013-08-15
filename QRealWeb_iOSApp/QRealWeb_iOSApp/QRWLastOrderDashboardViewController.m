@@ -58,11 +58,11 @@
     if (!_mainStatsInfoMode) {
         _productsLastorderDashboardViewController = [[QRWProductsViewControllerForModalPresent alloc] initWithProducts:_lastOrder.products];
         _productsLastorderDashboardViewController.mainStatsMode = NO;
-        [_controllerForModalPresent presentViewController:_productsLastorderDashboardViewController animated:YES completion:nil];
+        [self.forPresentViewController presentViewController:_productsLastorderDashboardViewController animated:YES completion:nil];
     } else {
         _productsLastorderDashboardViewController = [[QRWProductsViewControllerForModalPresent alloc] initWithProducts:_lastOrder.products];
         _productsLastorderDashboardViewController.mainStatsMode = YES;
-        [_controllerForModalPresent.navigationController pushViewController:_productsLastorderDashboardViewController animated:YES];
+        [self.forPresentViewController.navigationController pushViewController:_productsLastorderDashboardViewController animated:YES];
     }
 }
 

@@ -25,6 +25,12 @@
 }
 
 
+- (id)initWithNibName:(NSString *)nibNameOrNil oldNibName:(NSString *)oldNibNameOrNil
+{
+    return [self initWithNibName:(([[UIDevice currentDevice] resolution] == UIDeviceResolution_iPhoneRetina5)) ? nibNameOrNil: oldNibNameOrNil bundle:nil];
+}
+
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];

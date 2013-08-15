@@ -36,7 +36,7 @@
 
 - (id)init
 {
-    return [self initWithNibName:@"QRWDashboardViewController" bundle:nil];
+    return [self initWithNibName:@"QRWDashboardViewController" oldNibName:@"QRWDashboardViewControllerOld"];
 }
 
 - (void)viewDidLoad
@@ -52,14 +52,13 @@
     _dashboardPagesScrollView.showsVerticalScrollIndicator = NO;
     _dashboardPagesScrollView.scrollsToTop = NO;
     
-    _topSellersDashboardViewController = [[QRWTopSellersDashboardViewController alloc] initWithNameOfPageImage:@"subtitle_topsellers.png" nibName:@"QRWTopSellersDashboardViewController"];
-    _lastOrderDashboardViewController = [[QRWLastOrderDashboardViewController alloc] initWithNameOfPageImage:@"subtitle_last_order.png" nibName:@"QRWLastOrderDashboardViewController"];
-    _informationDashboardViewController = [[QRWInformationDashboardViewController alloc] initWithNameOfPageImage:@"subtitle_information.png" nibName:@"QRWInformationDashboardViewController"];
-    _ordersInfoDashboardViewController = [[QRWOrdersInfoDashboardViewController alloc] initWithNameOfPageImage:@"subtitle_orders_info.png" nibName:@"QRWOrdersInfoDashboardViewController"];
+    _topSellersDashboardViewController = [[QRWTopSellersDashboardViewController alloc] initWithNameOfPageImage:@"subtitle_topsellers.png" nibName:@"QRWTopSellersDashboardViewController" oldNibName:@"QRWTopSellersDashboardViewControllerOld" viewControllerForPresent:nil];
+    _lastOrderDashboardViewController = [[QRWLastOrderDashboardViewController alloc] initWithNameOfPageImage:@"subtitle_last_order.png" nibName:@"QRWLastOrderDashboardViewController" oldNibName:nil viewControllerForPresent:self];
+    _informationDashboardViewController = [[QRWInformationDashboardViewController alloc] initWithNameOfPageImage:@"subtitle_information.png" nibName:@"QRWInformationDashboardViewController" oldNibName:nil viewControllerForPresent:nil];
+    _ordersInfoDashboardViewController = [[QRWOrdersInfoDashboardViewController alloc] initWithNameOfPageImage:@"subtitle_orders_info.png" nibName:@"QRWOrdersInfoDashboardViewController" oldNibName:nil viewControllerForPresent:nil];
     
     _ordersInfoDashboardViewController.fullInfoMode = YES;
     _lastOrderDashboardViewController.mainStatsInfoMode = NO;
-    _lastOrderDashboardViewController.controllerForModalPresent = self;
     
     NSArray *controllersArray = @[_ordersInfoDashboardViewController, _lastOrderDashboardViewController, _topSellersDashboardViewController];//, _informationDashboardViewController];
     CGRect frame = _ordersInfoDashboardViewController.view.frame;

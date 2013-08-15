@@ -21,7 +21,7 @@
 
 - (id)init
 {
-    return [self initWithNibName:@"QRWLoginScrinViewController" bundle:nil];
+    return [self initWithNibName:@"QRWLoginScrinViewController" oldNibName:@"QRWLoginScrinViewControllerOld"];
 }
 
 - (void)viewDidLoad

@@ -27,10 +27,11 @@
 }
 
 
-- (id)initWithNameOfPageImage: (NSString *) nameOfPageImage nibName: (NSString *) nibName
+- (id)initWithNameOfPageImage: (NSString *) nameOfPageImage nibName: (NSString *) nibName oldNibName: (NSString *) oldNibName viewControllerForPresent: (UIViewController *) forPresentViewController;
 {
-    self = [self initWithNibName:nibName bundle:nil];
+    self = [self initWithNibName:nibName oldNibName:oldNibName];
     pageImageName = nameOfPageImage;
+    _forPresentViewController = forPresentViewController;
     return self;
 }
 

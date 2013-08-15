@@ -37,7 +37,7 @@
 
 - (id)initWithUser:(QRWUser *)user
 {
-    self = [self initWithNibName:@"QRWUserOrdersViewController" bundle:nil];
+    self = [self initWithNibName:@"QRWUserOrdersViewController" oldNibName:@"QRWUserOrdersViewControllerOld"];
     _user = user;
     return self;
 }

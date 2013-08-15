@@ -30,7 +30,7 @@
 
 - (id)init
 {
-    return [self initWithNibName:@"QRWMainScrinViewController" bundle:nil];
+    return [self initWithNibName:@"QRWMainScrinViewController" oldNibName:@"QRWMainScrinViewControllerOld"];
 }
 
 
@@ -64,6 +64,8 @@
     
     [_mainScrinPagesScrollView addSubview:_mainStatsViewController.view];
     [_mainScrinPagesScrollView addSubview:_toolsViewController.view];
+    
+    [self startLoadingAnimation];
 }
 
 - (void)didReceiveMemoryWarning

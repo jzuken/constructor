@@ -27,19 +27,17 @@
 
 - (id)init
 {
-    return [self initWithNibName:@"QRWMainStatsViewController" bundle:nil];
+    return [self initWithNibName:@"QRWMainStatsViewController" oldNibName:@"QRWMainStatsViewControllerOld"];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    _lastOrderDashboardViewController = [[QRWLastOrderDashboardViewController alloc] initWithNameOfPageImage:@"subtitle_last_order.png" nibName:@"QRWLastOrderDashboardViewController"];
-    _ordersInfoDashboardViewController = [[QRWOrdersInfoDashboardViewController alloc] initWithNameOfPageImage:@"subtitle_orders_info.png" nibName:@"QRWOrdersInfoDashboardViewController"];
+    _lastOrderDashboardViewController = [[QRWLastOrderDashboardViewController alloc] initWithNameOfPageImage:@"subtitle_last_order_blue.png" nibName:@"QRWLastOrderDashboardViewController" oldNibName:nil viewControllerForPresent:_forNavigationPushViewController];
+    _ordersInfoDashboardViewController = [[QRWOrdersInfoDashboardViewController alloc] initWithNameOfPageImage:@"subtitle_orders_info_blue.png" nibName:@"QRWOrdersInfoDashboardViewController" oldNibName:nil viewControllerForPresent:nil];
     _ordersInfoDashboardViewController.fullInfoMode = NO;
     _lastOrderDashboardViewController.mainStatsInfoMode = YES;
-    
-    _lastOrderDashboardViewController.controllerForModalPresent = _forNavigationPushViewController;
     
     _mainStatisticsPagesScrollView.contentSize = CGSizeMake(self.view.frame.size.width, _lastOrderDashboardViewController.view.frame.size.height + _ordersInfoDashboardViewController.view.frame.size.height);
     
@@ -66,18 +64,5 @@
     [super didReceiveMemoryWarning];
 }
 
-
-//
-//- (void)respondsForLastOrderRequest:(QRWLastOrder *)lastOrder
-//{
-//    [self stopLoadingAnimation];
-//    [_lastOrderDashboardViewController setLastOrder:lastOrder];
-//}
-//
-//- (void)respondsForOrdersStatisticRequest:(NSDictionary *)statistic withArratOfKeys:(NSArray *)keys
-//{
-//    [self stopLoadingAnimation];
-//    [_ordersInfoDashboardViewController setStatistic:statistic];
-//}
 
 @end

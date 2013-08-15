@@ -20,7 +20,6 @@
 
 @property BOOL mainStatsInfoMode;
 
-@property (strong, nonatomic) UIViewController *controllerForModalPresent;
 
 - (void) setLastOrder:(QRWLastOrder *)lastOrder;
 

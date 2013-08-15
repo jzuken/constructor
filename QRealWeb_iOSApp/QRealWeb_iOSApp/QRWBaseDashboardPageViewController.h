@@ -20,7 +20,10 @@
 @property (strong, nonatomic) NSArray *segmentSelectedImageNamesArray;
 
 
-- (id)initWithNameOfPageImage: (NSString *) nameOfPageImage nibName: (NSString *) nibName;
+
+@property (strong, nonatomic) UIViewController *forPresentViewController;
+
+- (id)initWithNameOfPageImage: (NSString *) nameOfPageImage nibName: (NSString *) nibName oldNibName: (NSString *) oldNibName viewControllerForPresent: (UIViewController *) forPresentViewController;
 
 
 @end

@@ -45,9 +45,9 @@
 {
     _window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
-    if (![[UIDevice currentDevice] resolution] == UIDeviceResolution_iPhoneRetina5) {
-        abort();
-    }
+//    if (![[UIDevice currentDevice] resolution] == UIDeviceResolution_iPhoneRetina5) {
+//        abort();
+//    }
     
     if([[[NSUserDefaults standardUserDefaults] objectForKey:kUserDefaults_isLogInKey] isEqualToString:kUserDefaults_isLogInObject]){
         _mainScrinViewController = [[QRWMainScrinViewController alloc] init];
@@ -89,7 +89,7 @@
 
 - (void) openFastAuthViewController
 {
-    if([[[NSUserDefaults standardUserDefaults] objectForKey:kUserDefaults_isLogInKey] isEqualToString:kUserDefaults_isLogInObject]){
+    if([[[NSUserDefaults standardUserDefaults] objectForKey:kUserDefaults_isLogInKey] isEqualToString:kUserDefaults_isLogInObject] && !_fastAuthViewController.isPresented){
         _fastAuthViewController = [[QRWDeployScrinViewController alloc] init];
         CGRect frame = _fastAuthViewController.view.frame;
         frame.origin.y = frame.size.height;
@@ -102,6 +102,7 @@
             frame.origin.y -= frame.size.height;
             _fastAuthViewController.view.frame = frame;
         }];
+        _fastAuthViewController.isPresented = YES;
     }
 }
 

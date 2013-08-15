@@ -22,7 +22,7 @@
 
 - (id)init
 {
-    return [self initWithNibName:@"QRWToolsScrinViewController" bundle:nil]; 
+    return [self initWithNibName:@"QRWToolsScrinViewController" oldNibName:@"QRWToolsScrinViewControllerOld"]; 
 }
 
 - (void)viewDidLoad
