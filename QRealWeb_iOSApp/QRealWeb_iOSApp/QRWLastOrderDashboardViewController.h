@@ -18,6 +18,9 @@
 @property (strong, nonatomic) IBOutlet UILabel *nameLabel;
 @property (strong, nonatomic) IBOutlet UILabel *statusLabel;
 
+@property BOOL mainStatsInfoMode;
+
+@property (strong, nonatomic) UIViewController *controllerForModalPresent;
 
 - (void) setLastOrder:(QRWLastOrder *)lastOrder;
 

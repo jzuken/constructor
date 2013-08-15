@@ -50,7 +50,7 @@
     _segmentedControl.frame = self.timeAndTypeSegmentedControlArea.frame;
     _segmentedControl.segmentEdgeInset = UIEdgeInsetsMake(0, 0, 0, 0);
     [_segmentedControl setSelectionStyle:HMSegmentedControlSelectionStyleTextWidthStrip];
-    [_segmentedControl setSelectionLocation:HMSegmentedControlSelectionLocationDown];
+    [_segmentedControl setSelectionLocation:HMSegmentedControlSelectionLocationUp];
     [_segmentedControl setSelectedSegmentIndex:0];
     
     __weak QRWTopSellersDashboardViewController *weakSelf = self;
@@ -141,8 +141,6 @@
     if ((_categoriesArray.count == 0) && (_productsArray.count == 0)) {
         if (loadingCategoriesFinished || loadingProdusctsFinished) {
             _topSellersTableView.hidden = YES;
-            
-//            TLAlertView *alert = [[TLAlertView alloc] initWithTitle: NSLocalizedString(@"ERROR_ALERT_TITLE", nil) message:NSLocalizedString(@"NO_DATA_FOR_PERIOD_ALERT_MESSAGE", nil) inView:self.view cancelButtonTitle:NSLocalizedString(@"OK", nil) confirmButton:nil];
             
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"ERROR_ALERT_TITLE", nil)
                                                             message:NSLocalizedString(@"NO_DATA_FOR_PERIOD_ALERT_MESSAGE", nil)

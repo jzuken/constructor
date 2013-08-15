@@ -7,7 +7,21 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "QRWBaseViewController.h"
 
-@interface QRWMainStatsViewController : UIViewController
+#import "QRWOrdersInfoDashboardViewController.h"
+#import "QRWLastOrderDashboardViewController.h"
+
+
+
+@interface QRWMainStatsViewController : QRWBaseViewController
+
+@property (strong, nonatomic) IBOutlet UIScrollView *mainStatisticsPagesScrollView;
+
+
+@property (nonatomic, strong) QRWLastOrderDashboardViewController *lastOrderDashboardViewController;
+@property (nonatomic, strong) QRWOrdersInfoDashboardViewController *ordersInfoDashboardViewController;
+
+@property (nonatomic, strong) UIViewController *forNavigationPushViewController;
 
 @end

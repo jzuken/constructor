@@ -55,6 +55,8 @@
     _mainStatsViewController = [[QRWMainStatsViewController alloc] init];
     _toolsViewController = [[QRWToolsScrinViewController alloc] init];
     
+    _mainStatsViewController.forNavigationPushViewController = self;
+    
     
     CGRect frame = _mainStatsViewController.view.frame;
     frame.origin.x = frame.size.width;
@@ -69,6 +71,16 @@
     [super didReceiveMemoryWarning];
 }
 
+- (void)respondsForLastOrderRequest:(QRWLastOrder *)lastOrder
+{
+    [self stopLoadingAnimation];
+    [_mainStatsViewController.lastOrderDashboardViewController setLastOrder:lastOrder];
+}
 
+- (void)respondsForOrdersStatisticRequest:(NSDictionary *)statistic withArratOfKeys:(NSArray *)keys
+{
+    [self stopLoadingAnimation];
+    [_mainStatsViewController.ordersInfoDashboardViewController setStatistic:statistic];
+}
 
 @end

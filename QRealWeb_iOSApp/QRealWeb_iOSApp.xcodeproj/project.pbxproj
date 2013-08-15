@@ -27,6 +27,7 @@
 		7F5EE26217BBA1FF00B02636 /* QRWUserOrdersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F5EE26017BBA1FF00B02636 /* QRWUserOrdersViewController.xib */; };
 		7F5EE26617BBA51700B02636 /* QRWUserOrderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F5EE26517BBA51700B02636 /* QRWUserOrderCell.m */; };
 		7F5EE26817BBA52900B02636 /* QRWUserOrderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F5EE26717BBA52900B02636 /* QRWUserOrderCell.xib */; };
+		7F5EE26B17BCE8DD00B02636 /* QRWTodayOrdersStatisticCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F5EE26A17BCE8DC00B02636 /* QRWTodayOrdersStatisticCell.xib */; };
 		7F6DFA49179E5F4E00421123 /* segmentedControl_separator.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F6DFA48179E5F4E00421123 /* segmentedControl_separator.png */; };
 		7F6DFA4D179E608800421123 /* QRWDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F6DFA4C179E608800421123 /* QRWDownloader.m */; };
 		7F6DFA50179E65BE00421123 /* QRWLastOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F6DFA4F179E65BE00421123 /* QRWLastOrder.m */; };
@@ -174,6 +175,7 @@
 		7F5EE26417BBA51700B02636 /* QRWUserOrderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRWUserOrderCell.h; sourceTree = "<group>"; };
 		7F5EE26517BBA51700B02636 /* QRWUserOrderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRWUserOrderCell.m; sourceTree = "<group>"; };
 		7F5EE26717BBA52900B02636 /* QRWUserOrderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRWUserOrderCell.xib; sourceTree = "<group>"; };
+		7F5EE26A17BCE8DC00B02636 /* QRWTodayOrdersStatisticCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRWTodayOrdersStatisticCell.xib; sourceTree = "<group>"; };
 		7F6DFA48179E5F4E00421123 /* segmentedControl_separator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = segmentedControl_separator.png; sourceTree = "<group>"; };
 		7F6DFA4B179E608800421123 /* QRWDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRWDownloader.h; sourceTree = "<group>"; };
 		7F6DFA4C179E608800421123 /* QRWDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRWDownloader.m; sourceTree = "<group>"; };
@@ -766,6 +768,7 @@
 		7FBDFA3217AAA754004B6CB8 /* OrdersStatisticCell */ = {
 			isa = PBXGroup;
 			children = (
+				7F5EE26A17BCE8DC00B02636 /* QRWTodayOrdersStatisticCell.xib */,
 				7FBDFA3317AAA795004B6CB8 /* QRWOrdersStatisticCell.xib */,
 				7FBDFA3517AAA7B5004B6CB8 /* QRWOrdersStatisticCell.h */,
 				7FBDFA3617AAA7B5004B6CB8 /* QRWOrdersStatisticCell.m */,
@@ -1147,6 +1150,7 @@
 				96771F8517BAD3AF00A08CE3 /* QRWEditProductViewController.xib in Resources */,
 				7F5EE26217BBA1FF00B02636 /* QRWUserOrdersViewController.xib in Resources */,
 				7F5EE26817BBA52900B02636 /* QRWUserOrderCell.xib in Resources */,
+				7F5EE26B17BCE8DD00B02636 /* QRWTodayOrdersStatisticCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

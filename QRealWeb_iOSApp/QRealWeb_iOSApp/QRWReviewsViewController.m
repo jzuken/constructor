@@ -72,6 +72,7 @@
     [self addDataAndReloadsTableView];
     [_reviews removeAllObjects];
     [_reviewsTableView reloadData];
+    [_reviewsTableView setHidden:YES];
 }
 
 - (void) addDataAndReloadsTableView
@@ -94,6 +95,7 @@
     [_reviewsTableView reloadData];
     [_reviewsTableView.pullToRefreshView stopAnimating];
     [_reviewsTableView.infiniteScrollingView stopAnimating];
+    [_reviewsTableView setHidden:NO];
 }
 
 

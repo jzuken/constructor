@@ -93,6 +93,7 @@
     [_productsArray removeAllObjects];
     [_productsTableView reloadData];
     [self addDataAndReloadsTableView];
+    [_productsTableView setHidden:YES];
 }
 
 - (void)respondsForProductsRequest:(NSArray *)products
@@ -106,6 +107,7 @@
     [_productsTableView reloadData];
     [_productsTableView.pullToRefreshView stopAnimating];
     [_productsTableView.infiniteScrollingView stopAnimating];
+    [_productsTableView setHidden:NO];
 }
 
 - (void)respondsForUploadingRequest:(BOOL)status

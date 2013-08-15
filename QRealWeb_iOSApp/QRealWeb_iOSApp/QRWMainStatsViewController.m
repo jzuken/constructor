@@ -8,9 +8,11 @@
 
 #import "QRWMainStatsViewController.h"
 
+
 @interface QRWMainStatsViewController ()
 
 @end
+
 
 @implementation QRWMainStatsViewController
 
@@ -31,7 +33,26 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    
+    _lastOrderDashboardViewController = [[QRWLastOrderDashboardViewController alloc] initWithNameOfPageImage:@"subtitle_last_order.png" nibName:@"QRWLastOrderDashboardViewController"];
+    _ordersInfoDashboardViewController = [[QRWOrdersInfoDashboardViewController alloc] initWithNameOfPageImage:@"subtitle_orders_info.png" nibName:@"QRWOrdersInfoDashboardViewController"];
+    _ordersInfoDashboardViewController.fullInfoMode = NO;
+    _lastOrderDashboardViewController.mainStatsInfoMode = YES;
+    
+    _lastOrderDashboardViewController.controllerForModalPresent = _forNavigationPushViewController;
+    
+    _mainStatisticsPagesScrollView.contentSize = CGSizeMake(self.view.frame.size.width, _lastOrderDashboardViewController.view.frame.size.height + _ordersInfoDashboardViewController.view.frame.size.height);
+    
+    
+    CGRect frame = _lastOrderDashboardViewController.view.frame;
+    frame.origin.y = _ordersInfoDashboardViewController.view.frame.size.height;
+    _lastOrderDashboardViewController.view.frame = frame;
+    
+    [_mainStatisticsPagesScrollView addSubview:_lastOrderDashboardViewController.view];
+    [_mainStatisticsPagesScrollView addSubview:_ordersInfoDashboardViewController.view];
+    
+    [dataManager sendLastOrderRequest];
+    [dataManager sendOrdersStatisticRequest];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -43,7 +64,20 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
+
+
+//
+//- (void)respondsForLastOrderRequest:(QRWLastOrder *)lastOrder
+//{
+//    [self stopLoadingAnimation];
+//    [_lastOrderDashboardViewController setLastOrder:lastOrder];
+//}
+//
+//- (void)respondsForOrdersStatisticRequest:(NSDictionary *)statistic withArratOfKeys:(NSArray *)keys
+//{
+//    [self stopLoadingAnimation];
+//    [_ordersInfoDashboardViewController setStatistic:statistic];
+//}
 
 @end

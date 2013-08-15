@@ -86,6 +86,7 @@
         isFirstDataLoading = NO;
         [self startLoadingAnimation];
     }
+    [_discountsTableView setHidden:YES];
     [_discounts removeAllObjects];
     [_discountsTableView reloadData];
     [dataManager sendDiscountsRequest];
@@ -102,6 +103,7 @@
     [_discountsTableView reloadData];
     [_discountsTableView.pullToRefreshView stopAnimating];
     [self stopLoadingAnimation];
+    [_discountsTableView setHidden:NO];
 }
 
 - (void)respondsForUploadingRequest:(BOOL)status

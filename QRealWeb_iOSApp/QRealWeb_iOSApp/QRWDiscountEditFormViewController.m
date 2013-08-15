@@ -110,21 +110,22 @@
     _absoluteTypeRadioButton.groupName = kTypeGroup;
     _percentTypeRadioButton.groupName = kTypeGroup;
     
-    _premiumMembershipRadioButton.selectedColor = [UIColor blueColor];
-    _wholesalerMembershipRadioButton.selectedColor = [UIColor blueColor];
-    _allMembershipRadioButton.selectedColor = [UIColor blueColor];
-    _absoluteTypeRadioButton.selectedColor = [UIColor blueColor];
-    _percentTypeRadioButton.selectedColor = [UIColor blueColor];
+    _premiumMembershipRadioButton.selectedColor = [UIColor colorWithRed:28.0/256 green:103.0/256 blue:152.0/256 alpha:1];
+    _wholesalerMembershipRadioButton.selectedColor = [UIColor colorWithRed:28.0/256 green:103.0/256 blue:152.0/256 alpha:1];
+    _allMembershipRadioButton.selectedColor = [UIColor colorWithRed:28.0/256 green:103.0/256 blue:152.0/256 alpha:1];
+    _absoluteTypeRadioButton.selectedColor = [UIColor colorWithRed:28.0/256 green:103.0/256 blue:152.0/256 alpha:1];
+    _percentTypeRadioButton.selectedColor = [UIColor colorWithRed:28.0/256 green:103.0/256 blue:152.0/256 alpha:1];
     
-    _premiumMembershipRadioButton.controlColor = [UIColor grayColor];
-    _wholesalerMembershipRadioButton.controlColor = [UIColor grayColor];
-    _allMembershipRadioButton.controlColor = [UIColor grayColor];
-    _absoluteTypeRadioButton.controlColor = [UIColor grayColor];
-    _percentTypeRadioButton.controlColor = [UIColor grayColor];
+    _premiumMembershipRadioButton.controlColor = [UIColor colorWithRed:153.0/256 green:159.0/256 blue:163.0/256 alpha:1];
+    _wholesalerMembershipRadioButton.controlColor = [UIColor colorWithRed:153.0/256 green:159.0/256 blue:163.0/256 alpha:1];
+    _allMembershipRadioButton.controlColor = [UIColor colorWithRed:153.0/256 green:159.0/256 blue:163.0/256 alpha:1];
+    _absoluteTypeRadioButton.controlColor = [UIColor colorWithRed:153.0/256 green:159.0/256 blue:163.0/256 alpha:1];
+    _percentTypeRadioButton.controlColor = [UIColor colorWithRed:153.0/256 green:159.0/256 blue:163.0/256 alpha:1];
     
     _premiumMembershipRadioButton.selectionBlock = selectionBlockForMemebership;
     _wholesalerMembershipRadioButton.selectionBlock = selectionBlockForMemebership;
     _allMembershipRadioButton.selectionBlock = selectionBlockForMemebership;
+    
     _absoluteTypeRadioButton.selectionBlock = selectionBlockForType;
     _percentTypeRadioButton.selectionBlock = selectionBlockForType;
     

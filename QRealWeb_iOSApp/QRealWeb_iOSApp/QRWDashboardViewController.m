@@ -48,8 +48,6 @@
     
     _dashboardPagesScrollView.pagingEnabled = YES;
     
-    _dashboardPagesScrollView.contentSize = CGSizeMake(_dashboardPagesScrollView.frame.size.width * 4, _dashboardPagesScrollView.frame.size.height);
-    
     _dashboardPagesScrollView.showsHorizontalScrollIndicator = NO;
     _dashboardPagesScrollView.showsVerticalScrollIndicator = NO;
     _dashboardPagesScrollView.scrollsToTop = NO;
@@ -59,8 +57,14 @@
     _informationDashboardViewController = [[QRWInformationDashboardViewController alloc] initWithNameOfPageImage:@"subtitle_information.png" nibName:@"QRWInformationDashboardViewController"];
     _ordersInfoDashboardViewController = [[QRWOrdersInfoDashboardViewController alloc] initWithNameOfPageImage:@"subtitle_orders_info.png" nibName:@"QRWOrdersInfoDashboardViewController"];
     
-    NSArray *controllersArray = @[_ordersInfoDashboardViewController, _lastOrderDashboardViewController, _topSellersDashboardViewController, _informationDashboardViewController];
+    _ordersInfoDashboardViewController.fullInfoMode = YES;
+    _lastOrderDashboardViewController.mainStatsInfoMode = NO;
+    _lastOrderDashboardViewController.controllerForModalPresent = self;
+    
+    NSArray *controllersArray = @[_ordersInfoDashboardViewController, _lastOrderDashboardViewController, _topSellersDashboardViewController];//, _informationDashboardViewController];
     CGRect frame = _ordersInfoDashboardViewController.view.frame;
+    _dashboardPagesScrollView.contentSize = CGSizeMake(_dashboardPagesScrollView.frame.size.width * controllersArray.count, _dashboardPagesScrollView.frame.size.height);
+    
     for (UIViewController *pageViewController in controllersArray) {
         frame.origin.x =+ frame.size.width * [controllersArray indexOfObject:pageViewController];
         pageViewController.view.frame = frame;
@@ -72,6 +76,7 @@
     [dataManager sendTopProductsRequest];
     [dataManager sendLastOrderRequest];
     [dataManager sendOrdersStatisticRequest];
+    
     [self startLoadingAnimation];
 }
 

@@ -46,6 +46,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    if (_mainStatsMode) {
+        _exitButton.hidden = YES;
+        _exitButton.userInteractionEnabled = NO;
+        
+        self.navigationController.navigationBarHidden = NO;
+        self.navigationItem.title = @"Products";
+    }
 }
 
 - (void)didReceiveMemoryWarning

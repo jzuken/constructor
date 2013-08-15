@@ -81,6 +81,7 @@
     loadMoreDataAvaliable = YES;
     [_usersTableView.pullToRefreshView stopAnimating];
     [self stopLoadingAnimation];
+    [_usersTableView setHidden:NO];
 }
 
 - (void) openSortedByPopover
@@ -116,6 +117,7 @@
     [_users removeAllObjects];
     [_usersTableView reloadData];
     [self addsDataAndReloadsTableView];
+    [_usersTableView setHidden:YES];
 }
 
 #pragma mark QRWUsersSortedByTableViewControllerDelegate

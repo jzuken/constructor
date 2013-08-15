@@ -30,7 +30,7 @@
     
     
     self.signInBoxView.layer.cornerRadius = 10;
-    self.signInBoxView.backgroundColor = [UIColor orangeColor];
+//    self.signInBoxView.backgroundColor = [UIColor orangeColor];
     self.signInBoxView.layer.shadowOffset = CGSizeMake(5, 5);
     self.signInBoxView.layer.shadowRadius = 5;
     self.signInBoxView.layer.shadowOpacity = 1;
