@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 public class Dashboard extends PinSupportNetworkActivity {
@@ -40,28 +41,7 @@ public class Dashboard extends PinSupportNetworkActivity {
 		pages.add(page1);
 
 		View page2 = inflater.inflate(R.layout.orders_info, null);
-		totalOrders = (TextView) page2.findViewById(R.id.total_orders);
-		completeOrders = (TextView) page2.findViewById(R.id.complete_orders);
-		notFinishedOrders = (TextView) page2.findViewById(R.id.not_finished_orders);
-		queuedOrders = (TextView) page2.findViewById(R.id.queued_orders);
-		processedOrders = (TextView) page2.findViewById(R.id.processed_orders);
-		backorderedOrders = (TextView) page2.findViewById(R.id.backordered_orders);
-		declinedOrders = (TextView) page2.findViewById(R.id.declined_orders);
-		failedOrders = (TextView) page2.findViewById(R.id.failed_orders);
-		totalPaid = (TextView) page2.findViewById(R.id.total_paid);
-		grossTotal = (TextView) page2.findViewById(R.id.gross_total);
-
-		ordersInfoPeriod = 1;
-		TabHost ordersTabHost = (TabHost) page2.findViewById(android.R.id.tabhost);
-		newPeriodTabHost(ordersTabHost);
-
-		ordersTabHost.setOnTabChangedListener(new OnTabChangeListener() {
-			public void onTabChanged(String tabId) {
-				ordersInfoPeriod = periodIdByTag(tabId);
-				updateOrdersInfoData();
-			}
-		});
-
+		setupOrdersInfoTable(page2);
 		ordersInfoPrBar = (ProgressBar) page2.findViewById(R.id.progress_bar);
 		pages.add(page2);
 
@@ -75,7 +55,8 @@ public class Dashboard extends PinSupportNetworkActivity {
 			}
 		});
 
-		pages.add(page3);
+		// temporarily hidden
+		// pages.add(page3);
 
 		View page4 = inflater.inflate(R.layout.top_sellers, null);
 
@@ -137,6 +118,19 @@ public class Dashboard extends PinSupportNetworkActivity {
 			public void onPageScrollStateChanged(int state) {
 			}
 		});
+	}
+
+	private void setupOrdersInfoTable(final View page) {
+		totalOrders = (TableRow) page.findViewById(R.id.total_orders_row);
+		completeOrders = (TableRow) page.findViewById(R.id.complete_orders_row);
+		notFinishedOrders = (TableRow) page.findViewById(R.id.not_finished_row);
+		queuedOrders = (TableRow) page.findViewById(R.id.queued_row);
+		processedOrders = (TableRow) page.findViewById(R.id.processed_row);
+		backorderedOrders = (TableRow) page.findViewById(R.id.backordered_row);
+		declinedOrders = (TableRow) page.findViewById(R.id.declined_row);
+		failedOrders = (TableRow) page.findViewById(R.id.failed_row);
+		grossTotal = (TableRow) page.findViewById(R.id.gross_total_row);
+		totalPaid = (TableRow) page.findViewById(R.id.total_paid_row);
 	}
 
 	@Override
@@ -284,35 +278,41 @@ public class Dashboard extends PinSupportNetworkActivity {
 				if (result != null) {
 					try {
 						JSONObject obj = new JSONObject(result);
-						JSONObject currentPeriodObj;
-						switch (ordersInfoPeriod) {
-						case 1:
-							currentPeriodObj = obj.getJSONObject("last_login");
-							break;
-						case 2:
-							currentPeriodObj = obj.getJSONObject("today");
-							break;
-						case 3:
-							currentPeriodObj = obj.getJSONObject("week");
-							break;
-						case 4:
-							currentPeriodObj = obj.getJSONObject("month");
-							break;
-						default:
-							currentPeriodObj = null;
-							break;
-						}
+						JSONObject currentPeriodObj = null;
+						;
+						JSONObject lastLoginObj = obj.getJSONObject("last_login");
+						JSONObject todayObj = obj.getJSONObject("today");
+						JSONObject weekObj = obj.getJSONObject("week");
+						JSONObject monthObj = obj.getJSONObject("month");
 
-						completeOrders.setText(currentPeriodObj.getString("C"));
-						notFinishedOrders.setText(currentPeriodObj.getString("I"));
-						queuedOrders.setText(currentPeriodObj.getString("Q"));
-						processedOrders.setText(currentPeriodObj.getString("P"));
-						backorderedOrders.setText(currentPeriodObj.getString("X"));
-						declinedOrders.setText(currentPeriodObj.getString("D"));
-						failedOrders.setText(currentPeriodObj.getString("F"));
-						totalOrders.setText(currentPeriodObj.getString("Total"));
-						totalPaid.setText(currentPeriodObj.getString("total_paid"));
-						grossTotal.setText(currentPeriodObj.getString("gross_total"));
+						for (int i = 1; i < ordersInfoCloumnCount; i++) {
+							switch (i) {
+							case 1:
+								currentPeriodObj = lastLoginObj;
+								break;
+
+							case 2:
+								currentPeriodObj = todayObj;
+								break;
+							case 3:
+								currentPeriodObj = weekObj;
+								break;
+
+							case 4:
+								currentPeriodObj = monthObj;
+								break;
+							}
+							((TextView) totalOrders.getChildAt(i)).setText(currentPeriodObj.getString("Total"));
+							((TextView) completeOrders.getChildAt(i)).setText(currentPeriodObj.getString("C"));
+							((TextView) notFinishedOrders.getChildAt(i)).setText(currentPeriodObj.getString("I"));
+							((TextView) queuedOrders.getChildAt(i)).setText(currentPeriodObj.getString("Q"));
+							((TextView) processedOrders.getChildAt(i)).setText(currentPeriodObj.getString("P"));
+							((TextView) backorderedOrders.getChildAt(i)).setText(currentPeriodObj.getString("X"));
+							((TextView) declinedOrders.getChildAt(i)).setText(currentPeriodObj.getString("D"));
+							((TextView) failedOrders.getChildAt(i)).setText(currentPeriodObj.getString("F"));
+							((TextView) totalPaid.getChildAt(i)).setText(currentPeriodObj.getString("total_paid"));
+							((TextView) grossTotal.getChildAt(i)).setText(currentPeriodObj.getString("gross_total"));
+						}
 					} catch (JSONException e) {
 						e.printStackTrace();
 					}
@@ -329,16 +329,18 @@ public class Dashboard extends PinSupportNetworkActivity {
 	}
 
 	private void clearOrdersInfo() {
-		completeOrders.setText("");
-		notFinishedOrders.setText("");
-		queuedOrders.setText("");
-		processedOrders.setText("");
-		backorderedOrders.setText("");
-		declinedOrders.setText("");
-		failedOrders.setText("");
-		totalOrders.setText("");
-		totalPaid.setText("");
-		grossTotal.setText("");
+		for (int i = 1; i < ordersInfoCloumnCount; i++) {
+		((TextView) completeOrders.getChildAt(i)).setText("");
+		((TextView) notFinishedOrders.getChildAt(i)).setText("");
+		((TextView) queuedOrders.getChildAt(i)).setText("");
+		((TextView) processedOrders.getChildAt(i)).setText("");
+		((TextView) backorderedOrders.getChildAt(i)).setText("");
+		((TextView) declinedOrders.getChildAt(i)).setText("");
+		((TextView) failedOrders.getChildAt(i)).setText("");
+		((TextView) totalOrders.getChildAt(i)).setText("");
+		((TextView) totalPaid.getChildAt(i)).setText("");
+		((TextView) grossTotal.getChildAt(i)).setText("");
+		}
 	}
 
 	private void updateTopSellersData() {
@@ -475,16 +477,18 @@ public class Dashboard extends PinSupportNetworkActivity {
 	private TextView totalPrice;
 	private TextView user;
 	private TextView status;
-	private TextView totalOrders;
-	private TextView completeOrders;
-	private TextView notFinishedOrders;
-	private TextView queuedOrders;
-	private TextView processedOrders;
-	private TextView backorderedOrders;
-	private TextView declinedOrders;
-	private TextView failedOrders;
-	private TextView totalPaid;
-	private TextView grossTotal;
+
+	private TableRow totalOrders;
+	private TableRow completeOrders;
+	private TableRow notFinishedOrders;
+	private TableRow queuedOrders;
+	private TableRow processedOrders;
+	private TableRow backorderedOrders;
+	private TableRow declinedOrders;
+	private TableRow failedOrders;
+	private TableRow totalPaid;
+	private TableRow grossTotal;
+
 	private TextView noProducts;
 	private TextView noCategories;
 	private StatisticTable topSellersTable;
@@ -493,8 +497,8 @@ public class Dashboard extends PinSupportNetworkActivity {
 	private ProgressBar ordersInfoPrBar;
 	private ProgressBar topSellersPrBar;
 	private ProgressBar topCategoriesPrBar;
-	private int ordersInfoPeriod;
 	private int topSellersPeriod;
 	private int topCategoriesPeriod;
 	private int currentPage;
+	private final int ordersInfoCloumnCount = 5;
 }

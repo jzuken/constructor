@@ -40,49 +40,61 @@
                 android:textSize="15sp" />
         </RelativeLayout>
 
-        <TabHost
-            android:id="@android:id/tabhost"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical" >
-
-                <TabWidget
-                    android:id="@android:id/tabs"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" >
-                </TabWidget>
-
-                <FrameLayout
-                    android:id="@android:id/tabcontent"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
-
-                    <LinearLayout
-                        android:id="@+id/emptyContent"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical" >
-                    </LinearLayout>
-                </FrameLayout>
-            </LinearLayout>
-        </TabHost>
-
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="5dp" >
 
             <TableLayout
-                android:id="@+id/top_sellers_table"
+                android:id="@+id/orders_info_table"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="10dp" >
 
                 <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/ghostwhite" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="left"
+                        android:paddingLeft="10dp"
+                        android:text="" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="@string/last" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="@string/today" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="@string/week" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="@string/month" />
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/total_orders_row"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" >
 
@@ -95,7 +107,28 @@
                         android:text="@string/total_orders" />
 
                     <TextView
-                        android:id="@+id/total_orders"
+                        android:id="@+id/total_orders_last"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center" />
+
+                    <TextView
+                        android:id="@+id/total_orders_today"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center" />
+
+                    <TextView
+                        android:id="@+id/total_orders_week"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center" />
+
+                    <TextView
+                        android:id="@+id/total_orders_month"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -103,6 +136,7 @@
                 </TableRow>
 
                 <TableRow
+                    android:id="@+id/complete_orders_row"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@color/ghostwhite" >
@@ -116,7 +150,28 @@
                         android:text="@string/complete_orders" />
 
                     <TextView
-                        android:id="@+id/complete_orders"
+                        android:id="@+id/complete_orders_last"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center" />
+
+                    <TextView
+                        android:id="@+id/complete_orders_today"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center" />
+
+                    <TextView
+                        android:id="@+id/complete_orders_week"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center" />
+
+                    <TextView
+                        android:id="@+id/complete_orders_month"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -124,6 +179,7 @@
                 </TableRow>
 
                 <TableRow
+                    android:id="@+id/not_finished_row"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" >
 
@@ -136,7 +192,28 @@
                         android:text="@string/not_finished" />
 
                     <TextView
-                        android:id="@+id/not_finished_orders"
+                        android:id="@+id/not_finished_orders_last"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center" />
+
+                    <TextView
+                        android:id="@+id/not_finished_orders_today"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center" />
+
+                    <TextView
+                        android:id="@+id/not_finished_orders_week"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center" />
+
+                    <TextView
+                        android:id="@+id/not_finished_orders_month"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -144,6 +221,7 @@
                 </TableRow>
 
                 <TableRow
+                    android:id="@+id/queued_row"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@color/ghostwhite" >
@@ -157,7 +235,28 @@
                         android:text="@string/queued" />
 
                     <TextView
-                        android:id="@+id/queued_orders"
+                        android:id="@+id/queued_orders_last"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center" />
+
+                    <TextView
+                        android:id="@+id/queued_orders_today"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center" />
+
+                    <TextView
+                        android:id="@+id/queued_orders_week"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center" />
+
+                    <TextView
+                        android:id="@+id/queued_orders_month"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -165,6 +264,7 @@
                 </TableRow>
 
                 <TableRow
+                    android:id="@+id/processed_row"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" >
 
@@ -177,7 +277,28 @@
                         android:text="@string/processed" />
 
                     <TextView
-                        android:id="@+id/processed_orders"
+                        android:id="@+id/processed_orders_last"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center" />
+
+                    <TextView
+                        android:id="@+id/processed_orders_today"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center" />
+
+                    <TextView
+                        android:id="@+id/processed_orders_week"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center" />
+
+                    <TextView
+                        android:id="@+id/processed_orders_month"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -185,6 +306,7 @@
                 </TableRow>
 
                 <TableRow
+                    android:id="@+id/backordered_row"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@color/ghostwhite" >
@@ -198,7 +320,28 @@
                         android:text="@string/backordered" />
 
                     <TextView
-                        android:id="@+id/backordered_orders"
+                        android:id="@+id/backordered_orders_last"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center" />
+
+                    <TextView
+                        android:id="@+id/backordered_orders_today"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center" />
+
+                    <TextView
+                        android:id="@+id/backordered_orders_week"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center" />
+
+                    <TextView
+                        android:id="@+id/backordered_orders_month"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -206,6 +349,7 @@
                 </TableRow>
 
                 <TableRow
+                    android:id="@+id/declined_row"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" >
 
@@ -218,7 +362,28 @@
                         android:text="@string/declined" />
 
                     <TextView
-                        android:id="@+id/declined_orders"
+                        android:id="@+id/declined_orders_last"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center" />
+
+                    <TextView
+                        android:id="@+id/declined_orders_today"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center" />
+
+                    <TextView
+                        android:id="@+id/declined_orders_week"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center" />
+
+                    <TextView
+                        android:id="@+id/declined_orders_month"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -226,6 +391,7 @@
                 </TableRow>
 
                 <TableRow
+                    android:id="@+id/failed_row"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@color/ghostwhite" >
@@ -239,7 +405,28 @@
                         android:text="@string/failed" />
 
                     <TextView
-                        android:id="@+id/failed_orders"
+                        android:id="@+id/failed_orders_last"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center" />
+
+                    <TextView
+                        android:id="@+id/failed_orders_today"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center" />
+
+                    <TextView
+                        android:id="@+id/failed_orders_week"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center" />
+
+                    <TextView
+                        android:id="@+id/failed_orders_month"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -247,6 +434,7 @@
                 </TableRow>
 
                 <TableRow
+                    android:id="@+id/gross_total_row"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" >
 
@@ -259,7 +447,28 @@
                         android:text="@string/gross_total" />
 
                     <TextView
-                        android:id="@+id/gross_total"
+                        android:id="@+id/gross_total_last"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center" />
+
+                    <TextView
+                        android:id="@+id/gross_total_today"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center" />
+
+                    <TextView
+                        android:id="@+id/gross_total_week"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center" />
+
+                    <TextView
+                        android:id="@+id/gross_total_month"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -267,6 +476,7 @@
                 </TableRow>
 
                 <TableRow
+                    android:id="@+id/total_paid_row"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@color/ghostwhite" >
@@ -280,7 +490,28 @@
                         android:text="@string/total_paid" />
 
                     <TextView
-                        android:id="@+id/total_paid"
+                        android:id="@+id/total_paid_last"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center" />
+
+                    <TextView
+                        android:id="@+id/total_paid_today"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center" />
+
+                    <TextView
+                        android:id="@+id/total_paid_week"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center" />
+
+                    <TextView
+                        android:id="@+id/total_paid_month"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"

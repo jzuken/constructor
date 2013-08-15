@@ -125,31 +125,46 @@
     <string name="backordered">Backordered:</string>
     <string name="declined">Declined:</string>
     <string name="failed">Failed:</string>
-	<string name="top_categories">Top 10 categories</string>
-	<string name="information">Information</string>
-	<string name="search_users">Search for users</string>
-	<string name="registered">Registered:</string>
-	<string name="online">Online:</string>
-	<string name="add_new_discount">Add new discount</string>
-	<string name="delete">Delete</string>
-	<string name="edit">Edit</string>
-	<string name="sort_by">Sort by:</string>
-	<string name="last_login_date">Last login</string>
-	<string name="last_order_date">Last order</string>
-	<string name="total_reviews">Total reviews</string>
-	<string name="total_orders_text">Total orders</string>
-	<string name="login_text">Login:</string>
-	<string name="user_type">User type:</string>
-	<string name="last_login_text">Last login:</string>
+    <string name="top_categories">Top 10 categories</string>
+    <string name="information">Information</string>
+    <string name="search_users">Search for users</string>
+    <string name="registered">Registered:</string>
+    <string name="online">Online:</string>
+    <string name="add_new_discount">Add new discount</string>
+    <string name="delete">Delete</string>
+    <string name="edit">Edit</string>
+    <string name="sort_by">Sort by:</string>
+    <string name="last_login_date">Last login</string>
+    <string name="last_order_date">Last order</string>
+    <string name="total_reviews">Total reviews</string>
+    <string name="total_orders_text">Total orders</string>
+    <string name="login_text">Login:</string>
+    <string name="user_type">User type:</string>
+    <string name="last_login_text">Last login:</string>
     <string name="user_email_text">User\'s email:</string>
-	<string name="review_product_text">Product:</string>
-	<string name="message_text">Message:</string>
-	<string name="gross_total">Gross total:</string>
-	<string name="action">Choose an action</string>
-	<string name="enter_to_app">Enter into admin area</string>
-	<string name="product_available">Available:</string>
-	<string name="product_sold">Sold:</string>
-	<string name="enter_price">Enter the new price:</string>
-	<string name="message">Message</string>
-	
+    <string name="review_product_text">Product:</string>
+    <string name="message_text">Message:</string>
+    <string name="gross_total">Gross total:</string>
+    <string name="action">Choose an action</string>
+    <string name="enter_to_app">Enter into admin area</string>
+    <string name="product_available">Available:</string>
+    <string name="product_sold">Sold:</string>
+    <string name="enter_price">Enter the new price:</string>
+    <string name="message">Message</string>
+    <string name="last">Last</string>
+    <string name="week">Week</string>
+    <string name="month">Month</string>
+    <string name="news">News</string>
+    <string name="today_orders">Today orders info</string>
+
+    <string-array name="screens">
+        <item>Menu</item>
+        <item>News</item>
+    </string-array>
+    
+    <string-array name="screens_values">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+
 </resources>

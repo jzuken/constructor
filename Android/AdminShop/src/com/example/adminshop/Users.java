@@ -51,7 +51,9 @@ public class Users extends PinSupportNetworkActivity {
 
 	private void updateUsersList() {
 		progressBar.setVisibility(View.VISIBLE);
-		isDownloading = true;
+		synchronized(lock) {
+			isDownloading = true;
+		}
 		hasNext = false;
 		GetRequester dataRequester = new GetRequester() {
 			@Override
@@ -86,7 +88,9 @@ public class Users extends PinSupportNetworkActivity {
 				}
 				progressBar.setVisibility(View.GONE);
 				usersListView.onRefreshComplete();
-				isDownloading = false;
+				synchronized(lock) {
+					isDownloading = false;
+				}
 			}
 		};
 
@@ -270,4 +274,5 @@ public class Users extends PinSupportNetworkActivity {
 	private int packAmount;
 	private final int startItemCount = 4;
 	PullToRefreshListView usersListView;
+	private Object lock = new Object();
 }
