@@ -46,13 +46,15 @@ public class Products extends PinSupportNetworkActivity {
 
 	@Override
 	protected void withoutPinAction() {
-		clearList();
-		updateProductsList();
+		if (isNeedDownload()) {
+			clearList();
+			updateProductsList();
+		}
 	}
 
 	private void updateProductsList() {
 		progressBar.setVisibility(View.VISIBLE);
-		synchronized(lock) {
+		synchronized (lock) {
 			isDownloading = true;
 		}
 		hasNext = false;
@@ -83,7 +85,7 @@ public class Products extends PinSupportNetworkActivity {
 				}
 				progressBar.setVisibility(View.GONE);
 				productsListView.onRefreshComplete();
-				synchronized(lock) {
+				synchronized (lock) {
 					isDownloading = false;
 				}
 			}
@@ -161,7 +163,7 @@ public class Products extends PinSupportNetworkActivity {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				switch (position) {
 				case 0:
-					editPriceClick(item.getId());
+					editPriceClick(item.getId(), item.getPrice());
 					dialog.dismiss();
 					break;
 				case 1:
@@ -182,9 +184,10 @@ public class Products extends PinSupportNetworkActivity {
 		dialog.show();
 	}
 
-	private void editPriceClick(final String id) {
+	private void editPriceClick(final String id, final String oldPrice) {
 		LinearLayout view = (LinearLayout) getLayoutInflater().inflate(R.layout.change_price_dialog, null);
 		final EditText newPriceEditor = (EditText) view.findViewById(R.id.product_price_editor);
+		newPriceEditor.setText(oldPrice);
 		final CustomDialog dialog = new CustomDialog(this, view);
 
 		Button okButton = (Button) view.findViewById(R.id.dialog_ok_button);
@@ -192,8 +195,20 @@ public class Products extends PinSupportNetworkActivity {
 			@Override
 			public void onClick(View v) {
 				hideKeyboard(newPriceEditor);
-				dialog.dismiss();
-				setNewPrice(id, newPriceEditor.getText().toString());
+				String newPrice = newPriceEditor.getText().toString();
+				try {
+					Double price = Double.parseDouble(newPrice);
+					if (price > 0) {
+						dialog.dismiss();
+						if (!newPrice.equals(oldPrice)) {
+							setNewPrice(id, newPrice);
+						}
+					} else {
+						Toast.makeText(getBaseContext(), "The price can not be zero", Toast.LENGTH_SHORT).show();
+					}
+				} catch (Exception e) {
+					Toast.makeText(getBaseContext(), "Incorrect input", Toast.LENGTH_SHORT).show();
+				}
 			}
 		});
 
@@ -216,10 +231,9 @@ public class Products extends PinSupportNetworkActivity {
 			showConnectionErrorMessage();
 		}
 	}
-	
+
 	private void hideKeyboard(EditText edit) {
-		Context context = getApplicationContext();
-		InputMethodManager imm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
+		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 		imm.hideSoftInputFromWindow(edit.getWindowToken(), 0);
 	}
 

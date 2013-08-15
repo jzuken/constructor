@@ -154,12 +154,12 @@
     <string name="last">Last</string>
     <string name="week">Week</string>
     <string name="month">Month</string>
-    <string name="news">News</string>
+    <string name="latest_info">Latest info</string>
     <string name="today_orders">Today orders info</string>
 
     <string-array name="screens">
         <item>Menu</item>
-        <item>News</item>
+        <item>Latest info</item>
     </string-array>
     
     <string-array name="screens_values">

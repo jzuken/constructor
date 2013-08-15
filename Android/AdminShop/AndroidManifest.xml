@@ -33,17 +33,24 @@
         <activity android:name=".Settings" />
         <activity
             android:name=".Products"
+            android:configChanges="orientation"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".Dashboard" />
+        <activity
+            android:name=".Dashboard"
+            android:configChanges="orientation" />
         <activity
             android:name=".ProductAdder"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".Users"
+            android:configChanges="orientation"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".Reviews" />
+        <activity
+            android:name=".Reviews"
+            android:configChanges="orientation" />
         <activity
             android:name=".Discounts"
+            android:configChanges="orientation"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".DiscountEditor"
@@ -52,7 +59,9 @@
             android:name=".DiscountAdder"
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".FullMessage" />
-        <activity android:name=".UserOrders" />
+        <activity
+            android:name=".UserOrders"
+            android:configChanges="orientation" />
     </application>
 
 </manifest>

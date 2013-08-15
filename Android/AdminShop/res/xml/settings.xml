@@ -6,19 +6,16 @@
         android:inputType="number"
         android:key="password"
         android:title="Password" />
-    
     <EditTextPreference
         android:defaultValue="10"
         android:inputType="number"
         android:key="users_amount"
         android:title="Users pack size" />
-    
     <EditTextPreference
         android:defaultValue="10"
         android:inputType="number"
         android:key="reviews_amount"
         android:title="Reviews pack size" />
-    
     <EditTextPreference
         android:defaultValue="10"
         android:inputType="number"
@@ -26,11 +23,11 @@
         android:title="Products pack size" />
 
     <ListPreference
+        android:defaultValue="0"
         android:entries="@array/screens"
         android:entryValues="@array/screens_values"
         android:key="screens_list"
-        android:title="First screen"
-        android:defaultValue="0" >
+        android:title="First screen" >
     </ListPreference>
 
 </PreferenceScreen>

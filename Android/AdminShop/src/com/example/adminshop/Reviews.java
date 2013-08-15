@@ -38,18 +38,20 @@ public class Reviews extends PinSupportNetworkActivity {
 		SharedPreferences settingsData = PreferenceManager.getDefaultSharedPreferences(this);
 		packAmount = Integer.parseInt(settingsData.getString("reviews_amount", "10"));
 		setupListViewAdapter();
-		
 	}
 
 	@Override
 	protected void withoutPinAction() {
-		clearList();
-		updateReviewsList();
+		if (isNeedDownload()) {
+			clearList();
+			updateReviewsList();
+		}
+		super.withoutPinAction();
 	}
 
 	private void updateReviewsList() {
 		progressBar.setVisibility(View.VISIBLE);
-		synchronized(lock) {
+		synchronized (lock) {
 			isDownloading = true;
 		}
 		hasNext = false;
@@ -79,7 +81,7 @@ public class Reviews extends PinSupportNetworkActivity {
 				}
 				progressBar.setVisibility(View.GONE);
 				reviewsListView.onRefreshComplete();
-				synchronized(lock) {
+				synchronized (lock) {
 					isDownloading = false;
 				}
 			}
@@ -95,7 +97,7 @@ public class Reviews extends PinSupportNetworkActivity {
 		adapter.add(new Review(id, "Review " + String.valueOf(position), email, product, message));
 		position++;
 	}
-	
+
 	private void deleteClick(final String id) {
 		LinearLayout view = (LinearLayout) getLayoutInflater().inflate(R.layout.confirmation_dialog, null);
 		((TextView) view.findViewById(R.id.confirm_question)).setText("Are you sure you want to delete this review?");
@@ -137,9 +139,11 @@ public class Reviews extends PinSupportNetworkActivity {
 			showConnectionErrorMessage();
 		}
 	}
-	
-	private void showFullMessage(String message)  {
+
+	private void showFullMessage(String email, String product, String message) {
 		Intent intent = new Intent(getBaseContext(), FullMessage.class);
+		intent.putExtra("email", email);
+		intent.putExtra("product", product);
 		intent.putExtra("message", message);
 		startActivityForResult(intent, 1);
 	}
@@ -193,7 +197,7 @@ public class Reviews extends PinSupportNetworkActivity {
 
 		ListView actionList = (ListView) action_view.findViewById(R.id.action_list);
 
-		String[] actions = { "Full message", "Delete", "Cancel"};
+		String[] actions = { "Full message", "Delete", "Cancel" };
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.action_item, R.id.textItem, actions);
 
 		actionList.setOnItemClickListener(new OnItemClickListener() {
@@ -201,7 +205,7 @@ public class Reviews extends PinSupportNetworkActivity {
 				switch (position) {
 				case 0:
 					dialog.dismiss();
-					showFullMessage(review.getMessage());
+					showFullMessage(review.getEmail(), review.getProduct(), review.getMessage());
 					break;
 				case 1:
 					deleteClick(review.getId());

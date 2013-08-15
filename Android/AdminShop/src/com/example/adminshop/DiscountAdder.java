@@ -63,14 +63,20 @@ public class DiscountAdder extends PinSupportNetworkActivity {
 	}
 	
 	public void okClick(View v) {
-		if (Float.valueOf(discountEditor.getText().toString()) > 100.0 && percentButton.isChecked()) {
-			Toast.makeText(getBaseContext(), "New discount can not be added with discount value more than 100%",
-					Toast.LENGTH_LONG).show();
-		} else if (Float.valueOf(discountEditor.getText().toString()) == 0f) {
-			Toast.makeText(getBaseContext(), "New discount can not be added with empty discount value",
-					Toast.LENGTH_LONG).show();
-		} else {
-			createNewDiscount();
+		try {
+			Double discountValue = Double.parseDouble((discountEditor.getText().toString()));
+			Double.parseDouble(orderSubtotalEditor.getText().toString());
+			if (discountValue > 100.0 && percentButton.isChecked()) {
+				Toast.makeText(getBaseContext(), "New discount can not be added with discount value more than 100%",
+						Toast.LENGTH_LONG).show();
+			} else if (discountValue == 0) {
+				Toast.makeText(getBaseContext(), "New discount can not be added with empty discount value",
+						Toast.LENGTH_LONG).show();
+			} else {
+				createNewDiscount();
+			}
+		} catch (Exception e) {
+			Toast.makeText(getBaseContext(), "Incorrect input", Toast.LENGTH_SHORT).show();
 		}
 	}
 	

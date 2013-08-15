@@ -36,7 +36,9 @@ public class Discounts extends PinSupportNetworkActivity {
 
 	@Override
 	protected void withoutPinAction() {
-		updateDiscountsTable();
+		if (isNeedDownload()) {
+			updateDiscountsTable();
+		}
 	}
 
 	private void updateDiscountsTable() {

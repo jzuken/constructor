@@ -51,7 +51,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingLeft="10dp"
-                        android:text="@string/id_text" />
+                        android:text="@string/id_text"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/last_order_id"
@@ -70,7 +71,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingLeft="10dp"
-                        android:text="@string/date_text" />
+                        android:text="@string/date_text"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/last_order_date"
@@ -88,7 +90,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingLeft="10dp"
-                        android:text="@string/product_text" />
+                        android:text="@string/product_text"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/last_order_product"
@@ -107,7 +110,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingLeft="10dp"
-                        android:text="@string/total_price_text" />
+                        android:text="@string/total_price_text"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/last_order_price"
@@ -125,7 +129,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingLeft="10dp"
-                        android:text="@string/user_text" />
+                        android:text="@string/user_text"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/last_order_user"
@@ -144,7 +149,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingLeft="10dp"
-                        android:text="@string/status_text" />
+                        android:text="@string/status_text"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/last_order_status"

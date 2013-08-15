@@ -3,6 +3,7 @@ package com.example.adminshop;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
+import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceActivity;
@@ -19,6 +20,7 @@ public class Settings extends PreferenceActivity {
 		setupUsersAmountEditText();
 		setupReviewsAmountEditText();
 		setupProductsAmountEditText();
+		setupFirstScreenChooser();
 	}
 
 	@SuppressWarnings("deprecation")
@@ -61,10 +63,26 @@ public class Settings extends PreferenceActivity {
 
 			@Override
 			public boolean onPreferenceChange(Preference preference, Object newValue) {
-				if (Integer.parseInt((String) newValue) < minPackSize) {
+				if (newValue.equals("") || Integer.parseInt((String) newValue) < minPackSize) {
 					Toast.makeText(getBaseContext(), "Pack must be bigger than " + String.valueOf(minPackSize - 1),
 							Toast.LENGTH_LONG).show();
 					return false;
+				}
+				return true;
+			}
+		});
+	}
+
+	@SuppressWarnings("deprecation")
+	private void setupFirstScreenChooser() {
+		final ListPreference chooser = (ListPreference) findPreference("screens_list");
+
+		chooser.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+
+			@Override
+			public boolean onPreferenceChange(Preference preference, Object newValue) {
+				if (!chooser.getValue().equals(newValue)) {
+					Toast.makeText(getBaseContext(), "Changes will apply after restart app", Toast.LENGTH_SHORT).show();
 				}
 				return true;
 			}

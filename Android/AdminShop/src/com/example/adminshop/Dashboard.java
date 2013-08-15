@@ -135,10 +135,13 @@ public class Dashboard extends PinSupportNetworkActivity {
 
 	@Override
 	protected void withoutPinAction() {
-		updateLastOrderData();
-		updateOrdersInfoData();
-		updateTopSellersData();
-		updateTopCategoriesData();
+		if (isNeedDownload()) {
+			updateLastOrderData();
+			updateOrdersInfoData();
+			updateTopSellersData();
+			updateTopCategoriesData();
+		}
+		super.withoutPinAction();
 	}
 
 	private void addEmptyTab(TabHost tabHost, String tag, String indicator) {
@@ -330,16 +333,16 @@ public class Dashboard extends PinSupportNetworkActivity {
 
 	private void clearOrdersInfo() {
 		for (int i = 1; i < ordersInfoCloumnCount; i++) {
-		((TextView) completeOrders.getChildAt(i)).setText("");
-		((TextView) notFinishedOrders.getChildAt(i)).setText("");
-		((TextView) queuedOrders.getChildAt(i)).setText("");
-		((TextView) processedOrders.getChildAt(i)).setText("");
-		((TextView) backorderedOrders.getChildAt(i)).setText("");
-		((TextView) declinedOrders.getChildAt(i)).setText("");
-		((TextView) failedOrders.getChildAt(i)).setText("");
-		((TextView) totalOrders.getChildAt(i)).setText("");
-		((TextView) totalPaid.getChildAt(i)).setText("");
-		((TextView) grossTotal.getChildAt(i)).setText("");
+			((TextView) completeOrders.getChildAt(i)).setText("");
+			((TextView) notFinishedOrders.getChildAt(i)).setText("");
+			((TextView) queuedOrders.getChildAt(i)).setText("");
+			((TextView) processedOrders.getChildAt(i)).setText("");
+			((TextView) backorderedOrders.getChildAt(i)).setText("");
+			((TextView) declinedOrders.getChildAt(i)).setText("");
+			((TextView) failedOrders.getChildAt(i)).setText("");
+			((TextView) totalOrders.getChildAt(i)).setText("");
+			((TextView) totalPaid.getChildAt(i)).setText("");
+			((TextView) grossTotal.getChildAt(i)).setText("");
 		}
 	}
 

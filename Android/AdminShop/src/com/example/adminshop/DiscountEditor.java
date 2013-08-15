@@ -15,7 +15,7 @@ public class DiscountEditor extends PinSupportNetworkActivity {
 		allButton = (RadioButton) findViewById(R.id.allRadioButton);
 		premiumButton = (RadioButton) findViewById(R.id.premiumRadioButton);
 		wholesaleButton = (RadioButton) findViewById(R.id.wholesaleRadioButton);
-		
+
 		String membership = getIntent().getStringExtra("membership");
 		if (membership.equals("All")) {
 			allButton.setChecked(true);
@@ -24,16 +24,16 @@ public class DiscountEditor extends PinSupportNetworkActivity {
 		} else {
 			wholesaleButton.setChecked(true);
 		}
-		
+
 		percentButton = (RadioButton) findViewById(R.id.percentRadioButton);
-		absoluteButton  = (RadioButton) findViewById(R.id.absoluteRadioButton);
-		
+		absoluteButton = (RadioButton) findViewById(R.id.absoluteRadioButton);
+
 		if (getIntent().getStringExtra("discountType").equals("percent")) {
 			percentButton.setChecked(true);
 		} else {
 			absoluteButton.setChecked(true);
 		}
-		
+
 		orderSubtotalEditor = (EditText) findViewById(R.id.orderSubtotalEditor);
 		orderSubtotalEditor.setText(getIntent().getCharSequenceExtra("orderSub"));
 		discountEditor = (EditText) findViewById(R.id.discountEditor);
@@ -45,14 +45,20 @@ public class DiscountEditor extends PinSupportNetworkActivity {
 	}
 
 	public void okClick(View v) {
-		if (Float.valueOf(discountEditor.getText().toString()) > 100.0 && percentButton.isChecked()) {
-			Toast.makeText(getBaseContext(), "New discount can not be added with discount value more than 100%",
-					Toast.LENGTH_LONG).show();
-		} else if (Float.valueOf(discountEditor.getText().toString()) == 0f) {
-			Toast.makeText(getBaseContext(), "New discount can not be added with empty discount value",
-					Toast.LENGTH_LONG).show();
-		} else {
-			updateDiscount();
+		try {
+			Double discountValue = Double.parseDouble((discountEditor.getText().toString()));
+			Double.parseDouble(orderSubtotalEditor.getText().toString());
+			if (discountValue > 100.0 && percentButton.isChecked()) {
+				Toast.makeText(getBaseContext(), "Discount can not be added with discount value more than 100%",
+						Toast.LENGTH_LONG).show();
+			} else if (discountValue == 0) {
+				Toast.makeText(getBaseContext(), "Discount can not be added with empty discount value",
+						Toast.LENGTH_LONG).show();
+			} else {
+				updateDiscount();
+			}
+		} catch (Exception e) {
+			Toast.makeText(getBaseContext(), "Incorrect input", Toast.LENGTH_SHORT).show();
 		}
 	}
 
@@ -83,7 +89,7 @@ public class DiscountEditor extends PinSupportNetworkActivity {
 			showConnectionErrorMessage();
 		}
 	}
-	
+
 	private String getMembershipId() {
 		if (allButton.isChecked()) {
 			return "0";
@@ -92,7 +98,7 @@ public class DiscountEditor extends PinSupportNetworkActivity {
 		} else {
 			return "2";
 		}
-		
+
 	}
 
 	private String getDiscountType() {

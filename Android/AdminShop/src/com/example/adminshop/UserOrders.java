@@ -32,8 +32,10 @@ public class UserOrders extends PinSupportNetworkActivity {
 
 	@Override
 	protected void withoutPinAction() {
-		clearList();
-		updateOrdersList();
+		if (isNeedDownload()) {
+			clearList();
+			updateOrdersList();
+		}
 	}
 
 	private enum StatusSymbols {
@@ -42,7 +44,7 @@ public class UserOrders extends PinSupportNetworkActivity {
 
 	private void updateOrdersList() {
 		progressBar.setVisibility(View.VISIBLE);
-		synchronized(lock) {
+		synchronized (lock) {
 			isDownloading = true;
 		}
 		hasNext = false;
@@ -67,7 +69,7 @@ public class UserOrders extends PinSupportNetworkActivity {
 				}
 				progressBar.setVisibility(View.GONE);
 				ordersListView.onRefreshComplete();
-				synchronized(lock) {
+				synchronized (lock) {
 					isDownloading = false;
 				}
 			}

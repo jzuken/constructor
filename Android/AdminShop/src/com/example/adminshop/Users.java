@@ -43,15 +43,17 @@ public class Users extends PinSupportNetworkActivity {
 
 	@Override
 	protected void withoutPinAction() {
-		registered.setText("");
-		online.setText("");
-		clearData();
-		updateUsersList();
+		if (isNeedDownload()) {
+			registered.setText("");
+			online.setText("");
+			clearData();
+			updateUsersList();
+		}
 	}
 
 	private void updateUsersList() {
 		progressBar.setVisibility(View.VISIBLE);
-		synchronized(lock) {
+		synchronized (lock) {
 			isDownloading = true;
 		}
 		hasNext = false;
@@ -88,7 +90,7 @@ public class Users extends PinSupportNetworkActivity {
 				}
 				progressBar.setVisibility(View.GONE);
 				usersListView.onRefreshComplete();
-				synchronized(lock) {
+				synchronized (lock) {
 					isDownloading = false;
 				}
 			}
@@ -193,8 +195,8 @@ public class Users extends PinSupportNetworkActivity {
 
 		usersListView.setAdapter(adapter);
 	}
-	
-	private void showOrders(String id)  {
+
+	private void showOrders(String id) {
 		Intent intent = new Intent(getBaseContext(), UserOrders.class);
 		intent.putExtra("userId", id);
 		startActivityForResult(intent, 1);

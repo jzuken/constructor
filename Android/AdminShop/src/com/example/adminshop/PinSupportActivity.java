@@ -2,8 +2,19 @@ package com.example.adminshop;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 
 public class PinSupportActivity extends Activity {
+	
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		if (savedInstanceState == null) {
+			NeedDownload = true;
+		} else {
+			NeedDownload = false;
+		}
+	}
 	
 	@Override
 	public void onBackPressed() {
@@ -28,6 +39,7 @@ public class PinSupportActivity extends Activity {
 	 * Override in childs if need some action without pin activity
 	 */
 	protected void withoutPinAction() {	
+		NeedDownload = true;
 	}
 	
 	@Override
@@ -55,4 +67,10 @@ public class PinSupportActivity extends Activity {
 			fromPin = true;
 		}
 	}
+	
+	protected boolean isNeedDownload() {
+		return NeedDownload;
+	}
+	
+	private boolean NeedDownload;
 }
