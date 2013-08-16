@@ -29,7 +29,9 @@
         <activity
             android:name=".Authorization"
             android:noHistory="true" />
-        <activity android:name=".MainActivity" />
+        <activity
+            android:name=".MainActivity"
+            android:configChanges="orientation|screenSize" />
         <activity android:name=".Settings" />
         <activity
             android:name=".Products"

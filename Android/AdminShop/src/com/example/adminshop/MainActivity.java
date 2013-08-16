@@ -11,6 +11,7 @@ import org.json.JSONObject;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.view.ViewPager;
@@ -38,11 +39,11 @@ public class MainActivity extends PinSupportNetworkActivity {
 		setContentView(R.layout.main);
 
 		LayoutInflater inflater = LayoutInflater.from(this);
-		List<View> pages = new ArrayList<View>();
+		pages = new ArrayList<View>();
+		
+		menuPage = inflater.inflate(R.layout.menu, null);
 
-		View menuPage = inflater.inflate(R.layout.menu, null);
-
-		View newsPage = inflater.inflate(R.layout.latest_info, null);
+		newsPage = inflater.inflate(R.layout.latest_info, null);
 		date = (TextView) newsPage.findViewById(R.id.last_order_date);
 		product = (TextView) newsPage.findViewById(R.id.last_order_product);
 		totalPrice = (TextView) newsPage.findViewById(R.id.last_order_price);
@@ -76,25 +77,10 @@ public class MainActivity extends PinSupportNetworkActivity {
 			firstPage = Integer.parseInt(settingsData.getString("screens_list", "0"));
 		} else {
 			firstPage = savedInstanceState.getInt("firstPage");
-			date.setText(savedInstanceState.getCharSequence("date"));
-			product.setText(savedInstanceState.getCharSequence("product"));
-			totalPrice.setText(savedInstanceState.getCharSequence("totalPrice"));
-			user.setText(savedInstanceState.getCharSequence("user"));
-			status.setText(savedInstanceState.getCharSequence("status"));
-			totalOrders.setText(savedInstanceState.getCharSequence("totalOrders"));
-			completeOrders.setText(savedInstanceState.getCharSequence("completeOrders"));
-			notFinishedOrders.setText(savedInstanceState.getCharSequence("notFinishedOrders"));
-			queuedOrders.setText(savedInstanceState.getCharSequence("queuedOrders"));
-			processedOrders.setText(savedInstanceState.getCharSequence("processedOrders"));
-			backorderedOrders.setText(savedInstanceState.getCharSequence("backorderedOrders"));
-			declinedOrders.setText(savedInstanceState.getCharSequence("declinedOrders"));
-			failedOrders.setText(savedInstanceState.getCharSequence("failedOrders"));
-			totalPaid.setText(savedInstanceState.getCharSequence("totalPaid"));
-			grossTotal.setText(savedInstanceState.getCharSequence("grossTotal"));
 		}
 
-		Button settingButton = (Button) menuPage.findViewById(R.id.settingsButton);
-		TextView menuArrow = (TextView) menuPage.findViewById(R.id.menu_arrow);
+		settingButton = (Button) menuPage.findViewById(R.id.settingsButton);
+		menuArrow = (TextView) menuPage.findViewById(R.id.menu_arrow);
 		TextView newsArrow = (TextView) newsPage.findViewById(R.id.news_arrow);
 
 		if (firstPage == 0) {
@@ -125,8 +111,8 @@ public class MainActivity extends PinSupportNetworkActivity {
 			viewToRight(newsArrow);
 		}
 
-		SwipingPagerAdapter pagerAdapter = new SwipingPagerAdapter(pages);
-		ViewPager viewPager = (ViewPager) findViewById(R.id.start_view_pager);
+		pagerAdapter = new SwipingPagerAdapter(pages);
+		viewPager = (ViewPager) findViewById(R.id.start_view_pager);
 		viewPager.setAdapter(pagerAdapter);
 
 		viewPager.setCurrentItem(0);
@@ -149,24 +135,46 @@ public class MainActivity extends PinSupportNetworkActivity {
 		});
 	}
 
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
+
+		pages = new ArrayList<View>();
+		
+		LayoutInflater inflater = LayoutInflater.from(this);
+		menuPage = inflater.inflate(R.layout.menu, null);
+		
+		settingButton = (Button) menuPage.findViewById(R.id.settingsButton);
+		menuArrow = (TextView) menuPage.findViewById(R.id.menu_arrow);
+		
+		if (firstPage == 0) {
+			pages.add(menuPage);
+			pages.add(newsPage);
+			newsPageNumber = 1;
+
+			viewToLeft(settingButton);
+			menuArrow.setText(">>");
+			menuArrow.setPadding(0, 0, 10, 0);
+			viewToRight(menuArrow);
+		} else {
+			pages.add(newsPage);
+			pages.add(menuPage);
+			newsPageNumber = 0;
+
+			viewToRight(settingButton);
+			menuArrow.setText("<<");
+			menuArrow.setPadding(10, 0, 0, 0);
+			viewToLeft(menuArrow);
+		}
+
+		pagerAdapter = new SwipingPagerAdapter(pages);
+		viewPager.setAdapter(pagerAdapter);
+		viewPager.setCurrentItem(currentPage);
+	}
+
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		outState.putInt("firstPage", firstPage);
-		outState.putCharSequence("date", date.getText());
-		outState.putCharSequence("product", product.getText());
-		outState.putCharSequence("totalPrice", totalPrice.getText());
-		outState.putCharSequence("user", user.getText());
-		outState.putCharSequence("status", status.getText());
-		outState.putCharSequence("totalOrders", totalOrders.getText());
-		outState.putCharSequence("completeOrders", completeOrders.getText());
-		outState.putCharSequence("notFinishedOrders", notFinishedOrders.getText());
-		outState.putCharSequence("queuedOrders", queuedOrders.getText());
-		outState.putCharSequence("processedOrders", processedOrders.getText());
-		outState.putCharSequence("backorderedOrders", backorderedOrders.getText());
-		outState.putCharSequence("declinedOrders", declinedOrders.getText());
-		outState.putCharSequence("failedOrders", failedOrders.getText());
-		outState.putCharSequence("totalPaid", totalPaid.getText());
-		outState.putCharSequence("grossTotal", grossTotal.getText());
 	}
 
 	private void viewToRight(View view) {
@@ -436,4 +444,11 @@ public class MainActivity extends PinSupportNetworkActivity {
 	private Object lock = new Object();
 	private PullToRefreshScrollView pullToRefreshView;
 	private int firstPage;
+	private View menuPage;
+	private View newsPage;
+	private ViewPager viewPager;
+	private Button settingButton;
+	private TextView menuArrow;
+	private SwipingPagerAdapter pagerAdapter;
+	private List<View> pages;
 }
