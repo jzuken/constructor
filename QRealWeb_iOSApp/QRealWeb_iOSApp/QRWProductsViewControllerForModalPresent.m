@@ -30,7 +30,7 @@
 
 - (id)initWithProducts: (NSArray *) products
 {
-    self = [self initWithNibName:@"QRWProductsViewControllerForModalPresent" bundle:nil];
+    self = [self initWithNibName:@"QRWProductsViewControllerForModalPresent" oldNibName:@"QRWProductsViewControllerForModalPresentOld"];
     self.productsArray = [NSArray arrayWithArray:products];
     return self;
 }
@@ -38,7 +38,7 @@
 
 - (id)initWithUserID: (NSNumber *) userID
 {
-    self = [self initWithNibName:@"QRWProductsViewControllerForModalPresent" bundle:nil];
+    self = [self initWithNibName:@"QRWProductsViewControllerForModalPresent" oldNibName:@"QRWProductsViewControllerForModalPresentOld"];
     self.userID = [NSNumber numberWithInt:[userID intValue]];
     return self;
 }
@@ -46,6 +46,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    if (_mainStatsMode) {
+        _exitButton.hidden = YES;
+        _exitButton.userInteractionEnabled = NO;
+        
+        self.navigationController.navigationBarHidden = NO;
+        self.navigationItem.title = @"Products";
+    }
 }
 
 - (void)didReceiveMemoryWarning

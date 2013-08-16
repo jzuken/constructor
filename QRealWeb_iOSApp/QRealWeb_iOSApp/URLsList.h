@@ -20,6 +20,7 @@ static NSString *const url_ordersStatisticURL = @"http://54.213.38.9/xcart/api.p
 #pragma mark Users
 
 static NSString *const url_usersURL = @"http://54.213.38.9/xcart/api.php?request=users&from=%d&size=%d&sort=%@";
+static NSString *const url_userOrdersURL = @"http://54.213.38.9/xcart/api.php?request=user_orders&user_id=%d&from=%d&size=%d";
 
 #pragma mark Discounts
 
@@ -32,3 +33,11 @@ static NSString *const url_discountsDeleteURL = @"http://54.213.38.9/xcart/api.p
 
 static NSString *const url_reviewsURL = @"http://54.213.38.9/xcart/api.php?request=reviews&from=%d&size=%d";
 static NSString *const url_reviewDeleteURL = @"http://54.213.38.9/xcart/api.php?request=delete_review&id=%d";
+
+
+#pragma mark Products
+
+static NSString *const url_productsURL = @"http://54.213.38.9/xcart/api.php?request=products&from=%d&size=%d";
+static NSString *const url_productsSearchURL = @"http://54.213.38.9/xcart/api.php?request=products&search_word=%@&from=%d&size=%d";
+static NSString *const url_productDeleteURL = @"http://54.213.38.9/xcart/api.php?request=delete_product&id=%d";
+static NSString *const url_productEditURL = @"http://54.213.38.9/xcart/api.php?request=update_product&id=%d&price=%.2f";

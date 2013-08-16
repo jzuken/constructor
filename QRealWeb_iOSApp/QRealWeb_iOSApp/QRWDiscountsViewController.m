@@ -82,9 +82,14 @@
 
 - (void) reloadsTableView
 {
-    [dataManager sendDiscountsRequest];
+    if (isFirstDataLoading) {
+        isFirstDataLoading = NO;
+        [self startLoadingAnimation];
+    }
+    [_discountsTableView setHidden:YES];
     [_discounts removeAllObjects];
     [_discountsTableView reloadData];
+    [dataManager sendDiscountsRequest];
 }
 
 
@@ -97,29 +102,17 @@
     }
     [_discountsTableView reloadData];
     [_discountsTableView.pullToRefreshView stopAnimating];
+    [self stopLoadingAnimation];
+    [_discountsTableView setHidden:NO];
 }
 
 - (void)respondsForUploadingRequest:(BOOL)status
 {
-    NSString *titleString;
-    NSString *messageString;
-    TLCompletionBlock cencelBlock;
-    
+    [self showAfterDeletedAlertWithSuccessStatus:status];
     if (status) {
-        titleString = NSLocalizedString(@"SUCCESS_TITLE", nil);
-        messageString = NSLocalizedString(@"SUCCESS_DELETE_MESSAGE", nil);
-        cencelBlock = ^{
-            [self reloadsTableView];
-        };
-        
-    } else {
-        titleString = NSLocalizedString(@"FAIL_TITLE", nil);
-        messageString = NSLocalizedString(@"FAIL_DELETE_MESSAGE", nil);
+        [_discounts removeObjectAtIndex:lastSelectedRow];
+        [_discountsTableView reloadData];
     }
-    
-    TLAlertView *alert = [[TLAlertView alloc] initWithTitle:titleString message:messageString inView:self.view cancelButtonTitle:NSLocalizedString(@"CANCEL", nil) confirmButton:nil];
-    [alert handleCancel:cencelBlock handleConfirm:nil];
-    [alert show];
 }
 
 
@@ -127,16 +120,14 @@
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    switch (buttonIndex) {
-        case 0:{
-            _discountEditFormViewController = [[QRWDiscountEditFormViewController alloc] initWithDiscount:[_discounts objectAtIndex:lastSelectedRow]];
-            [self presentViewController:_discountEditFormViewController animated:YES completion:nil];
-        }
-            break;
-            
-        case 1:
+    if (buttonIndex == actionSheet.destructiveButtonIndex) {
+        [self showSureToDeleteItemAlertWithHandleCancel:nil handleConfirm:^{
             [dataManager uploadDeletedDiscountWithDiscount:[_discounts objectAtIndex:lastSelectedRow]];
-            break;
+            [self startLoadingAnimation];
+        }];
+    } else if (buttonIndex != actionSheet.cancelButtonIndex){
+        _discountEditFormViewController = [[QRWDiscountEditFormViewController alloc] initWithDiscount:[_discounts objectAtIndex:lastSelectedRow]];
+        [self presentViewController:_discountEditFormViewController animated:YES completion:nil];
     }
 }
 
@@ -152,8 +143,8 @@
     UIActionSheet *userActionSheet = [[UIActionSheet alloc] initWithTitle:nil
                                                                  delegate:self
                                                         cancelButtonTitle:NSLocalizedString(@"CANCEL", nil)
-                                                   destructiveButtonTitle:nil
-                                                        otherButtonTitles:NSLocalizedString(@"EDIT", nil), NSLocalizedString(@"DELETE", nil), nil];
+                                                   destructiveButtonTitle: NSLocalizedString(@"DELETE", nil)
+                                                        otherButtonTitles:NSLocalizedString(@"EDIT", nil), nil];
     [userActionSheet showInView:self.view];
 }
 

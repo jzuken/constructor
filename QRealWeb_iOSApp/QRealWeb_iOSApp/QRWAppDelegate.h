@@ -12,6 +12,7 @@
 
 @class QRWLoginScrinViewController;
 @class QRWDeployScrinViewController;
+@class QRWMainScrinViewController;
 
 
 
@@ -21,6 +22,7 @@
 
 @property (strong, nonatomic) QRWLoginScrinViewController *firstEnterViewController;
 @property (strong, nonatomic) QRWDeployScrinViewController *fastAuthViewController;
+@property (strong, nonatomic) QRWMainScrinViewController *mainScrinViewController;
 
 @property (strong, nonatomic) UINavigationController *appNavigationController;
 

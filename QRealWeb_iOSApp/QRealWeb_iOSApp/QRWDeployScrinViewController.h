@@ -8,12 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "iCarousel.h"
-#import "QRWBaseViewController.h"
 
-@interface QRWDeployScrinViewController : QRWBaseViewController<iCarouselDataSource, iCarouselDelegate>
+@interface QRWDeployScrinViewController : UIViewController<iCarouselDataSource, iCarouselDelegate>
 
 @property (strong, nonatomic) IBOutlet iCarousel *passcodeCarousel;
 @property (strong, nonatomic) IBOutlet UILabel *firstLoginLabel;
+
+@property BOOL isPresented;
 
 - (IBAction)enterToShopAction:(id)sender;
 

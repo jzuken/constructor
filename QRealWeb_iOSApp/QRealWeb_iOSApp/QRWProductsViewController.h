@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "QRWProductsViewControllerForModalPresent.h"
+#import "QRWBaseViewController.h"
 
-@interface QRWProductsViewController : QRWProductsViewControllerForModalPresent<UIActionSheetDelegate>
+@interface QRWProductsViewController : QRWBaseViewController<UIActionSheetDelegate, UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate>
 
+@property (nonatomic, strong) IBOutlet UITableView *productsTableView;
+@property (nonatomic, strong) IBOutlet UISearchBar *productsSearchBar;
 
 @end

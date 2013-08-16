@@ -12,7 +12,7 @@
 
 
 @property (nonatomic, strong) IBOutlet UITableView *ordersStatisticTableView;
-
+@property BOOL fullInfoMode;
 
 
 - (void)setStatistic:(NSDictionary *)statistic;

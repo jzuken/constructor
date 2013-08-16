@@ -9,17 +9,16 @@
 #import "QRWAppDelegate.h"
 #import "UIDevice+Resolutions.h"
 #import "QRWLoginScrinViewController.h"
+#import "QRWMainScrinViewController.h"
 #import "QRWDeployScrinViewController.h"
 #import "UIColor+hex.h"
+#import "constants.h"
 
 @implementation QRWAppDelegate
 
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
-
-
-
 
 
 
@@ -46,30 +45,29 @@
 {
     _window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
-    if ([[UIDevice currentDevice] resolution] == UIDeviceResolution_iPhoneRetina5) {
-        _firstEnterViewController = [[QRWLoginScrinViewController alloc] initWithNibName:@"QRWLoginScrinViewController" bundle:nil];
-    } else {
-        _firstEnterViewController = [[QRWLoginScrinViewController alloc] initWithNibName:@"QRWLoginScrinViewController" bundle:nil];
+//    if (![[UIDevice currentDevice] resolution] == UIDeviceResolution_iPhoneRetina5) {
+//        abort();
+//    }
+    
+    if([[[NSUserDefaults standardUserDefaults] objectForKey:kUserDefaults_isLogInKey] isEqualToString:kUserDefaults_isLogInObject]){
+        _mainScrinViewController = [[QRWMainScrinViewController alloc] init];
+        _appNavigationController = [[UINavigationController alloc] initWithRootViewController:_mainScrinViewController];
+    }  else {
+        _firstEnterViewController = [[QRWLoginScrinViewController alloc] init];
+        _appNavigationController = [[UINavigationController alloc] initWithRootViewController:_firstEnterViewController];
     }
     
-    _fastAuthViewController = [[QRWDeployScrinViewController alloc] init];
     
-    _appNavigationController = [[UINavigationController alloc] initWithRootViewController:_firstEnterViewController];
-////    [_appNavigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"topBarBackground.jpg"] forBarMetrics:UIBarMetricsDefault];
-////    [_appNavigationController.navigationBar setBackgroundColor:[UIColor colorFromHex:0x3F3F3F]];
-//    UINavigationBar *navbarAppearance = [UINavigationBar appearance];
-//    UIImage *navbarBackground = [[UIImage imageNamed:@"topBarBackground.png"] resizableImageWithCapInsets:UIEdgeInsetsZero];
-//    [navbarAppearance setBackgroundImage:navbarBackground forBarMetrics:UIBarMetricsDefault];
     [self setCustomAppearance];
     
     [self.window setRootViewController:_appNavigationController];
     _appNavigationController.navigationBarHidden = YES;
     
     [_window makeKeyAndVisible];
-    //    [[UIApplication sharedApplication] setStatusBarHidden:YES];
+    
+    [self openFastAuthViewController];
     
     return YES;
-
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -86,7 +84,26 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
-    // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    [self openFastAuthViewController];
+}
+
+- (void) openFastAuthViewController
+{
+    if([[[NSUserDefaults standardUserDefaults] objectForKey:kUserDefaults_isLogInKey] isEqualToString:kUserDefaults_isLogInObject] && !_fastAuthViewController.isPresented){
+        _fastAuthViewController = [[QRWDeployScrinViewController alloc] init];
+        CGRect frame = _fastAuthViewController.view.frame;
+        frame.origin.y = frame.size.height;
+        _fastAuthViewController.view.frame = frame;
+        
+        [self.window addSubview:_fastAuthViewController.view];
+        
+        [UIView animateWithDuration:0.5 animations:^{
+            CGRect frame = _fastAuthViewController.view.frame;
+            frame.origin.y -= frame.size.height;
+            _fastAuthViewController.view.frame = frame;
+        }];
+        _fastAuthViewController.isPresented = YES;
+    }
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application

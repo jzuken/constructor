@@ -45,25 +45,40 @@
 
 
 
+// Sure to delete
+
+"ATTENTION" = "Attention!";
+"SURE_TO_DELETE" = "Are you sure to delete this item?";
+
+
+// isValid alert
+
+"ERROR" = "Error!";
+"BIG_DISCOUNT" = "Discount cannot be bigger than min price";
+"BIG_PERCENTS_DISCOUNT" = "Discount cannot be bigger 100%";
+"ZERO_FIELDS" = "Min price and discount cannot be zero";
+"ZERO_FIELD_PRODUCT" = "Price cannot be zero";
+
+
 // Upload alert
 
 "SUCCESS_TITLE" = "Success!";
-"SUCCESS_DELETE_MESSAGE" = "Discount data was deleted";
+"SUCCESS_DELETE_MESSAGE" = "Selected item was deleted";
 "FAIL_TITLE" = "Fail!";
-"FAIL_DELETE_MESSAGE" = "Discount data was not deleted";
-"SUCCESS_UPLOAD_MESSAGE" = "Discount data was uploaded";
-"FAIL_UPLOAD_MESSAGE" = "Discount data was not uploaded";
+"FAIL_DELETE_MESSAGE" = "Selected item was not deleted";
+"SUCCESS_UPLOAD_MESSAGE" = "New item was uploaded";
 
 
 // Action sheet
 
 "CANCEL" = "Cancel";
 "EDIT" = "Edit";
+"EDIT_PRICE" = "Edit price";
 "DELETE" = "Delete";
 "FULL_INFO" = "Full info";
 "ORDERS_LIST" = "Orders list";
 "SEND_A_MESSAGE" = "Send a message";
-"TO_THE_BLACK_LIST_WITH_A_MESSAGE" = "To the black list with a message";
+"TO_THE_BLACK_LIST_WITH_A_MESSAGE" = "Ban with a message";
 "REMOVE_FROM_STORE" = "Edit from the store";
 "FULL_TEXT" = "Full text";
 
@@ -75,7 +90,7 @@
 "LOGIN_LABLE_TEXT" = "Login: %@";
 "TYPE_LABLE_TEXT" = "User type: %@";
 "FIRST_LOGIN_LABLE_TEXT" = "First login: %@";
-"ORDERS_COUNT_LABLE_TEXT" = "Oreders count: %d";
+"ORDERS_COUNT_LABLE_TEXT" = "Orders count: %d";
 
 "SORT_BY" = "Sort by:";
 
@@ -96,6 +111,15 @@
 
 "REVIEWS" = "Reviews";
 "REVIEW" = "Review";
+
+
+// Products
+
+"PRODUCTS" = "Products";
+"FREE_SHIPPING" = "Free shipping: %@";
+"MIN_AMOUNT" = "Min amount: %d";
+"AVALIABLE" = "Avaliable: %d";
+"CODE" = "Code: %@";
 
 
 

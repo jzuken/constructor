@@ -47,7 +47,7 @@
     
     _messageLable.text = [_review message];
     _messageLable.numberOfLines = 0;
-    _messageLable.textAlignment = NSTextAlignmentCenter;
+    
     _messageLable.backgroundColor = [UIColor clearColor];
     
     CGRect messageFrame = _messageLable.frame;

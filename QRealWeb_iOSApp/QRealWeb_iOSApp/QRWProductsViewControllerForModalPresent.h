@@ -12,7 +12,11 @@
 
 
 @property (nonatomic, strong) IBOutlet UITableView *productsTableView;
+@property (nonatomic, strong) IBOutlet UIButton *exitButton;
 @property (nonatomic, strong) NSArray *productsArray;
+
+
+@property BOOL mainStatsMode;
 
 - (IBAction)exitButtonClicked:(id)sender;
 

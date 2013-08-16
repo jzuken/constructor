@@ -11,6 +11,7 @@
 @interface QRWUser : NSObject
 
 
+@property (nonatomic, strong) NSNumber *userID;
 @property (nonatomic, strong) NSString *login;
 @property (nonatomic, strong) NSString *username;
 @property (nonatomic, strong) NSString *usertype;

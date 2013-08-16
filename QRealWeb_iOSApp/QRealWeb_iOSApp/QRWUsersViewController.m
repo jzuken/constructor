@@ -12,9 +12,11 @@
 #import "QRWUserCell.h"
 
 #import "FPPopoverController.h"
+#import "QRWUserOrdersViewController.h"
 
 @interface QRWUsersViewController ()
 {
+    int lastSelectedRow;
     int numberOfRegisteredUsers;
     BOOL loadMoreDataAvaliable;
 }
@@ -24,6 +26,7 @@
 
 @property (nonatomic, strong) FPPopoverController *sortedByPopoverController;
 @property (nonatomic, strong) QRWUsersSortedByTableViewController *sortedByViewController;
+@property (nonatomic, strong) QRWUserOrdersViewController *userOrdersViewController;
 
 @end
 
@@ -63,7 +66,7 @@
         [weakSelf addsDataAndReloadsTableView];
     }];
     
-    [dataManager sendUsersRequestWithSort:_currentSort startPoint:0 lenght:10];
+    [self addsDataAndReloadsTableView];
 }
 
 - (void)respondsForUserRequest:(QRWUsers *)usersObject
@@ -77,6 +80,8 @@
     [_usersTableView reloadData];
     loadMoreDataAvaliable = YES;
     [_usersTableView.pullToRefreshView stopAnimating];
+    [self stopLoadingAnimation];
+    [_usersTableView setHidden:NO];
 }
 
 - (void) openSortedByPopover
@@ -96,14 +101,23 @@
 - (void) addsDataAndReloadsTableView
 {
     [dataManager sendUsersRequestWithSort:_currentSort startPoint:[_usersTableView numberOfRowsInSection:0] lenght:10];
+    if (isFirstDataLoading) {
+        isFirstDataLoading = NO;
+        [self startLoadingAnimation];
+    }
 }
 
 
 - (void) reloadsTableViewData
 {
-    [dataManager sendUsersRequestWithSort:_currentSort startPoint:[_usersTableView numberOfRowsInSection:0] lenght:10];
+    if (isFirstDataLoading) {
+        isFirstDataLoading = NO;
+        [self startLoadingAnimation];
+    }
     [_users removeAllObjects];
     [_usersTableView reloadData];
+    [self addsDataAndReloadsTableView];
+    [_usersTableView setHidden:YES];
 }
 
 #pragma mark QRWUsersSortedByTableViewControllerDelegate
@@ -119,17 +133,30 @@
     [_sortedByPopoverController dismissPopoverAnimated:YES];
 }
 
+#pragma mark Action sheet methods
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1) {
+        _userOrdersViewController = [[QRWUserOrdersViewController alloc] initWithUser:[_users objectAtIndex:lastSelectedRow]];
+        [self.navigationController pushViewController:_userOrdersViewController animated:YES];
+    } 
+}
+
 #pragma mark Table view methods
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    lastSelectedRow = indexPath.row;
+    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     UIActionSheet *userActionSheet = [[UIActionSheet alloc] initWithTitle:nil
                                                                  delegate:self
                                                         cancelButtonTitle:NSLocalizedString(@"CANCEL", nil)
-                                                   destructiveButtonTitle:nil
-                                                        otherButtonTitles:NSLocalizedString(@"FULL_INFO", nil), NSLocalizedString(@"ORDERS_LIST", nil), NSLocalizedString(@"SEND_A_MESSAGE", nil), NSLocalizedString(@"TO_THE_BLACK_LIST_WITH_A_MESSAGE", nil), nil];
+                                                   destructiveButtonTitle:NSLocalizedString(@"TO_THE_BLACK_LIST_WITH_A_MESSAGE", nil)
+                                                        otherButtonTitles: NSLocalizedString(@"ORDERS_LIST", nil), NSLocalizedString(@"SEND_A_MESSAGE", nil), nil];
+    //NSLocalizedString(@"FULL_INFO", nil)
     [userActionSheet showInView:self.view];
 }
 

@@ -30,7 +30,7 @@
 
 - (id)init
 {
-    return [self initWithNibName:@"QRWMainScrinViewController" bundle:nil];
+    return [self initWithNibName:@"QRWMainScrinViewController" oldNibName:@"QRWMainScrinViewControllerOld"];
 }
 
 
@@ -55,6 +55,8 @@
     _mainStatsViewController = [[QRWMainStatsViewController alloc] init];
     _toolsViewController = [[QRWToolsScrinViewController alloc] init];
     
+    _mainStatsViewController.forNavigationPushViewController = self;
+    
     
     CGRect frame = _mainStatsViewController.view.frame;
     frame.origin.x = frame.size.width;
@@ -62,6 +64,8 @@
     
     [_mainScrinPagesScrollView addSubview:_mainStatsViewController.view];
     [_mainScrinPagesScrollView addSubview:_toolsViewController.view];
+    
+    [self startLoadingAnimation];
 }
 
 - (void)didReceiveMemoryWarning
@@ -69,6 +73,16 @@
     [super didReceiveMemoryWarning];
 }
 
+- (void)respondsForLastOrderRequest:(QRWLastOrder *)lastOrder
+{
+    [self stopLoadingAnimation];
+    [_mainStatsViewController.lastOrderDashboardViewController setLastOrder:lastOrder];
+}
 
+- (void)respondsForOrdersStatisticRequest:(NSDictionary *)statistic withArratOfKeys:(NSArray *)keys
+{
+    [self stopLoadingAnimation];
+    [_mainStatsViewController.ordersInfoDashboardViewController setStatistic:statistic];
+}
 
 @end

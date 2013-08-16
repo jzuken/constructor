@@ -10,11 +10,5 @@
 
 @implementation QRWProductInOrder
 
-@synthesize price;
-@synthesize provider;
-@synthesize itemid;
-@synthesize productOptions;
-
-
 
 @end

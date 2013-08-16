@@ -7,22 +7,23 @@
 //
 
 #import "QRWBaseViewController.h"
+#import "HMSegmentedControl.h"
 
 @interface QRWBaseDashboardPageViewController : QRWBaseViewController
 
 
 @property (strong, nonatomic) IBOutlet UIView *timeAndTypeSegmentedControlArea;
 @property (strong, nonatomic) IBOutlet UIImageView *nameOfPageImageView;
-@property (strong, nonatomic) UISegmentedControl *timeAndTypeSegmentedControl;
 @property (strong, nonatomic) NSString *currentSegment;
 
 @property (strong, nonatomic) NSArray *segmentImageNamesArray;
 @property (strong, nonatomic) NSArray *segmentSelectedImageNamesArray;
 
 
-- (id)initWithNameOfPageImage: (NSString *) nameOfPageImage nibName: (NSString *) nibName;
 
-- (void) presentSegmentedControl;
-- (void) dismissSegmentedControl;
+@property (strong, nonatomic) UIViewController *forPresentViewController;
+
+- (id)initWithNameOfPageImage: (NSString *) nameOfPageImage nibName: (NSString *) nibName oldNibName: (NSString *) oldNibName viewControllerForPresent: (UIViewController *) forPresentViewController;
+
 
 @end

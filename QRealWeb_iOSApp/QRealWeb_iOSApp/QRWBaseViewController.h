@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "UIDevice+Resolutions.h"
 #import "QRWDataManager.h"
+
+#import "UIDevice+Resolutions.h"
 #import "constants.h"
 #import "UIDevice+Resolutions.h"
 
@@ -19,7 +20,21 @@
 
 @interface QRWBaseViewController : UIViewController<QRWDataManagerDelegate>
 {
+    BOOL isFirstDataLoading;
     QRWDataManager *dataManager;
 }
+
+
+@property (nonatomic, strong) UIActivityIndicatorView *loadingActivityIndicator;
+@property (nonatomic, strong) UIView *backgroundLoadingView;
+
+- (void) startLoadingAnimation;
+- (void) stopLoadingAnimation;
+
+- (void) showAfterDeletedAlertWithSuccessStatus: (BOOL) status;
+- (void) showSureToDeleteItemAlertWithHandleCancel:(TLCompletionBlock)cancelBlock handleConfirm:(TLCompletionBlock)confirmBlock;
+
+
+- (id)initWithNibName:(NSString *)nibNameOrNil oldNibName:(NSString *)oldNibNameOrNil;
 
 @end

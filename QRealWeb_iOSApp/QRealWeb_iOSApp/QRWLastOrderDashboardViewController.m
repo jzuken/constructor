@@ -31,8 +31,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [dataManager sendLastOrderRequest];
-    [self.timeAndTypeSegmentedControl removeFromSuperview];
 }
 
 - (void)didReceiveMemoryWarning
@@ -57,8 +55,15 @@
 
 - (void) openProductsView
 {
-    _productsLastorderDashboardViewController = [[QRWProductsViewControllerForModalPresent alloc] initWithProducts:_lastOrder.products];
-    [self presentViewController:_productsLastorderDashboardViewController animated:YES completion:nil];
+    if (!_mainStatsInfoMode) {
+        _productsLastorderDashboardViewController = [[QRWProductsViewControllerForModalPresent alloc] initWithProducts:_lastOrder.products];
+        _productsLastorderDashboardViewController.mainStatsMode = NO;
+        [self.forPresentViewController presentViewController:_productsLastorderDashboardViewController animated:YES completion:nil];
+    } else {
+        _productsLastorderDashboardViewController = [[QRWProductsViewControllerForModalPresent alloc] initWithProducts:_lastOrder.products];
+        _productsLastorderDashboardViewController.mainStatsMode = YES;
+        [self.forPresentViewController.navigationController pushViewController:_productsLastorderDashboardViewController animated:YES];
+    }
 }
 
 @end

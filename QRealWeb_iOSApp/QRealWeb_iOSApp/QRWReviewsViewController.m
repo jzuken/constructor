@@ -47,7 +47,6 @@
     
     self.navigationController.navigationBarHidden = NO;
     self.navigationItem.title = NSLocalizedString(@"REVIEWS", nil);
-//    [self.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(openAddDiscountView)]];
     
     __weak QRWReviewsViewController *weakSelf = self;
     
@@ -73,15 +72,21 @@
     [self addDataAndReloadsTableView];
     [_reviews removeAllObjects];
     [_reviewsTableView reloadData];
+    [_reviewsTableView setHidden:YES];
 }
 
 - (void) addDataAndReloadsTableView
 {
+    if (isFirstDataLoading) {
+        isFirstDataLoading = NO;
+        [self startLoadingAnimation];
+    }
     [dataManager sendReviewsRequestWithStartPoint:[_reviewsTableView numberOfRowsInSection:0] lenght:10];
 }
 
 - (void)respondsForReviewsRequest:(NSArray *)reviews
 {
+    [self stopLoadingAnimation];
     if (_reviews.count == 0) {
         _reviews = [NSMutableArray arrayWithArray:reviews];
     } else {
@@ -90,47 +95,33 @@
     [_reviewsTableView reloadData];
     [_reviewsTableView.pullToRefreshView stopAnimating];
     [_reviewsTableView.infiniteScrollingView stopAnimating];
+    [_reviewsTableView setHidden:NO];
 }
 
 
 - (void)respondsForUploadingRequest:(BOOL)status
 {
-    NSString *titleString;
-    NSString *messageString;
-    TLCompletionBlock cencelBlock;
-    
+    [self showAfterDeletedAlertWithSuccessStatus:status];
     if (status) {
-        titleString = NSLocalizedString(@"SUCCESS_TITLE", nil);
-        messageString = NSLocalizedString(@"SUCCESS_DELETE_MESSAGE", nil);
-        cencelBlock = ^{
-            [self reloadsTableView];
-        };
-        
-    } else {
-        titleString = NSLocalizedString(@"FAIL_TITLE", nil);
-        messageString = NSLocalizedString(@"FAIL_DELETE_MESSAGE", nil);
+        [_reviews removeObjectAtIndex:lastSelectedRow];
+        [_reviewsTableView reloadData];
     }
-    
-    TLAlertView *alert = [[TLAlertView alloc] initWithTitle:titleString message:messageString inView:self.view cancelButtonTitle:NSLocalizedString(@"CANCEL", nil) confirmButton:nil];
-    [alert handleCancel:cencelBlock handleConfirm:nil];
-    [alert show];
 }
 
 #pragma mark Action sheet methods
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    switch (buttonIndex) {
-        case 0:{
-            _fullReviewTextViewController = [[QRWFullReviewTextViewController alloc] initWithReview:[_reviews objectAtIndex:lastSelectedRow]];
-            [self presentViewController:_fullReviewTextViewController animated:YES completion:nil];
-        }
-            break;
-        case 1:{
+    if (buttonIndex == actionSheet.destructiveButtonIndex) {
+        [self showSureToDeleteItemAlertWithHandleCancel:nil handleConfirm:^{
             [dataManager uploadDeletedReviewWithReview:[_reviews objectAtIndex:lastSelectedRow]];
-        }
-        break;
+            [self startLoadingAnimation];
+        }];
+    } else if (buttonIndex != actionSheet.cancelButtonIndex){
+        _fullReviewTextViewController = [[QRWFullReviewTextViewController alloc] initWithReview:[_reviews objectAtIndex:lastSelectedRow]];
+        [self presentViewController:_fullReviewTextViewController animated:YES completion:nil];
     }
+
 }
 
 
@@ -145,8 +136,8 @@
     UIActionSheet *userActionSheet = [[UIActionSheet alloc] initWithTitle:nil
                                                                  delegate:self
                                                         cancelButtonTitle:NSLocalizedString(@"CANCEL", nil)
-                                                   destructiveButtonTitle:nil
-                                                        otherButtonTitles:  NSLocalizedString(@"FULL_TEXT", nil), NSLocalizedString(@"DELETE", nil), nil];
+                                                   destructiveButtonTitle:NSLocalizedString(@"DELETE", nil)
+                                                        otherButtonTitles:  NSLocalizedString(@"FULL_TEXT", nil), nil];
     [userActionSheet showInView:self.view];
 }
 

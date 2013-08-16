@@ -27,10 +27,11 @@
 }
 
 
-- (id)initWithNameOfPageImage: (NSString *) nameOfPageImage nibName: (NSString *) nibName
+- (id)initWithNameOfPageImage: (NSString *) nameOfPageImage nibName: (NSString *) nibName oldNibName: (NSString *) oldNibName viewControllerForPresent: (UIViewController *) forPresentViewController;
 {
-    self = [self initWithNibName:nibName bundle:nil];
+    self = [self initWithNibName:nibName oldNibName:oldNibName];
     pageImageName = nameOfPageImage;
+    _forPresentViewController = forPresentViewController;
     return self;
 }
 
@@ -38,30 +39,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    _segmentImageNamesArray = [NSArray arrayWithObjects: [UIImage imageNamed:@"button_since_last_login.jpg"],
+                               [UIImage imageNamed:@"button_today.jpg"],
+                               [UIImage imageNamed:@"button_this_month.jpg"],
+                               [UIImage imageNamed:@"button_this_week.jpg"], nil];
     
-    CGRect frameOfSegmentedControl = _timeAndTypeSegmentedControlArea.frame;
-//    frameOfSegmentedControl.origin.y -= frameOfSegmentedControl.size.height;
-    
-    self.timeAndTypeSegmentedControl = [[UISegmentedControl alloc] initWithFrame:frameOfSegmentedControl];
-    [self.timeAndTypeSegmentedControl setSelectedSegmentIndex:0];
-    
-    _segmentImageNamesArray = [NSArray arrayWithObjects: @"button_since_last_login.jpg", @"button_today.jpg", @"button_this_month.jpg", @"button_this_week.jpg", nil];
-    _segmentSelectedImageNamesArray = [NSArray arrayWithObjects: @"active_button_since_last_login.jpg", @"active_button_today.jpg", @"active_button_this_month.jpg", @"active_button_this_week.jpg", nil];
-    [self.timeAndTypeSegmentedControl setDividerImage:[UIImage imageNamed:@"segmentedControl_separator.png"]
-                                  forLeftSegmentState:UIControlStateNormal
-                                    rightSegmentState:UIControlStateNormal
-                                           barMetrics:UIBarMetricsDefault];
-    for (NSString *imgName in _segmentImageNamesArray) {
-        UIImage *segmentImage = [UIImage imageWithCGImage:[[UIImage imageNamed:imgName] CGImage] scale:1.8 orientation:UIImageOrientationUp];
-        if ([_segmentImageNamesArray indexOfObject:imgName] == self.timeAndTypeSegmentedControl.selectedSegmentIndex) {
-            [self.timeAndTypeSegmentedControl insertSegmentWithImage:segmentImage atIndex:[_segmentSelectedImageNamesArray indexOfObject:imgName] animated:NO];
-        } else {
-            [self.timeAndTypeSegmentedControl insertSegmentWithImage:segmentImage atIndex:[_segmentImageNamesArray indexOfObject:imgName] animated:NO];
-        }
-    }
-    
-    
-    [self.view addSubview:self.timeAndTypeSegmentedControl];
+    _segmentSelectedImageNamesArray = [NSArray arrayWithObjects: [UIImage imageNamed:@"active_button_since_last_login.png"],
+                                       [UIImage imageNamed:@"active_button_today.png"],
+                                       [UIImage imageNamed:@"active_button_this_month.png"],
+                                       [UIImage imageNamed:@"active_button_this_week.png"], nil];
     
     [self.nameOfPageImageView setImage:[UIImage imageNamed:pageImageName]];
 }
@@ -74,24 +60,9 @@
 
 
 
-- (void) presentSegmentedControl
+- (UIImage *) imageForSegmentedControlWithName: (NSString *) name
 {
-//    [UIView animateWithDuration:0.2 animations:^{
-//        CGRect frameOfSegmentedControl = self.timeAndTypeSegmentedControlArea.frame;
-//        self.timeAndTypeSegmentedControl.frame = frameOfSegmentedControl;
-//    }];
-    
+    return [[UIImage imageNamed:name] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 10, 0, 100)];
 }
-
-
-- (void) dismissSegmentedControl
-{
-//    [UIView animateWithDuration:0.2 animations:^{
-//        CGRect frameOfSegmentedControl = _timeAndTypeSegmentedControlArea.frame;
-//        frameOfSegmentedControl.origin.x -= frameOfSegmentedControl.size.height;
-//        self.timeAndTypeSegmentedControl.frame = frameOfSegmentedControl;
-//    }];
-}
-
 
 @end
