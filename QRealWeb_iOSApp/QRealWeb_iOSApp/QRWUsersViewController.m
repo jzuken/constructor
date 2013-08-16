@@ -137,7 +137,7 @@
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if (buttonIndex == 2) {
+    if (buttonIndex == 1) {
         _userOrdersViewController = [[QRWUserOrdersViewController alloc] initWithUser:[_users objectAtIndex:lastSelectedRow]];
         [self.navigationController pushViewController:_userOrdersViewController animated:YES];
     } 

@@ -20,19 +20,6 @@
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "QRealWeb_iOSApp/QRWDataManager.m"
-         timestampString = "398182080.580474"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "716"
-         endingLineNumber = "716"
-         landmarkName = "-downloadWasFailedWithError:forRequestURL:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
          filePath = "QRealWeb_iOSApp/QRWProductsViewController.m"
          timestampString = "398253927.681862"
          startingColumnNumber = "9223372036854775807"
