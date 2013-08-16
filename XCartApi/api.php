@@ -372,6 +372,7 @@ function get_orders_for_user()
     $result_array = array();
     while ($row = mysql_fetch_assoc($order_query)) {
         $row['details'] = get_order_details($row[orderid]);
+        $row['date'] = gmdate("m-d-Y", $row['date']);
         array_push($result_array, $row);
     }
 
@@ -390,6 +391,7 @@ function get_last_order()
     ") or die(mysql_error());
 
     $result_array = mysql_fetch_assoc($order_query);
+    $result_array['date'] = gmdate("m-d-Y", $result_array['date']);
     $order_id = $result_array['orderid'];
     $result_array['details'] = get_order_details($order_id);
 
