@@ -3,14 +3,14 @@
 /*
  * Development imports
  */
-require './xcart/top.inc.php';
-require './xcart/init.php';
+//require './xcart/top.inc.php';
+//require './xcart/init.php';
 
 /*
  * Production imports
  */
-//require './top.inc.php';
-//require './init.php';
+require './top.inc.php';
+require './init.php';
 
 mysql_connect($sql_host, $sql_user, $sql_password)  or die(mysql_error());
 mysql_select_db($sql_db) or die(mysql_error());
@@ -114,11 +114,11 @@ function process_response()
 
 function login()
 {
-    require_once './xcart/include/login.php';
-    require_once './xcart/include/classes/class.XCPasswordHash.php';
+ //   require_once './xcart/include/login.php';
+ //   require_once './xcart/include/classes/class.XCPasswordHash.php';
 
-//    require './include/login.php';
-//    require_once './include/classes/class.XCPasswordHash.php';
+    require './include/login.php';
+    require_once './include/classes/class.XCPasswordHash.php';
 
     global $sql_tbl;
 
@@ -133,6 +133,7 @@ function login()
                 date int(11),
                 PRIMARY KEY(udid)
             )";
+
     if (mysql_num_rows(mysql_query("SHOW TABLES LIKE 'xcart_mobile_sid'")) != 1) {
         db_query($sql) or die(mysql_error());
     }
@@ -203,6 +204,7 @@ function get_top_products_statistic()
 
     $result_array = array();
     foreach ($start_dates as $key => $date) {
+        echo $key;
         $result_array[$key] = is_array_check(get_top_products($date));
     }
 
@@ -228,7 +230,7 @@ function get_top_products($start_date)
         AND $sql_tbl[orders].status NOT IN ('F','D')
         GROUP BY $sql_tbl[order_details].productid
         ORDER BY count DESC LIMIT 0, $max_top_sellers
-    ") or die(mysql_error());
+    ");
 
     return $ordered_products;
 }
@@ -266,7 +268,7 @@ function get_top_categories($start_date)
         WHERE $date_condition
         GROUP BY $sql_tbl[products_categories].categoryid
         ORDER BY count DESC LIMIT 0, $max_top_sellers
-    ") or die(mysql_error());
+    ") ;
 
     return $categories;
 }
