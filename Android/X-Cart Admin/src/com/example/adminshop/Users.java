@@ -1,7 +1,6 @@
 package com.example.adminshop;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -78,7 +77,7 @@ public class Users extends PinSupportNetworkActivity {
 									+ obj.getString("lastname");
 							String login = obj.getString("login");
 							String type = obj.getString("usertype");
-							String lastLogin = getFormatDate(Long.parseLong(obj.getString("last_login")));
+							String lastLogin = obj.getString("last_login");
 							String totalOrder = obj.optString("orders_count");
 							addUserToList(id, name, login, type, lastLogin, totalOrder);
 						}
@@ -96,33 +95,16 @@ public class Users extends PinSupportNetworkActivity {
 			}
 		};
 
+		SharedPreferences authorizationData = getSharedPreferences("AuthorizationData", MODE_PRIVATE);
+		String sid = authorizationData.getString("sid", "");
 		dataRequester.execute("http://54.213.38.9/xcart/api.php?request=users&from=" + String.valueOf(currentAmount)
-				+ "&size=" + String.valueOf(packAmount) + "&sort=" + getCurrentSort());
+				+ "&size=" + String.valueOf(packAmount) + "&sort=" + getCurrentSort() + "&sid="  + sid);
 		currentAmount += packAmount;
 	}
 
 	private void clearData() {
 		adapter.clear();
 		currentAmount = 0;
-	}
-
-	private String getFormatDate(Long seconds) {
-		if (seconds == 0) {
-			return "never";
-		}
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTimeInMillis(seconds * 1000L);
-		return dateNumber(calendar.get(Calendar.DAY_OF_MONTH)) + "/" + dateNumber(calendar.get(Calendar.MONTH) + 1)
-				+ "/" + calendar.get(Calendar.YEAR) + " " + dateNumber(calendar.get(Calendar.HOUR_OF_DAY)) + ":"
-				+ dateNumber(calendar.get(Calendar.MINUTE));
-	}
-
-	private String dateNumber(int number) {
-		if (number < 10) {
-			return "0" + String.valueOf(number);
-		} else {
-			return String.valueOf(number);
-		}
 	}
 
 	private String getCurrentSort() {

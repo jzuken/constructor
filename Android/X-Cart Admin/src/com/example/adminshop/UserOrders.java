@@ -1,7 +1,6 @@
 package com.example.adminshop;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -12,9 +11,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.AbsListView.OnScrollListener;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
@@ -83,7 +82,8 @@ public class UserOrders extends PinSupportNetworkActivity {
 	private void addOrder(JSONObject obj) {
 		try {
 			String id = obj.getString("orderid");
-			String date = getFormatDate(Long.parseLong(obj.getString("date")));
+			String date = obj.getString("date");
+
 			StatusSymbols statusSymbol = StatusSymbols.valueOf(obj.getString("status"));
 			String status = getStatusBySymbol(statusSymbol);
 			String totalPrice = "$" + obj.getString("total");
@@ -106,22 +106,6 @@ public class UserOrders extends PinSupportNetworkActivity {
 			addOrderToList(id, date, products, status, totalPrice);
 		} catch (JSONException e) {
 			e.printStackTrace();
-		}
-	}
-
-	private String getFormatDate(Long seconds) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTimeInMillis(seconds * 1000L);
-		return dateNumber(calendar.get(Calendar.DAY_OF_MONTH)) + "/" + dateNumber(calendar.get(Calendar.MONTH) + 1)
-				+ "/" + calendar.get(Calendar.YEAR) + " " + dateNumber(calendar.get(Calendar.HOUR_OF_DAY)) + ":"
-				+ dateNumber(calendar.get(Calendar.MINUTE));
-	}
-
-	private String dateNumber(int number) {
-		if (number < 10) {
-			return "0" + String.valueOf(number);
-		} else {
-			return String.valueOf(number);
 		}
 	}
 

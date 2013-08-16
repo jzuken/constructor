@@ -1,7 +1,6 @@
 package com.example.adminshop;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -214,7 +213,8 @@ public class MainActivity extends PinSupportNetworkActivity {
 				if (result != null) {
 					try {
 						JSONObject obj = new JSONObject(result);
-						date.setText(getFormatDate(Long.parseLong(obj.getString("date"))));
+						date.setText(obj.getString("date"));
+						
 						totalPrice.setText("$" + obj.getString("total"));
 						user.setText(obj.getString("title") + " " + obj.getString("firstname") + " "
 								+ obj.getString("lastname"));
@@ -256,22 +256,6 @@ public class MainActivity extends PinSupportNetworkActivity {
 		};
 
 		dataRequester.execute("http://54.213.38.9/xcart/api.php?request=last_order");
-	}
-
-	private String getFormatDate(Long seconds) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTimeInMillis(seconds * 1000L);
-		return dateNumber(calendar.get(Calendar.DAY_OF_MONTH)) + "/" + dateNumber(calendar.get(Calendar.MONTH) + 1)
-				+ "/" + calendar.get(Calendar.YEAR) + " " + dateNumber(calendar.get(Calendar.HOUR_OF_DAY)) + ":"
-				+ dateNumber(calendar.get(Calendar.MINUTE));
-	}
-
-	private String dateNumber(int number) {
-		if (number < 10) {
-			return "0" + String.valueOf(number);
-		} else {
-			return String.valueOf(number);
-		}
 	}
 
 	private String getStatusBySymbol(StatusSymbols symbol) {
