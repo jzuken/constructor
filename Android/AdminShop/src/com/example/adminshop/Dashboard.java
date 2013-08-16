@@ -67,7 +67,10 @@ public class Dashboard extends PinSupportNetworkActivity {
 		sellersTabHost.setOnTabChangedListener(new OnTabChangeListener() {
 			public void onTabChanged(String tabId) {
 				topSellersPeriod = periodIdByTag(tabId);
-				updateTopSellersData();
+				if (!isTopProductsDownloading) {
+					clearTopSellersTable();
+					setProductsToTable();
+				}
 			}
 		});
 
@@ -86,7 +89,10 @@ public class Dashboard extends PinSupportNetworkActivity {
 		categoriesTabHost.setOnTabChangedListener(new OnTabChangeListener() {
 			public void onTabChanged(String tabId) {
 				topCategoriesPeriod = periodIdByTag(tabId);
-				updateTopCategoriesData();
+				if (!isTopCategoriesDownloading) {
+					clearTopCategoriesTable();
+					setCategoriesToTable();
+				}
 			}
 		});
 
@@ -347,54 +353,17 @@ public class Dashboard extends PinSupportNetworkActivity {
 	}
 
 	private void updateTopSellersData() {
-		topSellersTable.clearTable();
-		noProducts.setText("");
+		synchronized (topProductsLock) {
+			isTopProductsDownloading = true;
+		}
+		clearTopSellersTable();
 		topSellersPrBar.setVisibility(View.VISIBLE);
 		GetRequester dataRequester = new GetRequester() {
 			protected void onPostExecute(String result) {
 				if (result != null) {
 					try {
-						JSONObject obj = new JSONObject(result);
-						JSONArray currentPeriodArray = new JSONArray();
-						switch (topSellersPeriod) {
-						case 1:
-							if (obj.optString("last_login").equals("none")) {
-								noProducts.setText("No products sold during this period");
-							} else {
-								currentPeriodArray = obj.getJSONArray("last_login");
-							}
-							break;
-						case 2:
-							if (obj.optString("today").equals("none")) {
-								noProducts.setText("No products sold during this period");
-							} else {
-								currentPeriodArray = obj.getJSONArray("today");
-							}
-							break;
-						case 3:
-							if (obj.optString("week").equals("none")) {
-								noProducts.setText("No products sold during this period");
-							} else {
-								currentPeriodArray = obj.getJSONArray("week");
-							}
-							break;
-						case 4:
-							if (obj.optString("month").equals("none")) {
-								noProducts.setText("No products sold during this period");
-							} else {
-								currentPeriodArray = obj.getJSONArray("month");
-							}
-							break;
-						default:
-							break;
-						}
-
-						for (int i = 0; i < currentPeriodArray.length(); i++) {
-							JSONObject currentProduct = currentPeriodArray.getJSONObject(i);
-							topSellersTable.addPositionToTable(currentProduct.getString("product"),
-									currentProduct.getString("count"));
-						}
-
+						currentTopProductsData = new JSONObject(result);
+						setProductsToTable();
 					} catch (JSONException e) {
 						e.printStackTrace();
 					}
@@ -404,61 +373,78 @@ public class Dashboard extends PinSupportNetworkActivity {
 					}
 				}
 				topSellersPrBar.setVisibility(View.GONE);
+				synchronized (topProductsLock) {
+					isTopProductsDownloading = false;
+				}
 			}
 		};
 
 		dataRequester.execute("http://54.213.38.9/xcart/api.php?request=top_products");
 	}
 
+	private void setProductsToTable() {
+		try {
+			JSONArray currentPeriodArray = new JSONArray();
+			switch (topSellersPeriod) {
+			case 1:
+				if (currentTopProductsData.optString("last_login").equals("none")) {
+					noProducts.setText("No products sold during this period");
+				} else {
+					currentPeriodArray = currentTopProductsData.getJSONArray("last_login");
+				}
+				break;
+			case 2:
+				if (currentTopProductsData.optString("today").equals("none")) {
+					noProducts.setText("No products sold during this period");
+				} else {
+					currentPeriodArray = currentTopProductsData.getJSONArray("today");
+				}
+				break;
+			case 3:
+				if (currentTopProductsData.optString("week").equals("none")) {
+					noProducts.setText("No products sold during this period");
+				} else {
+					currentPeriodArray = currentTopProductsData.getJSONArray("week");
+				}
+				break;
+			case 4:
+				if (currentTopProductsData.optString("month").equals("none")) {
+					noProducts.setText("No products sold during this period");
+				} else {
+					currentPeriodArray = currentTopProductsData.getJSONArray("month");
+				}
+				break;
+			default:
+				break;
+			}
+
+			for (int i = 0; i < currentPeriodArray.length(); i++) {
+				JSONObject currentProduct = currentPeriodArray.getJSONObject(i);
+				topSellersTable.addPositionToTable(currentProduct.getString("product"),
+						currentProduct.getString("count"));
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void clearTopSellersTable() {
+		topSellersTable.clearTable();
+		noProducts.setText("");
+	}
+
 	private void updateTopCategoriesData() {
-		topCategoriesTable.clearTable();
-		noCategories.setText("");
+		synchronized (topCategoriesLock) {
+			isTopCategoriesDownloading = true;
+		}
+		clearTopCategoriesTable();
 		topCategoriesPrBar.setVisibility(View.VISIBLE);
 		GetRequester dataRequester = new GetRequester() {
 			protected void onPostExecute(String result) {
 				if (result != null) {
 					try {
-						JSONObject obj = new JSONObject(result);
-						JSONArray currentPeriodArray = new JSONArray();
-						switch (topCategoriesPeriod) {
-						case 1:
-							if (obj.optString("last_login").equals("none")) {
-								noCategories.setText("No categories statistic during this period");
-							} else {
-								currentPeriodArray = obj.getJSONArray("last_login");
-							}
-							break;
-						case 2:
-							if (obj.optString("today").equals("none")) {
-								noCategories.setText("No categories statistic during this period");
-							} else {
-								currentPeriodArray = obj.getJSONArray("today");
-							}
-							break;
-						case 3:
-							if (obj.optString("week").equals("none")) {
-								noCategories.setText("No categories statistic during this period");
-							} else {
-								currentPeriodArray = obj.getJSONArray("week");
-							}
-							break;
-						case 4:
-							if (obj.optString("month").equals("none")) {
-								noCategories.setText("No categories statistic during this period");
-							} else {
-								currentPeriodArray = obj.getJSONArray("month");
-							}
-							break;
-						default:
-							break;
-						}
-
-						for (int i = 0; i < currentPeriodArray.length(); i++) {
-							JSONObject currentCategory = currentPeriodArray.getJSONObject(i);
-							topCategoriesTable.addPositionToTable(currentCategory.getString("category"),
-									currentCategory.getString("count"));
-						}
-
+						currentTopCategoriesData = new JSONObject(result);
+						setCategoriesToTable();
 					} catch (JSONException e) {
 						e.printStackTrace();
 					}
@@ -468,10 +454,63 @@ public class Dashboard extends PinSupportNetworkActivity {
 					}
 				}
 				topCategoriesPrBar.setVisibility(View.GONE);
+				synchronized (topCategoriesLock) {
+					isTopCategoriesDownloading = false;
+				}
 			}
 		};
 
 		dataRequester.execute("http://54.213.38.9/xcart/api.php?request=top_categories");
+	}
+	
+	private void setCategoriesToTable() {
+		try {
+		JSONArray currentPeriodArray = new JSONArray();
+		switch (topCategoriesPeriod) {
+		case 1:
+			if (currentTopCategoriesData.optString("last_login").equals("none")) {
+				noCategories.setText("No categories statistic during this period");
+			} else {
+				currentPeriodArray = currentTopCategoriesData.getJSONArray("last_login");
+			}
+			break;
+		case 2:
+			if (currentTopCategoriesData.optString("today").equals("none")) {
+				noCategories.setText("No categories statistic during this period");
+			} else {
+				currentPeriodArray = currentTopCategoriesData.getJSONArray("today");
+			}
+			break;
+		case 3:
+			if (currentTopCategoriesData.optString("week").equals("none")) {
+				noCategories.setText("No categories statistic during this period");
+			} else {
+				currentPeriodArray = currentTopCategoriesData.getJSONArray("week");
+			}
+			break;
+		case 4:
+			if (currentTopCategoriesData.optString("month").equals("none")) {
+				noCategories.setText("No categories statistic during this period");
+			} else {
+				currentPeriodArray = currentTopCategoriesData.getJSONArray("month");
+			}
+			break;
+		default:
+			break;
+		}
+
+		for (int i = 0; i < currentPeriodArray.length(); i++) {
+			JSONObject currentCategory = currentPeriodArray.getJSONObject(i);
+			topCategoriesTable.addPositionToTable(currentCategory.getString("category"),
+					currentCategory.getString("count"));
+		}} catch (JSONException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void clearTopCategoriesTable() {
+		topCategoriesTable.clearTable();
+		noCategories.setText("");
 	}
 
 	private TextView id;
@@ -504,4 +543,10 @@ public class Dashboard extends PinSupportNetworkActivity {
 	private int topCategoriesPeriod;
 	private int currentPage;
 	private final int ordersInfoCloumnCount = 5;
+	private JSONObject currentTopProductsData;
+	private boolean isTopProductsDownloading;
+	private Object topProductsLock = new Object();
+	private JSONObject currentTopCategoriesData;
+	private boolean isTopCategoriesDownloading;
+	private Object topCategoriesLock = new Object();
 }
