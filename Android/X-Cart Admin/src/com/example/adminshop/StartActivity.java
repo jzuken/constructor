@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 public class StartActivity extends Activity {
 
@@ -21,10 +22,19 @@ public class StartActivity extends Activity {
 		}
 		if (!(authorizationData.getBoolean("logged", false))) {
 			Intent intent = new Intent(this, Authorization.class);
+			intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
 			startActivity(intent);
 		} else {
 			Intent intent = new Intent(this, Unlock.class);
+			intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
 			startActivity(intent);
 		}
+		Log.d("start", "create");
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		Log.d("start", "destroy");
 	}
 }

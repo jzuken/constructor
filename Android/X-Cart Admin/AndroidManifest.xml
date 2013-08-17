@@ -25,9 +25,11 @@
         </activity>
         <activity
             android:name=".Unlock"
+            android:launchMode="singleTop"
             android:noHistory="true" />
         <activity
             android:name=".Authorization"
+            android:launchMode="singleTop"
             android:noHistory="true" />
         <activity
             android:name=".MainActivity"
