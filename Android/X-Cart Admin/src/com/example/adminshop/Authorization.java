@@ -50,23 +50,27 @@ public class Authorization extends Activity {
 			e.printStackTrace();
 		}
 		if (authResult != null) {
-			try {
-				JSONObject obj = new JSONObject(authResult);
-				if (obj.optString("upload_status").equals("login success")) {
-					SharedPreferences authorizationData = getSharedPreferences("AuthorizationData", MODE_PRIVATE);
-					Editor editor = authorizationData.edit();
-					editor.putBoolean("logged", true);
-					editor.putString("sid", obj.getString("sid"));
-					editor.commit();
+			if (authResult.equals("")) {
+				Toast.makeText(this, "Incorrect email or password", Toast.LENGTH_SHORT).show();
+			} else {
+				try {
+					JSONObject obj = new JSONObject(authResult);
+					if (obj.optString("upload_status").equals("login success")) {
+						SharedPreferences authorizationData = getSharedPreferences("AuthorizationData", MODE_PRIVATE);
+						Editor editor = authorizationData.edit();
+						editor.putBoolean("logged", true);
+						editor.putString("sid", obj.getString("sid"));
+						editor.commit();
 
-					Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show();
-					Intent intent = new Intent(this, MainActivity.class);
-					startActivity(intent);
-				} else {
-					Toast.makeText(this, "Incorrect email or password", Toast.LENGTH_SHORT).show();
+						Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show();
+						Intent intent = new Intent(this, MainActivity.class);
+						startActivity(intent);
+					} else {
+						Toast.makeText(this, "Incorrect email or password", Toast.LENGTH_SHORT).show();
+					}
+				} catch (JSONException e) {
+					e.printStackTrace();
 				}
-			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 		} else {
 			Toast.makeText(getBaseContext(),
