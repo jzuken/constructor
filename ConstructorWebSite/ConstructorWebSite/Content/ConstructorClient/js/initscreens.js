@@ -24,7 +24,7 @@ var initScreens = function() {
                         display: value ? "none" : "block"
                     });
 
-                    return screens.items[id].disabled;
+                    screens.items[id].disabled = value;
                 },
                 loadMainButton: function(id) {
                     var $el = this.$view.find(".main-button[screen=" + id + "]");
@@ -37,85 +37,111 @@ var initScreens = function() {
                     }
                 },
                 selectedButton: "",
-                swapMainButtons: function(id1, id2) {
-                    if (id1 == id2) {
-                        return;
-                    }
+                moveInto: function(id, before) {
+                    var newItems = [];
 
-                    var number1 = null;
-                    var number2 = null;
-
-                    for (var i = 0, l = this.items.length; (number1 == null || number2 == null) && i < l; ++i) {
-                        var screenId = this.items[i];
-                
-                        switch (screenId) {
-                        case id1:
-                            number1 = i;
+                    var findedId = false;
+                    for (var i = 0, l = this.items.length; i < l; ++i) {
+                        switch(this.items[i]) {
+                        case id:
+                            findedId = true;
                             break;
-                        case id2:
-                            number2 = i;
+                        case before:
+                            if (findedId) {
+                                newItems.push(before);
+                                newItems.push(id);
+                            } else {
+                                newItems.push(id);
+                                newItems.push(before);
+                            }
                             break;
                         default:
+                            newItems.push(this.items[i]);
                             break;
                         }
                     }
 
-                    if (number1 == null || number2 == null) {
-                        return;
-                    }
+                    this.items = newItems;
 
-                    var t = this.items[number1];
-                    this.items[number1] = this.items[number2];
-                    this.items[number2] = t;
-
-                    var $el1 = this.$view.find(".main-button[screen=" + id1 + "]");
-                    var $el2 = this.$view.find(".main-button[screen=" + id2 + "]");
-
-                    $el1.attr('screen', id2);
-                    $el2.attr('screen', id1);
-
-                    this.loadMainButton(id1);
-                    this.loadMainButton(id2);
-
-                    this.loadSelectedButton();
+                    this.renderButtons();
                 },
-                mainButtonToUp: function() {
-                    var idToSwap = null;
+                renderButtons: function() {
+                    this.$view.find(".main-button").remove();
+                    this.$editor.find(".removed-button").remove();
 
-                    var finded = false;
-                    for (var i = 0, l = this.items.length; !finded && i < l; ++i) {
+                    var me = this;
+
+                    for (var i = 0, l = this.items.length; i < l; ++i) {
                         var screenId = this.items[i];
 
-                        if (screenId == this.selectedButton) {
-                            finded = true;
+                        if (this.getScreenDisabled(screenId)) {
+                            this.$editor.find("#removed-buttons").append("<div class=\"removed-button\" screen=\"" + screenId + "\">" + this.getScreenButtonText(screenId) + "</div>");
+
+                            this.$editor.find(".removed-button[screen=" + screenId + "]").button();
+                            this.$editor.find(".removed-button[screen=" + screenId + "]").click(function() {
+                                me.setScreenDisabled(screenId, false);
+                                me.renderButtons();
+
+                                $(this).remove();
+                            });
                         } else {
-                            if (!this.getScreenDisabled(screenId)) {
-                                idToSwap = screenId;
-                            }
+                            var style = this.getScreenButtonStyle(screenId);
+
+                            this.$view.append("<div class='main-button main-button-style-" + style + "' screen='" + screenId + "' button-style='" + style + "'></div>");
                         }
                     }
 
-                    this.swapMainButtons(this.selectedButton, idToSwap);
-                },
-                mainButtonToDown: function() {
-                    var idToSwap = null;
+                    this.$view.find(".main-button").each(function() {
+                        me.loadMainButton($(this).attr("screen"));
+                    });
 
-                    var findedSelected = false;
-                    for (var i = 0, l = this.items.length; idToSwap == null && i < l; ++i) {
-                        var screenId = this.items[i];
+                    this.$view.find(".main-button").mousedown(function() {
+                        me.loadSelectedButton($(this).attr("screen"));
+                    });
 
-                        if (findedSelected) {
-                            if (!this.getScreenDisabled(screenId)) {
-                                idToSwap = screenId;
-                            }
-                        } else {
-                            if (screenId == this.selectedButton) {
-                                findedSelected = true;
-                            }
+                    if (!this.selectedButton || this.getScreenDisabled(this.selectedButton)) {
+                        if (this.items.length > 0) {
+                            this.loadSelectedButton(this.items[0]);
                         }
+                    } else {
+                        this.loadSelectedButton(this.selectedButton);
                     }
 
-                    this.swapMainButtons(this.selectedButton, idToSwap);
+                    this.$view.find(".main-button").draggable({
+                        start: function() {
+                            $(this).addClass("drag");
+                        },
+                        stop: function() {
+                            $(this).removeClass("drag");
+                            
+                            var dragOffset = $(this).offset();
+                            var centerX = dragOffset.left + 60;
+                            var centerY = dragOffset.top + 60;
+                            
+                            var screenToReplace;
+                            me.$view.find(".main-button").each(function() {
+                                var screenId = $(this).attr("screen");
+                                if (screenId !== me.selectedButton) {
+                                    var offset = $(this).offset();
+
+                                    // 120 = width(height) + padding
+                                    if (offset.left < centerX && offset.left + 120 > centerX &&
+                                        offset.top < centerY && offset.top + 120 > centerY) {
+                                        screenToReplace = screenId;
+                                    }
+                                }
+                            })
+
+                            if (screenToReplace) {
+                                me.moveInto(me.selectedButton, screenToReplace);
+                            } else {
+                                $(this).css({
+                                    top: "0px",
+                                    left: "0px"
+                                });
+                            }
+                        }
+                    });
                 },
                 loadSelectedButton: function(id) {
                     if (typeof(id) != 'undefined') {
@@ -142,7 +168,7 @@ var initScreens = function() {
                     this.setScreenDisabled(this.selectedButton, true);
 
                     var $el = this.$view.find(".main-button[screen=" + this.selectedButton + "]");
-                    $el.fadeOut();
+                    $el.remove();
                     this.$editor.find("#removed-buttons").append("<div class='removed-button' screen='" + this.selectedButton + "'>" + this.getScreenButtonText(this.selectedButton) + "</div>");
 
                     var me = this;
@@ -150,7 +176,7 @@ var initScreens = function() {
                     this.$editor.find(".removed-button[screen=" + this.selectedButton + "]").button();
                     this.$editor.find(".removed-button[screen=" + this.selectedButton + "]").click(function() {
                         me.setScreenDisabled(me.selectedButton, false);
-                        $el.fadeIn();
+                        me.renderButtons();
 
                         $(this).remove();
                     });
@@ -159,42 +185,7 @@ var initScreens = function() {
                 }
             },
             loadScreen: function() {
-                this.$view.find(".main-button").remove();
-                this.$editor.find(".removed-button").remove();
-
-                var me = this;
-
-                for (var i = 0, l = this.params.items.length; i < l; ++i) {
-                    var screenId = this.params.items[i];
-
-                    var style = this.params.getScreenButtonStyle(screenId);
-                    
-                    this.$view.append("<div class='main-button main-button-style-" + style + "' screen='" + screenId + "' button-style='" + style + "'></div>");
-
-                    if (this.params.getScreenDisabled(screenId)) {
-                        this.$editor.find("#removed-buttons").append("<div class=\"removed-button\" screen=\"" + screenId + "\">" + this.getScreenButtonText() + "</div>");
-
-                        this.$editor.find(".removed-button[screen=" + screenId + "]").button();
-                        this.$editor.find(".removed-button[screen=" + screenId + "]").click(function() {
-                            me.params.setScreenDisabled(screenId, false);
-                            me.$view.find(".main-button[screen=" + screenId + "]").fadeIn();
-
-                            $(this).remove();
-                        });
-                    }
-                }
-
-                this.$view.find(".main-button").each(function() {
-                    me.params.loadMainButton($(this).attr("screen"));
-                });
-
-                this.$view.find(".main-button").click(function() {
-                    me.params.loadSelectedButton($(this).attr("screen"));
-                });
-
-                if (this.params.items.length > 0) {
-                    this.params.loadSelectedButton(this.params.items[0]);
-                }
+                this.params.renderButtons();
             },
             initView: function($el) {
                 this.$view = $el;
@@ -210,9 +201,6 @@ var initScreens = function() {
                                '<input id="main-button-text" maxlength="10"></input>' +
                                '<div id="main-button-styles-panel"></div>' +
                                '<div>' +
-                                   '<h3>Положение конпки</h3>' +
-                                   '<div id="main-up-button">Выше</div>' +
-                                   '<div id="main-down-button">Ниже</div>' +
                                    '<div id="main-remove-button">Удалить</div>' +
                                '</div>' +
                            '</div>' +
@@ -220,19 +208,9 @@ var initScreens = function() {
                                '<h2>Удалённые кнопки</h2>' +
                            '</div>');
 
-                this.$editor.find("#main-up-button").button();
-                this.$editor.find("#main-down-button").button();
                 this.$editor.find("#main-remove-button").button();
 
                 var params = this.params;
-
-                this.$editor.find("#main-up-button").click(function() {
-                    params.mainButtonToUp();
-                });
-
-                this.$editor.find("#main-down-button").click(function() {
-                    params.mainButtonToDown();
-                });
 
                 this.$editor.find("#main-remove-button").click(function() {
                     params.removeSelectedButton();
