@@ -3,47 +3,37 @@ var initScreens = function() {
             name: "Главный экран",
             params: {
                 items: [],
-                getScreen: function(id) {
-                    if (id == "main") {
-                        return null;
-                    }
+                getScreenButtonText: function(id) {
+                    return screens.items[id].buttonText;
+                },
+                setScreenButtonText: function(id, value) {
+                    screens.items[id].buttonText = value;
+                },
+                getScreenButtonStyle: function(id) {
+                    return screens.items[id].buttonStyle;
+                },
+                setScreenButtonStyle: function(id, value) {
+                    screens.items[id].buttonStyle = value;
+                },
+                getScreenDisabled: function(id) {
+                    return screens.items[id].disabled;
+                },
+                setScreenDisabled: function(id, value) {
+                    var $screenButton = $("#screens [screen=" + id + "]");
+                    $screenButton.css({
+                        display: value ? "none" : "block"
+                    });
 
-                    for (var key in this.items) {
-                        var screen = this.items[key];
-
-                        if (screen.id == id) {
-                            return screen;
-                        }
-                    }
-
-                    return null;
+                    return screens.items[id].disabled;
                 },
                 loadMainButton: function(id) {
-                    var screen = this.getScreen(id);
                     var $el = this.$view.find(".main-button[screen=" + id + "]");
 
-                    if (screen.disabled) {
+                    if (this.getScreenDisabled(id)) {
                         $el.hide();
                     } else {
-                        if (screen.hasButton) {
-                            $el.show();
-
-                            var imgSrc = "";
-                            if (screen.buttonImage) {
-                                imgSrc = ' src="' + screen.buttonImageSrc + '"';
-                            }
-
-                            var imgBlock = "<img" + imgSrc + "></img>";
-                            var textBlock = '<div class="main-button-text">' + screen.buttonText + '</div>';
-
-                            $el.html(imgBlock + textBlock);
-                            $el.css({
-                                'color': "#" + screen.buttonTextColor,
-                                'background-color': "#" + screen.buttonBgColor
-                            });
-                        } else {
-                            $el.hide();
-                        }
+                        $el.show();
+                        $el.text(this.getScreenButtonText(id));
                     }
                 },
                 selectedButton: "",
@@ -56,9 +46,9 @@ var initScreens = function() {
                     var number2 = null;
 
                     for (var i = 0, l = this.items.length; (number1 == null || number2 == null) && i < l; ++i) {
-                        var screen = this.items[i];
+                        var screenId = this.items[i];
                 
-                        switch (screen.id) {
+                        switch (screenId) {
                         case id1:
                             number1 = i;
                             break;
@@ -94,13 +84,13 @@ var initScreens = function() {
 
                     var finded = false;
                     for (var i = 0, l = this.items.length; !finded && i < l; ++i) {
-                        var screen = this.items[i];
+                        var screenId = this.items[i];
 
-                        if (screen.id == this.selectedButton) {
+                        if (screenId == this.selectedButton) {
                             finded = true;
                         } else {
-                            if (!screen.disabled && screen.hasButton) {
-                                idToSwap = screen.id;
+                            if (!this.getScreenDisabled(screenId)) {
+                                idToSwap = screenId;
                             }
                         }
                     }
@@ -112,14 +102,14 @@ var initScreens = function() {
 
                     var findedSelected = false;
                     for (var i = 0, l = this.items.length; idToSwap == null && i < l; ++i) {
-                        var screen = this.items[i];
+                        var screenId = this.items[i];
 
                         if (findedSelected) {
-                            if (!screen.disabled && screen.hasButton) {
-                                idToSwap = screen.id;
+                            if (!this.getScreenDisabled(screenId)) {
+                                idToSwap = screenId;
                             }
                         } else {
-                            if (screen.id == this.selectedButton) {
+                            if (screenId == this.selectedButton) {
                                 findedSelected = true;
                             }
                         }
@@ -132,65 +122,34 @@ var initScreens = function() {
                         this.selectedButton = id;
                     }
 
+                    var $button = this.$view.find(".main-button[screen=" + this.selectedButton + "]");
+
                     this.$view.find(".main-button").removeClass("selected");
-                    this.$view.find(".main-button[screen=" + this.selectedButton + "]").addClass("selected");
+                    $button.addClass("selected");
 
-                    var screen = this.getScreen(this.selectedButton);
+                    this.$editor.find("#main-button-text").val(this.getScreenButtonText(this.selectedButton));
 
-                    this.$editor.find("#main-button-text").val(screen.buttonText);
-                    this.$editor.find("#main-button-bg-color").ColorPickerSetColor("#" + screen.buttonBgColor);
-                    this.$editor.find("#main-button-text-color").ColorPickerSetColor("#" + screen.buttonTextColor);
+                    var me = this;
+                    this.stylesPanel.setEl($button, function(style) {
+                        me.setScreenButtonStyle(me.selectedButton, style);
+                    });
                 },
                 changeSelectedButtonText: function(text) {
-                    this.getScreen(this.selectedButton).buttonText = text;
-                    this.$view.find(".main-button[screen=" + this.selectedButton + "] .main-button-text").text(text);
-                },
-                changeSelectedButtonBgColor: function(hex) {
-                    this.getScreen(this.selectedButton).buttonBgColor = hex;
-
-                    this.$view.find(".main-button[screen=" + this.selectedButton + "]").css({
-                        'background-color': "#" + hex
-                    });
-                },
-                changeSelectedButtonTextColor: function(hex) {
-                    this.getScreen(this.selectedButton).buttonTextColor = hex;
-
-                    this.$view.find(".main-button[screen=" + this.selectedButton + "]").css({
-                        'color': "#" + hex
-                    });
-                },
-                loadButtonBgImage: function(file) {
-                    if (!file.type.match('image.*')) {
-                        return;
-                    }
-
-                    var screen = this.getScreen(this.selectedButton);
-                    screen.buttonImage = file;
-
-                    var reader = new FileReader();
-                    var me = this;
-                    reader.onload = (function(theFile) {
-                        return function(e) {
-                            var src = e.target.result;
-
-                            screen.buttonImageSrc = e.target.result;
-                            me.$view.find(".main-button[screen=" + me.selectedButton + "] img").attr('src', src);
-                        };
-                    })(file);
-
-                    reader.readAsDataURL(file);
+                    this.setScreenButtonText(this.selectedButton, text);
+                    this.$view.find(".main-button[screen=" + this.selectedButton + "]").text(text);
                 },
                 removeSelectedButton: function() {
-                    var screen = this.getScreen(this.selectedButton);
-                    screen.hasButton = false;
+                    this.setScreenDisabled(this.selectedButton, true);
 
                     var $el = this.$view.find(".main-button[screen=" + this.selectedButton + "]");
                     $el.fadeOut();
-                    this.$editor.find("#removed-buttons").append("<div class='removed-button' screen='" + this.selectedButton + "'>" + screen.buttonText + "</div>");
+                    this.$editor.find("#removed-buttons").append("<div class='removed-button' screen='" + this.selectedButton + "'>" + this.getScreenButtonText(this.selectedButton) + "</div>");
+
+                    var me = this;
 
                     this.$editor.find(".removed-button[screen=" + this.selectedButton + "]").button();
                     this.$editor.find(".removed-button[screen=" + this.selectedButton + "]").click(function() {
-                        screen.hasButton = true;
+                        me.setScreenDisabled(me.selectedButton, false);
                         $el.fadeIn();
 
                         $(this).remove();
@@ -206,19 +165,19 @@ var initScreens = function() {
                 var me = this;
 
                 for (var i = 0, l = this.params.items.length; i < l; ++i) {
-                    var screen = this.params.items[i];
+                    var screenId = this.params.items[i];
 
-                    if (!screen.disabled) {
-                        this.$view.append("<div class='main-button' screen='" + screen.id + "'></div>");
-                    }
+                    var style = this.params.getScreenButtonStyle(screenId);
+                    
+                    this.$view.append("<div class='main-button main-button-style-" + style + "' screen='" + screenId + "' button-style='" + style + "'></div>");
 
-                    if (!screen.hasButton) {
-                        this.$editor.find("#removed-buttons").append("<div class=\"removed-button\" screen=\"" + screen.id + "\">" + screen.buttonText + "</div>");
+                    if (this.params.getScreenDisabled(screenId)) {
+                        this.$editor.find("#removed-buttons").append("<div class=\"removed-button\" screen=\"" + screenId + "\">" + this.getScreenButtonText() + "</div>");
 
-                        this.$editor.find(".removed-button[screen=" + screen.id + "]").button();
-                        this.$editor.find(".removed-button[screen=" + screen.id + "]").click(function() {
-                            screen.hasButton = true;
-                            me.$view.find(".main-button[screen=" + screen.id + "]").fadeIn();
+                        this.$editor.find(".removed-button[screen=" + screenId + "]").button();
+                        this.$editor.find(".removed-button[screen=" + screenId + "]").click(function() {
+                            me.params.setScreenDisabled(screenId, false);
+                            me.$view.find(".main-button[screen=" + screenId + "]").fadeIn();
 
                             $(this).remove();
                         });
@@ -234,7 +193,7 @@ var initScreens = function() {
                 });
 
                 if (this.params.items.length > 0) {
-                    this.params.loadSelectedButton(this.params.items[0].id);
+                    this.params.loadSelectedButton(this.params.items[0]);
                 }
             },
             initView: function($el) {
@@ -248,21 +207,8 @@ var initScreens = function() {
                 this.$editor.append('<div class="controls properties-block">' +
                                '<h2>Свойства кнопки</h2>' +
                                '<label for="main-button-text">Текст кнопки</label>' +
-                               '<input id="main-button-text"></input>' +
-                               '<div class="colors">' +
-                                   '<div>' +
-                                       'Фоновый рисунок кнопки' +
-                                       '<input type="file" id="main-button-bg"></input>' +
-                                   '</div>' +
-                                   '<div>' +
-                                       'Цвет фона кнопки' +
-                                       '<div id="main-button-bg-color" class="color-selector"></div>' +
-                                   '</div>' +
-                                   '<div>' +
-                                       'Цвет текста кнопки' +
-                                       '<div id="main-button-text-color" class="color-selector"></div>' +
-                                   '</div>' +
-                               '</div>' +
+                               '<input id="main-button-text" maxlength="10"></input>' +
+                               '<div id="main-button-styles-panel"></div>' +
                                '<div>' +
                                    '<h3>Положение конпки</h3>' +
                                    '<div id="main-up-button">Выше</div>' +
@@ -292,71 +238,15 @@ var initScreens = function() {
                     params.removeSelectedButton();
                 });
 
-                this.$editor.find("#main-button-bg-color").ColorPicker({
-                    onChange: function (hsb, hex, rgb) {
-                        params.changeSelectedButtonBgColor(hex);
-                    }
-                });
-
-                this.$editor.find("#main-button-text-color").ColorPicker({
-                    onChange: function (hsb, hex, rgb) {
-                        params.changeSelectedButtonTextColor(hex);
-                    }
-                });
-
-                this.$editor.find("#main-button-bg").change(function(e) {
-                    var file = e.target.files[0];
-
-                    params.loadButtonBgImage(file);
-                });
+                params.stylesPanel = new MainButtonStylesPanel(this.$editor.find("#main-button-styles-panel"));
 
                 this.$editor.find("#main-button-text").keyup(function() {
                     params.changeSelectedButtonText($(this).val());
                 });
 
-
                 this.$editor.find("#main-button-text").change(function() {
                     params.changeSelectedButtonText($(this).val());
                 });
-            },
-            serialize: function() {
-                var res = [];
-
-                var items = this.params.items;
-                for (var i = 0, l = items.length; i < l; ++i) {
-                    var item = items[i];
-
-                    if (!item.disabled && item.hasButton) {
-                        res.push({
-                            id: item.id,
-                            bgColor: item.buttonBgColor,
-                            bgColorRGB: hexToRGB(item.buttonBgColor),
-                            textColor: item.buttonTextColor,
-                            textColorRGB: hexToRGB(item.buttonTextColor),
-                            text: item.buttonText
-                            // TO DO: service for send images
-                        });
-                    }
-                }
-
-                return res;
-            },
-            loadSaved: function(data) {
-                for (var i = 0, l = data.length; i < l; ++i) {
-                    var dataItem = data[i];
-
-                    this.params.swapMainButtons(dataItem.id, this.params.items[i].id);
-
-                    var item = this.params.items[i];
-                    item.hasButton = true;
-                    item.buttonBgColor = dataItem.bgColor;
-                    item.buttonTextColor = dataItem.textColor;
-                    item.buttonText = dataItem.text;
-                }
-
-                for (var i = data.length, l = this.params.items.length; i < l; ++i) {
-                    this.params.items[i].hasButton = false;
-                }
             }
         })
     );
@@ -364,94 +254,12 @@ var initScreens = function() {
     screens.addScreen('stats', new Screen({
             name: "Статистика", 
             params: {
-                aboutOrders: true,
-                lastOrder: true,
-                leadersOfSales: true,
-                technicalInfo: true,
             },
             loadScreen: function() {
-                var params = this.params;
-                this.$editor.find("input").each(function() {
-                    $(this).prop("checked", params[$(this).attr('param')]);
-                });
-
-                this.$view.find(".stats-block").each(function() {
-                    if (params[$(this).attr('param')]) {
-                        $(this).css({
-                            display: 'block'
-                        });
-                    } else {
-                        $(this).css({
-                            display: 'none'
-                        });
-                    }
-                });
             },
             initView: function($el) {
-                this.$view = $el;
-
-                this.$view.html('<div class="stats-block" param="aboutOrders">' +
-                               '<img src="images/stats/about-orders.png">' +
-                           '</div>' +
-                           '<div class="stats-block" param="lastOrder">' +
-                               '<img src="images/stats/last-order.png">' +
-                           '</div>' +
-                           '<div class="stats-block" param="leadersOfSales">' +
-                               '<img src="images/stats/leaders-of-sales.png">' +
-                           '</div>' +
-                           '<div class="stats-block" param="technicalInfo">' +
-                               '<img src="images/stats/technical-info.png">' +
-                           '</div>');
-
-                this.$view.find(".stats-block").height(126);
             },
             initEditor: function($el) {
-                this.$editor = $el;
-
-                this.$editor.html('<div class="properties-block">' +
-                               '<h2>Выбор свойств для отображения</h2>' +
-                               '<div>' +
-                                   '<input type="checkbox" param="aboutOrders" checked>Общая информация о заказах' +
-                               '</div>' +
-                               '<div>' +
-                                   '<input type="checkbox" param="lastOrder" checked>Последний заказ' +
-                               '</div>' +
-                               '<div>' +
-                                   '<input type="checkbox" param="leadersOfSales" checked>Лидеры продаж' +
-                               '</div>' +
-                               '<div>' +
-                                   '<input type="checkbox" param="technicalInfo" checked>Техническая информация о магазине' +
-                               '</div>' +
-                           '</div>');
-
-                var params = this.params;
-                this.$editor.find("input").change(function() {
-                    var param = $(this).attr('param');
-                    var value = $(this).prop("checked");
-                    params[param] = value;
-
-                    if (value) {
-                        $(".stats-block[param=" + param + "]").fadeIn();
-                    } else {
-                        $(".stats-block[param=" + param + "]").fadeOut();
-                    }
-                });
-            },
-            serialize: function() {
-                return {
-                    aboutOrders: this.params.aboutOrders,
-                    lastOrder: this.params.lastOrder,
-                    leadersOfSales: this.params.leadersOfSales,
-                    technicalInfo: this.params.technicalInfo
-                };
-            },
-            loadSaved: function(data) {
-                this.params = {
-                    aboutOrders: data.aboutOrders,
-                    lastOrder: data.lastOrder,
-                    leadersOfSales: data.leadersOfSales,
-                    technicalInfo: data.technicalInfo
-                }
             }
         })
     );
@@ -472,11 +280,6 @@ var initScreens = function() {
             },
             initEditor: function($el) {
                 this.$editor = $el;
-            },
-            serialize: function() {
-                return null;
-            },
-            loadSaved: function(data) {
             }
         })
     );
@@ -497,11 +300,6 @@ var initScreens = function() {
             },
             initEditor: function($el) {
                 this.$editor = $el;
-            },
-            serialize: function() {
-                return null;
-            },
-            loadSaved: function(data) {
             }
         })
     );
@@ -522,11 +320,6 @@ var initScreens = function() {
             },
             initEditor: function($el) {
                 this.$editor = $el;
-            },
-            serialize: function() {
-                return null;
-            },
-            loadSaved: function(data) {
             }
         })
     );
@@ -546,11 +339,6 @@ var initScreens = function() {
             },
             initEditor: function($el) {
                 this.$editor = $el;
-            },
-            serialize: function() {
-                return null;
-            },
-            loadSaved: function(data) {
             }
         })
     );

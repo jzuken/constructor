@@ -1,8 +1,3 @@
-#controls {
-    width: 860px;
-    height: 540px;
-}
-
 .phone {
     border: 1px solid #000;
     border-radius: 11px;
@@ -11,6 +6,7 @@
     width: 320px;
     height: 540px;
     padding: 15px;
+    float: right;
 }
 
 #phone-screen {
@@ -30,58 +26,32 @@
 }
 
 .center {
-    height: 600px;
+    height: 800px;
 }
 
 .main-button {
-    width: 156px;
-    height: 155px;
+    width: 120px;
+    height: 30px;
     float: left;
+    padding-top: 90px;
     background-color: black;
     color: white;
+    background-position: center 10px;
     text-align: center;
     border: 2px solid rgba(0, 0, 0, 0);
-    font-size: 20pt;
+    font-size: 16pt;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none; 
 }
 
 .main-button.selected {
     border: 2px solid #0C3;
 }
 
-.main-button img {
-    height: 100px;
-    width: 155px;
-}
-
 #screens div {
     width: 100%;
-}
-
-.chose-screen-trigger span {
-    display: block;
-    overflow: hidden;
-}
-
-.chose-screen-trigger input {
-    width: 100%;
-}
-
-.chose-screen-trigger a {
-    width: 23px;
-    height: 22px;
-    float: right;
-}
-
-.screen-enabled a {
-    background-image: url(../images/remove-screen.png);
-}
-
-.screen-disabled a {
-    background-image: url(../images/add-screen.png);
-}
-
-.screen-disabled input {
-    color: #AAAAAA;
 }
 
 #phone-screen .screen-name {

@@ -1,10 +1,4 @@
 var templates = {
-    choseScreenTrigger: function(id, name) {
-        return '<div screen="' + id + '" class="chose-screen-trigger screen-enabled">' +
-                    '<a href="javascript:void(0)"></a>' +
-                    '<span><input value="' + name + '"></input></span>' +
-                '</div>';
-    },
     screenView: function(id) {
         return "<div screen-view='" + id + "'><div class='screen-name'></div><div class='screen-controls'></div></div>";
     },

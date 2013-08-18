@@ -7,9 +7,8 @@
         <link rel='stylesheet' type='text/css' href='http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css'>
         <script type='text/javascript' src='./js/jquery-1.10.1.min.js'></script>
         <script type='text/javascript' src='http://code.jquery.com/ui/1.10.3/jquery-ui.js'></script>
-        <link rel="stylesheet" media="screen" type="text/css" href="./css/colorpicker.css" />
-        <script type="text/javascript" src="./js/colorpicker.js"></script>
         <script type='text/javascript' src='./js/util.js'></script>
+        <script type='text/javascript' src='./js/stylespanel.js'></script>
         <script type='text/javascript' src='./js/initscreens.js'></script>
         <script type='text/javascript' src='./js/templates.js'></script>
         <script type='text/javascript' src='./js/script.js'></script>
@@ -19,13 +18,10 @@
             <hgroup>
             <div id="steps">
                 <div class="step" step="0">
-                    <h1>ШАГ 1: ВЫБОР ЭКРАНОВ</h1>
+                    <h2>ШАГ 1: НАСТРОЙКА ЭКРАНОВ</h2>
                 </div>
                 <div class="step" step="1">
-                    <h2>ШАГ 2: НАСТРОЙКА ЭКРАНОВ</h2>
-                </div>
-                <div class="step" step="2">
-                    <h3>ШАГ 3: ОТПРАВКА ДАННЫХ НА СЕРВЕР</h3>
+                    <h3>ШАГ 2: ОТПРАВКА ДАННЫХ НА СЕРВЕР</h3>
                 </div>
             </div>
           </hgroup>
@@ -34,35 +30,22 @@
             <div id="controls" style="float: left;">
                 <div id="editors">
                     <div class="step-editor" step="0">
-                        <h2>Выберите нужные экраны</h2>
-                        <div id="chose-screens"></div>
-                    </div>
-                    <div class="step-editor" step="1">
                         <div id="screens">
                             <h2>Экраны</h2>
                         </div>
                         <div id="screen-editors">
                             <div class="colors properties-block">
                                 <h2>Общие свойства экрана</h2>
-                                <div>
-                                    <label for="screen-bg">Фоновый рисунок экрана</label>
-                                    <input type="file" id="screen-bg"></input>
-                                </div>
-                                <div>
-                                    Цвет фона экрана
-                                    <div id="screen-bg-color" class="color-selector"></div>
-                                </div>
-                                <div>
-                                    Цвет текста экрана
-                                    <div id="screen-text-color" class="color-selector"></div>
+                                <input id="screen-title" maxlength="25"></input>
+                                <div id="screen-styles-panel" class="screen-styles-panel">
                                 </div>
                             </div>
                         </div>
-                        <div class="phone" style="float: left;">
+                        <div class="phone">
                             <div id="phone-screen"></div>
                         </div>
                     </div>
-                    <div class="step-editor" step="2">
+                    <div class="step-editor" step="1">
                         <h3 class="send-status"></h2>
                         <div id="send-button">Отправить</div>
                     </div>
