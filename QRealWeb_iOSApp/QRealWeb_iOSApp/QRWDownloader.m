@@ -32,6 +32,8 @@
     } else {
         NSLog(@"Connection failed");
     }
+    
+//    NSURLProtocol
 }
 
 #pragma mark NSURLConnection methods
