@@ -91,7 +91,6 @@
 		7FBDFA2317AA7612004B6CB8 /* QRWProductInOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FBDFA2217AA7612004B6CB8 /* QRWProductInOrder.m */; };
 		7FBDFA2817AA7EDD004B6CB8 /* QRWProductsViewControllerForModalPresent.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FBDFA2617AA7EDD004B6CB8 /* QRWProductsViewControllerForModalPresent.m */; };
 		7FBDFA2917AA7EDD004B6CB8 /* QRWProductsViewControllerForModalPresent.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FBDFA2717AA7EDD004B6CB8 /* QRWProductsViewControllerForModalPresent.xib */; };
-		7FBDFA2B17AA8040004B6CB8 /* Exit.png in Resources */ = {isa = PBXBuildFile; fileRef = 7FBDFA2A17AA8040004B6CB8 /* Exit.png */; };
 		7FBDFA2F17AA81BE004B6CB8 /* QRWProductInLastOrderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FBDFA2E17AA81BE004B6CB8 /* QRWProductInLastOrderCell.m */; };
 		7FBDFA3117AA81F1004B6CB8 /* QRWProductInLastOrderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FBDFA3017AA81F0004B6CB8 /* QRWProductInLastOrderCell.xib */; };
 		7FBDFA3417AAA795004B6CB8 /* QRWOrdersStatisticCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FBDFA3317AAA795004B6CB8 /* QRWOrdersStatisticCell.xib */; };
@@ -157,6 +156,7 @@
 		968B17B717B0545D00D8D8C9 /* QRWDiscountEditFormViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 968B17B517B0545D00D8D8C9 /* QRWDiscountEditFormViewController.xib */; };
 		968BBC8E17BD689A004B4FE2 /* QRWProductsViewControllerForModalPresentOld.xib in Resources */ = {isa = PBXBuildFile; fileRef = 968BBC8D17BD689A004B4FE2 /* QRWProductsViewControllerForModalPresentOld.xib */; };
 		968BBC9017BD6A20004B4FE2 /* QRWDiscountEditFormViewControllerOld.xib in Resources */ = {isa = PBXBuildFile; fileRef = 968BBC8F17BD6A20004B4FE2 /* QRWDiscountEditFormViewControllerOld.xib */; };
+		968BBC9417C1005C004B4FE2 /* Exit.png in Resources */ = {isa = PBXBuildFile; fileRef = 968BBC9317C1005C004B4FE2 /* Exit.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -282,7 +282,6 @@
 		7FBDFA2517AA7EDD004B6CB8 /* QRWProductsViewControllerForModalPresent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRWProductsViewControllerForModalPresent.h; sourceTree = "<group>"; };
 		7FBDFA2617AA7EDD004B6CB8 /* QRWProductsViewControllerForModalPresent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRWProductsViewControllerForModalPresent.m; sourceTree = "<group>"; };
 		7FBDFA2717AA7EDD004B6CB8 /* QRWProductsViewControllerForModalPresent.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRWProductsViewControllerForModalPresent.xib; sourceTree = "<group>"; };
-		7FBDFA2A17AA8040004B6CB8 /* Exit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Exit.png; sourceTree = "<group>"; };
 		7FBDFA2D17AA81BE004B6CB8 /* QRWProductInLastOrderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRWProductInLastOrderCell.h; sourceTree = "<group>"; };
 		7FBDFA2E17AA81BE004B6CB8 /* QRWProductInLastOrderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRWProductInLastOrderCell.m; sourceTree = "<group>"; };
 		7FBDFA3017AA81F0004B6CB8 /* QRWProductInLastOrderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRWProductInLastOrderCell.xib; sourceTree = "<group>"; };
@@ -376,6 +375,7 @@
 		968B17B517B0545D00D8D8C9 /* QRWDiscountEditFormViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRWDiscountEditFormViewController.xib; sourceTree = "<group>"; };
 		968BBC8D17BD689A004B4FE2 /* QRWProductsViewControllerForModalPresentOld.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRWProductsViewControllerForModalPresentOld.xib; sourceTree = "<group>"; };
 		968BBC8F17BD6A20004B4FE2 /* QRWDiscountEditFormViewControllerOld.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRWDiscountEditFormViewControllerOld.xib; sourceTree = "<group>"; };
+		968BBC9317C1005C004B4FE2 /* Exit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Exit.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -558,9 +558,9 @@
 		7F6FB268179539790024BB12 /* IMGS */ = {
 			isa = PBXGroup;
 			children = (
+				968BBC9317C1005C004B4FE2 /* Exit.png */,
 				968B17AD17AAF60500D8D8C9 /* button_login.png */,
 				968B17AB17AAF56300D8D8C9 /* title_welcome_to.png */,
-				7FBDFA2A17AA8040004B6CB8 /* Exit.png */,
 				7F6FB26C179539BD0024BB12 /* large-black-and-white-stripes-a4.jpg */,
 				7F6FB26D179539BD0024BB12 /* Black_white_Apple_background.jpg */,
 			);
@@ -1154,7 +1154,6 @@
 				7FBDFA0517A6AD84004B6CB8 /* QRWTopSellersTopProductsTableViewCell.xib in Resources */,
 				7FBDFA0917A6B071004B6CB8 /* QRWTopSellersTopCategoriesTableViewCell.xib in Resources */,
 				7FBDFA2917AA7EDD004B6CB8 /* QRWProductsViewControllerForModalPresent.xib in Resources */,
-				7FBDFA2B17AA8040004B6CB8 /* Exit.png in Resources */,
 				7FBDFA3117AA81F1004B6CB8 /* QRWProductInLastOrderCell.xib in Resources */,
 				7FBDFA3417AAA795004B6CB8 /* QRWOrdersStatisticCell.xib in Resources */,
 				968B17AC17AAF56300D8D8C9 /* title_welcome_to.png in Resources */,
@@ -1199,6 +1198,7 @@
 				96771FA017BD66BE00A08CE3 /* QRWUserOrdersViewControllerOld.xib in Resources */,
 				968BBC8E17BD689A004B4FE2 /* QRWProductsViewControllerForModalPresentOld.xib in Resources */,
 				968BBC9017BD6A20004B4FE2 /* QRWDiscountEditFormViewControllerOld.xib in Resources */,
+				968BBC9417C1005C004B4FE2 /* Exit.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
