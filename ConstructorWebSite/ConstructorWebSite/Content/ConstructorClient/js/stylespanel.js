@@ -32,32 +32,67 @@ var StylesPanelGenerator = function(generatorData) {
             "json");*/
             
         // !!!!!!!!!!!!!!!!!!!!!!!!
+
+        var data;
         
-        var data = [{
-            id: "style1",
-            options: {
-                name: "Стиль 1",
-                bgColor: "#FFFFFF",
-                textColor: "#000000",
-                image: "images/buttons/style1.png"
-            }
-        }, {
-            id: "style2",
-            options: {
-                name: "Стиль 2",
-                bgColor: "#000000",
-                textColor: "#FFFFFF",
-                image: "images/buttons/style2.png"
-            }
-        }, {
-            id: "style3",
-            options: {
-                name: "Стиль 3",
-                bgColor: "#333333",
-                textColor: "#AA0000",
-                image: "images/buttons/style3.png"
-            }
-        }];
+        switch (generatorData.url) {
+        case "buttons":
+            data = [{
+                id: "style1",
+                options: {
+                    name: "Стиль 1",
+                    bgColor: "#FFFFFF",
+                    textColor: "#000000",
+                    image: "images/buttons/style1.png"
+                }
+            }, {
+                id: "style2",
+                options: {
+                    name: "Стиль 2",
+                    bgColor: "#000000",
+                    textColor: "#FFFFFF",
+                    image: "images/buttons/style2.png"
+                }
+            }, {
+                id: "style3",
+                options: {
+                    name: "Стиль 3",
+                    bgColor: "#333333",
+                    textColor: "#AA0000",
+                    image: "images/buttons/style3.png"
+                }
+            }];
+            break;
+        case "screens":
+            data = [{
+                id: "style1",
+                options: {
+                    name: "Стиль 1",
+                    bgColor: "#FFFFFF",
+                    textColor: "#000000",
+                    image: "images/screens/style1.png"
+                }
+            }, {
+                id: "style2",
+                options: {
+                    name: "Стиль 2",
+                    bgColor: "#000000",
+                    textColor: "#FFFFFF",
+                    image: "images/screens/style2.png"
+                }
+            }, {
+                id: "style3",
+                options: {
+                    name: "Стиль 3",
+                    bgColor: "#333333",
+                    textColor: "#FFAAAA",
+                    image: "images/screens/style3.png"
+                }
+            }];
+            break;
+        default:
+            break;
+        }
 
         for (var i = 0, l = data.length; i < l; ++i) {
             addStyle(data[i].id, data[i].options);
@@ -97,12 +132,12 @@ var MainButtonStylesPanel = StylesPanelGenerator({
     elClass: "main-button",
     elClassPrefix: "main-button-style-",
     styleAttr: "button-style",
-    url: "url"
+    url: "buttons"
 });
 
 var ScreenStylesPanel = StylesPanelGenerator({
     elClass: "screen-mini",
     elClassPrefix: "screen-style-",
     styleAttr: "screen-style",
-    url: "url"
+    url: "screens"
 });
