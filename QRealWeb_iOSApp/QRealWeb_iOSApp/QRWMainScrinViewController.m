@@ -58,9 +58,9 @@
     _mainStatsViewController.forNavigationPushViewController = self;
     
     
-    CGRect frame = _mainStatsViewController.view.frame;
+    CGRect frame = _toolsViewController.view.frame;
     frame.origin.x = frame.size.width;
-    _mainStatsViewController.view.frame = frame;
+    _toolsViewController.view.frame = frame;
     
     [_mainScrinPagesScrollView addSubview:_mainStatsViewController.view];
     [_mainScrinPagesScrollView addSubview:_toolsViewController.view];
