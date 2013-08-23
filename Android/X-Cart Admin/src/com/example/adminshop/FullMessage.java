@@ -15,4 +15,11 @@ public class FullMessage extends PinSupportActivity {
 		TextView message = (TextView) findViewById(R.id.full_message);
 		message.setText(getIntent().getStringExtra("message"));
 	}
+
+	@Override
+	protected void setBackResult() {
+		setResult(noUpdateCode);
+	}
+
+	private final int noUpdateCode = 4;
 }

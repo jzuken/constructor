@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:background="@color/dark_grey"
         android:gravity="center"
-        android:text="@string/orders"
+        android:text="@string/user_orders"
         android:textColor="@color/white"
         android:textSize="30sp" />
 

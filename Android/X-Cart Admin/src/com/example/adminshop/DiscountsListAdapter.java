@@ -18,7 +18,7 @@ public class DiscountsListAdapter extends ArrayAdapter<Discount> {
 		this.layoutResourceId = resource;
 		this.items = items;
 	}
-	
+
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View row = convertView;
@@ -28,8 +28,7 @@ public class DiscountsListAdapter extends ArrayAdapter<Discount> {
 
 		DiscountHolder holder = new DiscountHolder();
 		holder.discount = items.get(position);
-		
-		holder.title = (TextView) row.findViewById(R.id.title);
+
 		holder.orderSubtotal = (TextView) row.findViewById(R.id.order_subtotal);
 		holder.discountValue = (TextView) row.findViewById(R.id.discount);
 		holder.discountType = (TextView) row.findViewById(R.id.discount_type);
@@ -40,7 +39,6 @@ public class DiscountsListAdapter extends ArrayAdapter<Discount> {
 	}
 
 	private void setupItem(DiscountHolder holder) {
-		holder.title.setText(holder.discount.getTitle());
 		holder.orderSubtotal.setText(holder.discount.getOrderSubtotal());
 		holder.discountValue.setText(holder.discount.getDiscount());
 		holder.discountType.setText(holder.discount.getDiscountType());
@@ -49,13 +47,12 @@ public class DiscountsListAdapter extends ArrayAdapter<Discount> {
 
 	private static class DiscountHolder {
 		Discount discount;
-		TextView title;
 		TextView orderSubtotal;
 		TextView discountValue;
 		TextView discountType;
 		TextView membership;
 	}
-	
+
 	private List<Discount> items;
 	private int layoutResourceId;
 	private Context context;

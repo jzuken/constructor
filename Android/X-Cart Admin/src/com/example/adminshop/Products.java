@@ -50,6 +50,7 @@ public class Products extends PinSupportNetworkActivity {
 			clearList();
 			updateProductsList();
 		}
+		super.withoutPinAction();
 	}
 
 	private void updateProductsList() {

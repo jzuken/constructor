@@ -2,29 +2,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="2dp"
+    android:paddingBottom="2dp"
     android:orientation="vertical" >
-
-    <TextView
-        android:id="@+id/order_title"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/gray"
-        android:paddingLeft="5dp"
-        android:textColor="@color/black"
-        android:textSize="15sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
         android:orientation="horizontal" >
 
         <TextView
             android:id="@+id/order_date_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/date_text" />
+            android:text="@string/date_text"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/order_date"
@@ -37,15 +31,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
         android:orientation="horizontal" >
 
         <TextView
             android:id="@+id/order_products_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/product_text" />
+            android:text="@string/product_text"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/order_products"
@@ -57,15 +50,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
         android:orientation="horizontal" >
 
         <TextView
             android:id="@+id/order_status_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/status_text" />
+            android:text="@string/status_text"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/order_status"
@@ -77,21 +69,21 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
         android:orientation="horizontal" >
 
         <TextView
             android:id="@+id/order_total_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/total_price_text" />
+            android:text="@string/total_price_text"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/order_total"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp" />
+            android:layout_marginLeft="5dp"
+            android:textColor="@color/green" />
     </LinearLayout>
 
 </LinearLayout>

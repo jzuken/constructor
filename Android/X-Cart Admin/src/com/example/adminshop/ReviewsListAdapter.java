@@ -18,7 +18,7 @@ public class ReviewsListAdapter extends ArrayAdapter<Review> {
 		this.layoutResourceId = resource;
 		this.items = items;
 	}
-	
+
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View row = convertView;
@@ -29,8 +29,6 @@ public class ReviewsListAdapter extends ArrayAdapter<Review> {
 
 		holder = new ReviewHolder();
 		holder.review = items.get(position);
-		
-		holder.title = (TextView) row.findViewById(R.id.review_title);
 		holder.email = (TextView) row.findViewById(R.id.review_user);
 		holder.product = (TextView) row.findViewById(R.id.review_product);
 		holder.message = (TextView) row.findViewById(R.id.review_message);
@@ -40,7 +38,6 @@ public class ReviewsListAdapter extends ArrayAdapter<Review> {
 	}
 
 	private void setupItem(ReviewHolder holder) {
-		holder.title.setText(holder.review.getTitle());
 		holder.email.setText(holder.review.getEmail());
 		holder.product.setText(holder.review.getProduct());
 		holder.message.setText(holder.review.getMessage());
@@ -48,12 +45,11 @@ public class ReviewsListAdapter extends ArrayAdapter<Review> {
 
 	private static class ReviewHolder {
 		Review review;
-		TextView title;
 		TextView email;
 		TextView product;
 		TextView message;
 	}
-	
+
 	private List<Review> items;
 	private int layoutResourceId;
 	private Context context;

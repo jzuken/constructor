@@ -10,9 +10,9 @@ public class PinSupportActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		if (savedInstanceState == null) {
-			NeedDownload = true;
+			needDownload = true;
 		} else {
-			NeedDownload = false;
+			needDownload = false;
 		}
 	}
 	
@@ -39,7 +39,7 @@ public class PinSupportActivity extends Activity {
 	 * Override in childs if need some action without pin activity
 	 */
 	protected void withoutPinAction() {	
-		NeedDownload = true;
+		needDownload = true;
 	}
 	
 	@Override
@@ -60,7 +60,7 @@ public class PinSupportActivity extends Activity {
 	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (resultCode == RESULT_OK || requestCode > 3) {
+		if (resultCode == RESULT_OK || resultCode > 3) {
 			fromOtherPage = true;
 		}
 		if (resultCode == 2) {
@@ -69,8 +69,12 @@ public class PinSupportActivity extends Activity {
 	}
 	
 	protected boolean isNeedDownload() {
-		return NeedDownload;
+		return needDownload;
 	}
 	
-	private boolean NeedDownload;
+	public void setNeedDownloadValue(boolean value) {
+		needDownload = value;
+	}
+	
+	private boolean needDownload;
 }

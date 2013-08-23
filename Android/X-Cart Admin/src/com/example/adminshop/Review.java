@@ -2,9 +2,8 @@ package com.example.adminshop;
 
 public class Review {
 
-	public Review(String id, String title, String email, String product, String message) {
+	public Review(String id, String email, String product, String message) {
 		this.id = id;
-		this.title = title;
 		this.email = email;
 		this.product = product;
 		this.message = message;
@@ -12,10 +11,6 @@ public class Review {
 
 	public String getId() {
 		return id;
-	}
-
-	public String getTitle() {
-		return title;
 	}
 
 	public String getEmail() {
@@ -31,7 +26,6 @@ public class Review {
 	}
 
 	private String id;
-	private String title;
 	private String email;
 	private String product;
 	private String message;

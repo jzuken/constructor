@@ -29,7 +29,6 @@ public class OrdersListAdapter extends ArrayAdapter<Order> {
 		OrderHolder holder = new OrderHolder();
 		holder.order = items.get(position);
 		
-		holder.title = (TextView) row.findViewById(R.id.order_title);
 		holder.date = (TextView) row.findViewById(R.id.order_date);
 		holder.products = (TextView) row.findViewById(R.id.order_products);
 		holder.status = (TextView) row.findViewById(R.id.order_status);
@@ -40,7 +39,6 @@ public class OrdersListAdapter extends ArrayAdapter<Order> {
 	}
 
 	private void setupItem(OrderHolder holder) {
-		holder.title.setText(holder.order.getTitle());
 		holder.date.setText(holder.order.getDate());
 		holder.products.setText(holder.order.getProducts());
 		holder.status.setText(holder.order.getStatus());
@@ -49,7 +47,6 @@ public class OrdersListAdapter extends ArrayAdapter<Order> {
 
 	private static class OrderHolder {
 		Order order;
-		TextView title;
 		TextView date;
 		TextView products;
 		TextView status;
