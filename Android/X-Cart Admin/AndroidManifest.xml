@@ -66,6 +66,9 @@
         <activity
             android:name=".UserOrders"
             android:configChanges="orientation|screenSize" />
+        <activity
+            android:name=".OrderProducts"
+            android:configChanges="orientation|screenSize" />
     </application>
 
 </manifest>

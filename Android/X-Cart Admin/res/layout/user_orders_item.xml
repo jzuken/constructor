@@ -2,11 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="2dp"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
-    android:paddingTop="2dp"
-    android:paddingBottom="2dp"
-    android:orientation="vertical" >
+    android:paddingTop="2dp" >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -44,7 +44,9 @@
             android:id="@+id/order_products"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp" />
+            android:layout_marginLeft="5dp"
+            android:textColor="@drawable/order_products_text"
+            android:textSize="17sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -83,7 +85,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:textColor="@color/green" />
+            android:textColor="@color/green"
+            android:textSize="17sp" />
     </LinearLayout>
 
 </LinearLayout>

@@ -310,6 +310,6 @@ public class Products extends PinSupportNetworkActivity {
 	private int packAmount;
 	private final int startItemCount = 4;
 	private String searchWord = "";
-	PullToRefreshListView productsListView;
+	private PullToRefreshListView productsListView;
 	private Object lock = new Object();
 }

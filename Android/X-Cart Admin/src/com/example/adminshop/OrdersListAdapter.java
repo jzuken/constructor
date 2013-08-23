@@ -4,8 +4,10 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
@@ -38,9 +40,23 @@ public class OrdersListAdapter extends ArrayAdapter<Order> {
 		return row;
 	}
 
-	private void setupItem(OrderHolder holder) {
+	private void setupItem(final OrderHolder holder) {
 		holder.date.setText(holder.order.getDate());
+		
 		holder.products.setText(holder.order.getProducts());
+		holder.products.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				String details = holder.order.getDetails();
+				if (details != null) {
+					Intent intent = new Intent(context, OrderProducts.class);
+					intent.putExtra("details", details);
+					((Activity) context).startActivityForResult(intent, 1);
+				}
+			}
+		});
+		
 		holder.status.setText(holder.order.getStatus());
 		holder.totalPrice.setText(holder.order.getTotalPrice());
 	}

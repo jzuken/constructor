@@ -29,24 +29,14 @@ public class Dashboard extends PinSupportNetworkActivity {
 		LayoutInflater inflater = LayoutInflater.from(this);
 		List<View> pages = new ArrayList<View>();
 
-		View page1 = inflater.inflate(R.layout.last_order, null);
-		id = (TextView) page1.findViewById(R.id.last_order_id);
-		date = (TextView) page1.findViewById(R.id.last_order_date);
-		product = (TextView) page1.findViewById(R.id.last_order_product);
-		totalPrice = (TextView) page1.findViewById(R.id.last_order_price);
-		user = (TextView) page1.findViewById(R.id.last_order_user);
-		status = (TextView) page1.findViewById(R.id.last_order_status);
-		lastOrderPrBar = (ProgressBar) page1.findViewById(R.id.progress_bar);
-		pages.add(page1);
+		View ordersInfoPage = inflater.inflate(R.layout.orders_info, null);
+		setupOrdersInfoTable(ordersInfoPage);
+		ordersInfoPrBar = (ProgressBar) ordersInfoPage.findViewById(R.id.progress_bar);
+		pages.add(ordersInfoPage);
 
-		View page2 = inflater.inflate(R.layout.orders_info, null);
-		setupOrdersInfoTable(page2);
-		ordersInfoPrBar = (ProgressBar) page2.findViewById(R.id.progress_bar);
-		pages.add(page2);
+		View salesGrowthPage = inflater.inflate(R.layout.sales_growth, null);
 
-		View page3 = inflater.inflate(R.layout.sales_growth, null);
-
-		TabHost growthTabHost = (TabHost) page3.findViewById(android.R.id.tabhost);
+		TabHost growthTabHost = (TabHost) salesGrowthPage.findViewById(android.R.id.tabhost);
 		newPeriodTabHost(growthTabHost);
 
 		growthTabHost.setOnTabChangedListener(new OnTabChangeListener() {
@@ -57,10 +47,10 @@ public class Dashboard extends PinSupportNetworkActivity {
 		// temporarily hidden
 		// pages.add(page3);
 
-		View page4 = inflater.inflate(R.layout.top_sellers, null);
+		View topProductsPage = inflater.inflate(R.layout.top_sellers, null);
 
 		topSellersPeriod = 1;
-		TabHost sellersTabHost = (TabHost) page4.findViewById(android.R.id.tabhost);
+		TabHost sellersTabHost = (TabHost) topProductsPage.findViewById(android.R.id.tabhost);
 		newPeriodTabHost(sellersTabHost);
 
 		sellersTabHost.setOnTabChangedListener(new OnTabChangeListener() {
@@ -73,16 +63,16 @@ public class Dashboard extends PinSupportNetworkActivity {
 			}
 		});
 
-		topSellersPrBar = (ProgressBar) page4.findViewById(R.id.progress_bar);
-		noProducts = (TextView) page4.findViewById(R.id.no_products_sold);
+		topSellersPrBar = (ProgressBar) topProductsPage.findViewById(R.id.progress_bar);
+		noProducts = (TextView) topProductsPage.findViewById(R.id.no_products_sold);
 
-		topSellersTable = (StatisticTable) page4.findViewById(R.id.top_sellers_table);
-		pages.add(page4);
+		topSellersTable = (StatisticTable) topProductsPage.findViewById(R.id.top_sellers_table);
+		pages.add(topProductsPage);
 
-		View page5 = inflater.inflate(R.layout.top_categories, null);
+		View topCategoriesPage = inflater.inflate(R.layout.top_categories, null);
 
 		topCategoriesPeriod = 1;
-		TabHost categoriesTabHost = (TabHost) page5.findViewById(android.R.id.tabhost);
+		TabHost categoriesTabHost = (TabHost) topCategoriesPage.findViewById(android.R.id.tabhost);
 		newPeriodTabHost(categoriesTabHost);
 
 		categoriesTabHost.setOnTabChangedListener(new OnTabChangeListener() {
@@ -95,11 +85,11 @@ public class Dashboard extends PinSupportNetworkActivity {
 			}
 		});
 
-		topCategoriesPrBar = (ProgressBar) page5.findViewById(R.id.progress_bar);
-		noCategories = (TextView) page5.findViewById(R.id.no_categories);
+		topCategoriesPrBar = (ProgressBar) topCategoriesPage.findViewById(R.id.progress_bar);
+		noCategories = (TextView) topCategoriesPage.findViewById(R.id.no_categories);
 
-		topCategoriesTable = (StatisticTable) page5.findViewById(R.id.top_categories_table);
-		pages.add(page5);
+		topCategoriesTable = (StatisticTable) topCategoriesPage.findViewById(R.id.top_categories_table);
+		pages.add(topCategoriesPage);
 
 		SwipingPagerAdapter pagerAdapter = new SwipingPagerAdapter(pages);
 		ViewPager viewPager = (ViewPager) findViewById(R.id.dashbroad_view_pager);
@@ -141,7 +131,6 @@ public class Dashboard extends PinSupportNetworkActivity {
 	@Override
 	protected void withoutPinAction() {
 		if (isNeedDownload()) {
-			updateLastOrderData();
 			updateOrdersInfoData();
 			updateTopSellersData();
 			updateTopCategoriesData();
@@ -179,88 +168,6 @@ public class Dashboard extends PinSupportNetworkActivity {
 			return 3;
 		}
 		return 4;
-	}
-
-	private enum StatusSymbols {
-		I, Q, P, X, D, F, C
-	}
-
-	private void updateLastOrderData() {
-		clearLastOrderInfo();
-		lastOrderPrBar.setVisibility(View.VISIBLE);
-		GetRequester dataRequester = new GetRequester() {
-			protected void onPostExecute(String result) {
-				if (result != null) {
-					try {
-						JSONObject obj = new JSONObject(result);
-						id.setText(obj.getString("orderid"));
-						date.setText(obj.getString("date"));
-						
-						totalPrice.setText("$" + obj.getString("total"));
-						user.setText(obj.getString("title") + " " + obj.getString("firstname") + " "
-								+ obj.getString("lastname"));
-						StatusSymbols statusSymbol = StatusSymbols.valueOf(obj.getString("status"));
-						status.setText(getStatusBySymbol(statusSymbol));
-
-						JSONArray detailsArray = obj.getJSONArray("details");
-						StringBuilder productsInfo = new StringBuilder();
-						int arrayLenght = detailsArray.length();
-
-						for (int i = 0; i < arrayLenght - 1; i++) {
-							JSONObject detailsObj = detailsArray.getJSONObject(i);
-							productsInfo.append(detailsObj.getString("product") + ", " + "Quantity: "
-									+ detailsObj.getString("amount") + "\n\n");
-						}
-
-						JSONObject detailsObj = detailsArray.getJSONObject(arrayLenght - 1);
-						productsInfo.append(detailsObj.getString("product") + ", " + "Quantity: "
-								+ detailsObj.getString("amount"));
-
-						product.setText(productsInfo.toString());
-
-					} catch (JSONException e) {
-						e.printStackTrace();
-					}
-				} else {
-					if (currentPage == 0) {
-						showConnectionErrorMessage();
-					}
-				}
-				lastOrderPrBar.setVisibility(View.GONE);
-			}
-		};
-
-		dataRequester.execute("http://54.213.38.9/xcart/api.php?request=last_order");
-	}
-
-	private String getStatusBySymbol(StatusSymbols symbol) {
-		switch (symbol) {
-		case I:
-			return "Not finished";
-		case Q:
-			return "Queued";
-		case P:
-			return "Processed";
-		case X:
-			return "Backordered";
-		case D:
-			return "Declined";
-		case F:
-			return "Failed";
-		case C:
-			return "Complete";
-		default:
-			return "";
-		}
-	}
-
-	private void clearLastOrderInfo() {
-		id.setText("");
-		date.setText("");
-		product.setText("");
-		totalPrice.setText("");
-		user.setText("");
-		status.setText("");
 	}
 
 	private void updateOrdersInfoData() {
@@ -310,7 +217,7 @@ public class Dashboard extends PinSupportNetworkActivity {
 						e.printStackTrace();
 					}
 				} else {
-					if (currentPage == 1) {
+					if (currentPage == 0) {
 						showConnectionErrorMessage();
 					}
 				}
@@ -352,7 +259,7 @@ public class Dashboard extends PinSupportNetworkActivity {
 						e.printStackTrace();
 					}
 				} else {
-					if (currentPage == 3) {
+					if (currentPage == 1) {
 						showConnectionErrorMessage();
 					}
 				}
@@ -433,7 +340,7 @@ public class Dashboard extends PinSupportNetworkActivity {
 						e.printStackTrace();
 					}
 				} else {
-					if (currentPage == 4) {
+					if (currentPage == 2) {
 						showConnectionErrorMessage();
 					}
 				}
@@ -497,13 +404,6 @@ public class Dashboard extends PinSupportNetworkActivity {
 		noCategories.setText("");
 	}
 
-	private TextView id;
-	private TextView date;
-	private TextView product;
-	private TextView totalPrice;
-	private TextView user;
-	private TextView status;
-
 	private TableRow totalOrders;
 	private TableRow completeOrders;
 	private TableRow notFinishedOrders;
@@ -519,7 +419,6 @@ public class Dashboard extends PinSupportNetworkActivity {
 	private TextView noCategories;
 	private StatisticTable topSellersTable;
 	private StatisticTable topCategoriesTable;
-	private ProgressBar lastOrderPrBar;
 	private ProgressBar ordersInfoPrBar;
 	private ProgressBar topSellersPrBar;
 	private ProgressBar topCategoriesPrBar;

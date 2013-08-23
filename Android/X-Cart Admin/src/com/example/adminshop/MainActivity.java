@@ -20,6 +20,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -35,16 +36,28 @@ public class MainActivity extends PinSupportNetworkActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main);
+		setContentView(R.layout.main);setContentView(R.layout.main);setContentView(R.layout.main);
 
 		LayoutInflater inflater = LayoutInflater.from(this);
 		pages = new ArrayList<View>();
-		
+
 		menuPage = inflater.inflate(R.layout.menu, null);
 
 		newsPage = inflater.inflate(R.layout.latest_info, null);
 		date = (TextView) newsPage.findViewById(R.id.last_order_date);
 		product = (TextView) newsPage.findViewById(R.id.last_order_product);
+		product.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				if (details != null) {
+					Intent intent = new Intent(getBaseContext(), OrderProducts.class);
+					intent.putExtra("details", details);
+					startActivityForResult(intent, 1);
+				}
+			}
+		});
+
 		totalPrice = (TextView) newsPage.findViewById(R.id.last_order_price);
 		user = (TextView) newsPage.findViewById(R.id.last_order_user);
 		status = (TextView) newsPage.findViewById(R.id.last_order_status);
@@ -139,13 +152,13 @@ public class MainActivity extends PinSupportNetworkActivity {
 		super.onConfigurationChanged(newConfig);
 
 		pages = new ArrayList<View>();
-		
+
 		LayoutInflater inflater = LayoutInflater.from(this);
 		menuPage = inflater.inflate(R.layout.menu, null);
-		
+
 		settingButton = (Button) menuPage.findViewById(R.id.settingsButton);
 		menuArrow = (TextView) menuPage.findViewById(R.id.menu_arrow);
-		
+
 		if (firstPage == 0) {
 			pages.add(menuPage);
 			pages.add(newsPage);
@@ -214,7 +227,7 @@ public class MainActivity extends PinSupportNetworkActivity {
 					try {
 						JSONObject obj = new JSONObject(result);
 						date.setText(obj.getString("date"));
-						
+
 						totalPrice.setText("$" + obj.getString("total"));
 						user.setText(obj.getString("title") + " " + obj.getString("firstname") + " "
 								+ obj.getString("lastname"));
@@ -222,21 +235,13 @@ public class MainActivity extends PinSupportNetworkActivity {
 						status.setText(getStatusBySymbol(statusSymbol));
 
 						JSONArray detailsArray = obj.getJSONArray("details");
-						StringBuilder productsInfo = new StringBuilder();
-						int arrayLenght = detailsArray.length();
-
-						for (int i = 0; i < arrayLenght - 1; i++) {
-							JSONObject detailsObj = detailsArray.getJSONObject(i);
-							productsInfo.append(detailsObj.getString("product") + ", " + "Quantity: "
-									+ detailsObj.getString("amount") + "\n\n");
+						int productsCount = detailsArray.length();
+						details = obj.getJSONArray("details").toString();
+						if (productsCount == 1) {
+							product.setText("1 item >");
+						} else {
+							product.setText(String.valueOf(productsCount) + " items >");
 						}
-
-						JSONObject detailsObj = detailsArray.getJSONObject(arrayLenght - 1);
-						productsInfo.append(detailsObj.getString("product") + ", " + "Quantity: "
-								+ detailsObj.getString("amount"));
-
-						product.setText(productsInfo.toString());
-
 					} catch (JSONException e) {
 						e.printStackTrace();
 					}
@@ -285,6 +290,7 @@ public class MainActivity extends PinSupportNetworkActivity {
 		totalPrice.setText("");
 		user.setText("");
 		status.setText("");
+		details = null;
 	}
 
 	private void updateOrdersInfoData() {
@@ -405,6 +411,14 @@ public class MainActivity extends PinSupportNetworkActivity {
 		}
 		return false;
 	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (resultCode == noUpdateCode) {
+			setNeedDownloadValue(false);
+		}
+	}
 
 	private int currentPage;
 	private int newsPageNumber;
@@ -435,4 +449,6 @@ public class MainActivity extends PinSupportNetworkActivity {
 	private TextView menuArrow;
 	private SwipingPagerAdapter pagerAdapter;
 	private List<View> pages;
+	private String details = null;
+	private final int noUpdateCode = 4;
 }

@@ -211,6 +211,6 @@ public class Discounts extends PinSupportNetworkActivity {
 
 	private ProgressBar progressBar;
 	private DiscountsListAdapter adapter;
-	PullToRefreshListView discountsListView;
+	private PullToRefreshListView discountsListView;
 	private final int noUpdateCode = 4;
 }

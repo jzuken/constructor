@@ -6,6 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -96,21 +97,16 @@ public class UserOrders extends PinSupportNetworkActivity {
 			String totalPrice = "$" + obj.getString("total");
 
 			JSONArray detailsArray = obj.getJSONArray("details");
-			StringBuilder productsInfo = new StringBuilder();
-			int arrayLenght = detailsArray.length();
-
-			for (int i = 0; i < arrayLenght - 1; i++) {
-				JSONObject detailsObj = detailsArray.getJSONObject(i);
-				productsInfo.append(detailsObj.getString("product") + ", " + "Quantity: "
-						+ detailsObj.getString("amount") + "\n\n");
+			int productsCount = detailsArray.length();
+			details = obj.getJSONArray("details").toString();
+			String products = null;
+			if (productsCount == 1) {
+				products = "1 item >";
+			} else {
+				products = String.valueOf(productsCount) + " items >";
 			}
 
-			JSONObject detailsObj = detailsArray.getJSONObject(arrayLenght - 1);
-			productsInfo.append(detailsObj.getString("product") + ", " + "Quantity: " + detailsObj.getString("amount"));
-
-			String products = productsInfo.toString();
-
-			addOrderToList(id, date, products, status, totalPrice);
+			addOrderToList(id, date, products, status, totalPrice, details);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -138,8 +134,8 @@ public class UserOrders extends PinSupportNetworkActivity {
 	}
 
 	private void addOrderToList(final String id, final String date, final String products, final String status,
-			final String totalPrice) {
-		adapter.add(new Order(id, date, products, status, totalPrice));
+			final String totalPrice, final String details) {
+		adapter.add(new Order(id, date, products, status, totalPrice, details));
 	}
 
 	private void setupListViewAdapter() {
@@ -150,7 +146,7 @@ public class UserOrders extends PinSupportNetworkActivity {
 
 		View listHeader = inflater.inflate(R.layout.user_orders_header, null, false);
 		userName = (TextView) listHeader.findViewById(R.id.user_name);
-		userName.setText(getIntent().getStringExtra("userName"));
+		userName.setText("User: " + getIntent().getStringExtra("userName"));
 		ordersListView.getRefreshableView().addHeaderView(listHeader, null, false);
 
 		View listFooter = inflater.inflate(R.layout.on_demand_footer, null, false);
@@ -191,6 +187,14 @@ public class UserOrders extends PinSupportNetworkActivity {
 		currentAmount = 0;
 	}
 
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (resultCode == noUpdateCode) {
+			setNeedDownloadValue(false);
+		}
+	}
+
 	private ProgressBar progressBar;
 	private OrdersListAdapter adapter;
 	private int currentAmount;
@@ -198,8 +202,9 @@ public class UserOrders extends PinSupportNetworkActivity {
 	private boolean hasNext;
 	private int packAmount = 10;
 	private final int startItemCount = 3;
-	PullToRefreshListView ordersListView;
+	private PullToRefreshListView ordersListView;
 	private Object lock = new Object();
 	private final int noUpdateCode = 4;
 	private TextView userName;
+	private String details = null;
 }

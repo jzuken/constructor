@@ -245,7 +245,7 @@ public class Reviews extends PinSupportNetworkActivity {
 	private boolean hasNext;
 	private int packAmount;
 	private final int startItemCount = 3;
-	PullToRefreshListView reviewsListView;
+	private PullToRefreshListView reviewsListView;
 	private Object lock = new Object();
 	private final int noUpdateCode = 4;
 }
