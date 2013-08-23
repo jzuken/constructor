@@ -32,6 +32,7 @@ public class ProductsListAdapter extends ArrayAdapter<Product> {
 		holder.name = (TextView) row.findViewById(R.id.product_name);
 		holder.available = (TextView) row.findViewById(R.id.product_available);
 		holder.sold = (TextView) row.findViewById(R.id.product_sold);
+		holder.freeShipping = (TextView) row.findViewById(R.id.product_free_shipping);
 		holder.price = (TextView) row.findViewById(R.id.product_price);
 		row.setTag(holder.product);
 		setupItem(holder);
@@ -42,6 +43,7 @@ public class ProductsListAdapter extends ArrayAdapter<Product> {
 		holder.name.setText(holder.product.getName());
 		holder.available.setText(holder.product.getAvailable());
 		holder.sold.setText(holder.product.getSold());
+		holder.freeShipping.setText(holder.product.getFreeShippingValue());
 		holder.price.setText(holder.product.getPrice());
 	}
 
@@ -50,6 +52,7 @@ public class ProductsListAdapter extends ArrayAdapter<Product> {
 		TextView name;
 		TextView available;
 		TextView sold;
+		TextView freeShipping;
 		TextView price;
 	}
 	

@@ -157,6 +157,7 @@
     <string name="today_orders">Today orders info</string>
     <string name="edit_discount">Edit discount</string>
     <string name="product_quantity">Quantity:</string>
+    <string name="product_free_shipping">Free shipping:</string>
 
     <string-array name="screens">
         <item>Menu</item>

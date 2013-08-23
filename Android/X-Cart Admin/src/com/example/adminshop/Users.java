@@ -12,17 +12,20 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
@@ -206,6 +209,7 @@ public class Users extends PinSupportNetworkActivity {
 					dialog.dismiss();
 					break;
 				case 2:
+					banClick(user.getId());
 					dialog.dismiss();
 					break;
 				case 3:
@@ -248,6 +252,35 @@ public class Users extends PinSupportNetworkActivity {
 			public void onNothingSelected(AdapterView<?> arg0) {
 			}
 		});
+	}
+
+	public void banClick(final String id) {
+		LinearLayout view = (LinearLayout) getLayoutInflater().inflate(R.layout.confirmation_dialog, null);
+		((TextView) view.findViewById(R.id.confirm_question)).setText("Are you sure you want to ban this user?");
+		final CustomDialog dialog = new CustomDialog(this, view);
+
+		Button noButton = (Button) view.findViewById(R.id.dialog_no_button);
+		noButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				dialog.dismiss();
+			}
+		});
+
+		Button yesButton = (Button) view.findViewById(R.id.dialog_yes_button);
+		yesButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				dialog.dismiss();
+				banUser(id);
+			}
+		});
+
+		dialog.show();
+	}
+
+	private void banUser(String id) {
+
 	}
 
 	@Override

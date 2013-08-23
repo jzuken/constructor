@@ -72,11 +72,18 @@ public class Products extends PinSupportNetworkActivity {
 						for (int i = 0; i < length; i++) {
 							JSONObject obj = array.getJSONObject(i);
 							String id = obj.getString("productid");
-							String name = obj.getString("productcode") + " " + obj.getString("product");
+							String name = "[" + obj.getString("productcode") + "] " + obj.getString("product");
 							String available = obj.getString("avail");
 							String sold = obj.getString("sales_stats");
+							String freeShippingSymbol = obj.getString("free_shipping");
+							String freeShipping;
+							if (freeShippingSymbol.equals("N")) {
+								freeShipping = "No";
+							} else {
+								freeShipping = "Yes";
+							}
 							String price = obj.getString("list_price");
-							addProductToList(id, name, available, sold, price);
+							addProductToList(id, name, available, sold, freeShipping, price);
 						}
 					} catch (JSONException e) {
 						e.printStackTrace();
@@ -98,8 +105,8 @@ public class Products extends PinSupportNetworkActivity {
 	}
 
 	private void addProductToList(final String id, final String name, final String available, final String sold,
-			final String price) {
-		adapter.add(new Product(id, name, available, sold, price));
+			final String freeShipping, final String price) {
+		adapter.add(new Product(id, name, available, sold, freeShipping, price));
 	}
 
 	private void setupListViewAdapter() {
