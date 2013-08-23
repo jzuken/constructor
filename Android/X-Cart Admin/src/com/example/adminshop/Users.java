@@ -48,6 +48,7 @@ public class Users extends PinSupportNetworkActivity {
 			clearData();
 			updateUsersList();
 		}
+		super.withoutPinAction();
 	}
 
 	private void updateUsersList() {
@@ -98,7 +99,7 @@ public class Users extends PinSupportNetworkActivity {
 		SharedPreferences authorizationData = getSharedPreferences("AuthorizationData", MODE_PRIVATE);
 		String sid = authorizationData.getString("sid", "");
 		dataRequester.execute("http://54.213.38.9/xcart/api.php?request=users&from=" + String.valueOf(currentAmount)
-				+ "&size=" + String.valueOf(packAmount) + "&sort=" + getCurrentSort() + "&sid="  + sid);
+				+ "&size=" + String.valueOf(packAmount) + "&sort=" + getCurrentSort() + "&sid=" + sid);
 		currentAmount += packAmount;
 	}
 
@@ -178,9 +179,10 @@ public class Users extends PinSupportNetworkActivity {
 		usersListView.setAdapter(adapter);
 	}
 
-	private void showOrders(String id) {
+	private void showOrders(String id, String name) {
 		Intent intent = new Intent(getBaseContext(), UserOrders.class);
 		intent.putExtra("userId", id);
+		intent.putExtra("userName", name);
 		startActivityForResult(intent, 1);
 	}
 
@@ -190,7 +192,7 @@ public class Users extends PinSupportNetworkActivity {
 
 		ListView actionList = (ListView) action_view.findViewById(R.id.action_list);
 
-		String[] actions = { "Orders list", "To the black list", "Cancel" };
+		String[] actions = { "Orders list", "Send message", "Ban user", "Cancel" };
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.action_item, R.id.textItem, actions);
 
 		actionList.setOnItemClickListener(new OnItemClickListener() {
@@ -198,12 +200,15 @@ public class Users extends PinSupportNetworkActivity {
 				switch (position) {
 				case 0:
 					dialog.dismiss();
-					showOrders(user.getId());
+					showOrders(user.getId(), user.getName());
 					break;
 				case 1:
 					dialog.dismiss();
 					break;
 				case 2:
+					dialog.dismiss();
+					break;
+				case 3:
 					dialog.dismiss();
 					break;
 				default:
@@ -245,6 +250,14 @@ public class Users extends PinSupportNetworkActivity {
 		});
 	}
 
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (resultCode == noUpdateCode) {
+			setNeedDownloadValue(false);
+		}
+	}
+
 	private boolean isFirstSelection = true;
 	private TextView registered;
 	private TextView online;
@@ -259,4 +272,5 @@ public class Users extends PinSupportNetworkActivity {
 	private final int startItemCount = 4;
 	PullToRefreshListView usersListView;
 	private Object lock = new Object();
+	private final int noUpdateCode = 4;
 }

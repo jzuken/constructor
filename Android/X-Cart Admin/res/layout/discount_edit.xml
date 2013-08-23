@@ -5,22 +5,13 @@
     android:orientation="vertical" >
 
     <TextView
+        android:id="@+id/discount_editor_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/dark_grey"
         android:gravity="center"
-        android:text="@string/discounts"
         android:textColor="@color/white"
         android:textSize="30sp" />
-
-    <TextView
-        android:id="@+id/small_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/gray"
-        android:gravity="center"
-        android:textColor="@color/black"
-        android:textSize="15sp" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -38,7 +29,8 @@
                 android:paddingLeft="10dp"
                 android:text="@string/order_subtotal"
                 android:textColor="@color/white"
-                android:textSize="15sp" />
+                android:textSize="15sp"
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/orderSubtotalEditor"
@@ -59,7 +51,8 @@
                 android:paddingLeft="10dp"
                 android:text="@string/discount"
                 android:textColor="@color/white"
-                android:textSize="15sp" />
+                android:textSize="15sp"
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/discountEditor"
@@ -80,7 +73,8 @@
                 android:paddingLeft="10dp"
                 android:text="@string/discount_type"
                 android:textColor="@color/white"
-                android:textSize="15sp" />
+                android:textSize="15sp"
+                android:textStyle="bold" />
 
             <RadioGroup
                 android:layout_width="match_parent"
@@ -115,7 +109,8 @@
                 android:paddingLeft="10dp"
                 android:text="@string/membership_text"
                 android:textColor="@color/white"
-                android:textSize="15sp" />
+                android:textSize="15sp"
+                android:textStyle="bold" />
 
             <RadioGroup
                 android:layout_width="match_parent"

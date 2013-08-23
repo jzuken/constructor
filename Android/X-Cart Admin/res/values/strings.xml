@@ -5,7 +5,7 @@
     <string name="menu_settings">Settings</string>
     <string name="dashboard">Dashboard</string>
     <string name="discounts">Discounts</string>
-    <string name="orders">Orders</string>
+    <string name="user_orders">User\'s orders</string>
     <string name="products">Products</string>
     <string name="users">Users</string>
     <string name="reviews">Reviews</string>
@@ -95,7 +95,6 @@
     <string name="current">Current</string>
     <string name="right_arrow">&gt;&gt;</string>
     <string name="left_arrow">&lt;&lt;</string>
-    <string name="add_discount">Add new discount</string>
     <string name="enter_value">Enter a value:</string>
     <string name="percent">Percent, %</string>
     <string name="absolute">Absolute, $</string>
@@ -156,12 +155,12 @@
     <string name="month">Month</string>
     <string name="latest_info">Latest info</string>
     <string name="today_orders">Today orders info</string>
+    <string name="edit_discount">Edit discount</string>
 
     <string-array name="screens">
         <item>Menu</item>
         <item>Latest info</item>
     </string-array>
-    
     <string-array name="screens_values">
         <item>0</item>
         <item>1</item>

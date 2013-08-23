@@ -14,6 +14,7 @@ import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
@@ -35,6 +36,12 @@ public class UserOrders extends PinSupportNetworkActivity {
 			clearList();
 			updateOrdersList();
 		}
+		super.withoutPinAction();
+	}
+
+	@Override
+	protected void setBackResult() {
+		setResult(noUpdateCode);
 	}
 
 	private enum StatusSymbols {
@@ -132,8 +139,7 @@ public class UserOrders extends PinSupportNetworkActivity {
 
 	private void addOrderToList(final String id, final String date, final String products, final String status,
 			final String totalPrice) {
-		adapter.add(new Order(id, "Order " + String.valueOf(position), date, products, status, totalPrice));
-		position++;
+		adapter.add(new Order(id, date, products, status, totalPrice));
 	}
 
 	private void setupListViewAdapter() {
@@ -141,6 +147,12 @@ public class UserOrders extends PinSupportNetworkActivity {
 		ordersListView = (PullToRefreshListView) findViewById(R.id.user_orders_list);
 
 		LayoutInflater inflater = getLayoutInflater();
+
+		View listHeader = inflater.inflate(R.layout.user_orders_header, null, false);
+		userName = (TextView) listHeader.findViewById(R.id.user_name);
+		userName.setText(getIntent().getStringExtra("userName"));
+		ordersListView.getRefreshableView().addHeaderView(listHeader, null, false);
+
 		View listFooter = inflater.inflate(R.layout.on_demand_footer, null, false);
 		progressBar = (ProgressBar) listFooter.findViewById(R.id.progress_bar);
 		ordersListView.getRefreshableView().addFooterView(listFooter, null, false);
@@ -176,11 +188,9 @@ public class UserOrders extends PinSupportNetworkActivity {
 
 	private void clearList() {
 		adapter.clear();
-		position = 1;
 		currentAmount = 0;
 	}
 
-	private int position = 1;
 	private ProgressBar progressBar;
 	private OrdersListAdapter adapter;
 	private int currentAmount;
@@ -190,4 +200,6 @@ public class UserOrders extends PinSupportNetworkActivity {
 	private final int startItemCount = 3;
 	PullToRefreshListView ordersListView;
 	private Object lock = new Object();
+	private final int noUpdateCode = 4;
+	private TextView userName;
 }

@@ -39,6 +39,7 @@ public class Discounts extends PinSupportNetworkActivity {
 		if (isNeedDownload()) {
 			updateDiscountsTable();
 		}
+		super.withoutPinAction();
 	}
 
 	private void updateDiscountsTable() {
@@ -83,9 +84,7 @@ public class Discounts extends PinSupportNetworkActivity {
 
 	private void addDiscountToList(final String id, final String subtotal, final String discount,
 			final String discountType, final String membership) {
-		adapter.add(new Discount(id, "Discount " + String.valueOf(position), subtotal, discount, discountType,
-				membership));
-		position++;
+		adapter.add(new Discount(id, subtotal, discount, discountType, membership));
 	}
 
 	private void editClick(Discount itemToEdit) {
@@ -195,7 +194,6 @@ public class Discounts extends PinSupportNetworkActivity {
 
 	private void clearList() {
 		adapter.clear();
-		position = 1;
 	}
 
 	public void addNewDiscountClick(View v) {
@@ -203,8 +201,16 @@ public class Discounts extends PinSupportNetworkActivity {
 		startActivityForResult(intent, 1);
 	}
 
-	private int position = 1;
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (resultCode == noUpdateCode) {
+			setNeedDownloadValue(false);
+		}
+	}
+
 	private ProgressBar progressBar;
 	private DiscountsListAdapter adapter;
 	PullToRefreshListView discountsListView;
+	private final int noUpdateCode = 4;
 }

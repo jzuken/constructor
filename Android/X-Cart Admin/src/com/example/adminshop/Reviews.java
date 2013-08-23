@@ -94,8 +94,7 @@ public class Reviews extends PinSupportNetworkActivity {
 	}
 
 	private void addReviewToList(final String id, final String email, final String product, final String message) {
-		adapter.add(new Review(id, "Review " + String.valueOf(position), email, product, message));
-		position++;
+		adapter.add(new Review(id, email, product, message));
 	}
 
 	private void deleteClick(final String id) {
@@ -197,7 +196,7 @@ public class Reviews extends PinSupportNetworkActivity {
 
 		ListView actionList = (ListView) action_view.findViewById(R.id.action_list);
 
-		String[] actions = { "Full message", "Delete", "Cancel" };
+		String[] actions = { "Full text", "Delete", "Cancel" };
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.action_item, R.id.textItem, actions);
 
 		actionList.setOnItemClickListener(new OnItemClickListener() {
@@ -228,11 +227,17 @@ public class Reviews extends PinSupportNetworkActivity {
 
 	private void clearList() {
 		adapter.clear();
-		position = 1;
 		currentAmount = 0;
 	}
 
-	private int position = 1;
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (resultCode == noUpdateCode) {
+			setNeedDownloadValue(false);
+		}
+	}
+
 	private ProgressBar progressBar;
 	private ReviewsListAdapter adapter;
 	private int currentAmount;
@@ -242,4 +247,5 @@ public class Reviews extends PinSupportNetworkActivity {
 	private final int startItemCount = 3;
 	PullToRefreshListView reviewsListView;
 	private Object lock = new Object();
+	private final int noUpdateCode = 4;
 }

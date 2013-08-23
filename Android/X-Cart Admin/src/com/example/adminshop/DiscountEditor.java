@@ -40,8 +40,8 @@ public class DiscountEditor extends PinSupportNetworkActivity {
 		discountEditor.setText(getIntent().getCharSequenceExtra("discount"));
 		Button okButton = (Button) findViewById(R.id.okButton);
 		okButton.setText("Save");
-		TextView smallTitle = (TextView) findViewById(R.id.small_title);
-		smallTitle.setText("Edit the discount");
+		TextView title = (TextView) findViewById(R.id.discount_editor_title);
+		title.setText(getResources().getString(R.string.edit_discount));
 	}
 
 	public void okClick(View v) {
@@ -60,6 +60,11 @@ public class DiscountEditor extends PinSupportNetworkActivity {
 		} catch (Exception e) {
 			Toast.makeText(getBaseContext(), "Incorrect input", Toast.LENGTH_SHORT).show();
 		}
+	}
+	
+	@Override
+	protected void setBackResult() {
+		setResult(noUpdateCode);
 	}
 
 	private void updateDiscount() {
@@ -84,7 +89,8 @@ public class DiscountEditor extends PinSupportNetworkActivity {
 		}
 		if (response != null) {
 			Toast.makeText(getBaseContext(), "Success", Toast.LENGTH_SHORT).show();
-			onBackPressed();
+			setResult(RESULT_OK);
+			finish();
 		} else {
 			showConnectionErrorMessage();
 		}
@@ -116,4 +122,5 @@ public class DiscountEditor extends PinSupportNetworkActivity {
 	private RadioButton absoluteButton;
 	private EditText orderSubtotalEditor;
 	private EditText discountEditor;
+	private final int noUpdateCode = 4;
 }
