@@ -418,6 +418,7 @@
 		7F384C94179569EE00BF7F93 /* MainStatsViewController */ = {
 			isa = PBXGroup;
 			children = (
+				968B1777179DCEDC00D8D8C9 /* LastOrder */,
 				7F384C9E17956BFD00BF7F93 /* QRWMainStatsViewController.h */,
 				7F384C9F17956BFD00BF7F93 /* QRWMainStatsViewController.m */,
 				7F384CA017956BFD00BF7F93 /* QRWMainStatsViewController.xib */,
@@ -961,7 +962,6 @@
 			children = (
 				968B1783179DD09000D8D8C9 /* TopSellers */,
 				968B177D179DCFDB00D8D8C9 /* OrdersInfo */,
-				968B1777179DCEDC00D8D8C9 /* LastOrder */,
 				968B175A179DC3AE00D8D8C9 /* Information */,
 				968B175B179DC3ED00D8D8C9 /* QRWBaseDashboardPageViewController.h */,
 				968B175C179DC3ED00D8D8C9 /* QRWBaseDashboardPageViewController.m */,

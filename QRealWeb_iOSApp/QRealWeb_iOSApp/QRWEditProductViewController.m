@@ -48,7 +48,7 @@
     NSNumberFormatter * formatter = [[NSNumberFormatter alloc] init];
     [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
     
-    _product.price = [formatter numberFromString:_priceTextView.text];
+    _product.price = [NSNumber numberWithDouble:[_priceTextView.text doubleValue]];
     
     if ([self isDiscountValid]) {
         [dataManager uploadDeletedProductWithProduct:_product];

@@ -19,5 +19,6 @@
 - (void) setTopProducts: (QRWTopProducts *) topProducts;
 - (void) setTopCategories: (QRWTopCategories *) topCategories;
 
+@property (nonatomic, strong) NSString *typeOfData;
 
 @end

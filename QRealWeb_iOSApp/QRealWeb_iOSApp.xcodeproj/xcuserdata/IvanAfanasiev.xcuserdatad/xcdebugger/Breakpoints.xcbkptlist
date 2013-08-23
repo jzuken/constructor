@@ -4,42 +4,16 @@
    version = "1.0">
    <FileBreakpoints>
       <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "QRealWeb_iOSApp/QRWDashboardViewController.m"
-         timestampString = "398261565.023936"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "95"
-         endingLineNumber = "95"
-         landmarkName = "-respondsForTopCategoriesRequest:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "QRealWeb_iOSApp/QRWProductsViewController.m"
-         timestampString = "398253927.681862"
+         timestampString = "398685011.203789"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "166"
          endingLineNumber = "166"
-         landmarkName = "-configureProductCell:atIndexPath:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "QRealWeb_iOSApp/QRWProductsViewController.m"
-         timestampString = "398253927.681862"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "121"
-         endingLineNumber = "121"
-         landmarkName = "-tableView:didSelectRowAtIndexPath:"
+         landmarkName = "-dismissSearchFronView"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

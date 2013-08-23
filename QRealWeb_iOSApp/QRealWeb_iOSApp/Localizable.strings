@@ -87,10 +87,10 @@
 
 "USERS" = "Users";
 "USER_LABLE_TEXT" = "%@ %@";
-"LOGIN_LABLE_TEXT" = "Login: %@";
-"TYPE_LABLE_TEXT" = "User type: %@";
-"FIRST_LOGIN_LABLE_TEXT" = "First login: %@";
-"ORDERS_COUNT_LABLE_TEXT" = "Orders count: %d";
+"LOGIN_LABLE_TEXT" = "  Login: %@";
+"TYPE_LABLE_TEXT" = "  User type: %@";
+"FIRST_LOGIN_LABLE_TEXT" = "  First login: %@";
+"ORDERS_COUNT_LABLE_TEXT" = "  Orders count: %d";
 
 "SORT_BY" = "Sort by:";
 

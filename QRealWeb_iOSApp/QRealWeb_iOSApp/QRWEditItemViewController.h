@@ -8,7 +8,7 @@
 
 #import "QRWBaseViewController.h"
 
-@interface QRWEditItemViewController : QRWBaseViewController<UIGestureRecognizerDelegate>
+@interface QRWEditItemViewController : QRWBaseViewController<UIGestureRecognizerDelegate, UITextFieldDelegate>
 
 
 @property (nonatomic, strong) IBOutlet UIButton *exitButton;

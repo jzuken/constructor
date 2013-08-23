@@ -32,22 +32,10 @@
     } else {
         NSLog(@"Connection failed");
     }
-    
-//    NSURLProtocol
 }
 
 #pragma mark NSURLConnection methods
 
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
-{
-    // This method is called when the server has determined that it
-    // has enough information to create the NSURLResponse.
-	
-    // It can be called multiple times, for example in the case of a
-    // redirect, so each time we reset the data.
-	
-    // receivedData is an instance variable declared elsewhere.
-}
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
@@ -60,11 +48,17 @@
     [_delegate downloadWasFailedWithError:error forRequestURL:_requestURL];
 }
 
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection
-{
-    // do something with the data
-    // receivedData is declared as an instance variable elsewhere
-    // in this example, convert data (from plist) to a string and then to a dictionary
+
+- (BOOL)connection:(NSURLConnection *)connection canAuthenticateAgainstProtectionSpace:(NSURLProtectionSpace *)protectionSpace {
+    return [protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust];
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge {
+    if ([challenge.protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust])
+        if ([[_requestURL mutableCopy] containsObject:challenge.protectionSpace.host])
+            [challenge.sender useCredential:[NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust] forAuthenticationChallenge:challenge];
+    
+    [challenge.sender continueWithoutCredentialForAuthenticationChallenge:challenge];
 }
 
 @end

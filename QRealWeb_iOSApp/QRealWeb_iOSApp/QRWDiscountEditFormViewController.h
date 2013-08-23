@@ -23,6 +23,7 @@
 @property (nonatomic, strong) IBOutlet VCRadioButton *wholesalerMembershipRadioButton;
 @property (nonatomic, strong) IBOutlet VCRadioButton *allMembershipRadioButton;
 
+@property (nonatomic, strong) IBOutlet UIScrollView *forOpenKeyboardScrollView;
 
 //@property (nonatomic, strong) IBOutlet UIButton *exitButton;
 //@property (nonatomic, strong) IBOutlet UIButton *uploadButton;

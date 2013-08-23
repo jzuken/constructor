@@ -167,13 +167,13 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    return 1;
 }
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return section == 0 ? _productsArray.count : _categoriesArray.count;
+    return [_typeOfData isEqualToString:@"products"] ? _productsArray.count : _categoriesArray.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -183,7 +183,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 0) {
+    if ([_typeOfData isEqualToString:@"products"]) {
         return 70;
     } else {
         return 50;
@@ -193,7 +193,7 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     UIImageView *headerView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 30)];
-    if (section == 0) {
+    if ([_typeOfData isEqualToString:@"products"]) {
         [headerView setImage:[UIImage imageNamed:@"subtitle_top10products.png"]];
     } else {
         [headerView setImage:[UIImage imageNamed:@"subtitle_top10categories.png"]];
@@ -204,7 +204,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 0) {
+    if ([_typeOfData isEqualToString:@"products"]) {
         NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:@"QRWTopSellersTopProductsTableViewCell" owner:self options:nil];
         QRWTopSellersTopProductsTableViewCell *cell = [topLevelObjects objectAtIndex:0];
         

@@ -68,6 +68,8 @@
         [_minPriceTextView setText:[NSString stringWithFormat:@"%.2f", [_discount.minprice floatValue]]];
         [_discountTextView setText:[NSString stringWithFormat:@"%.2f", [_discount.discount floatValue]]];
     }
+    
+    _forOpenKeyboardScrollView.contentSize = _forOpenKeyboardScrollView.frame.size;
 }
 
 - (void)didReceiveMemoryWarning
@@ -184,12 +186,14 @@
             answer = NO;
             TLAlertView *alert = [[TLAlertView alloc] initWithTitle:NSLocalizedString(@"ERROR", nil) message:NSLocalizedString(@"BIG_PERCENTS_DISCOUNT", nil) inView:self.view cancelButtonTitle:NSLocalizedString(@"OK", nil) confirmButton:nil];
             [alert show];
+            return answer;
         }
     } else {
         if ([_discount.minprice floatValue] <= [_discount.discount floatValue]) {
             answer = NO;
             TLAlertView *alert = [[TLAlertView alloc] initWithTitle:NSLocalizedString(@"ERROR", nil) message:NSLocalizedString(@"BIG_DISCOUNT", nil) inView:self.view cancelButtonTitle:NSLocalizedString(@"OK", nil) confirmButton:nil];
             [alert show];
+            return answer;
         }
     }
     
@@ -209,6 +213,11 @@
 {
     [_minPriceTextView resignFirstResponder];
     [_discountTextView resignFirstResponder];
+    [UIView animateWithDuration:0.3 animations:^{
+        CGRect frame = _forOpenKeyboardScrollView.frame;
+        frame.size = _forOpenKeyboardScrollView.contentSize;
+        _forOpenKeyboardScrollView.frame = frame;
+    }];
 }
 
 
@@ -227,6 +236,15 @@
 {
     [textField resignFirstResponder];
     return YES;
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    [UIView animateWithDuration:0.3 animations:^{
+        CGRect frame = _forOpenKeyboardScrollView.frame;
+        frame.size.height -= 140;
+        _forOpenKeyboardScrollView.frame = frame;
+    }];
 }
 
 

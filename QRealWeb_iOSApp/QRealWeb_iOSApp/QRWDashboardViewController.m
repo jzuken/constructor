@@ -16,8 +16,8 @@
 
 @interface QRWDashboardViewController ()
 
-@property (nonatomic, strong) QRWTopSellersDashboardViewController *topSellersDashboardViewController;
-@property (nonatomic, strong) QRWLastOrderDashboardViewController *lastOrderDashboardViewController;
+@property (nonatomic, strong) QRWTopSellersDashboardViewController *topProductsDashboardViewController;
+@property (nonatomic, strong) QRWTopSellersDashboardViewController *topCategoriesDashboardViewController;
 @property (nonatomic, strong) QRWInformationDashboardViewController *informationDashboardViewController;
 @property (nonatomic, strong) QRWOrdersInfoDashboardViewController *ordersInfoDashboardViewController;
 
@@ -52,15 +52,16 @@
     _dashboardPagesScrollView.showsVerticalScrollIndicator = NO;
     _dashboardPagesScrollView.scrollsToTop = NO;
     
-    _topSellersDashboardViewController = [[QRWTopSellersDashboardViewController alloc] initWithNameOfPageImage:@"subtitle_topsellers.png" nibName:@"QRWTopSellersDashboardViewController" oldNibName:@"QRWTopSellersDashboardViewControllerOld" viewControllerForPresent:nil];
-    _lastOrderDashboardViewController = [[QRWLastOrderDashboardViewController alloc] initWithNameOfPageImage:@"subtitle_last_order.png" nibName:@"QRWLastOrderDashboardViewController" oldNibName:nil viewControllerForPresent:self];
+    _topCategoriesDashboardViewController = [[QRWTopSellersDashboardViewController alloc] initWithNameOfPageImage:@"subtitle_topsellers.png" nibName:@"QRWTopSellersDashboardViewController" oldNibName:@"QRWTopSellersDashboardViewControllerOld" viewControllerForPresent:nil];
+    _topProductsDashboardViewController = [[QRWTopSellersDashboardViewController alloc] initWithNameOfPageImage:@"subtitle_topsellers.png" nibName:@"QRWTopSellersDashboardViewController" oldNibName:@"QRWTopSellersDashboardViewControllerOld" viewControllerForPresent:nil];
     _informationDashboardViewController = [[QRWInformationDashboardViewController alloc] initWithNameOfPageImage:@"subtitle_information.png" nibName:@"QRWInformationDashboardViewController" oldNibName:nil viewControllerForPresent:nil];
     _ordersInfoDashboardViewController = [[QRWOrdersInfoDashboardViewController alloc] initWithNameOfPageImage:@"subtitle_orders_info.png" nibName:@"QRWOrdersInfoDashboardViewController" oldNibName:nil viewControllerForPresent:nil];
     
     _ordersInfoDashboardViewController.fullInfoMode = YES;
-    _lastOrderDashboardViewController.mainStatsInfoMode = NO;
+    [_topProductsDashboardViewController setTypeOfData:  @"products"];
+    [_topCategoriesDashboardViewController setTypeOfData: @"categories"];
     
-    NSArray *controllersArray = @[_ordersInfoDashboardViewController, _lastOrderDashboardViewController, _topSellersDashboardViewController];//, _informationDashboardViewController];
+    NSArray *controllersArray = @[_ordersInfoDashboardViewController, _topProductsDashboardViewController, _topCategoriesDashboardViewController];//, _informationDashboardViewController];
     CGRect frame = _ordersInfoDashboardViewController.view.frame;
     _dashboardPagesScrollView.contentSize = CGSizeMake(_dashboardPagesScrollView.frame.size.width * controllersArray.count, _dashboardPagesScrollView.frame.size.height);
     
@@ -73,7 +74,6 @@
     
     [dataManager sendTopCategoriesRequest];
     [dataManager sendTopProductsRequest];
-    [dataManager sendLastOrderRequest];
     [dataManager sendOrdersStatisticRequest];
     
     [self startLoadingAnimation];
@@ -86,22 +86,16 @@
 
 
 
-- (void)respondsForLastOrderRequest:(QRWLastOrder *)lastOrder
-{
-    [self stopLoadingAnimation];
-    [_lastOrderDashboardViewController setLastOrder:lastOrder];
-}
-
 - (void)respondsForTopProductsRequest:(QRWTopProducts *)topProducts
 {
     [self stopLoadingAnimation];
-    [_topSellersDashboardViewController setTopProducts:topProducts];
+    [_topProductsDashboardViewController setTopProducts:topProducts];
 }
 
 - (void)respondsForTopCategoriesRequest:(QRWTopCategories *)topCategories
 {
     [self stopLoadingAnimation];
-    [_topSellersDashboardViewController setTopCategories:topCategories];
+    [_topCategoriesDashboardViewController setTopCategories:topCategories];
 }
 
 - (void)respondsForOrdersStatisticRequest:(NSDictionary *)statistic withArratOfKeys:(NSArray *)keys

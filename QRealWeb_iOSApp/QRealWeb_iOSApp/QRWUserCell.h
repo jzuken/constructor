@@ -10,7 +10,6 @@
 
 @interface QRWUserCell : UITableViewCell
 
-@property (strong, nonatomic) IBOutlet UIImageView *userPhotoImageView;
 
 @property (strong, nonatomic) IBOutlet UILabel *userLable;
 @property (strong, nonatomic) IBOutlet UILabel *loginLable;
