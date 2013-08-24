@@ -89,7 +89,7 @@ public class Dashboard extends PinSupportNetworkActivity {
 		topCategoriesPrBar = (ProgressBar) topCategoriesPage.findViewById(R.id.progress_bar);
 		noCategories = (TextView) topCategoriesPage.findViewById(R.id.no_categories);
 
-		topCategoriesTable = (StatisticTable) topCategoriesPage.findViewById(R.id.top_categories_table);
+		setupTopCategoriesListViewAdapter(topCategoriesPage);
 		pages.add(topCategoriesPage);
 
 		SwipingPagerAdapter pagerAdapter = new SwipingPagerAdapter(pages);
@@ -321,16 +321,16 @@ public class Dashboard extends PinSupportNetworkActivity {
 	}
 
 	private void addProductToList(final String name, final String id, final String code, final String sold) {
-		adapter.add(new TopProduct(name, id, code, sold));
+		topProductsAdapter.add(new TopProduct(name, id, code, sold));
 	}
 
 	private void clearTopSellersTable() {
-		adapter.clear();
+		topProductsAdapter.clear();
 		noProducts.setText("");
 	}
 
 	private void setupTopProductsListViewAdapter(View page) {
-		adapter = new TopProductsListAdapter(this, R.layout.top_products_item, new ArrayList<TopProduct>());
+		topProductsAdapter = new TopProductsListAdapter(this, R.layout.top_products_item, new ArrayList<TopProduct>());
 		ListView topProductsListView = (ListView) page.findViewById(R.id.top_products_list);
 		LayoutInflater inflater = getLayoutInflater();
 
@@ -338,9 +338,8 @@ public class Dashboard extends PinSupportNetworkActivity {
 		topProductsListView.addHeaderView(listHeader, null, false);
 
 		topProductsListView.setHeaderDividersEnabled(false);
-		topProductsListView.setFooterDividersEnabled(false);
 
-		topProductsListView.setAdapter(adapter);
+		topProductsListView.setAdapter(topProductsAdapter);
 	}
 
 	private void updateTopCategoriesData() {
@@ -411,7 +410,7 @@ public class Dashboard extends PinSupportNetworkActivity {
 
 			for (int i = 0; i < currentPeriodArray.length(); i++) {
 				JSONObject currentCategory = currentPeriodArray.getJSONObject(i);
-				topCategoriesTable.addPositionToTable(currentCategory.getString("category"),
+				addCategoryToList(currentCategory.getString("category"), currentCategory.getString("categoryid"),
 						currentCategory.getString("count"));
 			}
 		} catch (JSONException e) {
@@ -419,9 +418,27 @@ public class Dashboard extends PinSupportNetworkActivity {
 		}
 	}
 
+	private void addCategoryToList(final String name, final String id, final String sold) {
+		topCategoriesAdapter.add(new Category(name, id, sold));
+	}
+
 	private void clearTopCategoriesTable() {
-		topCategoriesTable.clearTable();
+		topCategoriesAdapter.clear();
 		noCategories.setText("");
+	}
+
+	private void setupTopCategoriesListViewAdapter(View page) {
+		topCategoriesAdapter = new CategoriesListViewAdapter(this, R.layout.top_categories_item,
+				new ArrayList<Category>());
+		ListView topCategoriesListView = (ListView) page.findViewById(R.id.top_categories_list);
+		LayoutInflater inflater = getLayoutInflater();
+
+		View listHeader = inflater.inflate(R.layout.top_categories_header, null, false);
+		topCategoriesListView.addHeaderView(listHeader, null, false);
+
+		topCategoriesListView.setHeaderDividersEnabled(false);
+
+		topCategoriesListView.setAdapter(topCategoriesAdapter);
 	}
 
 	private TableRow totalOrders;
@@ -437,8 +454,8 @@ public class Dashboard extends PinSupportNetworkActivity {
 
 	private TextView noProducts;
 	private TextView noCategories;
-	private TopProductsListAdapter adapter;
-	private StatisticTable topCategoriesTable;
+	private TopProductsListAdapter topProductsAdapter;
+	private CategoriesListViewAdapter topCategoriesAdapter;
 	private ProgressBar ordersInfoPrBar;
 	private ProgressBar topSellersPrBar;
 	private ProgressBar topCategoriesPrBar;
