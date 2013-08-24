@@ -26,7 +26,13 @@ public class DiscountAdder extends PinSupportNetworkActivity {
 		TextView title = (TextView) findViewById(R.id.discount_editor_title);
 		title.setText(getResources().getString(R.string.add_new_discount));
 	}
-	
+
+	@Override
+	public void onBackPressed() {
+		setResult(noUpdateCode);
+		super.onBackPressed();
+	}
+
 	private void createNewDiscount() {
 		String provider = "1";
 		String orderSubtotalValue = orderSubtotalEditor.getText().toString();
@@ -48,13 +54,12 @@ public class DiscountAdder extends PinSupportNetworkActivity {
 		}
 		if (response != null) {
 			Toast.makeText(getBaseContext(), "Success", Toast.LENGTH_SHORT).show();
-			setResult(RESULT_OK);
 			finish();
 		} else {
 			showConnectionErrorMessage();
 		}
 	}
-	
+
 	private String getDiscountType() {
 		if (percentButton.isChecked()) {
 			return "percent";
@@ -62,7 +67,7 @@ public class DiscountAdder extends PinSupportNetworkActivity {
 			return "absolute";
 		}
 	}
-	
+
 	public void okClick(View v) {
 		try {
 			Double discountValue = Double.parseDouble((discountEditor.getText().toString()));
@@ -80,7 +85,7 @@ public class DiscountAdder extends PinSupportNetworkActivity {
 			Toast.makeText(getBaseContext(), "Incorrect input", Toast.LENGTH_SHORT).show();
 		}
 	}
-	
+
 	private String getMembershipId() {
 		if (allButton.isChecked()) {
 			return "0";
@@ -89,12 +94,13 @@ public class DiscountAdder extends PinSupportNetworkActivity {
 		} else {
 			return "2";
 		}
-		
+
 	}
-	
+
 	private RadioButton allButton;
 	private RadioButton premiumButton;
 	private RadioButton percentButton;
 	private EditText orderSubtotalEditor;
 	private EditText discountEditor;
+	private final int noUpdateCode = 4;
 }

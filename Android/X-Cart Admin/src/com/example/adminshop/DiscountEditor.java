@@ -28,7 +28,7 @@ public class DiscountEditor extends PinSupportNetworkActivity {
 		percentButton = (RadioButton) findViewById(R.id.percentRadioButton);
 		absoluteButton = (RadioButton) findViewById(R.id.absoluteRadioButton);
 
-		if (getIntent().getStringExtra("discountType").equals("percent")) {
+		if (getIntent().getStringExtra("discountType").equals("Percent, %")) {
 			percentButton.setChecked(true);
 		} else {
 			absoluteButton.setChecked(true);
@@ -42,6 +42,12 @@ public class DiscountEditor extends PinSupportNetworkActivity {
 		okButton.setText("Save");
 		TextView title = (TextView) findViewById(R.id.discount_editor_title);
 		title.setText(getResources().getString(R.string.edit_discount));
+	}
+
+	@Override
+	public void onBackPressed() {
+		setResult(noUpdateCode);
+		super.onBackPressed();
 	}
 
 	public void okClick(View v) {
@@ -61,7 +67,7 @@ public class DiscountEditor extends PinSupportNetworkActivity {
 			Toast.makeText(getBaseContext(), "Incorrect input", Toast.LENGTH_SHORT).show();
 		}
 	}
-	
+
 	private void updateDiscount() {
 		String provider = "1";
 		String id = getIntent().getStringExtra("id");
@@ -84,7 +90,6 @@ public class DiscountEditor extends PinSupportNetworkActivity {
 		}
 		if (response != null) {
 			Toast.makeText(getBaseContext(), "Success", Toast.LENGTH_SHORT).show();
-			setResult(RESULT_OK);
 			finish();
 		} else {
 			showConnectionErrorMessage();
@@ -117,4 +122,5 @@ public class DiscountEditor extends PinSupportNetworkActivity {
 	private RadioButton absoluteButton;
 	private EditText orderSubtotalEditor;
 	private EditText discountEditor;
+	private final int noUpdateCode = 4;
 }

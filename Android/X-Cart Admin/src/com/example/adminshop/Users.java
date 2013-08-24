@@ -80,8 +80,21 @@ public class Users extends PinSupportNetworkActivity {
 							String name = obj.getString("title") + " " + obj.getString("firstname") + " "
 									+ obj.getString("lastname");
 							String login = obj.getString("login");
-							String type = obj.getString("usertype");
+							
+							String type;
+							String typeSymbol = obj.getString("usertype");
+							if (typeSymbol.equals("C")) {
+								type = "Customer";
+							} else if (typeSymbol.equals("P")) {
+								type = "Administrator";
+							} else {
+								type = "Partner";
+							}
+							
 							String lastLogin = obj.getString("last_login");
+							if (lastLogin.equals("01-01-1970")) {
+								lastLogin = "Never logged in";
+							}
 							String totalOrder = obj.optString("orders_count");
 							addUserToList(id, name, login, type, lastLogin, totalOrder);
 						}

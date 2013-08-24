@@ -55,17 +55,25 @@ public class Discounts extends PinSupportNetworkActivity {
 							JSONObject obj = array.getJSONObject(i);
 							String id = obj.getString("discountid");
 							String orderSubtotalString = obj.getString("minprice");
+
 							String discountString = obj.getString("discount");
 							String discountTypeString = obj.getString("discount_type");
-							String membershipid = obj.getString("membershipid");
+							if (discountTypeString.equals("percent")) {
+								discountTypeString = "Percent, %";
+							} else {
+								discountTypeString = "Absolute, $";
+							}
+
+							String membershipId = obj.getString("membershipid");
 							String membership = null;
-							if (membershipid.equals("none")) {
+							if (membershipId.equals("none")) {
 								membership = "All";
-							} else if (membershipid.equals("1")) {
+							} else if (membershipId.equals("1")) {
 								membership = "Premium";
 							} else {
 								membership = "Wholesale";
 							}
+
 							addDiscountToList(id, orderSubtotalString, discountString, discountTypeString, membership);
 						}
 					} catch (JSONException e) {
@@ -86,16 +94,13 @@ public class Discounts extends PinSupportNetworkActivity {
 			final String discountType, final String membership) {
 		adapter.add(new Discount(id, subtotal, discount, discountType, membership));
 	}
-	
 
 	public void addNewDiscountClick(View v) {
-		setNeedDownloadValue(false);
 		Intent intent = new Intent(this, DiscountAdder.class);
 		startActivityForResult(intent, 1);
 	}
 
 	private void editClick(Discount itemToEdit) {
-		setNeedDownloadValue(false);
 		Intent intent = new Intent(getBaseContext(), DiscountEditor.class);
 		intent.putExtra("id", itemToEdit.getId());
 		intent.putExtra("orderSub", itemToEdit.getOrderSubtotal());
@@ -203,8 +208,17 @@ public class Discounts extends PinSupportNetworkActivity {
 	private void clearList() {
 		adapter.clear();
 	}
-	
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (resultCode == noUpdateCode) {
+			setNeedDownloadValue(false);
+		}
+	}
+
 	private ProgressBar progressBar;
 	private DiscountsListAdapter adapter;
 	private PullToRefreshListView discountsListView;
+	private final int noUpdateCode = 4;
 }
