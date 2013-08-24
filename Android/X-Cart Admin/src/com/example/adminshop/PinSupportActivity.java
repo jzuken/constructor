@@ -15,12 +15,7 @@ public class PinSupportActivity extends Activity {
 			needDownload = false;
 		}
 	}
-	
-	@Override
-	public void onBackPressed() {
-		setBackResult();
-		super.onBackPressed();
-	}
+
 	private boolean isPaused;
 	private boolean fromOtherPage;
 	private boolean fromPin;
@@ -29,10 +24,6 @@ public class PinSupportActivity extends Activity {
 	protected void onPause() {
 		super.onPause();
 		isPaused = true;
-	}
-	
-	protected void setBackResult() {
-		setResult(RESULT_OK);
 	}
 	
 	/**
@@ -60,11 +51,10 @@ public class PinSupportActivity extends Activity {
 	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (resultCode == RESULT_OK || resultCode > 3) {
-			fromOtherPage = true;
-		}
 		if (resultCode == 2) {
 			fromPin = true;
+		} else {
+			fromOtherPage = true;
 		}
 	}
 	

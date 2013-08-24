@@ -17,8 +17,9 @@ public class FullMessage extends PinSupportActivity {
 	}
 
 	@Override
-	protected void setBackResult() {
+	public void onBackPressed() {
 		setResult(noUpdateCode);
+		super.onBackPressed();
 	}
 
 	private final int noUpdateCode = 4;

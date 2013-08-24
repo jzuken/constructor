@@ -28,8 +28,9 @@ public class DiscountAdder extends PinSupportNetworkActivity {
 	}
 	
 	@Override
-	protected void setBackResult() {
+	public void onBackPressed() {
 		setResult(noUpdateCode);
+		super.onBackPressed();
 	}
 	
 	private void createNewDiscount() {

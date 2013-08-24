@@ -19,8 +19,9 @@ public class OrderProducts extends PinSupportActivity {
 	}
 
 	@Override
-	protected void setBackResult() {
+	public void onBackPressed() {
 		setResult(noUpdateCode);
+		super.onBackPressed();
 	}
 
 	private void addProductsToList() {

@@ -229,8 +229,9 @@ public class Users extends PinSupportNetworkActivity {
 	}
 
 	private void sendMessage(String recipientEmail) {
+		setNeedDownloadValue(false);
 		Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", recipientEmail, null));
-		startActivity(Intent.createChooser(emailIntent, "Send message..."));
+		startActivityForResult(Intent.createChooser(emailIntent, "Send message..."), 1);
 	}
 
 	private void setupSortSpinner() {
