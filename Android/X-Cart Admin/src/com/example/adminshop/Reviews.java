@@ -140,6 +140,7 @@ public class Reviews extends PinSupportNetworkActivity {
 	}
 
 	private void showFullMessage(String email, String product, String message) {
+		setNeedDownloadValue(false);
 		Intent intent = new Intent(getBaseContext(), FullMessage.class);
 		intent.putExtra("email", email);
 		intent.putExtra("product", product);

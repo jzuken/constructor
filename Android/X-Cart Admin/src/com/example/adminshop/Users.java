@@ -183,6 +183,7 @@ public class Users extends PinSupportNetworkActivity {
 	}
 
 	private void showOrders(String id, String name) {
+		setNeedDownloadValue(false);
 		Intent intent = new Intent(getBaseContext(), UserOrders.class);
 		intent.putExtra("userId", id);
 		intent.putExtra("userName", name);
@@ -290,14 +291,6 @@ public class Users extends PinSupportNetworkActivity {
 
 	}
 
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-		if (resultCode == noUpdateCode) {
-			setNeedDownloadValue(false);
-		}
-	}
-
 	private boolean isFirstSelection = true;
 	private TextView registered;
 	private TextView online;
@@ -312,5 +305,4 @@ public class Users extends PinSupportNetworkActivity {
 	private final int startItemCount = 4;
 	private PullToRefreshListView usersListView;
 	private Object lock = new Object();
-	private final int noUpdateCode = 4;
 }

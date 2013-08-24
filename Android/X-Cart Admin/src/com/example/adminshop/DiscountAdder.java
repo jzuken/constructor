@@ -27,12 +27,6 @@ public class DiscountAdder extends PinSupportNetworkActivity {
 		title.setText(getResources().getString(R.string.add_new_discount));
 	}
 	
-	@Override
-	public void onBackPressed() {
-		setResult(noUpdateCode);
-		super.onBackPressed();
-	}
-	
 	private void createNewDiscount() {
 		String provider = "1";
 		String orderSubtotalValue = orderSubtotalEditor.getText().toString();
@@ -103,5 +97,4 @@ public class DiscountAdder extends PinSupportNetworkActivity {
 	private RadioButton percentButton;
 	private EditText orderSubtotalEditor;
 	private EditText discountEditor;
-	private final int noUpdateCode = 4;
 }

@@ -89,12 +89,6 @@ public class Settings extends PreferenceActivity {
 		});
 	}
 
-	@Override
-	public void onBackPressed() {
-		setResult(RESULT_OK);
-		super.onBackPressed();
-	}
-
 	private boolean isPaused;
 	private boolean fromPin;
 

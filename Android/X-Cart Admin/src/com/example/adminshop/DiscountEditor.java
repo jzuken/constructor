@@ -62,12 +62,6 @@ public class DiscountEditor extends PinSupportNetworkActivity {
 		}
 	}
 	
-	@Override
-	public void onBackPressed() {
-		setResult(noUpdateCode);
-		super.onBackPressed();
-	}
-
 	private void updateDiscount() {
 		String provider = "1";
 		String id = getIntent().getStringExtra("id");
@@ -123,5 +117,4 @@ public class DiscountEditor extends PinSupportNetworkActivity {
 	private RadioButton absoluteButton;
 	private EditText orderSubtotalEditor;
 	private EditText discountEditor;
-	private final int noUpdateCode = 4;
 }

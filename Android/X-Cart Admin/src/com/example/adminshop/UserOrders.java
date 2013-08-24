@@ -40,12 +40,6 @@ public class UserOrders extends PinSupportNetworkActivity {
 		super.withoutPinAction();
 	}
 
-	@Override
-	public void onBackPressed() {
-		setResult(noUpdateCode);
-		super.onBackPressed();
-	}
-
 	private enum StatusSymbols {
 		I, Q, P, X, D, F, C
 	}

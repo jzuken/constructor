@@ -17,7 +17,7 @@ public class OrderProducts extends PinSupportActivity {
 		setupListViewAdapter();
 		addProductsToList();
 	}
-
+	
 	@Override
 	public void onBackPressed() {
 		setResult(noUpdateCode);
@@ -45,6 +45,6 @@ public class OrderProducts extends PinSupportActivity {
 		orderProductsListView.setAdapter(adapter);
 	}
 
-	private final int noUpdateCode = 4;
 	private OrderProductsListAdapter adapter;
+	private final int noUpdateCode = 4;
 }

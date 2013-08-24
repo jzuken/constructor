@@ -51,6 +51,7 @@ public class MainActivity extends PinSupportNetworkActivity {
 			@Override
 			public void onClick(View v) {
 				if (details != null) {
+					setNeedDownloadValue(false);
 					Intent intent = new Intent(getBaseContext(), OrderProducts.class);
 					intent.putExtra("details", details);
 					startActivityForResult(intent, 1);
@@ -380,6 +381,7 @@ public class MainActivity extends PinSupportNetworkActivity {
 	}
 
 	public void settingsClick(View v) {
+		setNeedDownloadValue(false);
 		Intent intent = new Intent(this, Settings.class);
 		startActivityForResult(intent, 1);
 	}
@@ -406,18 +408,11 @@ public class MainActivity extends PinSupportNetworkActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.settings:
+			setNeedDownloadValue(false);
 			startActivityForResult(new Intent(this, Settings.class), 1);
 			return true;
 		}
 		return false;
-	}
-	
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-		if (resultCode == noUpdateCode) {
-			setNeedDownloadValue(false);
-		}
 	}
 
 	private int currentPage;
@@ -450,5 +445,4 @@ public class MainActivity extends PinSupportNetworkActivity {
 	private SwipingPagerAdapter pagerAdapter;
 	private List<View> pages;
 	private String details = null;
-	private final int noUpdateCode = 4;
 }
