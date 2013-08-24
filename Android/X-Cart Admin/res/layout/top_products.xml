@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
@@ -71,40 +72,14 @@
             </LinearLayout>
         </TabHost>
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
-
-            <com.example.adminshop.StatisticTable
-                android:id="@+id/top_sellers_table"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="10dp" >
-
-                <TableRow
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:background="@color/gray" >
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="@string/topProducts"
-                        android:textSize="15sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="@string/sold"
-                        android:textSize="15sp" />
-                </TableRow>
-            </com.example.adminshop.StatisticTable>
-        </ScrollView>
+        <ListView
+            android:id="@+id/top_products_list"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:paddingBottom="10dp"
+            android:listSelector="@android:color/transparent"
+            tools:listitem="@layout/top_products_item" >
+        </ListView>
     </LinearLayout>
 
     <ProgressBar

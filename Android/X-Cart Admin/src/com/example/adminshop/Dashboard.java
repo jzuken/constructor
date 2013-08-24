@@ -13,6 +13,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
@@ -47,7 +48,7 @@ public class Dashboard extends PinSupportNetworkActivity {
 		// temporarily hidden
 		// pages.add(page3);
 
-		View topProductsPage = inflater.inflate(R.layout.top_sellers, null);
+		View topProductsPage = inflater.inflate(R.layout.top_products, null);
 
 		topSellersPeriod = 1;
 		TabHost sellersTabHost = (TabHost) topProductsPage.findViewById(android.R.id.tabhost);
@@ -66,7 +67,7 @@ public class Dashboard extends PinSupportNetworkActivity {
 		topSellersPrBar = (ProgressBar) topProductsPage.findViewById(R.id.progress_bar);
 		noProducts = (TextView) topProductsPage.findViewById(R.id.no_products_sold);
 
-		topSellersTable = (StatisticTable) topProductsPage.findViewById(R.id.top_sellers_table);
+		setupTopProductsListViewAdapter(topProductsPage);
 		pages.add(topProductsPage);
 
 		View topCategoriesPage = inflater.inflate(R.layout.top_categories, null);
@@ -311,17 +312,35 @@ public class Dashboard extends PinSupportNetworkActivity {
 
 			for (int i = 0; i < currentPeriodArray.length(); i++) {
 				JSONObject currentProduct = currentPeriodArray.getJSONObject(i);
-				topSellersTable.addPositionToTable(currentProduct.getString("product"),
-						currentProduct.getString("count"));
+				addProductToList(currentProduct.getString("product"), currentProduct.getString("productid"),
+						currentProduct.getString("productcode"), currentProduct.getString("count"));
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
 	}
 
+	private void addProductToList(final String name, final String id, final String code, final String sold) {
+		adapter.add(new TopProduct(name, id, code, sold));
+	}
+
 	private void clearTopSellersTable() {
-		topSellersTable.clearTable();
+		adapter.clear();
 		noProducts.setText("");
+	}
+
+	private void setupTopProductsListViewAdapter(View page) {
+		adapter = new TopProductsListAdapter(this, R.layout.top_products_item, new ArrayList<TopProduct>());
+		ListView topProductsListView = (ListView) page.findViewById(R.id.top_products_list);
+		LayoutInflater inflater = getLayoutInflater();
+
+		View listHeader = inflater.inflate(R.layout.top_products_header, null, false);
+		topProductsListView.addHeaderView(listHeader, null, false);
+
+		topProductsListView.setHeaderDividersEnabled(false);
+		topProductsListView.setFooterDividersEnabled(false);
+
+		topProductsListView.setAdapter(adapter);
 	}
 
 	private void updateTopCategoriesData() {
@@ -353,52 +372,53 @@ public class Dashboard extends PinSupportNetworkActivity {
 
 		dataRequester.execute("http://54.213.38.9/xcart/api.php?request=top_categories");
 	}
-	
+
 	private void setCategoriesToTable() {
 		try {
-		JSONArray currentPeriodArray = new JSONArray();
-		switch (topCategoriesPeriod) {
-		case 1:
-			if (currentTopCategoriesData.optString("last_login").equals("none")) {
-				noCategories.setText("No categories statistic during this period");
-			} else {
-				currentPeriodArray = currentTopCategoriesData.getJSONArray("last_login");
+			JSONArray currentPeriodArray = new JSONArray();
+			switch (topCategoriesPeriod) {
+			case 1:
+				if (currentTopCategoriesData.optString("last_login").equals("none")) {
+					noCategories.setText("No categories statistic during this period");
+				} else {
+					currentPeriodArray = currentTopCategoriesData.getJSONArray("last_login");
+				}
+				break;
+			case 2:
+				if (currentTopCategoriesData.optString("today").equals("none")) {
+					noCategories.setText("No categories statistic during this period");
+				} else {
+					currentPeriodArray = currentTopCategoriesData.getJSONArray("today");
+				}
+				break;
+			case 3:
+				if (currentTopCategoriesData.optString("week").equals("none")) {
+					noCategories.setText("No categories statistic during this period");
+				} else {
+					currentPeriodArray = currentTopCategoriesData.getJSONArray("week");
+				}
+				break;
+			case 4:
+				if (currentTopCategoriesData.optString("month").equals("none")) {
+					noCategories.setText("No categories statistic during this period");
+				} else {
+					currentPeriodArray = currentTopCategoriesData.getJSONArray("month");
+				}
+				break;
+			default:
+				break;
 			}
-			break;
-		case 2:
-			if (currentTopCategoriesData.optString("today").equals("none")) {
-				noCategories.setText("No categories statistic during this period");
-			} else {
-				currentPeriodArray = currentTopCategoriesData.getJSONArray("today");
-			}
-			break;
-		case 3:
-			if (currentTopCategoriesData.optString("week").equals("none")) {
-				noCategories.setText("No categories statistic during this period");
-			} else {
-				currentPeriodArray = currentTopCategoriesData.getJSONArray("week");
-			}
-			break;
-		case 4:
-			if (currentTopCategoriesData.optString("month").equals("none")) {
-				noCategories.setText("No categories statistic during this period");
-			} else {
-				currentPeriodArray = currentTopCategoriesData.getJSONArray("month");
-			}
-			break;
-		default:
-			break;
-		}
 
-		for (int i = 0; i < currentPeriodArray.length(); i++) {
-			JSONObject currentCategory = currentPeriodArray.getJSONObject(i);
-			topCategoriesTable.addPositionToTable(currentCategory.getString("category"),
-					currentCategory.getString("count"));
-		}} catch (JSONException e) {
+			for (int i = 0; i < currentPeriodArray.length(); i++) {
+				JSONObject currentCategory = currentPeriodArray.getJSONObject(i);
+				topCategoriesTable.addPositionToTable(currentCategory.getString("category"),
+						currentCategory.getString("count"));
+			}
+		} catch (JSONException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private void clearTopCategoriesTable() {
 		topCategoriesTable.clearTable();
 		noCategories.setText("");
@@ -417,7 +437,7 @@ public class Dashboard extends PinSupportNetworkActivity {
 
 	private TextView noProducts;
 	private TextView noCategories;
-	private StatisticTable topSellersTable;
+	private TopProductsListAdapter adapter;
 	private StatisticTable topCategoriesTable;
 	private ProgressBar ordersInfoPrBar;
 	private ProgressBar topSellersPrBar;
