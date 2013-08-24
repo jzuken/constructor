@@ -8,6 +8,7 @@ import org.json.JSONObject;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
@@ -205,6 +206,7 @@ public class Users extends PinSupportNetworkActivity {
 					showOrders(user.getId(), user.getName());
 					break;
 				case 1:
+					sendMessage(user.getLogin());
 					dialog.dismiss();
 					break;
 				case 2:
@@ -224,6 +226,11 @@ public class Users extends PinSupportNetworkActivity {
 		actionList.setAdapter(adapter);
 
 		dialog.show();
+	}
+
+	private void sendMessage(String recipientEmail) {
+		Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", recipientEmail, null));
+		startActivity(Intent.createChooser(emailIntent, "Send message..."));
 	}
 
 	private void setupSortSpinner() {
