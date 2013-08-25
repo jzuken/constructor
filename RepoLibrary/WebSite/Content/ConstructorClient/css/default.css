@@ -1,0 +1,120 @@
+.phone {
+    border: 1px solid #000;
+    border-radius: 11px;
+    background-color: #232323;
+    box-shadow: 0 0 15px rgba(0,0,0,.28), inset 0 1px 1px rgba(255,255,255,.45), inset 0 0 2px rgba(255,255,255,.2);
+    width: 320px;
+    height: 540px;
+    padding: 15px;
+    float: right;
+}
+
+#phone-screen {
+    background-color: white;
+    width: 100%;
+    height: 100%;
+}
+
+div[screen-view] {
+    width: 100%;
+    height: 100%;
+}
+
+#screens {
+    width: 200px;
+    float: left;
+}
+
+#editors {
+    width: 100%;
+    float: left;
+}
+
+.center {
+    height: 800px;
+}
+
+.main-button {
+    width: 120px;
+    height: 30px;
+    padding-top: 90px;
+    background-color: black;
+    color: white;
+    background-position: center 10px;
+    text-align: center;
+    border: 2px solid rgba(0, 0, 0, 0);
+    font-size: 16pt;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none; 
+}
+
+.screen-controls .main-button {
+    float: left;
+    margin: 5px;
+}
+
+.screen-controls {
+    margin-left: 26px;
+    margin-top: 50px;
+    position: relative;
+}
+
+
+.main-button.selected {
+    border: 2px solid #0C3;
+}
+
+#screens div {
+    width: 100%;
+}
+
+#phone-screen .screen-name {
+    border: 1px solid #000000;
+    text-align: center;
+    font-size: 18pt;
+}
+
+.step-editor {
+    width: 100%;
+}
+
+#screen-editors {
+    float: left;
+    width: 280px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.properties-block {
+    padding-bottom: 5px;
+}
+
+.color-selector {
+    width: 30px;
+    height: 30px;
+    background: url(../images/select.png) center;
+}
+
+.step {
+    display: none;
+}
+
+.step.active {
+    display: block;
+}
+
+.screen-mini {
+    width: 64px;
+    height: 102px;
+    float: left;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.drag {
+    z-index: 1000;
+}
