@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleHost", "ConsoleHost\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepoLibraryTests", "RepoLibraryTests\RepoLibraryTests.csproj", "{12D75122-8473-44DA-801B-D69ED18712AB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WCFTestClient", "WCFTestClient\WCFTestClient.csproj", "{A3A99940-69B7-49B3-A49B-2848CCCB9108}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,10 +25,6 @@ Global
 		{12D75122-8473-44DA-801B-D69ED18712AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{12D75122-8473-44DA-801B-D69ED18712AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{12D75122-8473-44DA-801B-D69ED18712AB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A3A99940-69B7-49B3-A49B-2848CCCB9108}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A3A99940-69B7-49B3-A49B-2848CCCB9108}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A3A99940-69B7-49B3-A49B-2848CCCB9108}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A3A99940-69B7-49B3-A49B-2848CCCB9108}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
