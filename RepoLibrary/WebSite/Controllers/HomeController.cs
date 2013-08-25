@@ -28,5 +28,13 @@ namespace WebSite.Controllers
 
             return View();
         }
+
+        [Authorize]
+        public ActionResult Constructor()
+        {
+            ViewBag.Message = "Constructor app";
+
+            return View();
+        }
     }
 }
