@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleHost", "ConsoleHost\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepoLibraryTests", "RepoLibraryTests\RepoLibraryTests.csproj", "{12D75122-8473-44DA-801B-D69ED18712AB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApplicationServerListener", "ApplicationServerListener\ApplicationServerListener.csproj", "{FCC3E947-B657-40D4-95DB-019A305B683D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +27,10 @@ Global
 		{12D75122-8473-44DA-801B-D69ED18712AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{12D75122-8473-44DA-801B-D69ED18712AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{12D75122-8473-44DA-801B-D69ED18712AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FCC3E947-B657-40D4-95DB-019A305B683D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCC3E947-B657-40D4-95DB-019A305B683D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCC3E947-B657-40D4-95DB-019A305B683D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCC3E947-B657-40D4-95DB-019A305B683D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
