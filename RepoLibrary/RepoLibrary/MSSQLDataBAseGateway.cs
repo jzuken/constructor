@@ -11,20 +11,21 @@ namespace RepoLibrary
             this.connectionString = connectionString;
         }
 
-        public Project GetProject(int id)
+        public Project GetProject(string name)
         {
             SqlConnection connection = new SqlConnection(this.connectionString);
             connection.Open();
             SqlDataReader myReader = null;
-            SqlCommand myCommand = new SqlCommand("select * from projects where projectId=" + id.ToString(), connection);
+            SqlCommand myCommand = new SqlCommand("select * from shops where shopName=@name", connection);
+            myCommand.Parameters.Add("@name", SqlDbType.VarChar).Value = name;
             myReader = myCommand.ExecuteReader();
             while (myReader.Read())
             {
-                Console.WriteLine(myReader["projectId"].ToString());
-                Console.WriteLine(myReader["projectName"].ToString());
+                Console.WriteLine(myReader["shopName"].ToString());
+                Console.WriteLine(myReader["shopSettings"].ToString());
                 Project project = new Project();
-                project.Id = int.Parse(myReader["projectId"].ToString());
-                project.Name = myReader["projectName"].ToString();
+                project.Settings = myReader["shopSettings"].ToString();
+                project.Name = myReader["shopName"].ToString();
                 connection.Close();
                 return project;
             }
@@ -34,21 +35,44 @@ namespace RepoLibrary
 
         public string SaveProject(Project data)
         {
-            SqlConnection connection = new SqlConnection(this.connectionString);
-            connection.Open();
-            SqlCommand myCommand = new SqlCommand("INSERT INTO projects (projectId, projectName) " +
-                "Values (" + data.Id.ToString() + ", '" + data.Name + "')", connection);
-            int result = myCommand.ExecuteNonQuery();
-            connection.Close();
-            if (result > 0)
+            Project project = GetProject(data.Name);
+            if (project == null)
             {
-                return "ok";
+                SqlConnection connection = new SqlConnection(this.connectionString);
+                connection.Open();
+                SqlCommand myCommand = new SqlCommand("INSERT INTO shops (shopName, shopSettings) " +
+                    "Values (@name,@settings)", connection);
+                myCommand.Parameters.Add("@name", SqlDbType.VarChar).Value = data.Name;
+                myCommand.Parameters.Add("@settings", SqlDbType.VarChar).Value = data.Settings;
+                int result = myCommand.ExecuteNonQuery();
+                connection.Close();
+                if (result > 0)
+                {
+                    return "ok";
+                }
+                else
+                {
+                    return "Failed to add project";
+                }
             }
             else
             {
-                return "Failed to add project";
+                SqlConnection connection = new SqlConnection(this.connectionString);
+                connection.Open();
+                SqlCommand myCommand = new SqlCommand("UPDATE shops SET shopSettings=@settings WHERE shopName=@name", connection);
+                myCommand.Parameters.Add("@name", SqlDbType.VarChar).Value = data.Name;
+                myCommand.Parameters.Add("@settings", SqlDbType.VarChar).Value = data.Settings;
+                int result = myCommand.ExecuteNonQuery();
+                connection.Close();
+                if (result > 0)
+                {
+                    return "ok";
+                }
+                else
+                {
+                    return "Failed to add project";
+                }
             }
-
         }
         private string connectionString;
     }

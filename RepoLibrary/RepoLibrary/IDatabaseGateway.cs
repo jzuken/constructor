@@ -2,7 +2,7 @@
 {
     public interface IDatabaseGateway
     {
-        Project GetProject(int id);
+        Project GetProject(string id);
 
         string SaveProject(Project data);
     }
