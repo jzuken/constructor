@@ -10,10 +10,10 @@ namespace WCFTestClient.Controllers
 {
     public class WCFTestClientController : Controller
     {
-        RepoLibraryReference.RepoLibraryClient wcfClient;
+        WCFTestReference.RepoLibraryClient wcfClient;
         public WCFTestClientController()
         {
-            this.wcfClient = new RepoLibraryReference.RepoLibraryClient();
+            this.wcfClient = new WCFTestReference.RepoLibraryClient("WSHttpBinding_IRepoLibrary");
         }
 
         //
@@ -21,7 +21,7 @@ namespace WCFTestClient.Controllers
 
         public ActionResult Index()
         {
-            RepoLibraryReference.Project project = this.wcfClient.GetProject(0);
+            WCFTestReference.Project project = this.wcfClient.GetProject(0);
             ViewData["projectName"] = project.Name;
             return View();
         }
@@ -29,7 +29,7 @@ namespace WCFTestClient.Controllers
         public ActionResult AddProject(string projectId, string projectName)
         {
             int id = Convert.ToInt32(projectId);
-            RepoLibraryReference.Project project = new RepoLibraryReference.Project();
+            WCFTestReference.Project project = new WCFTestReference.Project();
             project.Id = id;
             project.Name = projectName;
             string result = wcfClient.SaveProject(project);
@@ -48,7 +48,7 @@ namespace WCFTestClient.Controllers
         public ActionResult GetProject(string projectId)
         {
             int id = Convert.ToInt32(projectId);
-            RepoLibraryReference.Project project = wcfClient.GetProject(id);
+            WCFTestReference.Project project = wcfClient.GetProject(id);
             if (project != null)
             {
                 ViewData["projectId"] = project.Id;

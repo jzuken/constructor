@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepoLibrary", "RepoLibrary\RepoLibrary.csproj", "{15B3E0D2-6217-493A-A690-158C497F5318}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleHost", "ConsoleHost\ConsoleHost.csproj", "{FDC47E5C-850B-4C79-B897-2AE4F5695DAD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepoLibraryTests", "RepoLibraryTests\RepoLibraryTests.csproj", "{12D75122-8473-44DA-801B-D69ED18712AB}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WCFTestClient", "WCFTestClient\WCFTestClient.csproj", "{A3A99940-69B7-49B3-A49B-2848CCCB9108}"
-EndProject
-Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "RepoLibraryService", "RepoLibraryService\RepoLibraryService.ccproj", "{BA66A7D0-CB16-43BD-8B74-C49236E99EF5}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepoLibraryServiceWebRole", "RepoLibraryServiceWebRole\RepoLibraryServiceWebRole.csproj", "{3A8047C9-91BE-4655-81C5-4E7554D0F3D3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,18 +15,22 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{15B3E0D2-6217-493A-A690-158C497F5318}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15B3E0D2-6217-493A-A690-158C497F5318}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15B3E0D2-6217-493A-A690-158C497F5318}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15B3E0D2-6217-493A-A690-158C497F5318}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FDC47E5C-850B-4C79-B897-2AE4F5695DAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FDC47E5C-850B-4C79-B897-2AE4F5695DAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FDC47E5C-850B-4C79-B897-2AE4F5695DAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FDC47E5C-850B-4C79-B897-2AE4F5695DAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12D75122-8473-44DA-801B-D69ED18712AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12D75122-8473-44DA-801B-D69ED18712AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12D75122-8473-44DA-801B-D69ED18712AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12D75122-8473-44DA-801B-D69ED18712AB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A3A99940-69B7-49B3-A49B-2848CCCB9108}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A3A99940-69B7-49B3-A49B-2848CCCB9108}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A3A99940-69B7-49B3-A49B-2848CCCB9108}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A3A99940-69B7-49B3-A49B-2848CCCB9108}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BA66A7D0-CB16-43BD-8B74-C49236E99EF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BA66A7D0-CB16-43BD-8B74-C49236E99EF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BA66A7D0-CB16-43BD-8B74-C49236E99EF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BA66A7D0-CB16-43BD-8B74-C49236E99EF5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3A8047C9-91BE-4655-81C5-4E7554D0F3D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3A8047C9-91BE-4655-81C5-4E7554D0F3D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3A8047C9-91BE-4655-81C5-4E7554D0F3D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3A8047C9-91BE-4655-81C5-4E7554D0F3D3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

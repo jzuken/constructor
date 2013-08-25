@@ -1,7 +1,5 @@
 bin
 obj
-rcf
-csx
 *.suo
 *.user
 /TestApi/PhpTestApi/.idea
