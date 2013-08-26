@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/dark_grey"
-        android:text="@string/dashboard"
+        android:text="@string/orders"
         android:textColor="@color/white"
         android:textSize="30sp"
         android:gravity="center" />

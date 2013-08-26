@@ -4,7 +4,7 @@
 		android:drawable="@drawable/button_plus"
 		android:state_focused="true"/>
     <item 
-		android:drawable="@drawable/active_button_plus" 
+		android:drawable="@drawable/button_plus" 
 		android:state_pressed="true"/>
     <item 
 		android:drawable="@drawable/button_plus"/>

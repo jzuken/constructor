@@ -20,16 +20,15 @@
                 android:layout_centerInParent="true"
                 android:text="@string/top_sellers"
                 android:textColor="@color/black"
-                android:textSize="15sp" />
+                android:textSize="17sp" />
 
-            <TextView
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
-                android:text="@string/left_arrow"
-                android:textColor="@color/black"
-                android:textSize="15sp" />
+                android:src="@drawable/pointer_leftt_dark" />
         </RelativeLayout>
 
         <TabHost

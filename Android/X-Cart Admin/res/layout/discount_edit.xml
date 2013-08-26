@@ -155,9 +155,7 @@
                 android:layout_marginBottom="15dp"
                 android:layout_marginTop="15dp"
                 android:background="@drawable/save_button"
-                android:minWidth="100dp"
-                android:onClick="okClick"
-                android:textColor="@color/white" />
+                android:onClick="okClick" />
         </LinearLayout>
     </ScrollView>
 
