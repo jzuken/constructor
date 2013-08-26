@@ -22,6 +22,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -93,8 +94,8 @@ public class MainActivity extends PinSupportNetworkActivity {
 		}
 
 		settingButton = (Button) menuPage.findViewById(R.id.settingsButton);
-		menuArrow = (TextView) menuPage.findViewById(R.id.menu_arrow);
-		TextView newsArrow = (TextView) newsPage.findViewById(R.id.news_arrow);
+		menuArrow = (ImageView) menuPage.findViewById(R.id.menu_arrow);
+		ImageView newsArrow = (ImageView) newsPage.findViewById(R.id.news_arrow);
 
 		if (firstPage == 0) {
 			pages.add(menuPage);
@@ -102,11 +103,11 @@ public class MainActivity extends PinSupportNetworkActivity {
 			newsPageNumber = 1;
 
 			viewToLeft(settingButton);
-			menuArrow.setText(">>");
+			menuArrow.setImageResource(R.drawable.pointer_right_white1);
 			menuArrow.setPadding(0, 0, 10, 0);
 			viewToRight(menuArrow);
 
-			newsArrow.setText("<<");
+			newsArrow.setImageResource(R.drawable.pointer_leftt_white1);
 			newsArrow.setPadding(10, 0, 0, 0);
 			viewToLeft(newsArrow);
 		} else {
@@ -115,11 +116,11 @@ public class MainActivity extends PinSupportNetworkActivity {
 			newsPageNumber = 0;
 
 			viewToRight(settingButton);
-			menuArrow.setText("<<");
+			menuArrow.setImageResource(R.drawable.pointer_leftt_white1);
 			menuArrow.setPadding(10, 0, 0, 0);
 			viewToLeft(menuArrow);
 
-			newsArrow.setText(">>");
+			newsArrow.setImageResource(R.drawable.pointer_right_white1);
 			newsArrow.setPadding(0, 0, 10, 0);
 			viewToRight(newsArrow);
 		}
@@ -158,7 +159,7 @@ public class MainActivity extends PinSupportNetworkActivity {
 		menuPage = inflater.inflate(R.layout.menu, null);
 
 		settingButton = (Button) menuPage.findViewById(R.id.settingsButton);
-		menuArrow = (TextView) menuPage.findViewById(R.id.menu_arrow);
+		menuArrow = (ImageView) menuPage.findViewById(R.id.menu_arrow);
 
 		if (firstPage == 0) {
 			pages.add(menuPage);
@@ -166,7 +167,7 @@ public class MainActivity extends PinSupportNetworkActivity {
 			newsPageNumber = 1;
 
 			viewToLeft(settingButton);
-			menuArrow.setText(">>");
+			menuArrow.setImageResource(R.drawable.pointer_right_white1);
 			menuArrow.setPadding(0, 0, 10, 0);
 			viewToRight(menuArrow);
 		} else {
@@ -175,7 +176,7 @@ public class MainActivity extends PinSupportNetworkActivity {
 			newsPageNumber = 0;
 
 			viewToRight(settingButton);
-			menuArrow.setText("<<");
+			menuArrow.setImageResource(R.drawable.pointer_leftt_white1);
 			menuArrow.setPadding(10, 0, 0, 0);
 			viewToLeft(menuArrow);
 		}
@@ -441,7 +442,7 @@ public class MainActivity extends PinSupportNetworkActivity {
 	private View newsPage;
 	private ViewPager viewPager;
 	private Button settingButton;
-	private TextView menuArrow;
+	private ImageView menuArrow;
 	private SwipingPagerAdapter pagerAdapter;
 	private List<View> pages;
 	private String details = null;

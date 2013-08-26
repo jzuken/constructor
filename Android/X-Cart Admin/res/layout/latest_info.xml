@@ -21,13 +21,11 @@
                 android:textColor="@color/white"
                 android:textSize="30sp" />
 
-            <TextView
+            <ImageView
                 android:id="@+id/news_arrow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:textColor="@color/white"
-                android:textSize="25sp" />
+                android:layout_centerVertical="true" />
         </RelativeLayout>
 
         <com.handmark.pulltorefresh.library.PullToRefreshScrollView

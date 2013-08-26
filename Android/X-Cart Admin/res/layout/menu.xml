@@ -25,13 +25,11 @@
             android:background="@drawable/settings_button"
             android:onClick="settingsClick" />
 
-        <TextView
+        <ImageView
             android:id="@+id/menu_arrow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:textColor="@color/white"
-            android:textSize="25sp" />
+            android:layout_centerVertical="true" />
     </RelativeLayout>
 
     <TableLayout
