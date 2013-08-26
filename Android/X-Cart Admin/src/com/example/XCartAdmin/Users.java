@@ -11,7 +11,6 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -246,7 +245,6 @@ public class Users extends PinSupportNetworkActivity {
 	private void sendMessage(String recipientEmail) {
 		setNeedDownloadValue(false);
 		Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", recipientEmail, null));
-		emailIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
 		startActivityForResult(Intent.createChooser(emailIntent, "Send message..."), 3);
 	}
 

@@ -34,7 +34,7 @@
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation|screenSize" />
-        <activity android:name="com.example.XCartAdmin.Settings" />
+        <activity android:name=".Settings" />
         <activity
             android:name=".Products"
             android:configChanges="orientation|screenSize"
