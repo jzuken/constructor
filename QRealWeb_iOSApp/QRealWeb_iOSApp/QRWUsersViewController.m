@@ -14,6 +14,7 @@
 #import "FPPopoverController.h"
 #import "QRWUserOrdersViewController.h"
 
+
 @interface QRWUsersViewController ()
 {
     int lastSelectedRow;
@@ -27,6 +28,8 @@
 @property (nonatomic, strong) FPPopoverController *sortedByPopoverController;
 @property (nonatomic, strong) QRWUsersSortedByTableViewController *sortedByViewController;
 @property (nonatomic, strong) QRWUserOrdersViewController *userOrdersViewController;
+
+@property (nonatomic, strong) MFMailComposeViewController *mailViewController;
 
 @end
 
@@ -120,6 +123,16 @@
     [_usersTableView setHidden:YES];
 }
 
+
+
+- (void) openMessageSendViewController
+{
+    _mailViewController = [[MFMailComposeViewController alloc] init];
+    _mailViewController.mailComposeDelegate = self;
+    [_mailViewController setToRecipients:@[[(QRWUser *)[_users objectAtIndex:lastSelectedRow] email]]];
+    [self presentViewController:_mailViewController animated:YES completion:nil];
+}
+
 #pragma mark QRWUsersSortedByTableViewControllerDelegate
 
 - (void)useSortWithName:(NSString *)sortType
@@ -133,14 +146,23 @@
     [_sortedByPopoverController dismissPopoverAnimated:YES];
 }
 
+
 #pragma mark Action sheet methods
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if (buttonIndex == 1) {
-        _userOrdersViewController = [[QRWUserOrdersViewController alloc] initWithUser:[_users objectAtIndex:lastSelectedRow]];
-        [self.navigationController pushViewController:_userOrdersViewController animated:YES];
-    } 
+    if ([[(QRWUser *)[_users objectAtIndex:lastSelectedRow] ordersCount] intValue] != 0) {
+        if (buttonIndex == 1) {
+            _userOrdersViewController = [[QRWUserOrdersViewController alloc] initWithUser:[_users objectAtIndex:lastSelectedRow]];
+            [self.navigationController pushViewController:_userOrdersViewController animated:YES];
+        } if (buttonIndex == 2) {
+            [self openMessageSendViewController];
+        }
+    } else {
+        if (buttonIndex == 1) {
+            [self openMessageSendViewController];
+        }
+    }
 }
 
 #pragma mark Table view methods
@@ -151,11 +173,23 @@
     lastSelectedRow = indexPath.row;
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    UIActionSheet *userActionSheet = [[UIActionSheet alloc] initWithTitle:nil
-                                                                 delegate:self
-                                                        cancelButtonTitle:NSLocalizedString(@"CANCEL", nil)
-                                                   destructiveButtonTitle:NSLocalizedString(@"TO_THE_BLACK_LIST_WITH_A_MESSAGE", nil)
-                                                        otherButtonTitles: NSLocalizedString(@"ORDERS_LIST", nil), NSLocalizedString(@"SEND_A_MESSAGE", nil), nil];
+    UIActionSheet *userActionSheet;
+    
+    if ([[(QRWUser *)[_users objectAtIndex:lastSelectedRow] ordersCount] intValue] == 0) {
+        userActionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                    delegate:self
+                                           cancelButtonTitle: NSLocalizedString(@"CANCEL", nil)
+                                      destructiveButtonTitle: NSLocalizedString(@"TO_THE_BLACK_LIST_WITH_A_MESSAGE", nil)
+                                           otherButtonTitles: NSLocalizedString(@"SEND_A_MESSAGE", nil), nil];
+    } else {
+        userActionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                      delegate:self
+                                             cancelButtonTitle: NSLocalizedString(@"CANCEL", nil)
+                                        destructiveButtonTitle: NSLocalizedString(@"TO_THE_BLACK_LIST_WITH_A_MESSAGE", nil)
+                                             otherButtonTitles: NSLocalizedString(@"ORDERS_LIST", nil), NSLocalizedString(@"SEND_A_MESSAGE", nil), nil];
+    }
+    
+    
     //NSLocalizedString(@"FULL_INFO", nil)
     [userActionSheet showInView:self.view];
 }
@@ -198,6 +232,9 @@
     cell.ordersCountLable.text = [NSString stringWithFormat:NSLocalizedString(@"ORDERS_COUNT_LABLE_TEXT", nil), [[(QRWUser *)_users[indexPath.row] ordersCount] intValue]];
 }
 
-
+- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
+{
+    [controller dismissViewControllerAnimated:YES completion:nil];
+}
 
 @end

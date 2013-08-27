@@ -8,7 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
+#pragma mark Auth
 
+static NSString *const url_auth = @"http://54.213.38.9/xcart/api.php?request=login";
 
 #pragma mark Dashboard
 

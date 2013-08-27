@@ -42,7 +42,10 @@
     [_passwordTextField addTarget:self action:@selector(textDidChangeText:) forControlEvents:UIControlEventEditingChanged];
     [_loginTextField addTarget:self action:@selector(textDidChangeText:) forControlEvents:UIControlEventEditingChanged];
     
-    [_signInButton setEnabled:NO];
+    [_loginTextField setText:kTestUsername];
+    [_passwordTextField setText:kTestPassword];
+    
+    [self textDidChangeText:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -58,6 +61,7 @@
 
 - (IBAction)signInClick:(id)sender
 {
+    [self startLoadingAnimation];
     [dataManager sendAuthorizationRequestWithLogin:_loginTextField.text andPassowrd:_passwordTextField.text];
 }
 
@@ -79,6 +83,7 @@
 
 - (void)respondsForAuthRequest:(BOOL)isAccepted
 {
+    [self stopLoadingAnimation];
     if (isAccepted) {
         [_loginTextField resignFirstResponder];
         [_passwordTextField resignFirstResponder];
@@ -114,7 +119,7 @@
 
 -(void)textDidChangeText:(id)sender
 {
-    if ([_passwordTextField.text isEqualToString:@""] || [_loginTextField.text isEqualToString:@""]) {
+    if ([@"" isEqualToString: _loginTextField.text] || [@"" isEqualToString: _passwordTextField.text] ) {
         [_signInButton setEnabled:NO];
     } else {
         [_signInButton setEnabled:YES];

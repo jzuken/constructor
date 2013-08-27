@@ -137,10 +137,11 @@
 
 - (void)configureProductCell:(QRWUserOrderCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
+    [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
     cell.totalLable.text = [NSString stringWithFormat: @"%.2f$", [[(QRWLastOrder *)_orders[indexPath.row] total] floatValue]];
     cell.statusLable.text = [NSString stringWithFormat: @"Status: %@", [(QRWLastOrder *)_orders[indexPath.row] status]];
     cell.dateLable.text = [NSString stringWithFormat: @"Date: %@", [(QRWLastOrder *)_orders[indexPath.row] date]];
-    cell.productsLable.text = [NSString stringWithFormat: @"%d items >", [[(QRWLastOrder *)_orders[indexPath.row] products] count]];
+    cell.productsLable.text = [NSString stringWithFormat: @"%d items", [[(QRWLastOrder *)_orders[indexPath.row] products] count]];
 }
 
 

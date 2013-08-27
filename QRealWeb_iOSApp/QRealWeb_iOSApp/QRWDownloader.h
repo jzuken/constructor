@@ -28,6 +28,9 @@
 @property (nonatomic, strong) NSURL *requestURL;
 
 - (id) initWithRequestURL: (NSURL *) requestURL;
+
+- (id) initWithRequestURL: (NSURL *) requestURL parametres: (NSDictionary *) parametres;
+
 - (void) startDownloadWithDelegate: (id<QRWDownloaderDelegate> ) delegate;
 
 @end

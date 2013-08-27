@@ -8,6 +8,14 @@
 
 #import "QRWDownloader.h"
 
+@interface QRWDownloader ()
+
+@property (nonatomic, strong) NSMutableURLRequest *theRequest;
+
+@end
+
+
+
 @implementation QRWDownloader
 
 
@@ -15,18 +23,34 @@
 {
     self = [self init];
     _requestURL = requestURL;
+    _theRequest = [NSMutableURLRequest requestWithURL:_requestURL
+                                   cachePolicy:NSURLRequestUseProtocolCachePolicy
+                               timeoutInterval:60.0];
     return self;
 }
+
+
+
+- (id)initWithRequestURL:(NSURL *)requestURL parametres:(NSDictionary *)parametres
+{
+    self = [self init];
+    _requestURL = requestURL;
+    _theRequest = [NSMutableURLRequest requestWithURL:_requestURL
+                                   cachePolicy:NSURLRequestUseProtocolCachePolicy
+                               timeoutInterval:60.0];
+    
+    for (NSString *parametr in [parametres allKeys]) {
+        [_theRequest addValue:[parametres objectForKey:parametr] forHTTPHeaderField:parametr];
+    }
+    return self;
+}
+
 
 - (void)startDownloadWithDelegate:(id<QRWDownloaderDelegate>)delegate
 {
     _delegate = delegate;
-    
-    NSURLRequest *theRequest=[NSURLRequest requestWithURL:_requestURL
-                                              cachePolicy:NSURLRequestUseProtocolCachePolicy
-                                          timeoutInterval:60.0];
 
-    NSURLConnection *theConnection=[[NSURLConnection alloc] initWithRequest:theRequest delegate:self];
+    NSURLConnection *theConnection=[[NSURLConnection alloc] initWithRequest:_theRequest delegate:self];
     if (theConnection) {
         jsonData = [NSMutableData data];
     } else {

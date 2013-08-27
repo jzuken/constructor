@@ -9,7 +9,9 @@
 #import "QRWBaseViewController.h"
 #import "QRWUsersSortedByTableViewController.h"
 
-@interface QRWUsersViewController : QRWBaseViewController <UITableViewDelegate, UITableViewDataSource, UIActionSheetDelegate, QRWUsersSortedByTableViewControllerDelegate, UIScrollViewDelegate>
+#import <MessageUI/MFMailComposeViewController.h>
+
+@interface QRWUsersViewController : QRWBaseViewController <UITableViewDelegate, UITableViewDataSource, UIActionSheetDelegate, QRWUsersSortedByTableViewControllerDelegate, UIScrollViewDelegate, MFMailComposeViewControllerDelegate>
 
 
 @property (nonatomic, strong) IBOutlet UITableView *usersTableView;

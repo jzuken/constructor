@@ -83,12 +83,26 @@ static QRWDataManager *_instance;
 }
 
 
+- (void) sendRequestUseDownloaderWithURL: (NSString *) urlString parametres: (NSDictionary *) parametres
+{
+    QRWDownloader *lastOrderDownloader = [[QRWDownloader alloc] initWithRequestURL:[NSURL URLWithString:urlString] parametres:parametres];
+    [lastOrderDownloader startDownloadWithDelegate:self];
+}
+
+
 #pragma mark Auth
+
+
 
 -(void)sendAuthorizationRequestWithLogin:(NSString *)login andPassowrd:(NSString *)password
 {
-    [_delegate respondsForAuthRequest:([kTestUsername isEqualToString:login] && [kTestPassword isEqualToString:password])];
+
+    [_delegate respondsForAuthRequest:[kTestUsername isEqualToString:login] && [kTestPassword isEqualToString:password]];
+//    NSDictionary *parametres = [NSDictionary dictionaryWithObjects:@[login, password, [[UIDevice currentDevice].identifierForVendor UUIDString]] forKeys:@[@"name", @"pass", @"udid"]];
+//    [self sendRequestUseDownloaderWithURL:url_auth parametres:parametres];
 }
+
+
 
 -(void)sendToolsRequest
 {
@@ -124,8 +138,8 @@ static QRWDataManager *_instance;
         switch (index) {
             case 0:
                 toolView = [[QRWToolView alloc] initWithName:@""
-                                                       image:[UIImage imageNamed:@"dashboardIcon.jpg"]
-                                               selectedImage:[UIImage imageNamed:@"active_button_dashboard.png"]
+                                                       image:[UIImage imageNamed:@"button_orders.png"]
+                                               selectedImage:[UIImage imageNamed:@"active_button_orders_blue.png"]
                                                  actionBlock:dashboardActionBlock];
                 break;
             
@@ -281,7 +295,21 @@ static QRWDataManager *_instance;
     [self sendRequestUseDownloaderWithURL:url_ordersStatisticURL];
 }
 
+
+//########################################################################################
+//########################################################################################
+//########################################################################################
 #pragma mark SEND OBJECTS TO CONTROLLERS
+//########################################################################################
+//########################################################################################
+//########################################################################################
+
+#pragma mark Auth
+
+- (void) sendResponseForAuthRequest:(NSDictionary *)jsonDictionary
+{
+    [_delegate respondsForAuthRequest:[[jsonDictionary objectForKey:@"upload_status"] isEqualToString:@"login success"]];
+}
 
 
 #pragma mark Products
@@ -713,6 +741,10 @@ static QRWDataManager *_instance;
     
     if ([reviewUrl isEqualToString:requesrURL.absoluteString]) {
         [self sendResponseForReviewsRequest:jsonData];
+    }
+    
+    if ([url_auth isEqualToString:requesrURL.absoluteString]) {
+        [self sendResponseForAuthRequest:jsonDictionary];
     }
     
     if ([productsUrl isEqualToString:requesrURL.absoluteString] || [searchedProductUrl isEqualToString:requesrURL.absoluteString]) {
