@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="9babf2ff-9582-426c-af5b-e39162f5dbd6" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:8000/RepoLibraryService/service" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="b7ec2472-da0a-41b8-9005-12852227a8f1" SourceId="1" SourceUrl="http://localhost:8000/RepoLibraryService/service?xsd=xsd0" />
+    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="18c60f1e-3476-4451-96f2-9ed4fc4d88df" SourceId="1" SourceUrl="http://localhost:8000/RepoLibraryService/service?xsd=xsd1" />
+    <MetadataFile FileName="service.disco" MetadataType="Disco" ID="f680c06f-c624-4b53-bec0-64c6cbc5fff4" SourceId="1" SourceUrl="http://localhost:8000/RepoLibraryService/service?disco" />
+    <MetadataFile FileName="RepoLibraryService.wsdl" MetadataType="Wsdl" ID="cec91ba0-ca31-4ed8-ac56-d6bd5e99019b" SourceId="1" SourceUrl="http://localhost:8000/RepoLibraryService/service?wsdl" />
+    <MetadataFile FileName="service2.xsd" MetadataType="Schema" ID="5295f1ff-3ce3-4f01-9966-518feccc4078" SourceId="1" SourceUrl="http://localhost:8000/RepoLibraryService/service?xsd=xsd2" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

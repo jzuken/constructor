@@ -216,10 +216,11 @@ var initStep1 = function() {
     $("#send-button").click(function() {
         $(".send-status").html(templates.waitDataSend);
 
-        var data = screens.serialize();
+        //var data = screens.serialize();
 
-        $.post("url", data, function(data) {
+        $.post("../../Home/SaveShop", "test" /*data*/, function(data) {
             if (data.success) {
+                alert(data);
                 $(".send-status").html(templates.successDataSend);
             } else {
                 $(".send-status").html(templates.failDataSend);
@@ -254,9 +255,8 @@ $(document).ready(function() {
     });
 
     $("#load-data-button").click(function() {
-        $.post("url", "", function(data) {
+        $.post("../../Home/LoadShop", "", function (data) {
             screens.loadData(data);
-
             loadStep(0);
         }, "json");
     });

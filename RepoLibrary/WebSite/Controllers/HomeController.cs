@@ -36,5 +36,31 @@ namespace WebSite.Controllers
 
             return View();
         }
+
+        [Authorize]
+        public ActionResult LoadShop()
+        {
+            RepoLibraryReference.RepoLibraryClient wcfClient = new RepoLibraryReference.RepoLibraryClient("WSHttpBinding_IRepoLibrary");
+            string settings = wcfClient.GetProject("test").Settings;
+            return Content(settings);
+        }
+
+        [Authorize]
+        public ActionResult SaveShop(string settings)
+        {
+            RepoLibraryReference.RepoLibraryClient wcfClient = new RepoLibraryReference.RepoLibraryClient("WSHttpBinding_IRepoLibrary");
+            RepoLibraryReference.Project project = new RepoLibraryReference.Project();
+            project.Name = "test";
+            project.Settings = settings;
+            string res = wcfClient.SaveProject(project);
+            if (res == "ok")
+            {
+                return Content("OK");
+            }
+            else
+            {
+                return Content("Fail");
+            }
+        }
     }
 }
