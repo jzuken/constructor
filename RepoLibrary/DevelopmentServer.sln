@@ -8,6 +8,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepoLibraryTests", "RepoLibraryTests\RepoLibraryTests.csproj", "{12D75122-8473-44DA-801B-D69ED18712AB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApplicationServerListener", "ApplicationServerListener\ApplicationServerListener.csproj", "{FCC3E947-B657-40D4-95DB-019A305B683D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{15B3E0D2-6217-493A-A690-158C497F5318} = {15B3E0D2-6217-493A-A690-158C497F5318}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSite", "WebSite\WebSite.csproj", "{9D7FB8EE-1FE6-465D-95FC-83A3127A3855}"
 EndProject

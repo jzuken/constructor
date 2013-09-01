@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="0c80b793-11a1-44e3-bb37-2c6e26272ad0" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="393e1e49-ddcc-4c3b-8c47-c28449e5440b" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -19,14 +19,14 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://localhost:8888/" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://localhost:8000/RepoLibraryService/service" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="item.xsd" MetadataType="Schema" ID="b8a5b8df-f7a2-4b14-ab70-2754842c0755" SourceId="1" SourceUrl="http://localhost:8888/?xsd=xsd2" />
-    <MetadataFile FileName="item1.xsd" MetadataType="Schema" ID="9260a828-2b8d-4615-a591-f060b0565a9a" SourceId="1" SourceUrl="http://localhost:8888/?xsd=xsd1" />
-    <MetadataFile FileName="item.disco" MetadataType="Disco" ID="805da88b-f440-458b-bd40-fce511a73332" SourceId="1" SourceUrl="http://localhost:8888/?disco" />
-    <MetadataFile FileName="RepoLibrary.wsdl" MetadataType="Wsdl" ID="0f91a301-20c5-47ec-9568-3027eb357f19" SourceId="1" SourceUrl="http://localhost:8888/?wsdl" />
-    <MetadataFile FileName="item2.xsd" MetadataType="Schema" ID="d2a07a99-3871-48d8-ac76-8d8ed3388c21" SourceId="1" SourceUrl="http://localhost:8888/?xsd=xsd0" />
+    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="c68e0bd6-bea3-4291-b251-878a0f64f93b" SourceId="1" SourceUrl="http://localhost:8000/RepoLibraryService/service?xsd=xsd0" />
+    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="7d9b8940-b2ed-4f44-860a-2332ac5eb5d1" SourceId="1" SourceUrl="http://localhost:8000/RepoLibraryService/service?xsd=xsd1" />
+    <MetadataFile FileName="service.disco" MetadataType="Disco" ID="1665b620-d5fe-47ca-bcf5-4f6057319704" SourceId="1" SourceUrl="http://localhost:8000/RepoLibraryService/service?disco" />
+    <MetadataFile FileName="RepoLibraryService.wsdl" MetadataType="Wsdl" ID="49d47d02-1b40-4223-b72a-b0e9283912a8" SourceId="1" SourceUrl="http://localhost:8000/RepoLibraryService/service?wsdl" />
+    <MetadataFile FileName="service2.xsd" MetadataType="Schema" ID="76a97563-9958-4342-a426-cc46dbdfb599" SourceId="1" SourceUrl="http://localhost:8000/RepoLibraryService/service?xsd=xsd2" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

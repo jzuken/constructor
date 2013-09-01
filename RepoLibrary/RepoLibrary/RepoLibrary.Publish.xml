@@ -1,0 +1,16 @@
+<publishData>
+  <publishTarget publishUrl="C:\Users\Eliriand\Desktop\">
+    <file relUrl="RepoLibrary.RepoLibraryService.svc" publishTime="09/01/2013 20:00:41" />
+    <file relUrl="bin/RepoLibrary.exe" publishTime="09/01/2013 20:00:39" />
+    <file relUrl="bin/MongoDB.Bson.xml" publishTime="08/25/2013 21:58:43" />
+    <file relUrl="bin/MongoDB.Driver.xml" publishTime="08/25/2013 21:58:43" />
+    <file relUrl="bin/RepoLibrary.vshost.exe" publishTime="09/01/2013 18:42:20" />
+    <file relUrl="Web.config" publishTime="09/01/2013 18:54:34" />
+    <file relUrl="bin/MongoDB.Driver.dll" publishTime="08/25/2013 21:58:43" />
+    <file relUrl="bin/MongoDB.Bson.dll" publishTime="08/25/2013 21:58:43" />
+    <file relUrl="bin/RepoLibrary.InstallLog" publishTime="09/01/2013 20:00:21" />
+    <file relUrl="bin/RepoLibrary.vshost.exe.config" publishTime="09/01/2013 18:29:24" />
+    <file relUrl="bin/RepoLibrary.pdb" publishTime="09/01/2013 20:00:39" />
+    <file relUrl="bin/RepoLibrary.exe.config" publishTime="09/01/2013 18:54:34" />
+  </publishTarget>
+</publishData>
