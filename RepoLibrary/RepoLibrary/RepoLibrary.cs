@@ -1,50 +1,55 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections;
 using System.Linq;
-using System.Runtime.Serialization;
-using System.ServiceModel;
 using System.Text;
-using MongoDB.Driver;
-using MongoDB.Driver.Builders;
-using System.Data.SqlClient;
+using System.Threading.Tasks;
+
+using System.ComponentModel;
+using System.ServiceModel;
+using System.ServiceProcess;
+using System.Configuration;
+using System.Configuration.Install;
 
 namespace RepoLibrary
 {
-    [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Reentrant)]
-    public class RepoLibrary : IRepoLibrary
+    public class RepoLibraryWindowsService : ServiceBase
     {
-        public RepoLibrary()
+        public ServiceHost serviceHost = null;
+        public RepoLibraryWindowsService()
         {
-            // MongoDB obsolete database (WILL BE REMOVED SOON)
-            //const string connectionString = "mongodb://localhost/?safe=true";
-            //Db = new MongoDBDatabaseGateway(connectionString);
-            const string connectionString = @"Data Source=localhost\SQLEXPRESS;Initial Catalog=shopDB;User ID=shopsGatewayLogin;Password=GiaeQgn7fee7o.-+";
-            Db = new MSSQLDatabaseGateway(connectionString);
-
-            //Db = new MSSQLDatabaseGateway(connString2Builder.ToString());
+            // Name the Windows Service
+            ServiceName = "RepoLibraryWindowsService";
         }
 
-        public RepoLibrary(IDatabaseGateway db)
+        public static void Main()
         {
-            Db = db;
+            ServiceBase.Run(new RepoLibraryWindowsService());
         }
 
-        public IDatabaseGateway Db { get; set; }
-
-        public Project GetProject(string name)
+        // Start the Windows service.
+        protected override void OnStart(string[] args)
         {
-            return Db.GetProject(name);
+            if (serviceHost != null)
+            {
+                serviceHost.Close();
+            }
+
+            // Create a ServiceHost for the CalculatorService type and 
+            // provide the base address.
+            serviceHost = new ServiceHost(typeof(RepoLibraryService));
+
+            // Open the ServiceHostBase to create listeners and start 
+            // listening for messages.
+            serviceHost.Open();
         }
 
-        public string SaveProject(Project data)
+        protected override void OnStop()
         {
-            return Db.SaveProject(data);
-        }
-
-        public string ToString()
-        {
-            return "ololo";
+            if (serviceHost != null)
+            {
+                serviceHost.Close();
+                serviceHost = null;
+            }
         }
     }
 }

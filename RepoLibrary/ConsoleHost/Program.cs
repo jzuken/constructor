@@ -13,7 +13,7 @@ namespace ConsoleHost
     {
         static void Main(string[] args)
         {
-            ServiceHost host = new ServiceHost(typeof(RepoLibrary.RepoLibrary));
+            ServiceHost host = new ServiceHost(typeof(RepoLibrary.RepoLibraryService));
 
             try
             {
