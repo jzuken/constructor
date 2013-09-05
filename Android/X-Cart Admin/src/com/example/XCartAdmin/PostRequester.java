@@ -11,21 +11,20 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
 import android.os.AsyncTask;
 
 public class PostRequester extends AsyncTask<String, Void, String> {
-	
+
 	public PostRequester(List<NameValuePair> nameValuePairs) {
 		this.nameValuePairs = nameValuePairs;
 	}
-	
+
 	@Override
 	protected String doInBackground(String... urls) {
 		String url = new String(urls[0]);
-		HttpClient client = new DefaultHttpClient();
+		HttpClient client = new SSLDefaultHttpClient();
 		HttpPost httppost = new HttpPost(url);
 
 		try {
@@ -45,6 +44,6 @@ public class PostRequester extends AsyncTask<String, Void, String> {
 		}
 		return null;
 	}
-	
+
 	private List<NameValuePair> nameValuePairs;
 }

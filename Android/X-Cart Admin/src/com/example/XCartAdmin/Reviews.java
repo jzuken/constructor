@@ -87,7 +87,7 @@ public class Reviews extends PinSupportNetworkActivity {
 			}
 		};
 
-		dataRequester.execute("http://54.213.38.9/xcart/api.php?request=reviews&from=" + String.valueOf(currentAmount)
+		dataRequester.execute("https://54.213.38.9/xcart/api.php?request=reviews&from=" + String.valueOf(currentAmount)
 				+ "&size=" + String.valueOf(packAmount));
 		currentAmount += packAmount;
 
@@ -125,7 +125,7 @@ public class Reviews extends PinSupportNetworkActivity {
 	private void deleteReview(String id) {
 		String response;
 		try {
-			response = new GetRequester().execute("http://54.213.38.9/xcart/api.php?request=delete_review&id=" + id)
+			response = new GetRequester().execute("https://54.213.38.9/xcart/api.php?request=delete_review&id=" + id)
 					.get();
 		} catch (Exception e) {
 			response = null;

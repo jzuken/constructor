@@ -8,7 +8,6 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
 import android.os.AsyncTask;
@@ -18,7 +17,7 @@ public class GetRequester extends AsyncTask<String, Void, String> {
 	@Override
 	protected String doInBackground(String... urls) {
 		String url = new String(urls[0]);
-		HttpClient client = new DefaultHttpClient();
+		HttpClient client = new SSLDefaultHttpClient();
 		HttpGet get = new HttpGet(url);
 
 		try {

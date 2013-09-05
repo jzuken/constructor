@@ -43,7 +43,7 @@ public class DiscountAdder extends PinSupportNetworkActivity {
 		String response;
 		try {
 			response = new GetRequester().execute(
-					"http://54.213.38.9/xcart/api.php?request=create_discount&minprice=" + orderSubtotalValue
+					"https://54.213.38.9/xcart/api.php?request=create_discount&minprice=" + orderSubtotalValue
 							+ "&discount=" + discountValue + "&discount_type=" + discountTypeValue + "&provider="
 							+ provider + membershipIdParametr).get();
 		} catch (Exception e) {

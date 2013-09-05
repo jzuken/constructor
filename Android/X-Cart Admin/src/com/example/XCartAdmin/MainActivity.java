@@ -262,7 +262,7 @@ public class MainActivity extends PinSupportNetworkActivity {
 			}
 		};
 
-		dataRequester.execute("http://54.213.38.9/xcart/api.php?request=last_order");
+		dataRequester.execute("https://54.213.38.9/xcart/api.php?request=last_order");
 	}
 
 	private String getStatusBySymbol(StatusSymbols symbol) {
@@ -335,7 +335,7 @@ public class MainActivity extends PinSupportNetworkActivity {
 			}
 		};
 
-		dataRequester.execute("http://54.213.38.9/xcart/api.php?request=orders_statistic");
+		dataRequester.execute("https://54.213.38.9/xcart/api.php?request=orders_statistic");
 	}
 
 	private void clearOrdersInfo() {

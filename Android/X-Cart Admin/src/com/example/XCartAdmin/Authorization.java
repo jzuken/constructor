@@ -45,7 +45,7 @@ public class Authorization extends Activity {
 		PostRequester postReq = new PostRequester(nameValuePairs);
 		String authResult = null;
 		try {
-			authResult = postReq.execute("http://54.213.38.9/xcart/api.php?request=login").get();
+			authResult = postReq.execute("https://54.213.38.9/xcart/api.php?request=login").get();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -75,7 +75,7 @@ public class Authorization extends Activity {
 		} else {
 			Toast.makeText(getBaseContext(),
 					"Sorry, unable to connect to server. Cannot update data. Please check your internet connection",
-					Toast.LENGTH_LONG).show();
+					Toast.LENGTH_SHORT).show();
 		}
 	}
 

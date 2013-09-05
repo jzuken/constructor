@@ -79,7 +79,7 @@ public class DiscountEditor extends PinSupportNetworkActivity {
 		String response;
 		try {
 			response = new GetRequester().execute(
-					"http://54.213.38.9/xcart/api.php?request=update_discount&id=" + id + "&minprice="
+					"https://54.213.38.9/xcart/api.php?request=update_discount&id=" + id + "&minprice="
 							+ orderSubtotalValue + "&discount=" + discountValue + "&discount_type=" + discountTypeValue
 							+ "&provider=" + provider + membershipIdParametr).get();
 		} catch (Exception e) {

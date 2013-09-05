@@ -80,7 +80,7 @@ public class Users extends PinSupportNetworkActivity {
 							String name = obj.getString("title") + " " + obj.getString("firstname") + " "
 									+ obj.getString("lastname");
 							String login = obj.getString("login");
-							
+
 							String type;
 							String typeSymbol = obj.getString("usertype");
 							if (typeSymbol.equals("C")) {
@@ -90,7 +90,7 @@ public class Users extends PinSupportNetworkActivity {
 							} else {
 								type = "Partner";
 							}
-							
+
 							String lastLogin = obj.getString("last_login");
 							if (lastLogin.equals("01-01-1970")) {
 								lastLogin = "Never logged in";
@@ -114,7 +114,7 @@ public class Users extends PinSupportNetworkActivity {
 
 		SharedPreferences authorizationData = getSharedPreferences("AuthorizationData", MODE_PRIVATE);
 		String sid = authorizationData.getString("sid", "");
-		dataRequester.execute("http://54.213.38.9/xcart/api.php?request=users&from=" + String.valueOf(currentAmount)
+		dataRequester.execute("https://54.213.38.9/xcart/api.php?request=users&from=" + String.valueOf(currentAmount)
 				+ "&size=" + String.valueOf(packAmount) + "&sort=" + getCurrentSort() + "&sid=" + sid);
 		currentAmount += packAmount;
 	}

@@ -226,7 +226,7 @@ public class Dashboard extends PinSupportNetworkActivity {
 			}
 		};
 
-		dataRequester.execute("http://54.213.38.9/xcart/api.php?request=orders_statistic");
+		dataRequester.execute("https://54.213.38.9/xcart/api.php?request=orders_statistic");
 	}
 
 	private void clearOrdersInfo() {
@@ -271,7 +271,7 @@ public class Dashboard extends PinSupportNetworkActivity {
 			}
 		};
 
-		dataRequester.execute("http://54.213.38.9/xcart/api.php?request=top_products");
+		dataRequester.execute("https://54.213.38.9/xcart/api.php?request=top_products");
 	}
 
 	private void setProductsToTable() {
@@ -369,7 +369,7 @@ public class Dashboard extends PinSupportNetworkActivity {
 			}
 		};
 
-		dataRequester.execute("http://54.213.38.9/xcart/api.php?request=top_categories");
+		dataRequester.execute("https://54.213.38.9/xcart/api.php?request=top_categories");
 	}
 
 	private void setCategoriesToTable() {

@@ -99,7 +99,7 @@ public class Products extends PinSupportNetworkActivity {
 			}
 		};
 
-		dataRequester.execute("http://54.213.38.9/xcart/api.php?request=products&search_word=" + searchWord + "&from="
+		dataRequester.execute("https://54.213.38.9/xcart/api.php?request=products&search_word=" + searchWord + "&from="
 				+ String.valueOf(currentAmount) + "&size=" + String.valueOf(packAmount));
 		currentAmount += packAmount;
 	}
@@ -227,7 +227,7 @@ public class Products extends PinSupportNetworkActivity {
 		String response;
 		try {
 			response = new GetRequester().execute(
-					"http://54.213.38.9/xcart/api.php?request=update_product&id=" + id + "&price=" + newPrice).get();
+					"https://54.213.38.9/xcart/api.php?request=update_product&id=" + id + "&price=" + newPrice).get();
 		} catch (Exception e) {
 			response = null;
 		}
@@ -273,7 +273,7 @@ public class Products extends PinSupportNetworkActivity {
 	private void deleteProduct(String id) {
 		String response;
 		try {
-			response = new GetRequester().execute("http://54.213.38.9/xcart/api.php?request=delete_product&id=" + id)
+			response = new GetRequester().execute("https://54.213.38.9/xcart/api.php?request=delete_product&id=" + id)
 					.get();
 		} catch (Exception e) {
 			response = null;

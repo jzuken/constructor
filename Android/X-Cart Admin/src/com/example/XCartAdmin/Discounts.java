@@ -87,7 +87,7 @@ public class Discounts extends PinSupportNetworkActivity {
 			}
 		};
 
-		dataRequester.execute("http://54.213.38.9/xcart/api.php?request=discounts");
+		dataRequester.execute("https://54.213.38.9/xcart/api.php?request=discounts");
 	}
 
 	private void addDiscountToList(final String id, final String subtotal, final String discount,
@@ -138,7 +138,7 @@ public class Discounts extends PinSupportNetworkActivity {
 	private void deleteDiscount(String id) {
 		String response;
 		try {
-			response = new GetRequester().execute("http://54.213.38.9/xcart/api.php?request=delete_discount&id=" + id)
+			response = new GetRequester().execute("https://54.213.38.9/xcart/api.php?request=delete_discount&id=" + id)
 					.get();
 		} catch (Exception e) {
 			response = null;
