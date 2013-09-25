@@ -39,7 +39,7 @@
         android:layout_marginBottom="4dp"
         android:layout_marginLeft="7dp"
         android:layout_marginRight="7dp"
-        android:background="@drawable/dashboard_shape"
+        android:background="@drawable/rounded_shape"
         android:orientation="vertical" >
 
         <LinearLayout

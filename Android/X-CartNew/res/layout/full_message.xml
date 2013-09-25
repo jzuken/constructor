@@ -39,7 +39,7 @@
         android:layout_marginLeft="7dp"
         android:layout_marginRight="7dp"
         android:layout_marginTop="4dp"
-        android:background="@drawable/dashboard_shape"
+        android:background="@drawable/rounded_shape"
         android:paddingBottom="7dp"
         android:paddingTop="7dp" >
 
