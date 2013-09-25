@@ -3,17 +3,19 @@
 /*
  * Development imports
  */
-//require './xcart/top.inc.php';
-//require './xcart/init.php';
+require '../xcart/top.inc.php';
+require '../xcart/init.php';
 
 /*
  * Production imports
  */
-require './top.inc.php';
-require './init.php';
+//require '../top.inc.php';
+//require '../init.php';
 
-mysql_connect($sql_host, $sql_user, $sql_password)  or die(mysql_error());
+mysql_connect($sql_host, $sql_user, $sql_password) or die(mysql_error());
 mysql_select_db($sql_db) or die(mysql_error());
+
+
 
 $curtime = XC_TIME + $config['Appearance']['timezone_offset'];
 $start_dates['last_login'] = $previous_login_date; // Since last login
@@ -22,6 +24,9 @@ $start_week = $curtime - date('w', $curtime) * 24 * 3600; // Week starts since S
 $start_dates['week'] = func_prepare_search_date($start_week) - $config['Appearance']['timezone_offset']; // Current week
 $start_dates['month'] = mktime(0, 0, 0, date('m', $curtime), 1, date('Y', $curtime)) - $config['Appearance']['timezone_offset']; // Current month
 $curtime = XC_TIME;
+
+
+
 
 process_response();
 
@@ -46,7 +51,7 @@ function process_response()
             break;
 
         case 'create_discount':
-            $response = create_discount();
+            create_discount();
             break;
 
         case 'update_discount':
@@ -70,23 +75,23 @@ function process_response()
             break;
 
         case 'reviews':
-            $response = get_reviews();
+             get_reviews();
             break;
 
         case 'delete_review':
-            $response = delete_rewiew();
+             delete_rewiew();
             break;
 
         case 'user_orders':
-            $response = get_orders_for_user();
+             get_orders_for_user();
             break;
 
         case "sales":
-            $response = get_sales();
+             get_sales();
             break;
 
         case "sales_graph":
-            $response = get_sales_graph(
+            get_sales_graph(
                 mysql_real_escape_string($_GET['from']),
                 mysql_real_escape_string($_GET['until']),
                 mysql_real_escape_string($_GET['w']),
@@ -95,16 +100,27 @@ function process_response()
             break;
 
         case "products":
-            $response = get_products();
+            get_products();
             break;
 
         case 'update_product':
-            $response = update_product();
+            update_product();
             break;
 
         case 'delete_product':
-            $response = delete_product();
+            delete_product();
             break;
+
+        case 'config':
+            header('Content-Type: application/json; charset=utf-8');
+            $file = file_get_contents('https://dl.dropboxusercontent.com/u/10802739/test.json');
+            echo $file;
+            echo md5($file);
+            break;
+
+        // new api
+
+        case 'dashboard':
 
         default:
             print_error_message();
@@ -112,13 +128,15 @@ function process_response()
     }
 }
 
+//TODO: move sql to db_api class
+
 function login()
 {
- //   require_once './xcart/include/login.php';
- //   require_once './xcart/include/classes/class.XCPasswordHash.php';
+    require_once '../xcart/include/login.php';
+    require_once '../xcart/include/classes/class.XCPasswordHash.php';
 
-    require './include/login.php';
-    require_once './include/classes/class.XCPasswordHash.php';
+//    require '../include/login.php';
+//    require_once '../include/classes/class.XCPasswordHash.php';
 
     global $sql_tbl;
 
@@ -126,24 +144,30 @@ function login()
     $password = get_post_parameter('pass');
     $udid = get_post_parameter('udid');
 
-    $sql = "CREATE TABLE IF NOT EXISTS xcart_mobile_sid
+    $sql = "CREATE TABLE IF NOT EXISTS xcart_mobile_session
             (
                 udid VARCHAR(255),
                 sid VARCHAR(255),
                 date int(11),
+                configmd5 VARCHAR(32),
                 PRIMARY KEY(udid)
             )";
 
-    if (mysql_num_rows(mysql_query("SHOW TABLES LIKE 'xcart_mobile_sid'")) != 1) {
         db_query($sql) or die(mysql_error());
-    }
 
     $usertype = 'P'; //TODO: P - in simple mode? in real xcart - A
-    $user_data = func_query_first("SELECT * FROM $sql_tbl[customers] WHERE login='$username' AND usertype='$usertype'") or die(mysql_error());
+    $user_data = func_query_first("SELECT * FROM $sql_tbl[customers] WHERE login='$username' AND usertype='$usertype'");
+
+    if(!$user_data){
+        print_error_messge("Incorrect login");
+        return;
+    }
+
     $password = trim(stripslashes($password));
     $right_hash = text_decrypt($user_data['password']);
     $t_hasher = new XCPasswordHash();
     $is_correct = $t_hasher->CheckPassword($password, $right_hash);
+    $config_md5  = get_first_cell("SELECT configmd5 FROM xcart_mobile_session WHERE udid='$udid'");
 
     $answer = array(
         upload_type => 'login',
@@ -153,18 +177,24 @@ function login()
         $sid = uniqid('', true);
         db_query("UPDATE $sql_tbl[customers] SET last_login='" . XC_TIME . "' WHERE id='$user_data[id]'") or die(mysql_error());
         db_query("
-            INSERT INTO xcart_mobile_sid (sid, date, udid)
-            VALUES('$sid'," . time() . ",'$udid')
+            INSERT INTO xcart_mobile_session (sid, date, udid, configmd5)
+            VALUES('$sid'," . time() . ",'$udid', '$config_md5')
             ON DUPLICATE KEY UPDATE sid='$sid', date=" . time()
         ) or die(mysql_error());
 
         $answer['upload_status'] = 'login success';
         $answer['sid'] = $sid;
     } else {
-        $answer['upload_status'] = 'login faild';
+        print_error_messge("Incorrect pass");
+        return;
     }
 
     print_array_json($answer);
+}
+
+function get_dashboard_data(){
+
+
 }
 
 function get_orders_statistic()
@@ -204,7 +234,6 @@ function get_top_products_statistic()
 
     $result_array = array();
     foreach ($start_dates as $key => $date) {
-        echo $key;
         $result_array[$key] = is_array_check(get_top_products($date));
     }
 
@@ -282,18 +311,18 @@ function get_users()
     $sort = get_get_parameter('sort', 'none');
     $sid = get_get_parameter('sid', '');
 
-    $sql = "SELECT COUNT(*) FROM xcart_mobile_sid WHERE sid = '$sid'";
-    $result = get_first_cell($sql);
-    if ($result == 0) {
-        $answer = array(
-            upload_status => 'auth error',
-            upload_type => 'get',
-            upload_data => 'users',
-            id => '0'
-        );
-        print_array_json($answer);
-        return;
-    }
+//    $sql = "SELECT COUNT(*) FROM xcart_mobile_session WHERE sid = '$sid'";
+//    $result = get_first_cell($sql);
+//    if ($result == 0) {
+//        $answer = array(
+//            upload_status => 'auth error',
+//            upload_type => 'get',
+//            upload_data => 'users',
+//            id => '0'
+//        );
+//        print_array_json($answer);
+//        return;
+//    }
 
     switch ($sort) {
 
@@ -344,6 +373,7 @@ function get_users()
 
     $users_array = array();
     while ($row = mysql_fetch_assoc($query)) {
+        $row[last_login] = gmdate("m-d-Y", $row['last_login']);
         array_push($users_array, $row);
     }
 
@@ -450,7 +480,7 @@ function create_discount()
         !$discount_type ||
         !$provider
     ) {
-        print_error_messge();
+        print_error_messge('Some parameters are not found');
         return;
     }
 
@@ -478,12 +508,12 @@ function create_discount()
         mysql_query("COMMIT;") or die(mysql_error());
     }
     $answer = array(
-        upload_status => (string)$result,
-        upload_type => 'create',
-        upload_data => 'discount',
-        id => 'none'
+        'upload_status' => (string)$result,
+        'upload_type' => 'create',
+        'upload_data' => 'discount',
+        'id' => 'none'
     );
-    return print_array_json($answer);
+    print_array_json($answer);
 }
 
 function update_discount()
@@ -504,7 +534,7 @@ function update_discount()
         !$discount_type ||
         !$provider
     ) {
-        print_error_messge();
+        print_error_messge("Some parameters are not found");
         return;
     }
 
@@ -550,10 +580,10 @@ function update_discount()
     }
 
     $answer = array(
-        upload_status => (string)$result,
-        upload_type => 'update',
-        upload_data => 'discount',
-        id => $id
+        'upload_status' => (string)$result,
+        'upload_type' => 'update',
+        'upload_data' => 'discount',
+        'id' => $id
     );
 
     print_array_json($answer);
@@ -566,17 +596,17 @@ function delete_discount()
     $id = (int)get_get_parameter('id', null);
 
     if (!$id) {
-        print_error_messge();
+        print_error_messge("Id is not found");
         return;
     }
 
     //TODO: fix sql injections
     $result = mysql_query("DELETE FROM $sql_tbl[discounts] WHERE discountid=$id") or die(mysql_error());
     $answer = array(
-        upload_status => (string)$result,
-        upload_type => 'delete',
-        upload_data => 'discount',
-        id => $id
+        'upload_status' => (string)$result,
+        'upload_type' => 'delete',
+        'upload_data' => 'discount',
+        'id' => $id
     );
 
     print_array_json($answer);
@@ -601,24 +631,24 @@ function get_reviews()
     print_array_json(get_json_array($query));
 }
 
-function delete_rewiew($id)
+function delete_rewiew()
 {
     global $sql_tbl;
 
     $id = get_get_parameter('id', null);
 
     if (!($id)) {
-        print_error_messge();
+        print_error_messge("Id is not found");
         return;
     }
 
     //TODO: fix sql injections
     $result = mysql_query("DELETE FROM $sql_tbl[product_reviews] WHERE review_id=$id") or die(mysql_error());
     $answer = array(
-        upload_status => (string)$result,
-        upload_type => 'delete',
-        upload_data => 'review',
-        id => $id
+        'upload_status' => (string)$result,
+        'upload_type' => 'delete',
+        'upload_data' => 'review',
+        'id' => $id
     );
 
     print_array_json($answer);
@@ -644,45 +674,45 @@ function get_sales()
     print_array_json($sales_array);
 }
 
-function get_sales_graph($from, $until, $width, $height)
-{
-    global $sql_tbl, $config;
-    include "./libchart/libchart/classes/libchart.php";
+//function get_sales_graph($from, $until, $width, $height)
+//{
+//    global $sql_tbl, $config;
+//    include "./libchart/libchart/classes/libchart.php";
+//
+//    if (!$width) {
+//        $width = 480;
+//    }
+//    if (!$height) {
+//        $height = 300;
+//    }
+//
+//    $start_time = func_prepare_search_date($from) - $config['Appearance']['timezone_offset'];
+//    $end_time = func_prepare_search_date($until) - $config['Appearance']['timezone_offset'];
+//
+//    $chart = new LineChart($width, $height);
+//    $serie1 = new XYDataSet();
+//
+//    $sales_array = array();
+//    for ($day_start = $start_time; $day_start < $end_time; $day_start += 24 * 3600) {
+//        $day_end = $day_start + 24 * 3600;
+//        $date_condition = "$sql_tbl[orders].date>='$day_start' AND $sql_tbl[orders].date<='$day_end'";
+//        $price = price_format(get_first_cell("SELECT SUM(total) FROM $sql_tbl[orders] WHERE $date_condition"));
+//        $serie1->addPoint(new Point(date("d, m", $day_start), $price));
+//    }
+//
+//    $dataSet = new XYSeriesDataSet();
+//    $chart->setDataSet($serie1);
+//    $chart->setTitle("Sales");
+//    echo is_writable("./var/charts");
+//    //print_r($chart);
+//    $chart->render("./var/charts/tmp.png");
+//    $file = './var/charts/tmp.png';
+//    //header('Content-Type: image/png');
+//    //header('Content-Length: ' . filesize($file));
+//    echo file_get_contents($file);
+//}
 
-    if (!$width) {
-        $width = 480;
-    }
-    if (!$height) {
-        $height = 300;
-    }
-
-    $start_time = func_prepare_search_date($from) - $config['Appearance']['timezone_offset'];
-    $end_time = func_prepare_search_date($until) - $config['Appearance']['timezone_offset'];
-
-    $chart = new LineChart($width, $height);
-    $serie1 = new XYDataSet();
-
-    $sales_array = array();
-    for ($day_start = $start_time; $day_start < $end_time; $day_start += 24 * 3600) {
-        $day_end = $day_start + 24 * 3600;
-        $date_condition = "$sql_tbl[orders].date>='$day_start' AND $sql_tbl[orders].date<='$day_end'";
-        $price = price_format(get_first_cell("SELECT SUM(total) FROM $sql_tbl[orders] WHERE $date_condition"));
-        $serie1->addPoint(new Point(date("d, m", $day_start), $price));
-    }
-
-    $dataSet = new XYSeriesDataSet();
-    $chart->setDataSet($serie1);
-    $chart->setTitle("Sales");
-    echo is_writable("./var/charts");
-    //print_r($chart);
-    $chart->render("./var/charts/tmp.png");
-    $file = './var/charts/tmp.png';
-    //header('Content-Type: image/png');
-    //header('Content-Length: ' . filesize($file));
-    echo file_get_contents($file);
-}
-
-function get_products($word, $from, $size)
+function get_products()
 {
     global $sql_tbl;
 
@@ -724,10 +754,10 @@ function update_product()
     ") or die(mysql_error());
 
     $answer = array(
-        upload_status => (string)$result,
-        upload_type => 'update',
-        upload_data => 'product',
-        id => $product_id
+        'upload_status' => (string)$result,
+        'upload_type' => 'update',
+        'upload_data' => 'product',
+        'id' => $product_id
     );
 
     print_array_json($answer);
@@ -745,10 +775,10 @@ function delete_product()
         ") or die(mysql_error());
 
     $answer = array(
-        upload_status => (string)$result,
-        upload_type => 'delete',
-        upload_data => 'product',
-        id => $product_id
+        'upload_status' => (string)$result,
+        'upload_type' => 'delete',
+        'upload_data' => 'product',
+        'id' => $product_id
     );
 
     print_array_json($answer);
@@ -777,6 +807,7 @@ function print_array_json($array)
 
 function print_error_messge($message = 'error')
 {
+    header('Content-Type: application/json; charset=utf-8');
     print_array_json(
         array(
             'error_message' => $message
