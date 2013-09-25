@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">X-CartNew</string>
+    <string name="action_settings">Settings</string>
+    <string name="unlock">Unlock</string>
+    <string name="enter_to_app">Enter into admin area</string>
+    <string name="welcome">Welcome to X-Cart</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="today_sales">Today sales($)</string>
+    <string name="low_stock">Low stock\nproducts</string>
+    <string name="visitors_today">Visitors\ntoday</string>
+    <string name="products_sold_today">Products\nsold today</string>
+    <string name="reviews_today">Reviews\ntoday</string>
+    <string name="last_orders">Last orders</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="orders">Orders</string>
+    <string name="products">Products</string>
+    <string name="reviews">Reviews</string>
+    <string name="users">Users</string>
+    <string name="email_colon">Email:</string>
+    <string name="product">Product:</string>
+    <string name="message_colon">Message:</string>
+    <string name="settings_description">image for settings button</string>
+    <string name="ok_description">image for OK button</string>
+    <string name="yes_description">image for yes button</string>
+    <string name="no_description">image for no button</string>
+    <string name="login_description">image for login button</string>
+
+</resources>

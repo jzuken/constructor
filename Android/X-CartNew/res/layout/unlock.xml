@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/title_color"
+        android:gravity="center"
+        android:paddingBottom="10dp"
+        android:paddingTop="5dp"
+        android:text="@string/unlock"
+        android:textColor="@color/white"
+        android:textSize="23sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:text="@string/enter_to_app"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_marginTop="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.50"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <kankan.wheel.widget.WheelView
+                android:id="@+id/passw_1"
+                android:layout_width="60dp"
+                android:layout_height="80dp" />
+
+            <kankan.wheel.widget.WheelView
+                android:id="@+id/passw_2"
+                android:layout_width="60dp"
+                android:layout_height="80dp" />
+
+            <kankan.wheel.widget.WheelView
+                android:id="@+id/passw_3"
+                android:layout_width="60dp"
+                android:layout_height="80dp" />
+
+            <kankan.wheel.widget.WheelView
+                android:id="@+id/passw_4"
+                android:layout_width="60dp"
+                android:layout_height="80dp" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3" >
+
+            <ImageButton
+                android:id="@+id/unlockOkButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ok_button"
+                android:onClick="okButtonClick"
+                android:contentDescription="@string/ok_description" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>
