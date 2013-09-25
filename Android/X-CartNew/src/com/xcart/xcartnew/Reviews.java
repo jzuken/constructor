@@ -18,7 +18,7 @@ import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -101,7 +101,7 @@ public class Reviews extends PinSupportNetworkActivity {
 		((TextView) view.findViewById(R.id.confirm_question)).setText("Are you sure you want to delete this review?");
 		final CustomDialog dialog = new CustomDialog(this, view);
 
-		Button noButton = (Button) view.findViewById(R.id.dialog_no_button);
+		ImageButton noButton = (ImageButton) view.findViewById(R.id.dialog_no_button);
 		noButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -109,7 +109,7 @@ public class Reviews extends PinSupportNetworkActivity {
 			}
 		});
 
-		Button yesButton = (Button) view.findViewById(R.id.dialog_yes_button);
+		ImageButton yesButton = (ImageButton) view.findViewById(R.id.dialog_yes_button);
 		yesButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -188,7 +188,7 @@ public class Reviews extends PinSupportNetworkActivity {
 
 		ListView actionList = (ListView) action_view.findViewById(R.id.action_list);
 
-		String[] actions = { "Full text", "Delete", "Cancel" };
+		String[] actions = { "Full text", "Remove", "Cancel" };
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.action_item, R.id.textItem, actions);
 
 		actionList.setOnItemClickListener(new OnItemClickListener() {
