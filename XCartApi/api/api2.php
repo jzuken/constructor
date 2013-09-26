@@ -26,9 +26,18 @@ if (isset($_GET["request"])) {
             break;
 
         case 'last_orders':
-            $array = $db->get_last_orders(
+            $array = $db->get_orders_list(
                 get_get_parameter('from', 0),
-                get_get_parameter('size', 5)
+                get_get_parameter('size', 5),
+                get_get_parameter('date', null),
+                get_get_parameter('status', null)
+            );
+            $pr->print_array_json($array);
+            break;
+
+        case 'order_info':
+            $array = $db->get_order_info(
+                get_get_parameter('id', 0)
             );
             $pr->print_array_json($array);
             break;
