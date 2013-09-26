@@ -97,6 +97,11 @@ class DbApiFunctions
         $today_sales_sql = "SELECT SUM(total) FROM $sql_tbl[orders] WHERE (status='P' OR status='C') AND $date_condition";
         $today_sales = price_format($this->get_first_cell($today_sales_sql));
 
+        $low_stock_sql = "SELECT COUNT(*)
+                          FROM $sql_tbl[products]
+                          WHERE avail <= low_avail_limit";
+        $low_stock = $this->get_first_cell($low_stock_sql);
+
         $today_visitors_sql = "SELECT COUNT(*) FROM $sql_tbl[customers] WHERE last_login >= '$start_date'";
         $today_visitors = $this->get_first_cell($today_visitors_sql);
 
@@ -105,7 +110,7 @@ class DbApiFunctions
 
         return array(
             'today_sales' => $today_sales,
-            'low_stock' => '0',
+            'low_stock' => $low_stock,
             'today_visitors' => $today_visitors,
             'today_sold' => $today_sold,
             'reviews_today' => '0'
