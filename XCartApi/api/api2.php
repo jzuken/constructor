@@ -27,8 +27,8 @@ if (isset($_GET["request"])) {
 
         case 'last_orders':
             $array = $db->get_orders_list(
-                get_get_parameter('from', 0),
-                get_get_parameter('size', 5),
+                (int)get_get_parameter('from', 0),
+                (int)get_get_parameter('size', 5),
                 get_get_parameter('date', null),
                 get_get_parameter('status', null)
             );
@@ -37,7 +37,22 @@ if (isset($_GET["request"])) {
 
         case 'order_info':
             $array = $db->get_order_info(
-                get_get_parameter('id', 0)
+                (int)get_get_parameter('id', 0)
+            );
+            $pr->print_array_json($array);
+            break;
+
+        case 'products':
+            $array = $db->get_products(
+                (int)get_get_parameter('from', 0),
+                (int)get_get_parameter('size', 5)
+            );
+            $pr->print_array_json($array);
+            break;
+
+        case 'product_info':
+            $array = $db->get_product_info(
+                (int)get_get_parameter('id', 0)
             );
             $pr->print_array_json($array);
             break;

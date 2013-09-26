@@ -115,10 +115,6 @@ function process_response()
             echo md5($file);
             break;
 
-        // new api
-
-        case 'dashboard':
-
         default:
             print_error_message();
             break;
@@ -173,8 +169,8 @@ function login()
         $sid = uniqid('', true);
         db_query("UPDATE $sql_tbl[customers] SET last_login='" . XC_TIME . "' WHERE id='$user_data[id]'") or die(mysql_error());
         db_query("
-            INSERT INTO xcart_mobile_session (sid, date, udid, configmd5)
-            VALUES('$sid'," . time() . ",'$udid', '$config_md5')
+            INSERT INTO xcart_mobile_session (sid, date, udid)
+            VALUES('$sid'," . time() . ",'$udid')
             ON DUPLICATE KEY UPDATE sid='$sid', date=" . time()
         ) or die(mysql_error());
 

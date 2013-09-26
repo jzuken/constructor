@@ -191,6 +191,44 @@ class DbApiFunctions
         return $order_details_array;
     }
 
+    public function get_products($from, $size)
+    {
+        global $sql_tbl;
+
+        $query = mysql_query
+        ("
+          SELECT $sql_tbl[products].productid, $sql_tbl[products].productcode, $sql_tbl[products].list_price, $sql_tbl[products].avail, $sql_tbl[products_lng_current].product FROM $sql_tbl[products]
+          INNER JOIN $sql_tbl[products_lng_current]
+          ON $sql_tbl[products_lng_current].productid = $sql_tbl[products].productid
+          LIMIT $from, $size
+        ") or die(mysql_error());
+
+        $products_array = array();
+        while ($row = mysql_fetch_assoc($query)) {
+            array_push($products_array, $row);
+        }
+
+        return $products_array;
+    }
+
+    public function get_product_info($id)
+    {
+        global $sql_tbl;
+
+        $query = mysql_query
+        ("
+          SELECT $sql_tbl[products].*, $sql_tbl[products_lng_current].* FROM $sql_tbl[products]
+          INNER JOIN $sql_tbl[products_lng_current]
+          ON $sql_tbl[products_lng_current].productid = $sql_tbl[products].productid
+          WHERE $sql_tbl[products].productid = $id
+        ") or die(mysql_error());
+
+        $product_info = mysql_fetch_assoc($query);
+
+        return $product_info;
+    }
+
+
     // Util functions
 
     private function get_first_cell($query)
