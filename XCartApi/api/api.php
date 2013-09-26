@@ -25,9 +25,6 @@ $start_dates['week'] = func_prepare_search_date($start_week) - $config['Appearan
 $start_dates['month'] = mktime(0, 0, 0, date('m', $curtime), 1, date('Y', $curtime)) - $config['Appearance']['timezone_offset']; // Current month
 $curtime = XC_TIME;
 
-
-
-
 process_response();
 
 function process_response()
@@ -159,7 +156,7 @@ function login()
     $user_data = func_query_first("SELECT * FROM $sql_tbl[customers] WHERE login='$username' AND usertype='$usertype'");
 
     if(!$user_data){
-        print_error_messge("Incorrect login");
+        print_error_message("Incorrect login");
         return;
     }
 
@@ -167,7 +164,6 @@ function login()
     $right_hash = text_decrypt($user_data['password']);
     $t_hasher = new XCPasswordHash();
     $is_correct = $t_hasher->CheckPassword($password, $right_hash);
-    $config_md5  = get_first_cell("SELECT configmd5 FROM xcart_mobile_session WHERE udid='$udid'");
 
     $answer = array(
         upload_type => 'login',
@@ -185,7 +181,7 @@ function login()
         $answer['upload_status'] = 'login success';
         $answer['sid'] = $sid;
     } else {
-        print_error_messge("Incorrect pass");
+        print_error_message("Incorrect pass");
         return;
     }
 
@@ -805,7 +801,7 @@ function print_array_json($array)
     echo indent(json_encode($array));
 }
 
-function print_error_messge($message = 'error')
+function print_error_message($message = 'error')
 {
     header('Content-Type: application/json; charset=utf-8');
     print_array_json(

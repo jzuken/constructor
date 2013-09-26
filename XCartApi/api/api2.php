@@ -10,6 +10,16 @@ if (isset($_GET["request"])) {
 
     switch ($_GET['request']) {
 
+        case 'login':
+            $username = get_post_parameter('name');
+            $password = get_post_parameter('pass');
+            $udid = get_post_parameter('udid');
+
+            $array = $db->login($username, $password, $udid);
+
+            $pr->print_array_json($array);
+            break;
+
         case 'dashboard':
             $array = $db->get_dashboard_data();
             $pr->print_array_json($array);

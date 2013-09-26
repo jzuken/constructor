@@ -61,18 +61,95 @@ class DbApiFunctions
 
         $order_query = mysql_query
         ("
-          SELECT orderid, status, total, title, firstname, b_firstname, lastname, b_lastname, date
+          SELECT orderid, status, total, title, firstname,lastname, company, b_title, b_firstname, b_lastname, b_address, b_city, b_county, b_state, b_country, b_zipcode, b_zip4, b_phone, b_fax, s_title, s_firstname, s_lastname, s_address, s_city, s_county, s_state, s_country, s_zipcode, s_phone, s_fax, s_zip4, shippingid, shipping, tracking, payment_method, date
           FROM $sql_tbl[orders]
           ORDER BY date DESC LIMIT $from, $size
         ") or die(mysql_error());
 
-        $result_array = mysql_fetch_assoc($order_query);
-        $result_array['date'] = gmdate("m-d-Y", $result_array['date']);
-        $order_id = $result_array['orderid'];
-        $result_array['details'] = get_order_details($order_id);
+        $result_array = array();
+        while ($row =mysql_fetch_assoc($order_query)) {
+            $row['date'] = gmdate("m-d-Y", $row['date']);
+            $order_id = $row['orderid'];
+            $row['details'] = $this->get_order_details($order_id);
+            array_push($result_array, $row);
+        }
 
         return $result_array;
     }
+
+    public function get_order_details($id)
+    {
+        global $sql_tbl;
+
+        $query = mysql_query
+        ("
+          SELECT productid, price, amount, provider, product_options, itemid, productcode, product
+          FROM $sql_tbl[order_details]
+          WHERE orderid=$id
+        ") or die(mysql_error());
+
+        $order_details_array = array();
+        while ($row = mysql_fetch_assoc($query)) {
+            array_push($order_details_array, $row);
+        }
+
+        return $order_details_array;
+    }
+
+    function login($username, $password, $udid)
+    {
+        require_once '../xcart/include/login.php';
+        require_once '../xcart/include/classes/class.XCPasswordHash.php';
+
+//    require '../include/login.php';
+//    require_once '../include/classes/class.XCPasswordHash.php';
+
+        global $sql_tbl;
+
+        $sql = "CREATE TABLE IF NOT EXISTS xcart_mobile_session
+            (
+                udid VARCHAR(255),
+                sid VARCHAR(255),
+                date int(11),
+                PRIMARY KEY(udid)
+            )";
+
+        db_query($sql) or die(mysql_error());
+
+        $usertype = 'P'; //TODO: P - in simple mode? in real xcart - A
+        $user_data = func_query_first("SELECT * FROM $sql_tbl[customers] WHERE login='$username' AND usertype='$usertype'");
+
+        if (!$user_data) {
+            return array('error' => "Incorrect login");
+        }
+
+        $password = trim(stripslashes($password));
+        $right_hash = text_decrypt($user_data['password']);
+        $t_hasher = new XCPasswordHash();
+        $is_correct = $t_hasher->CheckPassword($password, $right_hash);
+
+        $answer = array();
+        $answer['upload_type'] = 'login';
+
+        if ($is_correct) {
+            $sid = uniqid('', true);
+            db_query("UPDATE $sql_tbl[customers] SET last_login='" . XC_TIME . "' WHERE id='$user_data[id]'") or die(mysql_error());
+            db_query("
+            INSERT INTO xcart_mobile_session (sid, date, udid)
+            VALUES('$sid'," . time() . ",'$udid')
+            ON DUPLICATE KEY UPDATE sid='$sid', date=" . time()
+            ) or die(mysql_error());
+
+            $answer['upload_status'] = 'login success';
+            $answer['sid'] = $sid;
+        } else {
+            return array('error' => "Incorrect pass");
+        }
+
+        return $answer;
+    }
+
+    // Util functions
 
     private function get_first_cell($query)
     {
