@@ -27,9 +27,16 @@
     <string name="yes_description">image for yes button</string>
     <string name="no_description">image for no button</string>
     <string name="login_description">image for login button</string>
+    <string name="save_description">image for save button</string>
     <string name="login_colon">Login:</string>
     <string name="user_type_colon">User type:</string>
     <string name="last_login_colon">Last login:</string>
     <string name="total_orders_colon">Total orders:</string>
+    <string name="name_colon">Name:</string>
+    <string name="sku_colon">SKU:</string>
+    <string name="in_stock_colon">In stock:</string>
+    <string name="price_colon">Price:</string>
+    <string name="null_number">0.00</string>
+    <string name="set_price">Set price</string>
 
 </resources>
