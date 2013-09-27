@@ -42,8 +42,8 @@ public class Unlock extends Activity {
 					setResult(pinPageCode);
 					finish();
 				}
-			}
-			else Toast.makeText(this, "incorrect password", Toast.LENGTH_SHORT).show();
+			} else
+				Toast.makeText(this, "incorrect password", Toast.LENGTH_SHORT).show();
 		}
 	}
 

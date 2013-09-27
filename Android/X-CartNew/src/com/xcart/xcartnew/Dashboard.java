@@ -20,10 +20,6 @@ public class Dashboard extends PinSupportNetworkActivity {
 		initLastOrders();
 	}
 
-	public void settingsClick(View v) {
-
-	}
-
 	private void initTodaySales() {
 		todaySalesLayout = (LinearLayout) findViewById(R.id.today_sales_layout);
 		todaySales = (TextView) findViewById(R.id.today_sales);
@@ -38,13 +34,13 @@ public class Dashboard extends PinSupportNetworkActivity {
 			}
 		});
 	}
-	
+
 	private void initLowStock() {
 		lowStockLayout = (LinearLayout) findViewById(R.id.low_stock_layout);
 		lowStock = (TextView) findViewById(R.id.low_stock);
-		
+
 		lowStockLayout.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				Intent lowStockProducts = new Intent(getBaseContext(), Products.class);
@@ -53,13 +49,13 @@ public class Dashboard extends PinSupportNetworkActivity {
 			}
 		});
 	}
-	
+
 	private void initVisitorsToday() {
 		visitorsTodayLayout = (LinearLayout) findViewById(R.id.visitors_today_layout);
 		visitorsToday = (TextView) findViewById(R.id.visitors_today);
-		
+
 		visitorsTodayLayout.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				Intent todayUsers = new Intent(getBaseContext(), Users.class);
@@ -68,13 +64,13 @@ public class Dashboard extends PinSupportNetworkActivity {
 			}
 		});
 	}
-	
+
 	private void initProductsSold() {
 		productsSoldLayout = (LinearLayout) findViewById(R.id.products_sold_today_layout);
 		productsSold = (TextView) findViewById(R.id.products_sold_today);
-		
+
 		productsSoldLayout.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				Intent todayProducts = new Intent(getBaseContext(), Products.class);
@@ -83,13 +79,13 @@ public class Dashboard extends PinSupportNetworkActivity {
 			}
 		});
 	}
-	
+
 	private void initReviewsToday() {
 		reviewsTodayLayout = (LinearLayout) findViewById(R.id.reviews_today_layout);
 		reviewsToday = (TextView) findViewById(R.id.reviews_today);
-		
+
 		reviewsTodayLayout.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				Intent todayReviews = new Intent(getBaseContext(), Reviews.class);
@@ -98,13 +94,13 @@ public class Dashboard extends PinSupportNetworkActivity {
 			}
 		});
 	}
-	
+
 	private void initLastOrders() {
 		lastOrdersLayout = (LinearLayout) findViewById(R.id.last_orders_layout);
 		lastOrdersCount = (TextView) findViewById(R.id.last_orders_count);
-		
+
 		lastOrdersLayout.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				Intent lastOrders = new Intent(getBaseContext(), Orders.class);
@@ -112,7 +108,7 @@ public class Dashboard extends PinSupportNetworkActivity {
 				startActivityForResult(lastOrders, 1);
 			}
 		});
-		
+
 		firstCustomer = (TextView) findViewById(R.id.first_customer);
 		firstCustomerPaid = (TextView) findViewById(R.id.first_customer_paid);
 		secondCustomer = (TextView) findViewById(R.id.second_customer);

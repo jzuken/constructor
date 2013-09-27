@@ -28,8 +28,8 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:background="@drawable/settings_button"
-            android:onClick="settingsClick"
-            android:contentDescription="@string/settings_description" />
+            android:contentDescription="@string/settings_description"
+            android:onClick="settingsClick" />
     </RelativeLayout>
 
 </LinearLayout>

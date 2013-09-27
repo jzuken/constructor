@@ -35,10 +35,6 @@ public class Reviews extends PinSupportNetworkActivity {
 		packAmount = Integer.parseInt(settingsData.getString("reviews_amount", "10"));
 		setupListViewAdapter();
 	}
-	
-	public void settingsClick(View v) {
-
-	}
 
 	@Override
 	protected void withoutPinAction() {
@@ -241,5 +237,3 @@ public class Reviews extends PinSupportNetworkActivity {
 	private Object lock = new Object();
 	private final int noUpdateCode = 4;
 }
-
-

@@ -19,7 +19,6 @@ import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -50,10 +49,6 @@ public class Products extends PinSupportNetworkActivity {
 			updateProductsList();
 		}
 		super.withoutPinAction();
-	}
-	
-	public void settingsClick(View v) {
-
 	}
 
 	private void updateProductsList() {
@@ -272,7 +267,7 @@ public class Products extends PinSupportNetworkActivity {
 			showConnectionErrorMessage();
 		}
 	}
-	
+
 	private void setupAvailabilitySortSpinner() {
 		String[] sortOptions = { "All", "Low stock" };
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_item, sortOptions);
@@ -299,9 +294,10 @@ public class Products extends PinSupportNetworkActivity {
 			}
 		});
 	}
-	
+
 	private void setupGeneralSortSpinner() {
-		String[] sortOptions = { "Price (ascending)", "Price (descending)", "Amount left (ascending)", "Amount left (descending)" };
+		String[] sortOptions = { "Price (ascending)", "Price (descending)", "Amount left (ascending)",
+				"Amount left (descending)" };
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_item, sortOptions);
 
 		IcsSpinner spinner = (IcsSpinner) findViewById(R.id.general_sort_spinner);

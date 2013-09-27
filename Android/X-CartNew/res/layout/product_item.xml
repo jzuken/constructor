@@ -22,11 +22,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:paddingLeft="10dp"
             android:layout_toRightOf="@id/product_name_label"
+            android:gravity="right"
+            android:paddingLeft="10dp"
             android:textColor="@color/blue"
-            android:textStyle="bold"
-            android:gravity="right" />
+            android:textStyle="bold" />
     </RelativeLayout>
 
     <RelativeLayout
