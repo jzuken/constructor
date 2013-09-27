@@ -29,7 +29,7 @@ public class Dashboard extends PinSupportNetworkActivity {
 			@Override
 			public void onClick(View v) {
 				Intent completeOrders = new Intent(getBaseContext(), Orders.class);
-				completeOrders.putExtra("complete", true);
+				completeOrders.putExtra("sortOption", "complete");
 				startActivityForResult(completeOrders, 1);
 			}
 		});
@@ -44,7 +44,7 @@ public class Dashboard extends PinSupportNetworkActivity {
 			@Override
 			public void onClick(View v) {
 				Intent lowStockProducts = new Intent(getBaseContext(), Products.class);
-				lowStockProducts.putExtra("lowStock", true);
+				lowStockProducts.putExtra("sortOption", "lowStock");
 				startActivityForResult(lowStockProducts, 1);
 			}
 		});
@@ -59,7 +59,7 @@ public class Dashboard extends PinSupportNetworkActivity {
 			@Override
 			public void onClick(View v) {
 				Intent todayUsers = new Intent(getBaseContext(), Users.class);
-				todayUsers.putExtra("today", true);
+				todayUsers.putExtra("sortOption", "today");
 				startActivityForResult(todayUsers, 1);
 			}
 		});
@@ -74,7 +74,7 @@ public class Dashboard extends PinSupportNetworkActivity {
 			@Override
 			public void onClick(View v) {
 				Intent todayProducts = new Intent(getBaseContext(), Products.class);
-				todayProducts.putExtra("all", true);
+				todayProducts.putExtra("sortOption", "all");
 				startActivityForResult(todayProducts, 1);
 			}
 		});
@@ -89,7 +89,7 @@ public class Dashboard extends PinSupportNetworkActivity {
 			@Override
 			public void onClick(View v) {
 				Intent todayReviews = new Intent(getBaseContext(), Reviews.class);
-				todayReviews.putExtra("today", true);
+				todayReviews.putExtra("sortOption", "today");
 				startActivityForResult(todayReviews, 1);
 			}
 		});
@@ -104,7 +104,7 @@ public class Dashboard extends PinSupportNetworkActivity {
 			@Override
 			public void onClick(View v) {
 				Intent lastOrders = new Intent(getBaseContext(), Orders.class);
-				lastOrders.putExtra("all", true);
+				lastOrders.putExtra("sortOption", "all");
 				startActivityForResult(lastOrders, 1);
 			}
 		});

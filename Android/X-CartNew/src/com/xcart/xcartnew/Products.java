@@ -38,7 +38,8 @@ public class Products extends PinSupportNetworkActivity {
 		SharedPreferences settingsData = PreferenceManager.getDefaultSharedPreferences(this);
 		packAmount = Integer.parseInt(settingsData.getString("products_amount", "10"));
 		setupListViewAdapter();
-		setupAvailabilitySortSpinner();
+		String sortOption = getIntent().getStringExtra("sortOption");
+		setupAvailabilitySortSpinner(sortOption);
 		setupGeneralSortSpinner();
 	}
 
@@ -268,14 +269,19 @@ public class Products extends PinSupportNetworkActivity {
 		}
 	}
 
-	private void setupAvailabilitySortSpinner() {
+	private void setupAvailabilitySortSpinner(String sortOption) {
 		String[] sortOptions = { "All", "Low stock" };
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_item, sortOptions);
 
 		IcsSpinner spinner = (IcsSpinner) findViewById(R.id.availability_sort_spinner);
 		spinner.setAdapter(adapter);
-		spinner.setSelection(0);
-		availabilitySortOption = 0;
+		if (sortOption.equals("lowStock")) {
+			spinner.setSelection(1);
+			availabilitySortOption = 1;
+		} else {
+			spinner.setSelection(0);
+			availabilitySortOption = 0;
+		}
 
 		spinner.setOnItemSelectedListener(new IcsAdapterView.OnItemSelectedListener() {
 			@Override
@@ -302,8 +308,8 @@ public class Products extends PinSupportNetworkActivity {
 
 		IcsSpinner spinner = (IcsSpinner) findViewById(R.id.general_sort_spinner);
 		spinner.setAdapter(adapter);
-		spinner.setSelection(0);
-		generalSortOption = 0;
+		spinner.setSelection(1);
+		generalSortOption = 1;
 
 		spinner.setOnItemSelectedListener(new IcsAdapterView.OnItemSelectedListener() {
 			@Override
