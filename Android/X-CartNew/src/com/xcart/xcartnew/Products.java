@@ -7,6 +7,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -149,6 +150,7 @@ public class Products extends PinSupportNetworkActivity {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				switch (position) {
 				case 0:
+					showFullInfo();
 					dialog.dismiss();
 					break;
 				case 1:
@@ -172,6 +174,11 @@ public class Products extends PinSupportNetworkActivity {
 		actionList.setAdapter(adapter);
 
 		dialog.show();
+	}
+	
+	private void showFullInfo() {
+		Intent intent = new Intent(this, ProductInfo.class);
+		startActivityForResult(intent, 1);
 	}
 
 	private void editPriceClick(final String id, final String oldPrice) {
