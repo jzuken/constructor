@@ -4,6 +4,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -47,8 +48,8 @@ public class ProductInfo extends PinSupportNetworkActivity {
 					try {
 						JSONObject obj = new JSONObject(result);
 						name.setText(obj.getString("product"));
-						description.setText(obj.getString("descr"));
-						fullDescription.setText(obj.getString("fulldescr"));
+						description.setText(Html.fromHtml(obj.getString("descr")));
+						fullDescription.setText(Html.fromHtml(obj.getString("fulldescr")));
 						price.setText("$" + obj.getString("list_price"));
 						sold.setText(obj.getString("sales_stats"));
 						String inStockString = obj.getString("avail");
