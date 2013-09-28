@@ -177,6 +177,7 @@ public class Products extends PinSupportNetworkActivity {
 	}
 	
 	private void showFullInfo(final String id) {
+		setNeedDownloadValue(false);
 		Intent intent = new Intent(this, ProductInfo.class);
 		intent.putExtra("id", id);
 		startActivityForResult(intent, 1);

@@ -55,7 +55,10 @@
                     android:id="@+id/product_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/top_rounded_blue" />
+                    android:background="@drawable/top_rounded_blue"
+                    android:paddingLeft="10dp"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
 
                 <ImageView
                     android:id="@+id/product_image"
