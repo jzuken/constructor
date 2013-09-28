@@ -87,6 +87,7 @@
                     android:paddingRight="10dp" />
 
                 <TextView
+                    android:id="@+id/full_description_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
@@ -109,8 +110,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="10dp"
-                    android:text="@string/show_full_decription"
-                    android:textColor="@color/blue"
                     android:visibility="gone" />
 
                 <View
