@@ -150,7 +150,7 @@ public class Products extends PinSupportNetworkActivity {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				switch (position) {
 				case 0:
-					showFullInfo();
+					showFullInfo(item.getId());
 					dialog.dismiss();
 					break;
 				case 1:
@@ -176,8 +176,9 @@ public class Products extends PinSupportNetworkActivity {
 		dialog.show();
 	}
 	
-	private void showFullInfo() {
+	private void showFullInfo(final String id) {
 		Intent intent = new Intent(this, ProductInfo.class);
+		intent.putExtra("id", id);
 		startActivityForResult(intent, 1);
 	}
 

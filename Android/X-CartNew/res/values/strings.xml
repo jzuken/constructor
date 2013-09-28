@@ -42,6 +42,7 @@
     <string name="product_info">Product info</string>
     <string name="description_colon">Description:</string>
     <string name="show_full_decription">Show full description</string>
-	<string name="availability_colon">Availability:</string>
-	<string name="sold_colon">Sold:</string>
+    <string name="availability_colon">Availability:</string>
+    <string name="sold_colon">Sold:</string>
+
 </resources>
