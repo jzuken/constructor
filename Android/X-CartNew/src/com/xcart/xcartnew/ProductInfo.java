@@ -3,10 +3,12 @@ package com.xcart.xcartnew;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.text.Html;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -19,8 +21,10 @@ public class ProductInfo extends PinSupportNetworkActivity {
 		progressBar = (ProgressBar) findViewById(R.id.progress_bar);
 		name = (TextView) findViewById(R.id.product_name);
 		productImage = (ImageView) findViewById(R.id.product_image);
-		description = (TextView) findViewById(R.id.description);
-		fullDescription = (TextView) findViewById(R.id.full_description);
+		description = (WebView) findViewById(R.id.description);
+		initDescriptionWebView(description);
+		fullDescription = (WebView) findViewById(R.id.full_description);
+		initDescriptionWebView(fullDescription);
 		isVisibleFoolDescr = false;
 		fullDescriptionDivider = findViewById(R.id.full_description_divider);
 		price = (TextView) findViewById(R.id.price);
@@ -48,8 +52,8 @@ public class ProductInfo extends PinSupportNetworkActivity {
 					try {
 						JSONObject obj = new JSONObject(result);
 						name.setText(obj.getString("product"));
-						description.setText(Html.fromHtml(obj.getString("descr")));
-						fullDescription.setText(Html.fromHtml(obj.getString("fulldescr")));
+						description.loadDataWithBaseURL("", obj.getString("descr"), "text/html", "UTF-8", "");
+						fullDescription.loadDataWithBaseURL("", obj.getString("fulldescr"), "text/html", "UTF-8", "");
 						price.setText("$" + obj.getString("list_price"));
 						sold.setText(obj.getString("sales_stats"));
 						String inStockString = obj.getString("avail");
@@ -79,8 +83,8 @@ public class ProductInfo extends PinSupportNetworkActivity {
 
 	private void clearData() {
 		name.setText("");
-		description.setText("");
-		fullDescription.setText("");
+		description.loadUrl("about:blank");
+		fullDescription.loadUrl("about:blank");
 		hideFullDescr();
 		price.setText("");
 		sold.setText("");
@@ -115,11 +119,18 @@ public class ProductInfo extends PinSupportNetworkActivity {
 		isVisibleFoolDescr = true;
 	}
 
+	@SuppressLint("SetJavaScriptEnabled")
+	private void initDescriptionWebView(WebView descript) {
+		WebSettings descriptionSettings = descript.getSettings();
+		descriptionSettings.setJavaScriptEnabled(true);
+		descriptionSettings.setDefaultFontSize(14);
+	}
+
 	private ProgressBar progressBar;
 	private TextView name;
 	private ImageView productImage;
-	private TextView description;
-	private TextView fullDescription;
+	private WebView description;
+	private WebView fullDescription;
 	boolean isVisibleFoolDescr;
 	private View fullDescriptionDivider;
 	private TextView price;
