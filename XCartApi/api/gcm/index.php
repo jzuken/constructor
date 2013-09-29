@@ -96,12 +96,12 @@ and open the template in the editor.
         <?php
         include_once 'db_gcm_functions.php';
         $db = new DB_Functions();
-//        $users = $db->getAllUsers();
-//        if ($users != false)
-//            $no_of_users = mysql_num_rows($users);
-//        else
-//            $no_of_users = 0;
-//        ?>
+            $users = $db->getAllUsers();
+        if ($users != false)
+            $no_of_users = mysql_num_rows($users);
+        else
+            $no_of_users = 0;
+        ?>
         <div class="container">
             <h1>No of Devices Registered: <?php echo $no_of_users; ?></h1>
             <hr/>
@@ -120,7 +120,7 @@ and open the template in the editor.
                                 <div class="clear"></div>
                                 <div class="send_container">
                                     <textarea rows="3" name="message" cols="25" class="txt_message" placeholder="Type message here"></textarea>
-                                    <input type="hidden" name="regId" value="<?php echo $row["gcm_regid"] ?>"/>
+                                    <input name="regId" value="<?php echo $row["gcm_regid"] ?>"/>
                                     <input type="submit" class="send_btn" value="Send" onclick=""/>
                                 </div>
                             </form>

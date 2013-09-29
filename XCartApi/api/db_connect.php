@@ -10,10 +10,9 @@ class DB_Connect {
         // $this->close();
     }
  
-    public function connect() {
-        require_once 'config.php';
-        $con = mysql_connect(DB_HOST, DB_USER, DB_PASSWORD);
-        mysql_select_db(DB_DATABASE);
+    public function connect($host, $user, $password, $database) {
+        $con = mysql_connect($host, $user, $password);
+        mysql_select_db($database);
 
         return $con;
     }

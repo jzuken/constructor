@@ -10,7 +10,8 @@
         </script>
     </head>
     <body>
-        <form name="" method="post" action="register.php">
+    <?php echo 'Curl: ', function_exists('curl_version') ? 'Enabled' : 'Disabled'; ?>
+        <form name="" method="post" action="./register.php">
 			<input type="text" name="regId"/>
 			<input type="submit"/>
 		</form>

@@ -15,10 +15,10 @@ class DbApiFunctions
     {
         include_once './db_connect.php';
 
-        global $config, $previous_login_date;
+        global $config, $previous_login_date, $sql_host, $sql_user, $sql_password, $sql_db;
 
         $this->db = new DB_Connect();
-        $this->db->connect();
+        $this->db->connect($sql_host, $sql_user, $sql_password, $sql_db);
 
         $this->curtime = XC_TIME + $config['Appearance']['timezone_offset'];
         $this->start_dates['last_login'] = $previous_login_date; // Since last login

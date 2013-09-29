@@ -1,5 +1,9 @@
 <?php
 
+define('XCART_START', 1);
+
+require_once '../../xcart/config.php';
+
 class DB_Functions
 {
 
@@ -7,10 +11,12 @@ class DB_Functions
 
     function __construct()
     {
-        include_once '../db_connect.php';
+        require_once '../db_connect.php';
+
+        global $sql_host, $sql_user, $sql_password, $sql_db;
 
         $this->db = new DB_Connect();
-        $this->db->connect();
+        $this->db->connect($sql_host, $sql_user, $sql_password, $sql_db);
         $this->createGcmTable();
     }
 
@@ -43,7 +49,7 @@ class DB_Functions
 
     public function getAllUsers()
     {
-        $result = mysql_query("select * FROM gcm_users");
+        $result = mysql_query("select DISTINCT * FROM xcart_gcm_users");
         return $result;
     }
 
@@ -52,11 +58,11 @@ class DB_Functions
         $sql = "CREATE TABLE IF NOT EXISTS `xcart_gcm_users`
             (
                 `id` int(11) NOT NULL AUTO_INCREMENT,
-                `gcm_regid` text,
+                `gcm_regid` varchar(255) UNIQUE,
                 `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
                 PRIMARY KEY (`id`)
             )";
-        mysql_query($sql);
+        mysql_query($sql) or die(mysql_error());
     }
 }
 

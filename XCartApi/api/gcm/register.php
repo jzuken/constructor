@@ -12,6 +12,7 @@ if (isset($_POST["regId"])) {
     include_once './db_gcm_functions.php';
     include_once './GCM.php';
 
+
     $db = new DB_Functions();
     $gcm = new GCM();
 

@@ -3,14 +3,16 @@
 /*
  * Development imports
  */
-require '../xcart/top.inc.php';
-require '../xcart/init.php';
+require_once '../xcart/top.inc.php';
+require_once '../xcart/init.php';
 
 /*
  * Production imports
  */
 //require '../top.inc.php';
 //require '../init.php';
+
+echo "sql_host $sql_host";
 
 mysql_connect($sql_host, $sql_user, $sql_password) or die(mysql_error());
 mysql_select_db($sql_db) or die(mysql_error());

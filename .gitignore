@@ -5,3 +5,5 @@ obj
 /TestApi/PhpTestApi/.idea
 .idea
 /XCartApi/xcart
+
+/XCartApi/api/testPush.php
