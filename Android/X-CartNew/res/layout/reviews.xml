@@ -42,8 +42,7 @@
         android:layout_marginRight="7dp"
         android:layout_marginTop="4dp"
         android:background="@drawable/rounded_shape"
-        android:paddingBottom="7dp"
-        android:paddingTop="7dp"
+        android:cacheColorHint="@android:color/transparent"
         tools:listitem="@layout/review_item" >
     </ListView>
 
