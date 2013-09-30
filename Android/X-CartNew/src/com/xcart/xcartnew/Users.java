@@ -272,6 +272,15 @@ public class Users extends PinSupportNetworkActivity {
 	private void banUser(String id) {
 
 	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (resultCode == Settings.fromSettingCode) {
+			SharedPreferences settingsData = PreferenceManager.getDefaultSharedPreferences(this);
+			packAmount = Integer.parseInt(settingsData.getString("users_amount", "10"));
+		}
+	}
 
 	private boolean isFirstSelection = true;
 	private ProgressBar progressBar;

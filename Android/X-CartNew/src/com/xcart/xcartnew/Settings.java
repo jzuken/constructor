@@ -99,5 +99,12 @@ public class Settings extends PreferenceActivity {
 		}
 	}
 	
+	@Override
+	public void onBackPressed() {
+		setResult(fromSettingCode);
+		super.onBackPressed();
+	}
+	
+	public static final int fromSettingCode = 3;
 	private final int minPack = 10;
 }

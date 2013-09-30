@@ -38,7 +38,10 @@
             android:launchMode="singleTop"
             android:noHistory="true"
             android:screenOrientation="portrait" />
-        <activity android:name=".Settings" />
+        <activity
+            android:name=".Settings"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Products"
             android:configChanges="orientation|screenSize"

@@ -175,7 +175,7 @@ public class Products extends PinSupportNetworkActivity {
 
 		dialog.show();
 	}
-	
+
 	private void showFullInfo(final String id) {
 		setNeedDownloadValue(false);
 		Intent intent = new Intent(this, ProductInfo.class);
@@ -341,6 +341,15 @@ public class Products extends PinSupportNetworkActivity {
 	private void clearList() {
 		adapter.clear();
 		currentAmount = 0;
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (resultCode == Settings.fromSettingCode) {
+			SharedPreferences settingsData = PreferenceManager.getDefaultSharedPreferences(this);
+			packAmount = Integer.parseInt(settingsData.getString("products_amount", "10"));
+		}
 	}
 
 	private boolean isAvailabilityFirstSelection = true;
