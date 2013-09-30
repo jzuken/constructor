@@ -48,5 +48,13 @@
     <string name="date_colon">Date:</string>
     <string name="items_colon">Items:</string>
     <string name="show">Show</string>
+    <string name="change_status">Change status</string>
+    <string name="not_finished">Not finished</string>
+    <string name="queued">Queued</string>
+    <string name="processed">Processed</string>
+    <string name="complete">Complete</string>
+    <string name="declined">Declined</string>
+    <string name="failed">Failed</string>
+    <string name="backordered">Backordered</string>
 
 </resources>

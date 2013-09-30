@@ -2,6 +2,7 @@ package com.xcart.xcartnew;
 
 import java.util.ArrayList;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,17 +20,17 @@ public class Orders extends PinSupportNetworkActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.orders);
 		setupListViewAdapter();
-		
-		//test
+
+		// test
 		addOrderToList("1000", "Smith, Michelle", "$460.99", "Complete", "6/22/2013", "2");
 		addOrderToList("999", "Smith, John", "$914.99", "Complete", "6/22/2013", "3");
 	}
-	
+
 	private void addOrderToList(final String id, final String userName, final String paid, final String status,
 			final String date, final String itemsCount) {
 		adapter.add(new Order(id, userName, paid, status, date, itemsCount));
 	}
-	
+
 	private void setupListViewAdapter() {
 		adapter = new OrdersListAdapter(this, R.layout.order_item, new ArrayList<Order>());
 		ordersListView = (ListView) findViewById(R.id.orders_list);
@@ -42,7 +43,7 @@ public class Orders extends PinSupportNetworkActivity {
 
 		ordersListView.setAdapter(adapter);
 	}
-	
+
 	private void showActionDialog(final Order item) {
 		LinearLayout action_view = (LinearLayout) getLayoutInflater().inflate(R.layout.action_dialog, null);
 		final CustomDialog dialog = new CustomDialog(this, action_view);
@@ -56,6 +57,7 @@ public class Orders extends PinSupportNetworkActivity {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				switch (position) {
 				case 0:
+					changeStatusClick(item.getId());
 					dialog.dismiss();
 					break;
 				case 1:
@@ -82,7 +84,13 @@ public class Orders extends PinSupportNetworkActivity {
 
 		dialog.show();
 	}
-	
+
+	private void changeStatusClick(final String id) {
+		Intent intent = new Intent(this, ChangeStatus.class);
+		intent.putExtra("orderId", id);
+		startActivityForResult(intent, 1);
+	}
+
 	private void deleteClick(final String id) {
 		LinearLayout view = (LinearLayout) getLayoutInflater().inflate(R.layout.confirmation_dialog, null);
 		((TextView) view.findViewById(R.id.confirm_question)).setText("Are you sure you want to delete this order?");
@@ -107,11 +115,11 @@ public class Orders extends PinSupportNetworkActivity {
 
 		dialog.show();
 	}
-	
+
 	private void deleteOrder(String id) {
 
 	}
-	
+
 	private OrdersListAdapter adapter;
 	private ListView ordersListView;
 }
