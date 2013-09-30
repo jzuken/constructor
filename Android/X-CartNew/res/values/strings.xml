@@ -44,5 +44,9 @@
     <string name="show_full_decription">Show full description</string>
     <string name="availability_colon">Availability:</string>
     <string name="sold_colon">Sold:</string>
+    <string name="order_id_colon">Order id:</string>
+    <string name="date_colon">Date:</string>
+    <string name="items_colon">Items:</string>
+    <string name="show">Show</string>
 
 </resources>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/dark_grey"
@@ -31,5 +32,20 @@
             android:contentDescription="@string/settings_description"
             android:onClick="settingsClick" />
     </RelativeLayout>
+
+    <ListView
+        android:id="@+id/orders_list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginBottom="4dp"
+        android:layout_marginLeft="7dp"
+        android:layout_marginRight="7dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/rounded_shape"
+        android:cacheColorHint="@android:color/transparent"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        tools:listitem="@layout/order_item" >
+    </ListView>
 
 </LinearLayout>
