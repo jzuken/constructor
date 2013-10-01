@@ -99,8 +99,29 @@ if (isset($_GET["request"])) {
             $pr->print_array_json($array);
             break;
 
+        case 'users':
+            $array = $db->get_users(
+                (int)get_get_parameter('from', 0),
+                (int)get_get_parameter('size', 20)
+            );
+            $pr->print_array_json($array);
+            break;
+
+        case 'users_info':
+            $array = $db->get_user_info(
+                (int)get_get_parameter('id', -1)
+            );
+            $pr->print_array_json($array);
+            break;
     }
 
+}
+
+function check_session($sid)
+{
+    $sql = "SELECT COUNT(*) FROM xcart_mobile_session WHERE sid = '$sid'";
+    $result = get_first_cell($sql);
+    return $result > 0;
 }
 
 function get_get_parameter($name, $default = '')

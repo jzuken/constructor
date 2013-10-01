@@ -15,13 +15,13 @@ class DbApiFunctions
     {
         include_once './db_connect.php';
 
-        global $config, $previous_login_date, $sql_host, $sql_user, $sql_password, $sql_db;
+        global $config, $sql_host, $sql_user, $sql_password, $sql_db;
 
         $this->db = new DB_Connect();
         $this->db->connect($sql_host, $sql_user, $sql_password, $sql_db);
 
         $this->curtime = XC_TIME + $config['Appearance']['timezone_offset'];
-        $this->start_dates['last_login'] = $previous_login_date; // Since last login
+        $this->start_dates['all'] = 0; // Since last login
         $this->start_dates['today'] = func_prepare_search_date($this->curtime) - $config['Appearance']['timezone_offset']; // Today
         $start_week = $this->curtime - date('w', $this->curtime) * 24 * 3600; // Week starts since Sunday
         $this->start_dates['week'] = func_prepare_search_date($start_week) - $config['Appearance']['timezone_offset']; // Current week
@@ -363,6 +363,46 @@ class DbApiFunctions
         );
 
         return $answer;
+    }
+
+   public function get_users($from, $size)
+{
+    global $sql_tbl;
+
+    $query = mysql_query("
+                SELECT $sql_tbl[customers].id, $sql_tbl[customers].login, $sql_tbl[customers].username, $sql_tbl[customers].usertype, $sql_tbl[customers].title, $sql_tbl[customers].firstname, $sql_tbl[customers].lastname, $sql_tbl[customers].email, $sql_tbl[customers].last_login,
+                (SELECT COUNT(*) FROM $sql_tbl[orders] WHERE $sql_tbl[orders].userid = $sql_tbl[customers].id) as 'total_orders'
+                FROM $sql_tbl[customers]
+                LIMIT $from, $size
+                ") or die(mysql_error());
+
+    $users_array = array();
+    while ($row = mysql_fetch_assoc($query)) {
+        $row[last_login] = gmdate("m-d-Y", $row['last_login']);
+        array_push($users_array, $row);
+    }
+
+    return $users_array;
+}
+
+    public function get_user_info($id)
+    {
+        global $sql_tbl;
+
+        $query = mysql_query("
+                SELECT id, login, username, usertype, title, firstname, lastname, company, email,
+                (SELECT COUNT(*) FROM $sql_tbl[orders] WHERE $sql_tbl[orders].userid = $sql_tbl[customers].id) as 'total_orders'
+                FROM $sql_tbl[customers]
+                WHERE id = $id
+                ") or die(mysql_error());
+
+        $users_array = array();
+        while ($row = mysql_fetch_assoc($query)) {
+            $row[last_login] = gmdate("m-d-Y", $row['last_login']);
+            array_push($users_array, $row);
+        }
+
+        return $users_array;
     }
 
     // Util functions

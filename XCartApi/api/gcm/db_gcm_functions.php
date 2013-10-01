@@ -29,13 +29,10 @@ class DB_Functions
      */
     public function storeUser($gcm_regid)
     {
-
         $result = mysql_query("INSERT INTO xcart_gcm_users(gcm_regid, created_at) VALUES('$gcm_regid', NOW())");
         if ($result) {
-            // get user details
-            $id = mysql_insert_id(); // last inserted id
+            $id = mysql_insert_id();
             $result = mysql_query("SELECT * FROM xcart_gcm_users WHERE id = $id") or die(mysql_error());
-            // return user details
             if (mysql_num_rows($result) > 0) {
                 return mysql_fetch_array($result);
             } else {
