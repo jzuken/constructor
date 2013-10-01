@@ -344,6 +344,26 @@ class DbApiFunctions
     }
 
 
+    public function update_product_price($product_id, $price)
+    {
+        global $sql_tbl;
+
+        $result = mysql_query
+        ("
+          UPDATE $sql_tbl[products]
+          SET list_price=$price
+          WHERE productid=$product_id
+        ") or die(mysql_error());
+
+        $answer = array(
+            'upload_status' => (string)$result,
+            'upload_type' => 'update',
+            'upload_data' => 'product',
+            'id' => $product_id
+        );
+
+        return $answer;
+    }
 
     // Util functions
 

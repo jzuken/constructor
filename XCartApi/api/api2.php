@@ -76,6 +76,14 @@ if (isset($_GET["request"])) {
             $pr->print_array_json($array);
             break;
 
+        case 'update_product_price':
+            $array = $db->update_product_price(
+                (int)get_get_parameter('id', 0),
+                (float)get_get_parameter('price')
+            );
+            $pr->print_array_json($array);
+            break;
+
         case 'reviews':
             $array = $db->get_reviews(
                 (int)get_get_parameter('from', 0),
