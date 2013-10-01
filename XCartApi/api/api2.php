@@ -22,6 +22,8 @@ if (isset($_GET["request"])) {
 
         case 'dashboard':
             $array = $db->get_dashboard_data();
+            $last_orders = $db->get_orders_list(0, 3, 'today', null);
+            $array['last_orders'] = $last_orders;
             $pr->print_array_json($array);
             break;
 
@@ -42,10 +44,27 @@ if (isset($_GET["request"])) {
             $pr->print_array_json($array);
             break;
 
+        case 'change_tracking':
+            $array = $db->change_tracking_number(
+                (int)get_get_parameter('tracking_number', null),
+                (int)get_get_parameter('order_id', -1)
+            );
+            $pr->print_array_json($array);
+            break;
+
+        case 'change_status':
+            $array = $db->change_status(
+                get_get_parameter('status', "Q"),
+                (int)get_get_parameter('order_id', -1)
+            );
+            $pr->print_array_json($array);
+            break;
+
         case 'products':
             $array = $db->get_products(
                 (int)get_get_parameter('from', 0),
-                (int)get_get_parameter('size', 5)
+                (int)get_get_parameter('size', 5),
+                get_get_parameter('low_stock', null)
             );
             $pr->print_array_json($array);
             break;
@@ -53,6 +72,21 @@ if (isset($_GET["request"])) {
         case 'product_info':
             $array = $db->get_product_info(
                 (int)get_get_parameter('id', 0)
+            );
+            $pr->print_array_json($array);
+            break;
+
+        case 'reviews':
+            $array = $db->get_reviews(
+                (int)get_get_parameter('from', 0),
+                (int)get_get_parameter('size', 20)
+            );
+            $pr->print_array_json($array);
+            break;
+
+        case 'delete_review':
+            $array = $db->delete_review(
+                get_get_parameter('id', null)
             );
             $pr->print_array_json($array);
             break;

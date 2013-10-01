@@ -1,7 +1,6 @@
 <?php
 
 define('XCART_START', 1);
-
 require_once '../../xcart/config.php';
 
 class DB_Functions

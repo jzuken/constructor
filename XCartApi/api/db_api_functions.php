@@ -164,7 +164,7 @@ class DbApiFunctions
 
         $order_query = mysql_query
         ("
-          SELECT orderid, status, total, title, firstname,lastname, company, b_title, b_firstname, b_lastname, b_address, b_city, b_county, b_state, b_country, b_zipcode, b_zip4, b_phone, b_fax, s_title, s_firstname, s_lastname, s_address, s_city, s_county, s_state, s_country, s_zipcode, s_phone, s_fax, s_zip4, shippingid, shipping, tracking, payment_method, date
+          SELECT orderid, status, total, title, firstname, lastname, company, b_title, b_firstname, b_lastname, b_address, b_city, b_county, b_state, b_country, b_zipcode, b_zip4, b_phone, b_fax, s_title, s_firstname, s_lastname, s_address, s_city, s_county, s_state, s_country, s_zipcode, s_phone, s_fax, s_zip4, shippingid, shipping, tracking, payment_method, date
           FROM $sql_tbl[orders]
           WHERE orderid = $id
         ") or die(mysql_error());
@@ -196,15 +196,21 @@ class DbApiFunctions
         return $order_details_array;
     }
 
-    public function get_products($from, $size)
+    public function get_products($from, $size, $low_stock)
     {
         global $sql_tbl;
+
+        $low_stock_condition ="";
+        if($low_stock){
+            $low_stock_condition = "AND avail <= low_avail_limit";
+        }
 
         $query = mysql_query
         ("
           SELECT $sql_tbl[products].productid, $sql_tbl[products].productcode, $sql_tbl[products].list_price, $sql_tbl[products].avail, $sql_tbl[products_lng_current].product FROM $sql_tbl[products]
           INNER JOIN $sql_tbl[products_lng_current]
           ON $sql_tbl[products_lng_current].productid = $sql_tbl[products].productid
+          WHERE 1 $low_stock_condition
           LIMIT $from, $size
         ") or die(mysql_error());
 
@@ -230,8 +236,113 @@ class DbApiFunctions
 
         $product_info = mysql_fetch_assoc($query);
 
+        $image_query = mysql_query
+        ("
+          SELECT image_path FROM $sql_tbl[images_P]
+          WHERE $sql_tbl[images_P].id = $product_info[productid]
+        ") or die(mysql_error());
+
+        $image_info = mysql_fetch_assoc($image_query);
+
+        global $xcart_http_host;
+        $url = "http://" . $xcart_http_host . '/xcart' . str_replace("./", "/", $image_info[image_path]);
+
+        $product_info["url"] = "$url";
+
         return $product_info;
     }
+
+    public function get_reviews($from, $size)
+    {
+        global $sql_tbl;
+
+        $query = mysql_query
+        ("
+          SELECT $sql_tbl[product_reviews].review_id, $sql_tbl[product_reviews].productid, $sql_tbl[product_reviews].email, $sql_tbl[product_reviews].message, $sql_tbl[products_lng_current].product
+          FROM $sql_tbl[product_reviews]
+          INNER JOIN $sql_tbl[products_lng_current]
+          ON $sql_tbl[product_reviews].productid = $sql_tbl[products_lng_current].productid
+          LIMIT $from, $size
+        ") or die(mysql_error());
+
+        $array = array();
+        while ($row = mysql_fetch_assoc($query)) {
+            array_push($array, $row);
+        }
+
+        return $array;
+    }
+
+    public function delete_review($id)
+    {
+        global $sql_tbl;
+
+        if (!$id) {
+            return array("error" => "Id is not found");
+        }
+
+        $result = mysql_query("DELETE FROM $sql_tbl[product_reviews] WHERE review_id=$id") or die(mysql_error());
+        $answer = array(
+            'upload_status' => (string)$result,
+            'upload_type' => 'delete',
+            'upload_data' => 'review',
+            'id' => $id
+        );
+
+        return $answer;
+    }
+
+
+    public function change_tracking_number($tracking_number, $id)
+    {
+        global $sql_tbl;
+
+        if (!$tracking_number) {
+            return array("error" => "tracking_number is not found");
+        }
+
+        $result = mysql_query
+        ("
+          UPDATE  $sql_tbl[orders]
+          SET tracking='$tracking_number'
+          WHERE orderid=$id
+        ") or die(mysql_error());
+
+        $answer = array(
+            'upload_status' => (string)$result,
+            'upload_type' => 'update',
+            'upload_data' => 'tracking_number',
+            'id' => $id
+        );
+
+        return $answer;
+    }
+
+    public function change_status($status, $id)
+    {
+        global $sql_tbl;
+
+        if (!$status) {
+            return array("error" => "status is not found");
+        }
+
+        $result = mysql_query
+        ("
+          UPDATE  $sql_tbl[orders]
+          SET status='$status'
+          WHERE orderid=$id
+        ") or die(mysql_error());
+
+        $answer = array(
+            'upload_status' => (string)$result,
+            'upload_type' => 'update',
+            'upload_data' => 'status',
+            'id' => $id
+        );
+
+        return $answer;
+    }
+
 
 
     // Util functions
