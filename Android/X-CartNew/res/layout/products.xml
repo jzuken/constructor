@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/dark_grey"
@@ -28,8 +29,57 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:background="@drawable/settings_button"
-            android:onClick="settingsClick"
-            android:contentDescription="@string/settings_description" />
+            android:contentDescription="@string/settings_description"
+            android:onClick="settingsClick" />
     </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="7dp"
+        android:layout_marginRight="7dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/spinner_style_layout" >
+
+        <com.actionbarsherlock.internal.widget.IcsSpinner
+            android:id="@+id/availability_sort_spinner"
+            android:layout_width="fill_parent"
+            android:layout_height="35dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/spinner_style"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="7dp"
+        android:layout_marginRight="7dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/spinner_style_layout" >
+
+        <com.actionbarsherlock.internal.widget.IcsSpinner
+            android:id="@+id/general_sort_spinner"
+            android:layout_width="fill_parent"
+            android:layout_height="35dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/spinner_style"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/products_list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginBottom="4dp"
+        android:layout_marginLeft="7dp"
+        android:layout_marginRight="7dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/rounded_shape"
+        android:cacheColorHint="@android:color/transparent"
+        tools:listitem="@layout/product_item" >
+    </ListView>
 
 </LinearLayout>

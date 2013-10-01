@@ -1,7 +1,6 @@
 package com.xcart.xcartnew;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.TextView;
 
 public class FullMessage extends PinSupportActivity {
@@ -15,9 +14,5 @@ public class FullMessage extends PinSupportActivity {
 		product.setText(getIntent().getStringExtra("product"));
 		TextView message = (TextView) findViewById(R.id.full_message);
 		message.setText(getIntent().getStringExtra("message"));
-	}
-	
-	public void settingsClick(View v) {
-
 	}
 }

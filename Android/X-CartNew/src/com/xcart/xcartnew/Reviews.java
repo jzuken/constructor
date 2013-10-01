@@ -35,10 +35,6 @@ public class Reviews extends PinSupportNetworkActivity {
 		packAmount = Integer.parseInt(settingsData.getString("reviews_amount", "10"));
 		setupListViewAdapter();
 	}
-	
-	public void settingsClick(View v) {
-
-	}
 
 	@Override
 	protected void withoutPinAction() {
@@ -225,8 +221,9 @@ public class Reviews extends PinSupportNetworkActivity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		if (resultCode == noUpdateCode) {
-			setNeedDownloadValue(false);
+		if (resultCode == Settings.fromSettingCode) {
+			SharedPreferences settingsData = PreferenceManager.getDefaultSharedPreferences(this);
+			packAmount = Integer.parseInt(settingsData.getString("reviews_amount", "10"));
 		}
 	}
 
@@ -239,7 +236,4 @@ public class Reviews extends PinSupportNetworkActivity {
 	private final int startItemCount = 3;
 	private ListView reviewsListView;
 	private Object lock = new Object();
-	private final int noUpdateCode = 4;
 }
-
-

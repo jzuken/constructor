@@ -28,17 +28,17 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:background="@drawable/settings_button"
-            android:onClick="settingsClick"
-            android:contentDescription="@string/settings_description" />
+            android:contentDescription="@string/settings_description"
+            android:onClick="settingsClick" />
     </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="4dp"
         android:layout_marginBottom="4dp"
         android:layout_marginLeft="7dp"
         android:layout_marginRight="7dp"
+        android:layout_marginTop="4dp"
         android:background="@drawable/rounded_shape"
         android:orientation="vertical" >
 
@@ -276,7 +276,7 @@
                         android:text="$123"
                         android:textColor="@color/blue" />
                 </RelativeLayout>
-                
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -300,7 +300,7 @@
                         android:text="$364"
                         android:textColor="@color/blue" />
                 </RelativeLayout>
-                
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

@@ -27,9 +27,34 @@
     <string name="yes_description">image for yes button</string>
     <string name="no_description">image for no button</string>
     <string name="login_description">image for login button</string>
+    <string name="save_description">image for save button</string>
+    <string name="product_image_description">product image</string>
     <string name="login_colon">Login:</string>
     <string name="user_type_colon">User type:</string>
     <string name="last_login_colon">Last login:</string>
     <string name="total_orders_colon">Total orders:</string>
+    <string name="name_colon">Name:</string>
+    <string name="sku_colon">SKU:</string>
+    <string name="in_stock_colon">In stock:</string>
+    <string name="price_colon">Price:</string>
+    <string name="null_number">0.00</string>
+    <string name="set_price">Set price</string>
+    <string name="product_info">Product info</string>
+    <string name="description_colon">Description:</string>
+    <string name="show_full_decription">Show full description</string>
+    <string name="availability_colon">Availability:</string>
+    <string name="sold_colon">Sold:</string>
+    <string name="order_id_colon">Order id:</string>
+    <string name="date_colon">Date:</string>
+    <string name="items_colon">Items:</string>
+    <string name="show">Show</string>
+    <string name="change_status">Change status</string>
+    <string name="not_finished">Not finished</string>
+    <string name="queued">Queued</string>
+    <string name="processed">Processed</string>
+    <string name="complete">Complete</string>
+    <string name="declined">Declined</string>
+    <string name="failed">Failed</string>
+    <string name="backordered">Backordered</string>
 
 </resources>

@@ -39,10 +39,6 @@ public class Users extends PinSupportNetworkActivity {
 		setupSortSpinner();
 	}
 
-	public void settingsClick(View v) {
-
-	}
-
 	@Override
 	protected void withoutPinAction() {
 		if (isNeedDownload()) {
@@ -186,7 +182,7 @@ public class Users extends PinSupportNetworkActivity {
 		adapter = new ArrayAdapter<String>(this, R.layout.action_item, R.id.textItem, actions);
 
 		actionList.setOnItemClickListener(new OnItemClickListener() {
-			
+
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				switch (position) {
 				case 0:
@@ -275,6 +271,15 @@ public class Users extends PinSupportNetworkActivity {
 
 	private void banUser(String id) {
 
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (resultCode == Settings.fromSettingCode) {
+			SharedPreferences settingsData = PreferenceManager.getDefaultSharedPreferences(this);
+			packAmount = Integer.parseInt(settingsData.getString("users_amount", "10"));
+		}
 	}
 
 	private boolean isFirstSelection = true;

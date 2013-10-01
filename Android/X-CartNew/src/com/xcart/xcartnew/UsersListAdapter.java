@@ -11,14 +11,14 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 public class UsersListAdapter extends ArrayAdapter<User> {
-	
+
 	public UsersListAdapter(Context context, int resource, List<User> items) {
 		super(context, resource, items);
 		this.context = context;
 		this.layoutResourceId = resource;
 		this.items = items;
 	}
-	
+
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View row = convertView;
@@ -28,7 +28,7 @@ public class UsersListAdapter extends ArrayAdapter<User> {
 
 		UserHolder holder = new UserHolder();
 		holder.user = items.get(position);
-		
+
 		holder.name = (TextView) row.findViewById(R.id.user_name);
 		if (position == 0) {
 			holder.name.setBackgroundResource(R.drawable.top_rounded_blue);
@@ -58,7 +58,7 @@ public class UsersListAdapter extends ArrayAdapter<User> {
 		TextView lastLogin;
 		TextView totalOrders;
 	}
-	
+
 	private List<User> items;
 	private int layoutResourceId;
 	private Context context;
