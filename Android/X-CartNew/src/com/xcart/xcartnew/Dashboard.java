@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class Dashboard extends PinSupportNetworkActivity {
@@ -96,7 +97,7 @@ public class Dashboard extends PinSupportNetworkActivity {
 	}
 
 	private void initLastOrders() {
-		lastOrdersLayout = (LinearLayout) findViewById(R.id.last_orders_layout);
+		lastOrdersLayout = (RelativeLayout) findViewById(R.id.last_orders_layout);
 		lastOrdersCount = (TextView) findViewById(R.id.last_orders_count);
 
 		lastOrdersLayout.setOnClickListener(new OnClickListener() {
@@ -127,7 +128,7 @@ public class Dashboard extends PinSupportNetworkActivity {
 	private TextView productsSold;
 	private LinearLayout reviewsTodayLayout;
 	private TextView reviewsToday;
-	private LinearLayout lastOrdersLayout;
+	private RelativeLayout lastOrdersLayout;
 	private TextView lastOrdersCount;
 	private TextView firstCustomer;
 	private TextView firstCustomerPaid;
