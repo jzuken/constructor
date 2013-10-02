@@ -390,19 +390,17 @@ class DbApiFunctions
         global $sql_tbl;
 
         $query = mysql_query("
-                SELECT id, login, username, usertype, title, firstname, lastname, company, email,
-                (SELECT COUNT(*) FROM $sql_tbl[orders] WHERE $sql_tbl[orders].userid = $sql_tbl[customers].id) as 'total_orders'
+                SELECT $sql_tbl[customers].id, $sql_tbl[customers].login, $sql_tbl[customers].username, $sql_tbl[customers].usertype, $sql_tbl[customers].title, $sql_tbl[customers].firstname, $sql_tbl[customers].lastname, $sql_tbl[customers].company, $sql_tbl[customers].email, $sql_tbl[address_book].*
                 FROM $sql_tbl[customers]
-                WHERE id = $id
+                INNER JOIN $sql_tbl[address_book]
+                ON $sql_tbl[address_book].userid = $sql_tbl[customers].id
+                WHERE $sql_tbl[customers].id = $id
                 ") or die(mysql_error());
 
-        $users_array = array();
-        while ($row = mysql_fetch_assoc($query)) {
-            $row[last_login] = gmdate("m-d-Y", $row['last_login']);
-            array_push($users_array, $row);
-        }
+        $user_info  = mysql_fetch_assoc($query);
+        $user_info[last_login] = gmdate("m-d-Y", $user_info['last_login']);
 
-        return $users_array;
+        return $user_info;
     }
 
     // Util functions

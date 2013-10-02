@@ -107,7 +107,7 @@ if (isset($_GET["request"])) {
             $pr->print_array_json($array);
             break;
 
-        case 'users_info':
+        case 'user_info':
             $array = $db->get_user_info(
                 (int)get_get_parameter('id', -1)
             );
