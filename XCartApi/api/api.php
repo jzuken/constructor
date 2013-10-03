@@ -907,7 +907,7 @@ function is_array_check($data)
 
 function get_first_cell($query)
 {
-    $result = mysql_query($query);
+    $result = mysql_query($query) or die(mysql_error());
     $row = mysql_fetch_row($result);
     return $row[0];
 }

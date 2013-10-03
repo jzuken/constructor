@@ -21,7 +21,7 @@ class DbApiFunctions
         $this->db->connect($sql_host, $sql_user, $sql_password, $sql_db);
 
         $this->curtime = XC_TIME + $config['Appearance']['timezone_offset'];
-        $this->start_dates['all'] = 0; // Since last login
+        $this->start_dates['all'] = 0;
         $this->start_dates['today'] = func_prepare_search_date($this->curtime) - $config['Appearance']['timezone_offset']; // Today
         $start_week = $this->curtime - date('w', $this->curtime) * 24 * 3600; // Week starts since Sunday
         $this->start_dates['week'] = func_prepare_search_date($start_week) - $config['Appearance']['timezone_offset']; // Current week
@@ -164,7 +164,7 @@ class DbApiFunctions
 
         $order_query = mysql_query
         ("
-          SELECT orderid, status, total, title, firstname, lastname, company, b_title, b_firstname, b_lastname, b_address, b_city, b_county, b_state, b_country, b_zipcode, b_zip4, b_phone, b_fax, s_title, s_firstname, s_lastname, s_address, s_city, s_county, s_state, s_country, s_zipcode, s_phone, s_fax, s_zip4, shippingid, shipping, tracking, payment_method, date
+          SELECT orderid, status, total, subtotal, discount, coupon, coupon_discount, shippingid, shipping, tracking, shipping_cost, tax, taxes_applied, title, firstname, lastname, company, b_title, b_firstname, b_lastname, b_address, b_city, b_county, b_state, b_country, b_zipcode, b_zip4, b_phone, b_fax, s_title, s_firstname, s_lastname, s_address, s_city, s_county, s_state, s_country, s_zipcode, s_phone, s_fax, s_zip4, shippingid, shipping, tracking, payment_method, date
           FROM $sql_tbl[orders]
           WHERE orderid = $id
         ") or die(mysql_error());
@@ -401,6 +401,13 @@ class DbApiFunctions
         $user_info[last_login] = gmdate("m-d-Y", $user_info['last_login']);
 
         return $user_info;
+    }
+
+    public function check_session($sid)
+    {
+        $sql = "SELECT COUNT(1) FROM xcart_mobile_session WHERE sid = '$sid'";
+        $result = $this->get_first_cell($sql);
+        return $result > 0;
     }
 
     // Util functions
