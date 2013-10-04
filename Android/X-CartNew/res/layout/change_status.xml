@@ -72,7 +72,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
-                    android:background="@color/gray" />
+                    android:background="@color/frame_color" />
 
                 <RadioButton
                     android:id="@+id/queued_button"
@@ -84,7 +84,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
-                    android:background="@color/gray" />
+                    android:background="@color/frame_color" />
 
                 <RadioButton
                     android:id="@+id/processed_button"
@@ -96,7 +96,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
-                    android:background="@color/gray" />
+                    android:background="@color/frame_color" />
 
                 <RadioButton
                     android:id="@+id/complete_button"
@@ -108,7 +108,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
-                    android:background="@color/gray" />
+                    android:background="@color/frame_color" />
 
                 <RadioButton
                     android:id="@+id/declined_button"
@@ -120,7 +120,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
-                    android:background="@color/gray" />
+                    android:background="@color/frame_color" />
 
                 <RadioButton
                     android:id="@+id/failed_button"
@@ -132,7 +132,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
-                    android:background="@color/gray" />
+                    android:background="@color/frame_color" />
 
                 <RadioButton
                     android:id="@+id/backordered_button"
