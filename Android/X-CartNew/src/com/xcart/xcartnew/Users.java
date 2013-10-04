@@ -25,22 +25,18 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.actionbarsherlock.internal.widget.IcsAdapterView;
-import com.actionbarsherlock.internal.widget.IcsSpinner;
-
 public class Users extends PinSupportNetworkActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.users);
-		SharedPreferences settingsData = PreferenceManager.getDefaultSharedPreferences(this);
-		packAmount = Integer.parseInt(settingsData.getString("users_amount", "10"));
+		settingsData = PreferenceManager.getDefaultSharedPreferences(this);
 		setupListViewAdapter();
-		setupSortSpinner();
 	}
 
 	@Override
 	protected void withoutPinAction() {
+		packAmount = Integer.parseInt(settingsData.getString("users_amount", "10"));
 		if (isNeedDownload()) {
 			clearData();
 			updateUsersList();
@@ -217,33 +213,6 @@ public class Users extends PinSupportNetworkActivity {
 		startActivityForResult(Intent.createChooser(emailIntent, "Send message..."), 3);
 	}
 
-	private void setupSortSpinner() {
-		String[] sortOptions = { "Last login", "Last order", "Total orders", "All" };
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_item, sortOptions);
-
-		IcsSpinner spinner = (IcsSpinner) findViewById(R.id.sort_spinner);
-		spinner.setAdapter(adapter);
-		spinner.setSelection(0);
-		currentSortOption = 0;
-
-		spinner.setOnItemSelectedListener(new IcsAdapterView.OnItemSelectedListener() {
-			@Override
-			public void onItemSelected(IcsAdapterView<?> parent, View view, int position, long id) {
-				currentSortOption = position;
-				if (isFirstSelection) {
-					isFirstSelection = false;
-				} else {
-					clearData();
-					updateUsersList();
-				}
-			}
-
-			@Override
-			public void onNothingSelected(IcsAdapterView<?> parent) {
-			}
-		});
-	}
-
 	public void banClick(final String id) {
 		LinearLayout view = (LinearLayout) getLayoutInflater().inflate(R.layout.confirmation_dialog, null);
 		((TextView) view.findViewById(R.id.confirm_question)).setText("Are you sure you want to ban this user?");
@@ -272,17 +241,7 @@ public class Users extends PinSupportNetworkActivity {
 	private void banUser(String id) {
 
 	}
-	
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-		if (resultCode == Settings.fromSettingCode) {
-			SharedPreferences settingsData = PreferenceManager.getDefaultSharedPreferences(this);
-			packAmount = Integer.parseInt(settingsData.getString("users_amount", "10"));
-		}
-	}
 
-	private boolean isFirstSelection = true;
 	private ProgressBar progressBar;
 	private UsersListAdapter adapter;
 	private int currentAmount;
@@ -293,4 +252,5 @@ public class Users extends PinSupportNetworkActivity {
 	private final int startItemCount = 4;
 	private ListView usersListView;
 	private Object lock = new Object();
+	private SharedPreferences settingsData;
 }

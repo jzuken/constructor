@@ -8,10 +8,12 @@
         android:id="@+id/user_name"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@color/blue"
-        android:paddingLeft="5dp"
-        android:textColor="@color/white"
-        android:textSize="15sp" />
+        android:background="@color/subtitle_color"
+        android:paddingLeft="7dp"
+        android:paddingRight="7dp"
+        android:textSize="16sp"
+        android:layout_marginLeft="0.5dp"
+        android:layout_marginRight="0.5dp" />
 
     <RelativeLayout
         android:layout_width="match_parent"

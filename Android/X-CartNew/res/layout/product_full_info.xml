@@ -2,23 +2,22 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/dark_grey"
+    android:background="@color/light_gray"
     android:orientation="vertical" >
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/title_color" >
+        android:background="@drawable/light_gray_title" >
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:gravity="center"
-            android:paddingBottom="10dp"
-            android:paddingTop="5dp"
             android:text="@string/product_info"
             android:textColor="@color/white"
-            android:textSize="23sp"
+            android:textSize="25sp"
             android:textStyle="bold" />
 
         <ImageButton
@@ -55,9 +54,11 @@
                     android:id="@+id/product_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/top_rounded_blue"
-                    android:paddingLeft="10dp"
-                    android:textColor="@color/white"
+                    android:layout_marginLeft="0.5dp"
+                    android:layout_marginRight="0.5dp"
+                    android:layout_marginTop="0.5dp"
+                    android:background="@drawable/top_rounded_subtitle"
+                    android:paddingLeft="8dp"
                     android:textSize="16sp" />
 
                 <ImageView
@@ -85,7 +86,9 @@
                 <WebView
                     android:id="@+id/description"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="0.5dp"
+                    android:layout_marginRight="0.5dp" />
 
                 <TextView
                     android:id="@+id/full_description_label"
@@ -110,6 +113,8 @@
                     android:id="@+id/full_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="0.5dp"
+                    android:layout_marginRight="0.5dp"
                     android:visibility="gone" />
 
                 <View

@@ -4,7 +4,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.webkit.WebSettings;
@@ -31,7 +33,8 @@ public class ProductInfo extends PinSupportNetworkActivity {
 		sold = (TextView) findViewById(R.id.sold);
 		inStock = (TextView) findViewById(R.id.in_stock);
 		availability = (TextView) findViewById(R.id.availability);
-		initFullDescrLable();
+		initFullDescrLable();	
+		authorizationData = getSharedPreferences("AuthorizationData", MODE_PRIVATE);
 	}
 
 	@Override
@@ -73,8 +76,8 @@ public class ProductInfo extends PinSupportNetworkActivity {
 			}
 		};
 
-		dataRequester.execute("http://54.213.38.9/api/api2.php?request=product_info&id="
-				+ getIntent().getStringExtra("id"));
+		dataRequester.execute("https://54.213.38.9/api/api2.php?request=product_info&id="
+				+ getIntent().getStringExtra("id") + "&sid=" + authorizationData.getString("sid", ""));
 	}
 
 	private boolean isAvailable(String inStock, String minStock) {
@@ -138,4 +141,5 @@ public class ProductInfo extends PinSupportNetworkActivity {
 	private TextView inStock;
 	private TextView availability;
 	private TextView fullDescrLabel;
+	private SharedPreferences authorizationData;
 }

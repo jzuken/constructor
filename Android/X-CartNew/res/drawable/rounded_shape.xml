@@ -10,6 +10,8 @@
             android:startColor="@color/white"
             android:endColor="@color/white"
             android:type="linear" />
+        <stroke android:width="0.5dp" 
+    		android:color="@color/frame_color" />
     </shape>
 </item>
 </selector>

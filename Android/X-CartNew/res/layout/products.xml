@@ -3,23 +3,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/dark_grey"
+    android:background="@color/light_gray"
     android:orientation="vertical" >
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/title_color" >
+        android:background="@drawable/light_gray_title" >
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:gravity="center"
-            android:paddingBottom="10dp"
-            android:paddingTop="5dp"
             android:text="@string/products"
             android:textColor="@color/white"
-            android:textSize="23sp"
+            android:textSize="25sp"
             android:textStyle="bold" />
 
         <ImageButton
@@ -31,42 +30,6 @@
             android:background="@drawable/settings_button"
             android:contentDescription="@string/settings_description"
             android:onClick="settingsClick" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginLeft="7dp"
-        android:layout_marginRight="7dp"
-        android:layout_marginTop="4dp"
-        android:background="@drawable/spinner_style_layout" >
-
-        <com.actionbarsherlock.internal.widget.IcsSpinner
-            android:id="@+id/availability_sort_spinner"
-            android:layout_width="fill_parent"
-            android:layout_height="35dp"
-            android:layout_marginRight="15dp"
-            android:background="@drawable/spinner_style"
-            android:textSize="16sp" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginLeft="7dp"
-        android:layout_marginRight="7dp"
-        android:layout_marginTop="4dp"
-        android:background="@drawable/spinner_style_layout" >
-
-        <com.actionbarsherlock.internal.widget.IcsSpinner
-            android:id="@+id/general_sort_spinner"
-            android:layout_width="fill_parent"
-            android:layout_height="35dp"
-            android:layout_marginRight="15dp"
-            android:background="@drawable/spinner_style"
-            android:textSize="16sp" />
     </RelativeLayout>
 
     <ListView

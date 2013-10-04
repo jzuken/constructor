@@ -31,7 +31,7 @@ public class UsersListAdapter extends ArrayAdapter<User> {
 
 		holder.name = (TextView) row.findViewById(R.id.user_name);
 		if (position == 0) {
-			holder.name.setBackgroundResource(R.drawable.top_rounded_blue);
+			holder.name.setBackgroundResource(R.drawable.top_rounded_subtitle);
 		}
 		holder.login = (TextView) row.findViewById(R.id.user_login);
 		holder.type = (TextView) row.findViewById(R.id.user_type);
