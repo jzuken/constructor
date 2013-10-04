@@ -22,13 +22,13 @@ public class Orders extends PinSupportNetworkActivity {
 		setupListViewAdapter();
 
 		// test
-		addOrderToList("1000", "Smith, Michelle", "$460.99", "Complete", "6/22/2013", "2");
-		addOrderToList("999", "Smith, John", "$914.99", "Complete", "6/22/2013", "3");
+		addOrderToList("1000", "Smith, Michelle", "$460.99", "Complete", "JUN\n22");
+		addOrderToList("999", "Smith, John", "$914.99", "Complete", "JUN\n22");
 	}
 
 	private void addOrderToList(final String id, final String userName, final String paid, final String status,
-			final String date, final String itemsCount) {
-		adapter.add(new Order(id, userName, paid, status, date, itemsCount));
+			final String date) {
+		adapter.add(new Order(id, userName, paid, status, date));
 	}
 
 	private void setupListViewAdapter() {
