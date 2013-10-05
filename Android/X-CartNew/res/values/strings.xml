@@ -56,5 +56,7 @@
     <string name="declined">Declined</string>
     <string name="failed">Failed</string>
     <string name="backordered">Backordered</string>
+    <string name="save">Save</string>
+    <string name="ok">OK</string>
 
 </resources>

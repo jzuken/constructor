@@ -34,6 +34,8 @@ public class Orders extends PinSupportNetworkActivity {
 	private void setupListViewAdapter() {
 		adapter = new OrdersListAdapter(this, R.layout.order_item, new ArrayList<Order>());
 		ordersListView = (ListView) findViewById(R.id.orders_list);
+		
+		ordersListView.setFooterDividersEnabled(false);
 
 		ordersListView.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
