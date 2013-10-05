@@ -63,6 +63,7 @@ public class Orders extends PinSupportNetworkActivity {
 					dialog.dismiss();
 					break;
 				case 1:
+					fullInfoClick(item.getId());
 					dialog.dismiss();
 					break;
 				case 2:
@@ -89,6 +90,12 @@ public class Orders extends PinSupportNetworkActivity {
 
 	private void changeStatusClick(final String id) {
 		Intent intent = new Intent(this, ChangeStatus.class);
+		intent.putExtra("orderId", id);
+		startActivityForResult(intent, 1);
+	}
+	
+	private void fullInfoClick(final String id) {
+		Intent intent = new Intent(this, OrderInfo.class);
 		intent.putExtra("orderId", id);
 		startActivityForResult(intent, 1);
 	}

@@ -44,7 +44,7 @@
     <string name="show_full_decription">Show full description</string>
     <string name="availability_colon">Availability:</string>
     <string name="sold_colon">Sold:</string>
-    <string name="order_id_colon">Order id:</string>
+    <string name="order_id_number">Order #</string>
     <string name="date_colon">Date:</string>
     <string name="items_colon">Items:</string>
     <string name="show">Show</string>
@@ -58,5 +58,24 @@
     <string name="backordered">Backordered</string>
     <string name="save">Save</string>
     <string name="ok">OK</string>
+    <string name="order_info">Order info</string>
+    <string name="status">Status</string>
+    <string name="tracking_number">Tracking number</string>
+    <string name="payment_method">Payment method</string>
+    <string name="delivery_method">Delivery method</string>
+    <string name="customer">Customer</string>
+    <string name="billing_info">Billing info</string>
+    <string name="shipping_info">Shipping info</string>
+    <string name="phone">Phone</string>
+    <string name="phone_colon">Phone:</string>
+    <string name="fax">Fax</string>
+    <string name="items">Items</string>
+    <string name="order_cost">Order cost</string>
+    <string name="totalCaps">TOTAL</string>
+    <string name="subtotal">Subtotal</string>
+    <string name="discount">Discount</string>
+    <string name="coupon_saving">Coupon saving</string>
+    <string name="shipping_cost">Shipping cost</string>
+    
 
 </resources>
