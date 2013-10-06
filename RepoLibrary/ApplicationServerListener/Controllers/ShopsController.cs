@@ -11,6 +11,7 @@ namespace ApplicationServerListener.Controllers
     {
         RepoLibraryReference.RepoLibraryClient wcfClient = new RepoLibraryReference.RepoLibraryClient("WSHttpBinding_IRepoLibrary");
         // GET api/values/5
+        [ActionName("DefaultAction")]
         public HttpResponseMessage Get(string name)
         {
             RepoLibraryReference.Project project = wcfClient.GetProject(@name);
@@ -23,8 +24,9 @@ namespace ApplicationServerListener.Controllers
                 return new HttpResponseMessage() { Content = new StringContent(project.Settings) };
             }
         }
-        /*
-        public HttpResponseMessage GetURL(string name)
+
+        [ActionName("CheckSubscribtion")]
+        public HttpResponseMessage GetCheckSubscribtion(string name)
         {
             RepoLibraryReference.Project project = wcfClient.GetProject(@name);
             if (project == null)
@@ -33,9 +35,27 @@ namespace ApplicationServerListener.Controllers
             }
             else
             {
+                string expirationDate = project.ExpirationDate;
+                DateTime todate = DateTime.Today;
+                DateTime expiring;
+                bool parsed = DateTime.TryParse(expirationDate, out expiring);
+                if (parsed)
+                {
+                    if (DateTime.Compare(todate, expiring) > 0)
+                    {
+                        return new HttpResponseMessage() { Content = new StringContent("{\"subscribed\": \"expired\"}") };
+                    }
+                    else
+                    {
+                        return new HttpResponseMessage() { Content = new StringContent("{\"subscribed\": \"active\"}") };
+                    }
+                }
+                else
+                {
+                    return new HttpResponseMessage() { Content = new StringContent("{\"subscribed\": \"none\"}") };
+                }
                 return new HttpResponseMessage() { Content = new StringContent(project.Settings) };
             }
         }
-         * */
     }
 }

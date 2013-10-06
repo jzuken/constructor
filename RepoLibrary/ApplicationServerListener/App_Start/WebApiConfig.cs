@@ -5,15 +5,15 @@ using System.Web.Http;
 
 namespace ApplicationServerListener
 {
-    public static class WebApiConfig
-    {
-        public static void Register(HttpConfiguration config)
-        {
-            config.Routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "api/{controller}/{name}",
-                defaults: new { name = RouteParameter.Optional }
-            );
-        }
-    }
+	public static class WebApiConfig
+	{
+		public static void Register(HttpConfiguration config)
+		{
+			config.Routes.MapHttpRoute(
+				name: "DefaultApi",
+				routeTemplate: "api/{controller}/{name}/{action}",
+				defaults: new { name = RouteParameter.Optional, action = "DefaultAction" }
+			);
+		}
+	}
 }

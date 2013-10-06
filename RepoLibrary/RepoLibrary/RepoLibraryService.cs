@@ -19,7 +19,7 @@ namespace RepoLibrary
             // MongoDB obsolete database (WILL BE REMOVED SOON)
             //const string connectionString = "mongodb://localhost/?safe=true";
             //Db = new MongoDBDatabaseGateway(connectionString);
-            const string connectionString = @"Data Source=localhost\SQLEXPRESS;Initial Catalog=shopDB;User ID=shopsGatewayLogin;Password=GiaeQgn7fee7o.-+";
+            const string connectionString = @"Data Source=localhost\SQLEXPRESS;Initial Catalog=shopDB;User ID=shopsGatewayLogin;Password=GiaeQgn7fee7o.-";
             Db = new MSSQLDatabaseGateway(connectionString);
 
             //Db = new MSSQLDatabaseGateway(connString2Builder.ToString());
