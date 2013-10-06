@@ -11,16 +11,16 @@ namespace ApplicationServerListener.Controllers
     {
         RepoLibraryReference.RepoLibraryClient wcfClient = new RepoLibraryReference.RepoLibraryClient("WSHttpBinding_IRepoLibrary");
         // GET api/values/5
-        public string Get(string name)
+        public HttpResponseMessage Get(string name)
         {
             RepoLibraryReference.Project project = wcfClient.GetProject(@name);
             if (project == null)
             {
-                return "NOT FOUND";
+                return new HttpResponseMessage() {Content = new StringContent("{}") };
             }
             else
             {
-                return project.Settings;
+                return new HttpResponseMessage() { Content = new StringContent(project.Settings) };
             }
         }
     }
