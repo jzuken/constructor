@@ -54,7 +54,6 @@ namespace ApplicationServerListener.Controllers
                 {
                     return new HttpResponseMessage() { Content = new StringContent("{\"subscribed\": \"none\"}") };
                 }
-                return new HttpResponseMessage() { Content = new StringContent(project.Settings) };
             }
         }
     }
