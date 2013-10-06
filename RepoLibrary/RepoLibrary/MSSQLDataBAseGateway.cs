@@ -11,21 +11,23 @@ namespace RepoLibrary
             this.connectionString = connectionString;
         }
 
-        public Project GetProject(string name)
+        public Project GetProject(string url)
         {
             SqlConnection connection = new SqlConnection(this.connectionString);
             connection.Open();
             SqlDataReader myReader = null;
-            SqlCommand myCommand = new SqlCommand("select * from shops where shopName=@name", connection);
-            myCommand.Parameters.Add("@name", SqlDbType.VarChar).Value = name;
+            SqlCommand myCommand = new SqlCommand("select * from shops where shopUrl=@url", connection);
+            myCommand.Parameters.Add("@url", SqlDbType.VarChar).Value = url;
             myReader = myCommand.ExecuteReader();
             while (myReader.Read())
             {
-                Console.WriteLine(myReader["shopName"].ToString());
+                Console.WriteLine(myReader["shopUrl"].ToString());
                 Console.WriteLine(myReader["shopSettings"].ToString());
+                Console.WriteLine((myReader["shopExpirationDate"] != null).ToString());
                 Project project = new Project();
                 project.Settings = myReader["shopSettings"].ToString();
-                project.Name = myReader["shopName"].ToString();
+                project.Url = myReader["shopUrl"].ToString();
+                project.ExpirationDate = myReader["shopExpirationDate"].ToString();
                 connection.Close();
                 return project;
             }
@@ -35,15 +37,16 @@ namespace RepoLibrary
 
         public string SaveProject(Project data)
         {
-            Project project = GetProject(data.Name);
+            Project project = GetProject(data.Url);
             if (project == null)
             {
                 SqlConnection connection = new SqlConnection(this.connectionString);
                 connection.Open();
-                SqlCommand myCommand = new SqlCommand("INSERT INTO shops (shopName, shopSettings) " +
-                    "Values (@name,@settings)", connection);
-                myCommand.Parameters.Add("@name", SqlDbType.VarChar).Value = data.Name;
+                SqlCommand myCommand = new SqlCommand("INSERT INTO shops (shopUrl, shopSettings, shopExpirationDate) " +
+                    "Values (@url,@settings,@expiration)", connection);
+                myCommand.Parameters.Add("@url", SqlDbType.VarChar).Value = data.Url;
                 myCommand.Parameters.Add("@settings", SqlDbType.VarChar).Value = data.Settings;
+                myCommand.Parameters.Add("@expiration", SqlDbType.VarChar).Value = data.ExpirationDate;
                 int result = myCommand.ExecuteNonQuery();
                 connection.Close();
                 if (result > 0)
@@ -59,9 +62,10 @@ namespace RepoLibrary
             {
                 SqlConnection connection = new SqlConnection(this.connectionString);
                 connection.Open();
-                SqlCommand myCommand = new SqlCommand("UPDATE shops SET shopSettings=@settings WHERE shopName=@name", connection);
-                myCommand.Parameters.Add("@name", SqlDbType.VarChar).Value = data.Name;
+                SqlCommand myCommand = new SqlCommand("UPDATE shops SET shopSettings=@settings, shopExpirationDate=@expiration WHERE shopUrl=@url", connection);
+                myCommand.Parameters.Add("@url", SqlDbType.VarChar).Value = data.Url;
                 myCommand.Parameters.Add("@settings", SqlDbType.VarChar).Value = data.Settings;
+                myCommand.Parameters.Add("@expiration", SqlDbType.VarChar).Value = data.ExpirationDate;
                 int result = myCommand.ExecuteNonQuery();
                 connection.Close();
                 if (result > 0)

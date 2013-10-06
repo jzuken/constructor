@@ -23,5 +23,19 @@ namespace ApplicationServerListener.Controllers
                 return new HttpResponseMessage() { Content = new StringContent(project.Settings) };
             }
         }
+        /*
+        public HttpResponseMessage GetURL(string name)
+        {
+            RepoLibraryReference.Project project = wcfClient.GetProject(@name);
+            if (project == null)
+            {
+                return new HttpResponseMessage() {Content = new StringContent("{}") };
+            }
+            else
+            {
+                return new HttpResponseMessage() { Content = new StringContent(project.Settings) };
+            }
+        }
+         * */
     }
 }
