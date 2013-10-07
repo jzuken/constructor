@@ -182,6 +182,7 @@ public class Users extends PinSupportNetworkActivity {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				switch (position) {
 				case 0:
+					fullInfoClick(user.getName());
 					dialog.dismiss();
 					break;
 				case 1:
@@ -205,6 +206,12 @@ public class Users extends PinSupportNetworkActivity {
 		actionList.setAdapter(adapter);
 
 		dialog.show();
+	}
+	
+	private void fullInfoClick(final String name) {
+		Intent intent = new Intent(this, UserInfo.class);
+		intent.putExtra("userName", name);
+		startActivityForResult(intent, 1);
 	}
 
 	private void sendMessage(String recipientEmail) {

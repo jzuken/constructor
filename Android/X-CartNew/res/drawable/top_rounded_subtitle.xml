@@ -8,4 +8,8 @@
 
     <solid android:color="@color/subtitle_color" />
 
+    <stroke
+        android:width="0.5dp"
+        android:color="@color/frame_color" />
+
 </shape>

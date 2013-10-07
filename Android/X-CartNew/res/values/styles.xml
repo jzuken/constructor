@@ -1,8 +1,7 @@
 <resources>
 
     <!-- Application theme. -->
-    <style name="AppTheme" parent="Theme.Sherlock.Light">
-        <item name="android:windowNoTitle">true</item>
+    <style name="AppTheme" parent="android:Theme.Light.NoTitleBar">
         <item name="android:editTextStyle">@android:style/Widget.EditText</item>
     </style>
 

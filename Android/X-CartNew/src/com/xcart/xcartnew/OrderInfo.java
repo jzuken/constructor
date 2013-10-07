@@ -2,6 +2,7 @@ package com.xcart.xcartnew;
 
 import android.os.Bundle;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class OrderInfo extends PinSupportNetworkActivity {
@@ -9,6 +10,7 @@ public class OrderInfo extends PinSupportNetworkActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.order_info);
+		progressBar = (ProgressBar) findViewById(R.id.progress_bar);
 		orderId = (TextView) findViewById(R.id.order_title);
 		orderId.setText(getResources().getString(R.string.order_id_number) + getIntent().getStringExtra("orderId"));
 		status = (TextView) findViewById(R.id.status);
@@ -27,6 +29,7 @@ public class OrderInfo extends PinSupportNetworkActivity {
 		total = (TextView) findViewById(R.id.total);
 	}
 
+	ProgressBar progressBar;
 	TextView orderId;
 	TextView status;
 	TextView trackingNumber;
