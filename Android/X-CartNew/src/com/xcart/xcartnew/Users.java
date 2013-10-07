@@ -6,19 +6,25 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnKeyListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -32,13 +38,14 @@ public class Users extends PinSupportNetworkActivity {
 		setContentView(R.layout.users);
 		settingsData = PreferenceManager.getDefaultSharedPreferences(this);
 		setupListViewAdapter();
+		setupSearchLine();
 	}
 
 	@Override
 	protected void withoutPinAction() {
 		packAmount = Integer.parseInt(settingsData.getString("users_amount", "10"));
 		if (isNeedDownload()) {
-			clearData();
+			clearList();
 			updateUsersList();
 		}
 		super.withoutPinAction();
@@ -55,8 +62,7 @@ public class Users extends PinSupportNetworkActivity {
 			protected void onPostExecute(String result) {
 				if (result != null) {
 					try {
-						JSONObject responseObj = new JSONObject(result);
-						JSONArray array = responseObj.getJSONArray("users");
+						JSONArray array = new JSONArray(result);
 						int length = array.length();
 						if (length == packAmount) {
 							hasNext = true;
@@ -67,23 +73,13 @@ public class Users extends PinSupportNetworkActivity {
 							String name = obj.getString("title") + " " + obj.getString("firstname") + " "
 									+ obj.getString("lastname");
 							String login = obj.getString("login");
-
-							String type;
-							String typeSymbol = obj.getString("usertype");
-							if (typeSymbol.equals("C")) {
-								type = "Customer";
-							} else if (typeSymbol.equals("P")) {
-								type = "Administrator";
-							} else {
-								type = "Partner";
-							}
+							String phone = obj.getString("phone");
 
 							String lastLogin = obj.getString("last_login");
-							if (lastLogin.equals("01-01-1970")) {
+							if (lastLogin.equals("Jan-01-1970")) {
 								lastLogin = "Never logged in";
 							}
-							String totalOrder = obj.optString("orders_count");
-							addUserToList(id, name, login, type, lastLogin, totalOrder);
+							addUserToList(id, name, login, phone, lastLogin);
 						}
 					} catch (JSONException e) {
 						e.printStackTrace();
@@ -100,12 +96,14 @@ public class Users extends PinSupportNetworkActivity {
 
 		SharedPreferences authorizationData = getSharedPreferences("AuthorizationData", MODE_PRIVATE);
 		String sid = authorizationData.getString("sid", "");
-		dataRequester.execute("https://54.213.38.9/xcart/api.php?request=users&from=" + String.valueOf(currentAmount)
-				+ "&size=" + String.valueOf(packAmount) + "&sort=" + getCurrentSort() + "&sid=" + sid);
+		Log.i("123", searchWord);
+		dataRequester.execute("https://54.213.38.9/api/api2.php?request=users&from=" + String.valueOf(currentAmount)
+				+ "&size=" + String.valueOf(packAmount) + "&sort=" + getCurrentSort() + "&sid=" + sid + "&search="
+				+ searchWord);
 		currentAmount += packAmount;
 	}
 
-	private void clearData() {
+	private void clearList() {
 		adapter.clear();
 		currentAmount = 0;
 	}
@@ -125,9 +123,9 @@ public class Users extends PinSupportNetworkActivity {
 		}
 	}
 
-	private void addUserToList(final String id, final String name, final String login, final String type,
-			final String lastLogin, final String totalOrders) {
-		adapter.add(new User(id, name, login, type, lastLogin, totalOrders));
+	private void addUserToList(final String id, final String name, final String login, final String phone,
+			final String lastLogin) {
+		adapter.add(new User(id, name, login, phone, lastLogin));
 	}
 
 	private void setupListViewAdapter() {
@@ -207,7 +205,7 @@ public class Users extends PinSupportNetworkActivity {
 
 		dialog.show();
 	}
-	
+
 	private void fullInfoClick(final String name) {
 		Intent intent = new Intent(this, UserInfo.class);
 		intent.putExtra("userName", name);
@@ -249,6 +247,28 @@ public class Users extends PinSupportNetworkActivity {
 
 	}
 
+	private void setupSearchLine() {
+		usersSearchLine = (EditText) findViewById(R.id.search_line);
+		usersSearchLine.setOnKeyListener(new OnKeyListener() {
+			public boolean onKey(View v, int keyCode, KeyEvent event) {
+				// If the event is a key-down event on the "enter" button
+				if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+					searchWord = usersSearchLine.getText().toString();
+					hideKeyboard(usersSearchLine);
+					clearList();
+					updateUsersList();
+					return true;
+				}
+				return false;
+			}
+		});
+	}
+
+	private void hideKeyboard(EditText edit) {
+		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+		imm.hideSoftInputFromWindow(edit.getWindowToken(), 0);
+	}
+
 	private ProgressBar progressBar;
 	private UsersListAdapter adapter;
 	private int currentAmount;
@@ -260,4 +280,6 @@ public class Users extends PinSupportNetworkActivity {
 	private ListView usersListView;
 	private Object lock = new Object();
 	private SharedPreferences settingsData;
+	private EditText usersSearchLine;
+	private String searchWord = "";
 }

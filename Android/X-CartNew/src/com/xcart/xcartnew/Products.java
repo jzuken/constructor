@@ -284,7 +284,7 @@ public class Products extends PinSupportNetworkActivity {
 	}
 
 	private void setupSearchLine() {
-		productsSearchLine = (EditText) findViewById(R.id.products_search_line);
+		productsSearchLine = (EditText) findViewById(R.id.search_line);
 		productsSearchLine.setOnKeyListener(new OnKeyListener() {
 			public boolean onKey(View v, int keyCode, KeyEvent event) {
 				// If the event is a key-down event on the "enter" button

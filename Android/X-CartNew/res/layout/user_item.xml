@@ -8,91 +8,82 @@
         android:id="@+id/user_name"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@color/subtitle_color"
+        android:background="@drawable/subtitle"
         android:paddingLeft="7dp"
         android:paddingRight="7dp"
-        android:textSize="16sp"
-        android:layout_marginLeft="0.5dp"
-        android:layout_marginRight="0.5dp" />
+        android:textSize="16sp" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp" >
+        android:layout_marginRight="10dp"
+        android:paddingTop="7dp" >
 
         <TextView
             android:id="@+id/user_login_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:text="@string/email_colon" />
+            android:text="@string/email_colon"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/user_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true" />
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/user_login_title"
+            android:gravity="right"
+            android:textColor="@color/blue" />
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp" >
+        android:layout_marginRight="10dp"
+        android:paddingTop="3dp" >
 
         <TextView
-            android:id="@+id/user_type_title"
+            android:id="@+id/phone_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:text="@string/user_type_colon" />
+            android:text="@string/phone_colon"
+            android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/user_type"
+            android:id="@+id/user_phone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true" />
+            android:layout_alignParentRight="true"
+            android:textColor="@color/blue" />
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp" >
+        android:layout_marginRight="10dp"
+        android:paddingBottom="7dp"
+        android:paddingTop="3dp" >
 
         <TextView
             android:id="@+id/last_login_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:text="@string/last_login_colon" />
+            android:text="@string/last_login_colon"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/last_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp" >
-
-        <TextView
-            android:id="@+id/total_orders_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:text="@string/total_orders_colon" />
-
-        <TextView
-            android:id="@+id/total_orders"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true" />
+            android:layout_alignParentRight="true"
+            android:textColor="@color/blue" />
     </RelativeLayout>
 
 </LinearLayout>

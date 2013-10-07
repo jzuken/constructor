@@ -33,7 +33,7 @@
     </RelativeLayout>
 
     <EditText
-        android:id="@+id/products_search_line"
+        android:id="@+id/search_line"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
