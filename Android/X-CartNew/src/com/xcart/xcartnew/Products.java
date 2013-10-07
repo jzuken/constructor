@@ -11,9 +11,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnKeyListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
@@ -37,6 +39,7 @@ public class Products extends PinSupportNetworkActivity {
 		String sortOption = getIntent().getStringExtra("sortOption");
 		settingsData = PreferenceManager.getDefaultSharedPreferences(this);
 		authorizationData = getSharedPreferences("AuthorizationData", MODE_PRIVATE);
+		setupSearchLine();
 	}
 
 	@Override
@@ -88,9 +91,9 @@ public class Products extends PinSupportNetworkActivity {
 			}
 		};
 
-		dataRequester.execute("https://54.213.38.9/api/api2.php?request=products&from="
-				+ String.valueOf(currentAmount) + "&size=" + String.valueOf(packAmount) + "&sid="
-				+ authorizationData.getString("sid", ""));
+		dataRequester.execute("https://54.213.38.9/api/api2.php?request=products&from=" + String.valueOf(currentAmount)
+				+ "&size=" + String.valueOf(packAmount) + "&sid=" + authorizationData.getString("sid", "") + "&search="
+				+ searchWord);
 		currentAmount += packAmount;
 	}
 
@@ -280,6 +283,23 @@ public class Products extends PinSupportNetworkActivity {
 		currentAmount = 0;
 	}
 
+	private void setupSearchLine() {
+		productsSearchLine = (EditText) findViewById(R.id.products_search_line);
+		productsSearchLine.setOnKeyListener(new OnKeyListener() {
+			public boolean onKey(View v, int keyCode, KeyEvent event) {
+				// If the event is a key-down event on the "enter" button
+				if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+					searchWord = productsSearchLine.getText().toString();
+					hideKeyboard(productsSearchLine);
+					clearList();
+					updateProductsList();
+					return true;
+				}
+				return false;
+			}
+		});
+	}
+
 	private ProgressBar progressBar;
 	private ProductsListAdapter adapter;
 	private int currentAmount;
@@ -292,4 +312,5 @@ public class Products extends PinSupportNetworkActivity {
 	private Object lock = new Object();
 	private SharedPreferences settingsData;
 	private SharedPreferences authorizationData;
+	private EditText productsSearchLine;
 }

@@ -32,6 +32,21 @@
             android:onClick="settingsClick" />
     </RelativeLayout>
 
+    <EditText
+        android:id="@+id/products_search_line"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="9dp"
+        android:layout_marginRight="9dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/edit_text"
+        android:drawableLeft="@drawable/loupe"
+        android:drawablePadding="7dp"
+        android:hint="@string/search"
+        android:inputType="textFilter|textNoSuggestions"
+        android:textSize="16sp" />
+
     <ListView
         android:id="@+id/products_list"
         android:layout_width="fill_parent"
@@ -39,7 +54,6 @@
         android:layout_marginBottom="4dp"
         android:layout_marginLeft="7dp"
         android:layout_marginRight="7dp"
-        android:layout_marginTop="4dp"
         android:background="@drawable/rounded_shape"
         android:cacheColorHint="@android:color/transparent"
         tools:listitem="@layout/product_item" >
