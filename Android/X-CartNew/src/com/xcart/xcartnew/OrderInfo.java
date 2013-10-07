@@ -1,7 +1,6 @@
 package com.xcart.xcartnew;
 
 import android.os.Bundle;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -21,7 +20,12 @@ public class OrderInfo extends PinSupportNetworkActivity {
 		shippingInfo = (TextView) findViewById(R.id.shipping_info);
 		phone = (TextView) findViewById(R.id.phone);
 		fax = (TextView) findViewById(R.id.fax);
-		itemsList = (LinearLayout) findViewById(R.id.items_list);
+		itemsList = (OrderProductsList) findViewById(R.id.items_list);
+		
+		//test
+		itemsList.addItem("123", "Apple iPod touch 32 GB", "$299.00");
+		itemsList.addItem("123", "Asus S56CA-WH31 15,6' Ultrabook", "$579.98");
+		
 		subtotal = (TextView) findViewById(R.id.subtotal);
 		discount = (TextView) findViewById(R.id.discount);
 		couponSaving = (TextView) findViewById(R.id.coupon_saving);
@@ -39,7 +43,7 @@ public class OrderInfo extends PinSupportNetworkActivity {
 	TextView shippingInfo;
 	TextView phone;
 	TextView fax;
-	LinearLayout itemsList;
+	OrderProductsList itemsList;
 	TextView subtotal;
 	TextView discount;
 	TextView couponSaving;

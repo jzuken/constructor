@@ -308,12 +308,12 @@
                         android:text="@string/items"
                         android:textSize="16sp" />
 
-                    <LinearLayout
+                    <com.xcart.xcartnew.OrderProductsList
                         android:id="@+id/items_list"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical" >
-                    </LinearLayout>
+                    </com.xcart.xcartnew.OrderProductsList>
                 </LinearLayout>
 
                 <LinearLayout
@@ -453,9 +453,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentLeft="true"
-                            android:paddingBottom="15dp"
+                            android:paddingBottom="10dp"
                             android:paddingLeft="10dp"
-                            android:paddingTop="15dp"
+                            android:paddingTop="10dp"
                             android:text="@string/totalCaps"
                             android:textColor="@color/white"
                             android:textSize="22sp"
@@ -466,9 +466,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
-                            android:paddingBottom="15dp"
+                            android:paddingBottom="10dp"
                             android:paddingRight="10dp"
-                            android:paddingTop="15dp"
+                            android:paddingTop="10dp"
                             android:textColor="@color/white"
                             android:textSize="22sp"
                             android:textStyle="bold" />
