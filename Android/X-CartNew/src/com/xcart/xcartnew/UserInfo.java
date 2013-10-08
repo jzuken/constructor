@@ -2,16 +2,20 @@ package com.xcart.xcartnew;
 
 import java.util.ArrayList;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-public class UserInfo extends PinSupportNetworkActivity implements OnClickListener {
+public class UserInfo extends PinSupportNetworkActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -19,7 +23,7 @@ public class UserInfo extends PinSupportNetworkActivity implements OnClickListen
 		progressBar = (ProgressBar) findViewById(R.id.progress_bar);
 		adapter = new OrdersListAdapter(this, R.layout.order_item, new ArrayList<Order>());
 		ListView list = (ListView) findViewById(R.id.orders_list);
-		LayoutInflater inflater = getLayoutInflater();
+		LayoutInflater inflater = LayoutInflater.from(this);
 
 		View header = inflater.inflate(R.layout.user_info_header, null, false);
 		list.addHeaderView(header, null, false);
@@ -40,16 +44,62 @@ public class UserInfo extends PinSupportNetworkActivity implements OnClickListen
 		address = (TextView) header.findViewById(R.id.address);
 		phone = (TextView) header.findViewById(R.id.phone);
 		fax = (TextView) header.findViewById(R.id.fax);
+
+		id = getIntent().getStringExtra("userId");
 	}
 
 	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.send_message_button:
-			break;
-		case R.id.call_button:
-			break;
+	protected void withoutPinAction() {
+		if (isNeedDownload()) {
+			clearData();
+			updateData();
 		}
+		super.withoutPinAction();
+	}
+
+	public void sendMessageClick(View v) {
+		setNeedDownloadValue(false);
+		Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", email.getText().toString(), null));
+		startActivityForResult(Intent.createChooser(emailIntent, "Send message..."), 3);
+	}
+
+	public void callClick(View v) {
+		setNeedDownloadValue(false);
+		Intent callIntent = new Intent(Intent.ACTION_CALL);
+		callIntent.setData(Uri.parse("tel:" + phone.getText()));
+		startActivityForResult(callIntent, 1);
+	}
+
+	private void updateData() {
+		progressBar.setVisibility(View.VISIBLE);
+
+		GetRequester dataRequester = new GetRequester() {
+			@Override
+			protected void onPostExecute(String result) {
+				if (result != null) {
+					try {
+						JSONObject obj = new JSONObject(result);
+						firstName.setText(obj.getString("firstname"));
+						lastName.setText(obj.getString("lastname"));
+						email.setText(obj.getString("login"));
+						address.setText(obj.getString("address") + "\n" + obj.getString("city") + ", "
+								+ obj.getString("state") + " " + obj.getString("zipcode") + "\n"
+								+ obj.getString("country"));
+						phone.setText(obj.getString("phone"));
+						fax.setText(obj.getString("fax"));
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+				} else {
+					showConnectionErrorMessage();
+				}
+				progressBar.setVisibility(View.GONE);
+			}
+		};
+
+		SharedPreferences authorizationData = getSharedPreferences("AuthorizationData", MODE_PRIVATE);
+		String sid = authorizationData.getString("sid", "");
+		dataRequester.execute("https://54.213.38.9/api/api2.php?request=user_info&id=" + id + "&sid=" + sid);
 	}
 
 	private void addOrderToList(final String id, final String userName, final String paid, final String status,
@@ -57,15 +107,24 @@ public class UserInfo extends PinSupportNetworkActivity implements OnClickListen
 		adapter.add(new Order(id, userName, paid, status, date));
 	}
 
-	ProgressBar progressBar;
-	Button sendMessageButton;
-	Button callButton;
-	TextView userName;
-	TextView firstName;
-	TextView lastName;
-	TextView email;
-	TextView address;
-	TextView phone;
-	TextView fax;
-	OrdersListAdapter adapter;
+	private void clearData() {
+		firstName.setText("");
+		lastName.setText("");
+		email.setText("");
+		address.setText("");
+		phone.setText("");
+		fax.setText("");
+		// adapter.clear();
+	}
+
+	private ProgressBar progressBar;
+	private TextView userName;
+	private TextView firstName;
+	private TextView lastName;
+	private TextView email;
+	private TextView address;
+	private TextView phone;
+	private TextView fax;
+	private OrdersListAdapter adapter;
+	private String id;
 }

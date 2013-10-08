@@ -12,7 +12,6 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -96,7 +95,6 @@ public class Users extends PinSupportNetworkActivity {
 
 		SharedPreferences authorizationData = getSharedPreferences("AuthorizationData", MODE_PRIVATE);
 		String sid = authorizationData.getString("sid", "");
-		Log.i("123", searchWord);
 		dataRequester.execute("https://54.213.38.9/api/api2.php?request=users&from=" + String.valueOf(currentAmount)
 				+ "&size=" + String.valueOf(packAmount) + "&sort=" + getCurrentSort() + "&sid=" + sid + "&search="
 				+ searchWord);
@@ -180,7 +178,7 @@ public class Users extends PinSupportNetworkActivity {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				switch (position) {
 				case 0:
-					fullInfoClick(user.getName());
+					fullInfoClick(user.getId(), user.getName());
 					dialog.dismiss();
 					break;
 				case 1:
@@ -206,9 +204,11 @@ public class Users extends PinSupportNetworkActivity {
 		dialog.show();
 	}
 
-	private void fullInfoClick(final String name) {
+	private void fullInfoClick(final String id, final String name) {
+		setNeedDownloadValue(false);
 		Intent intent = new Intent(this, UserInfo.class);
 		intent.putExtra("userName", name);
+		intent.putExtra("userId", id);
 		startActivityForResult(intent, 1);
 	}
 
