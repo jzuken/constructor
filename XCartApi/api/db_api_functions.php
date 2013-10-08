@@ -117,12 +117,14 @@ class DbApiFunctions
         );
     }
 
-    public function get_orders_list($from, $size, $date, $status)
+    public function get_orders_list($from, $size, $date, $status, $search)
     {
         global $sql_tbl;
 
         $date_condition = "";
         $status_condition = "";
+
+        $like = '%' . $search . '%';
 
         if ($date) {
             $start_date = $this->start_dates[$date];
@@ -135,7 +137,7 @@ class DbApiFunctions
 
         $order_query = mysql_query
         ("
-          SELECT orderid, status, total, title, firstname,lastname, date,
+          SELECT orderid, status, total, title, firstname, lastname, date,
           (
             SELECT COUNT(*)
             FROM $sql_tbl[order_details]
@@ -144,19 +146,37 @@ class DbApiFunctions
           AS items
 
           FROM $sql_tbl[orders]
-          WHERE 1 $date_condition $status_condition
+          WHERE 1 $date_condition $status_condition AND (firstname LIKE '$like' OR lastname LIKE '$like')
           ORDER BY date DESC LIMIT $from, $size
         ") or die(mysql_error());
 
         $orders = array();
 
         while ($row = mysql_fetch_assoc($order_query)) {
-            $row['date'] = gmdate("m-d-Y", $row['date']);
+            $row['month'] = strtoupper(gmdate("M", $row['date']));
+            $row['day'] = gmdate("d", $row['date']);
             array_push($orders, $row);
         }
 
         return $orders;
     }
+
+    public function get_today_orders_count()
+    {
+        global $sql_tbl;
+
+        $start_date = $this->start_dates['today'];
+        $date_condition = "AND $sql_tbl[orders].date>='$start_date'";
+
+
+        $order_query = "
+          SELECT COUNT(*)
+          FROM $sql_tbl[orders]
+          WHERE 1 $date_condition";
+
+        return $this->get_first_cell($order_query);
+    }
+
 
     public function get_order_info($id)
     {
@@ -170,7 +190,8 @@ class DbApiFunctions
         ") or die(mysql_error());
 
         $order = mysql_fetch_assoc($order_query);
-        $order['date'] = gmdate("m-d-Y", $order['date']);
+        $order['month'] = strtoupper(gmdate("M", $order['date']));
+        $order['day'] = gmdate("d", $order['date']);
         $order_id = $order['orderid'];
         $order['details'] = $this->get_order_details($order_id);
 
@@ -196,21 +217,23 @@ class DbApiFunctions
         return $order_details_array;
     }
 
-    public function get_products($from, $size, $low_stock)
+    public function get_products($from, $size, $low_stock, $search)
     {
         global $sql_tbl;
 
-        $low_stock_condition ="";
-        if($low_stock){
+        $low_stock_condition = "";
+        if ($low_stock) {
             $low_stock_condition = "AND avail <= low_avail_limit";
         }
+
+        $like = '%' . $search . '%';
 
         $query = mysql_query
         ("
           SELECT $sql_tbl[products].productid, $sql_tbl[products].productcode, $sql_tbl[products].list_price, $sql_tbl[products].avail, $sql_tbl[products_lng_current].product FROM $sql_tbl[products]
           INNER JOIN $sql_tbl[products_lng_current]
           ON $sql_tbl[products_lng_current].productid = $sql_tbl[products].productid
-          WHERE 1 $low_stock_condition
+          WHERE 1 $low_stock_condition AND $sql_tbl[products_lng_current].product LIKE '$like'
           LIMIT $from, $size
         ") or die(mysql_error());
 
@@ -365,25 +388,57 @@ class DbApiFunctions
         return $answer;
     }
 
-   public function get_users($from, $size)
-{
-    global $sql_tbl;
+    public function update_product_availability($product_id, $available)
+    {
+        global $sql_tbl;
 
-    $query = mysql_query("
-                SELECT $sql_tbl[customers].id, $sql_tbl[customers].login, $sql_tbl[customers].username, $sql_tbl[customers].usertype, $sql_tbl[customers].title, $sql_tbl[customers].firstname, $sql_tbl[customers].lastname, $sql_tbl[customers].email, $sql_tbl[customers].last_login,
+        if($available == 1){
+            $available = 'Y';
+        }else{
+            $available = 'N';
+        }
+
+        $result = mysql_query
+        ("
+          UPDATE $sql_tbl[products]
+          SET forsale='$available'
+          WHERE productid=$product_id
+        ") or die(mysql_error());
+
+        $answer = array(
+            'upload_status' => (string)$result,
+            'upload_type' => 'update',
+            'upload_data' => 'availability',
+            'id' => $product_id
+        );
+
+        return $answer;
+    }
+
+    public function get_users($from, $size, $search = "")
+    {
+        global $sql_tbl;
+
+        $like = '%' . $search . '%';
+
+        $query = mysql_query("
+                SELECT DISTINCT $sql_tbl[customers].id, $sql_tbl[customers].login, $sql_tbl[customers].username, $sql_tbl[customers].usertype, $sql_tbl[customers].title, $sql_tbl[customers].firstname, $sql_tbl[customers].lastname, $sql_tbl[customers].email, $sql_tbl[customers].last_login, $sql_tbl[address_book].phone,
                 (SELECT COUNT(*) FROM $sql_tbl[orders] WHERE $sql_tbl[orders].userid = $sql_tbl[customers].id) as 'total_orders'
                 FROM $sql_tbl[customers]
+                INNER JOIN $sql_tbl[address_book]
+                ON $sql_tbl[address_book].userid = $sql_tbl[customers].id
+                WHERE $sql_tbl[customers].username LIKE '$like'
                 LIMIT $from, $size
                 ") or die(mysql_error());
 
-    $users_array = array();
-    while ($row = mysql_fetch_assoc($query)) {
-        $row[last_login] = gmdate("m-d-Y", $row['last_login']);
-        array_push($users_array, $row);
-    }
+        $users_array = array();
+        while ($row = mysql_fetch_assoc($query)) {
+            $row[last_login] = gmdate("M-d-Y", $row['last_login']);
+            array_push($users_array, $row);
+        }
 
-    return $users_array;
-}
+        return $users_array;
+    }
 
     public function get_user_info($id)
     {
@@ -397,7 +452,7 @@ class DbApiFunctions
                 WHERE $sql_tbl[customers].id = $id
                 ") or die(mysql_error());
 
-        $user_info  = mysql_fetch_assoc($query);
+        $user_info = mysql_fetch_assoc($query);
         $user_info[last_login] = gmdate("m-d-Y", $user_info['last_login']);
 
         return $user_info;

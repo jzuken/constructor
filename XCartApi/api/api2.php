@@ -8,6 +8,7 @@ $pr = new JsonPrinter();
 
 if (isset($_GET["request"])) {
 
+    //if (false) {
     if ($_GET['request'] != 'login' && !$db->check_session($_GET['sid'])) {
         $pr->print_error_messge('sid is wrong');
     } else {
@@ -26,8 +27,9 @@ if (isset($_GET["request"])) {
 
             case 'dashboard':
                 $array = $db->get_dashboard_data();
-                $last_orders = $db->get_orders_list(0, 3, 'today', null);
+                $last_orders = $db->get_orders_list(0, 3, 'today', null, null);
                 $array['today_orders'] = $last_orders;
+                $array['today_orders_count'] = $db->get_today_orders_count();
                 $pr->print_array_json($array);
                 break;
 
@@ -36,7 +38,8 @@ if (isset($_GET["request"])) {
                     (int)get_get_parameter('from', 0),
                     (int)get_get_parameter('size', 5),
                     get_get_parameter('date', null),
-                    get_get_parameter('status', null)
+                    get_get_parameter('status', null),
+                    get_get_parameter('search', null)
                 );
                 $pr->print_array_json($array);
                 break;
@@ -64,11 +67,20 @@ if (isset($_GET["request"])) {
                 $pr->print_array_json($array);
                 break;
 
+            case 'change_available':
+                $array = $db->update_product_availability(
+                    (int)get_get_parameter('product_id', -1),
+                    (int)get_get_parameter('available', 1)
+                );
+                $pr->print_array_json($array);
+                break;
+
             case 'products':
                 $array = $db->get_products(
                     (int)get_get_parameter('from', 0),
                     (int)get_get_parameter('size', 5),
-                    get_get_parameter('low_stock', null)
+                    get_get_parameter('low_stock', null),
+                    get_get_parameter('search', null)
                 );
                 $pr->print_array_json($array);
                 break;
@@ -106,7 +118,8 @@ if (isset($_GET["request"])) {
             case 'users':
                 $array = $db->get_users(
                     (int)get_get_parameter('from', 0),
-                    (int)get_get_parameter('size', 20)
+                    (int)get_get_parameter('size', 20),
+                    get_get_parameter('search', null)
                 );
                 $pr->print_array_json($array);
                 break;
