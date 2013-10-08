@@ -44,7 +44,7 @@
     <string name="show_full_decription">Show full description</string>
     <string name="availability_colon">Availability:</string>
     <string name="sold_colon">Sold:</string>
-    <string name="order_id_colon">Order id:</string>
+    <string name="order_id_number">Order #</string>
     <string name="date_colon">Date:</string>
     <string name="items_colon">Items:</string>
     <string name="show">Show</string>
@@ -56,5 +56,33 @@
     <string name="declined">Declined</string>
     <string name="failed">Failed</string>
     <string name="backordered">Backordered</string>
+    <string name="save">Save</string>
+    <string name="ok">OK</string>
+    <string name="order_info">Order info</string>
+    <string name="status">Status</string>
+    <string name="tracking_number">Tracking number</string>
+    <string name="payment_method">Payment method</string>
+    <string name="delivery_method">Delivery method</string>
+    <string name="customer">Customer</string>
+    <string name="billing_info">Billing info</string>
+    <string name="shipping_info">Shipping info</string>
+    <string name="phone">Phone</string>
+    <string name="phone_colon">Phone:</string>
+    <string name="fax">Fax</string>
+    <string name="items">Items</string>
+    <string name="order_cost">Order cost</string>
+    <string name="totalCaps">TOTAL</string>
+    <string name="subtotal">Subtotal</string>
+    <string name="discount">Discount</string>
+    <string name="coupon_saving">Coupon saving</string>
+    <string name="shipping_cost">Shipping cost</string>
+    <string name="send_message">Send message</string>
+    <string name="call">Call</string>
+    <string name="user_info">User info</string>
+    <string name="first_name">First name</string>
+    <string name="last_name">Last name</string>
+    <string name="address">Address</string>
+    <string name="orders_list">Orders list</string>
+    <string name="search">Search</string>
 
 </resources>

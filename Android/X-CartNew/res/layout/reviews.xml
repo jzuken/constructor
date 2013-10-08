@@ -3,23 +3,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/dark_grey"
+    android:background="@color/light_gray"
     android:orientation="vertical" >
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/title_color" >
+        android:background="@drawable/light_orange_title" >
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:gravity="center"
-            android:paddingBottom="10dp"
-            android:paddingTop="5dp"
             android:text="@string/reviews"
             android:textColor="@color/white"
-            android:textSize="23sp"
+            android:textSize="25sp"
             android:textStyle="bold" />
 
         <ImageButton
@@ -36,7 +35,7 @@
     <ListView
         android:id="@+id/reviews_list"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
         android:layout_marginLeft="7dp"
         android:layout_marginRight="7dp"

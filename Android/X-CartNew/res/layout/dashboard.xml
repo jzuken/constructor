@@ -2,23 +2,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gray"
+    android:background="@color/light_gray"
     android:orientation="vertical" >
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/title_color" >
+        android:layout_marginBottom="0.5dp"
+        android:background="@drawable/gray_title" >
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:gravity="center"
-            android:paddingBottom="10dp"
-            android:paddingTop="5dp"
             android:text="@string/dashboard"
             android:textColor="@color/white"
-            android:textSize="23sp"
+            android:textSize="25sp"
             android:textStyle="bold" />
 
         <ImageButton
@@ -35,10 +35,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="4dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="4dp"
         android:orientation="vertical" >
 
         <LinearLayout
@@ -46,6 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="0.5dp"
             android:layout_weight="0.25"
+            android:baselineAligned="false"
             android:orientation="horizontal" >
 
             <LinearLayout
@@ -54,7 +51,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginRight="0.5dp"
                 android:layout_weight="0.5"
-                android:background="@drawable/rounded_shape"
+                android:background="@drawable/orange_dashboard"
                 android:baselineAligned="false"
                 android:gravity="center"
                 android:orientation="vertical" >
@@ -65,7 +62,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="1370"
-                    android:textColor="@color/blue"
+                    android:textColor="@color/white"
                     android:textSize="48sp"
                     android:textStyle="bold" />
 
@@ -83,7 +80,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="0.5dp"
                 android:layout_weight="0.5"
-                android:background="@drawable/rounded_shape"
+                android:background="@drawable/blue_dashboard"
                 android:gravity="center"
                 android:orientation="vertical" >
 
@@ -93,7 +90,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="134"
-                    android:textColor="@color/blue"
+                    android:textColor="@color/white"
                     android:textSize="48sp"
                     android:textStyle="bold" />
 
@@ -110,8 +107,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="0.5dp"
-            android:layout_marginTop="0.5dp"
             android:layout_weight="0.25"
+            android:baselineAligned="false"
             android:orientation="horizontal" >
 
             <LinearLayout
@@ -120,7 +117,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginRight="0.5dp"
                 android:layout_weight="0.33"
-                android:background="@drawable/rounded_shape"
+                android:background="@drawable/gray_dashboard"
                 android:gravity="center"
                 android:orientation="vertical" >
 
@@ -130,7 +127,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="75"
-                    android:textColor="@color/blue"
+                    android:textColor="@color/white"
                     android:textSize="38sp"
                     android:textStyle="bold" />
 
@@ -149,7 +146,7 @@
                 android:layout_marginLeft="0.5dp"
                 android:layout_marginRight="0.5dp"
                 android:layout_weight="0.34"
-                android:background="@drawable/rounded_shape"
+                android:background="@drawable/light_orange_dashboard"
                 android:gravity="center"
                 android:orientation="vertical" >
 
@@ -159,7 +156,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="6"
-                    android:textColor="@color/blue"
+                    android:textColor="@color/white"
                     android:textSize="38sp"
                     android:textStyle="bold" />
 
@@ -177,7 +174,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="0.5dp"
                 android:layout_weight="0.33"
-                android:background="@drawable/rounded_shape"
+                android:background="@drawable/gray_dashboard"
                 android:gravity="center"
                 android:orientation="vertical" >
 
@@ -187,7 +184,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="8"
-                    android:textColor="@color/blue"
+                    android:textColor="@color/white"
                     android:textSize="38sp"
                     android:textStyle="bold" />
 
@@ -206,7 +203,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="0.5dp"
             android:layout_weight="0.50"
-            android:background="@drawable/rounded_shape"
+            android:background="@color/white"
             android:baselineAligned="false" >
 
             <LinearLayout
@@ -235,15 +232,15 @@
             </LinearLayout>
 
             <LinearLayout
-                android:paddingTop="15dp"
-                android:layout_above="@id/order_id_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_above="@id/order_id_title"
                 android:layout_centerInParent="true"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:gravity="center"
-                android:orientation="vertical" >
+                android:orientation="vertical"
+                android:paddingTop="15dp" >
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -256,9 +253,7 @@
                         android:layout_alignParentLeft="true"
                         android:layout_marginLeft="10dp"
                         android:text="Smith, John"
-                        android:textColor="@color/dark_grey"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/first_customer_paid"
@@ -284,9 +279,7 @@
                         android:layout_alignParentLeft="true"
                         android:layout_marginLeft="10dp"
                         android:text="Green, Lora"
-                        android:textColor="@color/dark_grey"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/second_customer_paid"
@@ -312,9 +305,7 @@
                         android:layout_alignParentLeft="true"
                         android:layout_marginLeft="10dp"
                         android:text="Anderson, Jim"
-                        android:textColor="@color/dark_grey"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/third_customer_paid"

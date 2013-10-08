@@ -22,18 +22,20 @@ public class Orders extends PinSupportNetworkActivity {
 		setupListViewAdapter();
 
 		// test
-		addOrderToList("1000", "Smith, Michelle", "$460.99", "Complete", "6/22/2013", "2");
-		addOrderToList("999", "Smith, John", "$914.99", "Complete", "6/22/2013", "3");
+		addOrderToList("1000", "Smith, Michelle", "$460.99", "Complete", "JUN\n22");
+		addOrderToList("999", "Smith, John", "$914.99", "Complete", "JUN\n22");
 	}
 
 	private void addOrderToList(final String id, final String userName, final String paid, final String status,
-			final String date, final String itemsCount) {
-		adapter.add(new Order(id, userName, paid, status, date, itemsCount));
+			final String date) {
+		adapter.add(new Order(id, userName, paid, status, date));
 	}
 
 	private void setupListViewAdapter() {
 		adapter = new OrdersListAdapter(this, R.layout.order_item, new ArrayList<Order>());
 		ordersListView = (ListView) findViewById(R.id.orders_list);
+		
+		ordersListView.setFooterDividersEnabled(false);
 
 		ordersListView.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -61,6 +63,7 @@ public class Orders extends PinSupportNetworkActivity {
 					dialog.dismiss();
 					break;
 				case 1:
+					fullInfoClick(item.getId());
 					dialog.dismiss();
 					break;
 				case 2:
@@ -87,6 +90,12 @@ public class Orders extends PinSupportNetworkActivity {
 
 	private void changeStatusClick(final String id) {
 		Intent intent = new Intent(this, ChangeStatus.class);
+		intent.putExtra("orderId", id);
+		startActivityForResult(intent, 1);
+	}
+	
+	private void fullInfoClick(final String id) {
+		Intent intent = new Intent(this, OrderInfo.class);
 		intent.putExtra("orderId", id);
 		startActivityForResult(intent, 1);
 	}

@@ -2,23 +2,22 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/dark_grey"
+    android:background="@color/light_gray"
     android:orientation="vertical" >
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/title_color" >
+        android:background="@drawable/gray_title" >
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:gravity="center"
-            android:paddingBottom="10dp"
-            android:paddingTop="5dp"
             android:text="@string/change_status"
             android:textColor="@color/white"
-            android:textSize="23sp"
+            android:textSize="25sp"
             android:textStyle="bold" />
 
         <ImageButton
@@ -51,9 +50,8 @@
                 android:id="@+id/order_id_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/top_rounded_blue"
+                android:background="@drawable/top_rounded_subtitle"
                 android:paddingLeft="10dp"
-                android:textColor="@color/white"
                 android:textSize="16sp" />
 
             <RadioGroup
@@ -71,7 +69,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
-                    android:background="@color/gray" />
+                    android:background="@color/frame_color" />
 
                 <RadioButton
                     android:id="@+id/queued_button"
@@ -83,7 +81,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
-                    android:background="@color/gray" />
+                    android:background="@color/frame_color" />
 
                 <RadioButton
                     android:id="@+id/processed_button"
@@ -95,7 +93,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
-                    android:background="@color/gray" />
+                    android:background="@color/frame_color" />
 
                 <RadioButton
                     android:id="@+id/complete_button"
@@ -107,7 +105,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
-                    android:background="@color/gray" />
+                    android:background="@color/frame_color" />
 
                 <RadioButton
                     android:id="@+id/declined_button"
@@ -119,7 +117,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
-                    android:background="@color/gray" />
+                    android:background="@color/frame_color" />
 
                 <RadioButton
                     android:id="@+id/failed_button"
@@ -131,7 +129,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
-                    android:background="@color/gray" />
+                    android:background="@color/frame_color" />
 
                 <RadioButton
                     android:id="@+id/backordered_button"
@@ -141,16 +139,21 @@
                     android:text="@string/backordered" />
             </RadioGroup>
 
-            <ImageButton
+            <Button
                 android:id="@+id/save_button"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="34dp"
                 android:layout_gravity="center"
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="15dp"
-                android:background="@drawable/save_button"
-                android:contentDescription="@string/save_description"
-                android:onClick="saveClick" />
+                android:background="@drawable/blue_rounded_button"
+                android:onClick="saveClick"
+                android:paddingLeft="40dp"
+                android:paddingRight="40dp"
+                android:text="@string/save"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold" />
         </LinearLayout>
     </ScrollView>
 

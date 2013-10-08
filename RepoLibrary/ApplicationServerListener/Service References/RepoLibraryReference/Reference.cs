@@ -23,10 +23,13 @@ namespace ApplicationServerListener.RepoLibraryReference {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string NameField;
+        private string ExpirationDateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string SettingsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string UrlField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -39,14 +42,14 @@ namespace ApplicationServerListener.RepoLibraryReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Name {
+        public string ExpirationDate {
             get {
-                return this.NameField;
+                return this.ExpirationDateField;
             }
             set {
-                if ((object.ReferenceEquals(this.NameField, value) != true)) {
-                    this.NameField = value;
-                    this.RaisePropertyChanged("Name");
+                if ((object.ReferenceEquals(this.ExpirationDateField, value) != true)) {
+                    this.ExpirationDateField = value;
+                    this.RaisePropertyChanged("ExpirationDate");
                 }
             }
         }
@@ -60,6 +63,19 @@ namespace ApplicationServerListener.RepoLibraryReference {
                 if ((object.ReferenceEquals(this.SettingsField, value) != true)) {
                     this.SettingsField = value;
                     this.RaisePropertyChanged("Settings");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Url {
+            get {
+                return this.UrlField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UrlField, value) != true)) {
+                    this.UrlField = value;
+                    this.RaisePropertyChanged("Url");
                 }
             }
         }
@@ -79,10 +95,10 @@ namespace ApplicationServerListener.RepoLibraryReference {
     public interface IRepoLibrary {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRepoLibrary/GetProject", ReplyAction="http://tempuri.org/IRepoLibrary/GetProjectResponse")]
-        ApplicationServerListener.RepoLibraryReference.Project GetProject(string name);
+        ApplicationServerListener.RepoLibraryReference.Project GetProject(string url);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRepoLibrary/GetProject", ReplyAction="http://tempuri.org/IRepoLibrary/GetProjectResponse")]
-        System.Threading.Tasks.Task<ApplicationServerListener.RepoLibraryReference.Project> GetProjectAsync(string name);
+        System.Threading.Tasks.Task<ApplicationServerListener.RepoLibraryReference.Project> GetProjectAsync(string url);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRepoLibrary/SaveProject", ReplyAction="http://tempuri.org/IRepoLibrary/SaveProjectResponse")]
         string SaveProject(ApplicationServerListener.RepoLibraryReference.Project data);
@@ -118,12 +134,12 @@ namespace ApplicationServerListener.RepoLibraryReference {
                 base(binding, remoteAddress) {
         }
         
-        public ApplicationServerListener.RepoLibraryReference.Project GetProject(string name) {
-            return base.Channel.GetProject(name);
+        public ApplicationServerListener.RepoLibraryReference.Project GetProject(string url) {
+            return base.Channel.GetProject(url);
         }
         
-        public System.Threading.Tasks.Task<ApplicationServerListener.RepoLibraryReference.Project> GetProjectAsync(string name) {
-            return base.Channel.GetProjectAsync(name);
+        public System.Threading.Tasks.Task<ApplicationServerListener.RepoLibraryReference.Project> GetProjectAsync(string url) {
+            return base.Channel.GetProjectAsync(url);
         }
         
         public string SaveProject(ApplicationServerListener.RepoLibraryReference.Project data) {

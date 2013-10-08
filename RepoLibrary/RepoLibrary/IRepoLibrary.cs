@@ -10,7 +10,7 @@ namespace RepoLibrary
     public interface IRepoLibrary
     {
         [OperationContract]
-        Project GetProject(string name);
+        Project GetProject(string url);
 
         [OperationContract]
         string SaveProject(Project data);
@@ -20,10 +20,12 @@ namespace RepoLibrary
     public class Project
     {
         [DataMember]
-        public string Name { get; set; }
-
-        [DataMember]
         public string Settings { get; set; }
 
+        [DataMember]
+        public string Url { get; set; }
+
+        [DataMember]
+        public string ExpirationDate { get; set; }
     }
 }

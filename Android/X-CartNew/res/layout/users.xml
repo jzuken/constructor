@@ -3,23 +3,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/dark_grey"
+    android:background="@color/light_gray"
     android:orientation="vertical" >
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/title_color" >
+        android:background="@drawable/blue_title" >
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:gravity="center"
-            android:paddingBottom="10dp"
-            android:paddingTop="5dp"
             android:text="@string/users"
             android:textColor="@color/white"
-            android:textSize="23sp"
+            android:textSize="25sp"
             android:textStyle="bold" />
 
         <ImageButton
@@ -33,35 +32,30 @@
             android:onClick="settingsClick" />
     </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/search_line"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginLeft="7dp"
-        android:layout_marginRight="7dp"
-        android:layout_marginTop="4dp"
-        android:background="@drawable/spinner_style_layout" >
-
-        <com.actionbarsherlock.internal.widget.IcsSpinner
-            android:id="@+id/sort_spinner"
-            android:layout_width="fill_parent"
-            android:layout_height="35dp"
-            android:layout_marginRight="15dp"
-            android:background="@drawable/spinner_style"
-            android:textSize="16sp" />
-    </RelativeLayout>
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="9dp"
+        android:layout_marginRight="9dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/edit_text"
+        android:drawableLeft="@drawable/loupe"
+        android:drawablePadding="7dp"
+        android:hint="@string/search"
+        android:inputType="textFilter|textNoSuggestions"
+        android:textSize="16sp" />
 
     <ListView
         android:id="@+id/users_list"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
         android:layout_marginLeft="7dp"
         android:layout_marginRight="7dp"
-        android:layout_marginTop="4dp"
         android:background="@drawable/rounded_shape"
         android:cacheColorHint="@android:color/transparent"
-        android:paddingBottom="7dp"
         tools:listitem="@layout/user_item" >
     </ListView>
 

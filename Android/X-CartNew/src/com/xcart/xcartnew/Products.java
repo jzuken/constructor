@@ -11,9 +11,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnKeyListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
@@ -28,24 +30,21 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.actionbarsherlock.internal.widget.IcsAdapterView;
-import com.actionbarsherlock.internal.widget.IcsSpinner;
-
 public class Products extends PinSupportNetworkActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.products);
-		SharedPreferences settingsData = PreferenceManager.getDefaultSharedPreferences(this);
-		packAmount = Integer.parseInt(settingsData.getString("products_amount", "10"));
 		setupListViewAdapter();
 		String sortOption = getIntent().getStringExtra("sortOption");
-		setupAvailabilitySortSpinner(sortOption);
-		setupGeneralSortSpinner();
+		settingsData = PreferenceManager.getDefaultSharedPreferences(this);
+		authorizationData = getSharedPreferences("AuthorizationData", MODE_PRIVATE);
+		setupSearchLine();
 	}
 
 	@Override
 	protected void withoutPinAction() {
+		packAmount = Integer.parseInt(settingsData.getString("products_amount", "10"));
 		if (isNeedDownload()) {
 			clearList();
 			updateProductsList();
@@ -92,8 +91,9 @@ public class Products extends PinSupportNetworkActivity {
 			}
 		};
 
-		dataRequester.execute("https://54.213.38.9/xcart/api.php?request=products&search_word=" + searchWord + "&from="
-				+ String.valueOf(currentAmount) + "&size=" + String.valueOf(packAmount));
+		dataRequester.execute("https://54.213.38.9/api/api2.php?request=products&from=" + String.valueOf(currentAmount)
+				+ "&size=" + String.valueOf(packAmount) + "&sid=" + authorizationData.getString("sid", "") + "&search="
+				+ searchWord);
 		currentAmount += packAmount;
 	}
 
@@ -278,82 +278,28 @@ public class Products extends PinSupportNetworkActivity {
 		}
 	}
 
-	private void setupAvailabilitySortSpinner(String sortOption) {
-		String[] sortOptions = { "All", "Low stock" };
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_item, sortOptions);
-
-		IcsSpinner spinner = (IcsSpinner) findViewById(R.id.availability_sort_spinner);
-		spinner.setAdapter(adapter);
-		if (sortOption.equals("lowStock")) {
-			spinner.setSelection(1);
-			availabilitySortOption = 1;
-		} else {
-			spinner.setSelection(0);
-			availabilitySortOption = 0;
-		}
-
-		spinner.setOnItemSelectedListener(new IcsAdapterView.OnItemSelectedListener() {
-			@Override
-			public void onItemSelected(IcsAdapterView<?> parent, View view, int position, long id) {
-				availabilitySortOption = position;
-				if (isAvailabilityFirstSelection) {
-					isAvailabilityFirstSelection = false;
-				} else {
-					clearList();
-					updateProductsList();
-				}
-			}
-
-			@Override
-			public void onNothingSelected(IcsAdapterView<?> parent) {
-			}
-		});
-	}
-
-	private void setupGeneralSortSpinner() {
-		String[] sortOptions = { "Price (ascending)", "Price (descending)", "Amount left (ascending)",
-				"Amount left (descending)" };
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_item, sortOptions);
-
-		IcsSpinner spinner = (IcsSpinner) findViewById(R.id.general_sort_spinner);
-		spinner.setAdapter(adapter);
-		spinner.setSelection(1);
-		generalSortOption = 1;
-
-		spinner.setOnItemSelectedListener(new IcsAdapterView.OnItemSelectedListener() {
-			@Override
-			public void onItemSelected(IcsAdapterView<?> parent, View view, int position, long id) {
-				generalSortOption = position;
-				if (isGeneralFirstSelection) {
-					isGeneralFirstSelection = false;
-				} else {
-					clearList();
-					updateProductsList();
-				}
-			}
-
-			@Override
-			public void onNothingSelected(IcsAdapterView<?> parent) {
-			}
-		});
-	}
-
 	private void clearList() {
 		adapter.clear();
 		currentAmount = 0;
 	}
 
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-		if (resultCode == Settings.fromSettingCode) {
-			SharedPreferences settingsData = PreferenceManager.getDefaultSharedPreferences(this);
-			packAmount = Integer.parseInt(settingsData.getString("products_amount", "10"));
-		}
+	private void setupSearchLine() {
+		productsSearchLine = (EditText) findViewById(R.id.search_line);
+		productsSearchLine.setOnKeyListener(new OnKeyListener() {
+			public boolean onKey(View v, int keyCode, KeyEvent event) {
+				// If the event is a key-down event on the "enter" button
+				if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+					searchWord = productsSearchLine.getText().toString();
+					hideKeyboard(productsSearchLine);
+					clearList();
+					updateProductsList();
+					return true;
+				}
+				return false;
+			}
+		});
 	}
 
-	private boolean isAvailabilityFirstSelection = true;
-	private boolean isGeneralFirstSelection = true;
 	private ProgressBar progressBar;
 	private ProductsListAdapter adapter;
 	private int currentAmount;
@@ -364,6 +310,7 @@ public class Products extends PinSupportNetworkActivity {
 	private String searchWord = "";
 	private ListView productsListView;
 	private Object lock = new Object();
-	private int availabilitySortOption;
-	private int generalSortOption;
+	private SharedPreferences settingsData;
+	private SharedPreferences authorizationData;
+	private EditText productsSearchLine;
 }

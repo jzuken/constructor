@@ -49,7 +49,7 @@ public class Authorization extends Activity {
 		PostRequester postReq = new PostRequester(loginData);
 		String authResult = null;
 		try {
-			authResult = postReq.execute("https://54.213.38.9/xcart/api.php?request=login").get();
+			authResult = postReq.execute("https://54.213.38.9/api/api2.php?request=login").get();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -31,13 +31,13 @@ public class Reviews extends PinSupportNetworkActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.reviews);
-		SharedPreferences settingsData = PreferenceManager.getDefaultSharedPreferences(this);
-		packAmount = Integer.parseInt(settingsData.getString("reviews_amount", "10"));
+		settingsData = PreferenceManager.getDefaultSharedPreferences(this);
 		setupListViewAdapter();
 	}
 
 	@Override
 	protected void withoutPinAction() {
+		packAmount = Integer.parseInt(settingsData.getString("reviews_amount", "10"));
 		if (isNeedDownload()) {
 			clearList();
 			updateReviewsList();
@@ -218,15 +218,6 @@ public class Reviews extends PinSupportNetworkActivity {
 		currentAmount = 0;
 	}
 
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-		if (resultCode == Settings.fromSettingCode) {
-			SharedPreferences settingsData = PreferenceManager.getDefaultSharedPreferences(this);
-			packAmount = Integer.parseInt(settingsData.getString("reviews_amount", "10"));
-		}
-	}
-
 	private ProgressBar progressBar;
 	private ReviewsListAdapter adapter;
 	private int currentAmount;
@@ -236,4 +227,5 @@ public class Reviews extends PinSupportNetworkActivity {
 	private final int startItemCount = 3;
 	private ListView reviewsListView;
 	private Object lock = new Object();
+	private SharedPreferences settingsData;
 }

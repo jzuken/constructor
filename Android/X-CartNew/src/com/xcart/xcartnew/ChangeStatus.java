@@ -11,7 +11,7 @@ public class ChangeStatus extends PinSupportNetworkActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.change_status);
 		orderIdTitle = (TextView) findViewById(R.id.order_id_title);
-		orderIdTitle.setText(getResources().getString(R.string.order_id_colon) + " "
+		orderIdTitle.setText(getResources().getString(R.string.order_id_number) + " "
 				+ getIntent().getStringExtra("orderId"));
 		notFinished = (RadioButton) findViewById(R.id.not_finished_button);
 		notFinished.setChecked(true);
