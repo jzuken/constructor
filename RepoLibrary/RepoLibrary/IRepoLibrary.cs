@@ -27,5 +27,11 @@ namespace RepoLibrary
 
         [DataMember]
         public string ExpirationDate { get; set; }
+
+        [DataMember]
+        public string apiUrl { get; set; }
+
+        [DataMember]
+        public string keyHash { get; set; }
     }
 }

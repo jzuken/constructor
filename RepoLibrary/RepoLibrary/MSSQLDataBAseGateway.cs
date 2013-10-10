@@ -21,13 +21,12 @@ namespace RepoLibrary
             myReader = myCommand.ExecuteReader();
             while (myReader.Read())
             {
-                Console.WriteLine(myReader["shopUrl"].ToString());
-                Console.WriteLine(myReader["shopSettings"].ToString());
-                Console.WriteLine((myReader["shopExpirationDate"] != null).ToString());
                 Project project = new Project();
                 project.Settings = myReader["shopSettings"].ToString();
                 project.Url = myReader["shopUrl"].ToString();
                 project.ExpirationDate = myReader["shopExpirationDate"].ToString();
+                project.apiUrl = myReader["shopApiUrl"].ToString();
+                project.keyHash = myReader["shopKeyHash"].ToString();
                 connection.Close();
                 return project;
             }
@@ -42,11 +41,13 @@ namespace RepoLibrary
             {
                 SqlConnection connection = new SqlConnection(this.connectionString);
                 connection.Open();
-                SqlCommand myCommand = new SqlCommand("INSERT INTO shops (shopUrl, shopSettings, shopExpirationDate) " +
-                    "Values (@url,@settings,@expiration)", connection);
+                SqlCommand myCommand = new SqlCommand("INSERT INTO shops (shopUrl, shopSettings, shopExpirationDate, shopApiUrl, shopKeyHash) " +
+                    "Values (@url,@settings,@expiration,@apiUrl,@keyHash)", connection);
                 myCommand.Parameters.Add("@url", SqlDbType.VarChar).Value = data.Url;
                 myCommand.Parameters.Add("@settings", SqlDbType.VarChar).Value = data.Settings;
                 myCommand.Parameters.Add("@expiration", SqlDbType.VarChar).Value = data.ExpirationDate;
+                myCommand.Parameters.Add("@apiUrl", SqlDbType.VarChar).Value = data.apiUrl;
+                myCommand.Parameters.Add("@keyHash", SqlDbType.VarChar).Value = data.keyHash;
                 int result = myCommand.ExecuteNonQuery();
                 connection.Close();
                 if (result > 0)
@@ -62,10 +63,12 @@ namespace RepoLibrary
             {
                 SqlConnection connection = new SqlConnection(this.connectionString);
                 connection.Open();
-                SqlCommand myCommand = new SqlCommand("UPDATE shops SET shopSettings=@settings, shopExpirationDate=@expiration WHERE shopUrl=@url", connection);
+                SqlCommand myCommand = new SqlCommand("UPDATE shops SET shopSettings=@settings, shopExpirationDate=@expiration, shopApiUrl=@apiUrl, shopKeyHash=@keyHash WHERE shopUrl=@url", connection);
                 myCommand.Parameters.Add("@url", SqlDbType.VarChar).Value = data.Url;
                 myCommand.Parameters.Add("@settings", SqlDbType.VarChar).Value = data.Settings;
                 myCommand.Parameters.Add("@expiration", SqlDbType.VarChar).Value = data.ExpirationDate;
+                myCommand.Parameters.Add("@apiUrl", SqlDbType.VarChar).Value = data.apiUrl;
+                myCommand.Parameters.Add("@keyHash", SqlDbType.VarChar).Value = data.keyHash;
                 int result = myCommand.ExecuteNonQuery();
                 connection.Close();
                 if (result > 0)
