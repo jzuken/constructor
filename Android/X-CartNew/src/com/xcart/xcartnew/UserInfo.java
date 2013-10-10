@@ -62,8 +62,8 @@ public class UserInfo extends PinSupportNetworkActivity {
 		userName.setText(getIntent().getStringExtra("userName"));
 
 		// test
-		addOrderToList("1000", "Smith, Michelle", "$460.99", "Complete", "JUN\n22");
-		addOrderToList("999", "Smith, John", "$914.99", "Complete", "JUN\n22");
+		addOrderToList("1000", "Smith, Michelle", "$460.99", "C", "JUN\n22");
+		addOrderToList("999", "Smith, John", "$914.99", "C", "JUN\n22");
 
 		firstName = (TextView) header.findViewById(R.id.first_name);
 		lastName = (TextView) header.findViewById(R.id.last_name);

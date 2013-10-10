@@ -20,6 +20,16 @@
             android:textSize="25sp"
             android:textStyle="bold" />
 
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="10dp"
+            android:layout_centerVertical="true"
+            android:visibility="gone" >
+        </ProgressBar>
+
         <ImageButton
             android:id="@+id/settingsButton"
             android:layout_width="wrap_content"
@@ -129,6 +139,7 @@
                         android:paddingRight="10dp" >
 
                         <TextView
+                            android:id="@+id/payment_method_label"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentLeft="true"
@@ -140,6 +151,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
+                            android:layout_marginLeft="10dp"
+                            android:layout_toRightOf="@id/payment_method_label"
+                            android:gravity="right"
                             android:textColor="@color/blue" />
                     </RelativeLayout>
 
@@ -157,6 +171,7 @@
                         android:paddingRight="10dp" >
 
                         <TextView
+                            android:id="@+id/delivery_method_label"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentLeft="true"
@@ -168,6 +183,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
+                            android:layout_marginLeft="10dp"
+                            android:layout_toRightOf="@id/delivery_method_label"
+                            android:gravity="right"
                             android:textColor="@color/blue" />
                     </RelativeLayout>
 
@@ -185,6 +203,7 @@
                         android:paddingRight="10dp" >
 
                         <TextView
+                            android:id="@+id/customer_label"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentLeft="true"
@@ -196,6 +215,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
+                            android:layout_marginLeft="10dp"
+                            android:layout_toRightOf="@id/customer_label"
+                            android:gravity="right"
                             android:textColor="@color/blue" />
                     </RelativeLayout>
 
@@ -213,11 +235,63 @@
                         android:paddingRight="10dp" >
 
                         <TextView
+                            android:id="@+id/billing_info_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentLeft="true"
                             android:text="@string/billing_info"
                             android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/billing_info"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginLeft="10dp"
+                            android:layout_toRightOf="@id/billing_info_title"
+                            android:gravity="right"
+                            android:textColor="@color/blue" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:text="@string/phone" />
+
+                        <TextView
+                            android:id="@+id/b_phone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:textColor="@color/blue" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:text="@string/fax" />
+
+                        <TextView
+                            android:id="@+id/b_fax"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:textColor="@color/blue" />
                     </RelativeLayout>
 
                     <View
@@ -264,7 +338,7 @@
                             android:text="@string/phone" />
 
                         <TextView
-                            android:id="@+id/phone"
+                            android:id="@+id/s_phone"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
@@ -285,7 +359,7 @@
                             android:text="@string/fax" />
 
                         <TextView
-                            android:id="@+id/fax"
+                            android:id="@+id/s_fax"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
@@ -475,14 +549,6 @@
                     </RelativeLayout>
                 </LinearLayout>
             </LinearLayout>
-
-            <ProgressBar
-                android:id="@+id/progress_bar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:visibility="gone" >
-            </ProgressBar>
         </RelativeLayout>
     </ScrollView>
 
