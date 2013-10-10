@@ -31,6 +31,12 @@ namespace ApplicationServerListener.RepoLibraryReference {
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string UrlField;
         
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string apiUrlField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string keyHashField;
+        
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
             get {
@@ -76,6 +82,32 @@ namespace ApplicationServerListener.RepoLibraryReference {
                 if ((object.ReferenceEquals(this.UrlField, value) != true)) {
                     this.UrlField = value;
                     this.RaisePropertyChanged("Url");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string apiUrl {
+            get {
+                return this.apiUrlField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.apiUrlField, value) != true)) {
+                    this.apiUrlField = value;
+                    this.RaisePropertyChanged("apiUrl");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string keyHash {
+            get {
+                return this.keyHashField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.keyHashField, value) != true)) {
+                    this.keyHashField = value;
+                    this.RaisePropertyChanged("keyHash");
                 }
             }
         }

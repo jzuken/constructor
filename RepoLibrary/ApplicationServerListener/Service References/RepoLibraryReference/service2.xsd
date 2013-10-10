@@ -5,6 +5,8 @@
       <xs:element minOccurs="0" name="ExpirationDate" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Settings" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Url" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="apiUrl" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="keyHash" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Project" nillable="true" type="tns:Project" />
