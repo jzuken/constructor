@@ -84,5 +84,8 @@
     <string name="address">Address</string>
     <string name="orders_list">Orders list</string>
     <string name="search">Search</string>
-
+    <string name="today">Today</string>
+	<string name="this_week">This\nweek</string>
+	<string name="this_month">This\nmonth</string>
+	<string name="all">All</string>
 </resources>

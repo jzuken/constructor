@@ -11,16 +11,20 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.AbsListView.OnScrollListener;
+import android.widget.AdapterView.OnItemClickListener;
 
 public class UserInfo extends PinSupportNetworkActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.user_info);
-		progressBar = (ProgressBar) findViewById(R.id.progress_bar);
+		progressBar = (ProgressBar) findViewById(R.id.user_info_progress_bar);
 		adapter = new OrdersListAdapter(this, R.layout.order_item, new ArrayList<Order>());
 		ListView list = (ListView) findViewById(R.id.orders_list);
 		LayoutInflater inflater = LayoutInflater.from(this);
@@ -30,6 +34,29 @@ public class UserInfo extends PinSupportNetworkActivity {
 
 		list.setFooterDividersEnabled(false);
 		list.setHeaderDividersEnabled(false);
+		View listFooter = inflater.inflate(R.layout.on_demand_footer, null, false);
+		ordersProgressBar = (ProgressBar) listFooter.findViewById(R.id.progress_bar);
+		list.addFooterView(listFooter, null, false);
+
+		/**list.setOnScrollListener(new OnScrollListener() {
+
+			@Override
+			public void onScrollStateChanged(AbsListView arg0, int arg1) {
+			}
+
+			@Override
+			public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+				if (totalItemCount > startItemCount && firstVisibleItem + visibleItemCount == totalItemCount
+						&& !isDownloading && hasNext) {
+					updateUsersList();
+				}
+			}
+		});**/
+
+		list.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+			}
+		});
 		list.setAdapter(adapter);
 		userName = (TextView) findViewById(R.id.user_title);
 		userName.setText(getIntent().getStringExtra("userName"));
@@ -114,10 +141,14 @@ public class UserInfo extends PinSupportNetworkActivity {
 		address.setText("");
 		phone.setText("");
 		fax.setText("");
-		// adapter.clear();
+	}
+	
+	private void clearList() {
+		adapter.clear();
 	}
 
 	private ProgressBar progressBar;
+	private ProgressBar ordersProgressBar;
 	private TextView userName;
 	private TextView firstName;
 	private TextView lastName;

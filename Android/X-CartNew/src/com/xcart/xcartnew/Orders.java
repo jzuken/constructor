@@ -8,10 +8,12 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.TabHost.OnTabChangeListener;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TabWidget;
 import android.widget.TextView;
 
 public class Orders extends PinSupportNetworkActivity {
@@ -20,6 +22,7 @@ public class Orders extends PinSupportNetworkActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.orders);
 		setupListViewAdapter();
+		setupPeriodTabs();
 
 		// test
 		addOrderToList("1000", "Smith, Michelle", "$460.99", "Complete", "JUN\n22");
@@ -128,7 +131,35 @@ public class Orders extends PinSupportNetworkActivity {
 	private void deleteOrder(String id) {
 
 	}
+	
+	private void setupPeriodTabs() {
+		periodTabHost = (CustomTabHost) findViewById(android.R.id.tabhost);
+		periodTabHost.setup();
+		periodTabHost.addEmptyTab("today", getResources().getString(R.string.today), -1);
+		periodTabHost.addEmptyTab("week", getResources().getString(R.string.this_week), 0);
+		periodTabHost.addEmptyTab("month", getResources().getString(R.string.this_month), 0);
+		periodTabHost.addEmptyTab("all", getResources().getString(R.string.all), 1);
+		
+		TabWidget tabWidget = (TabWidget) findViewById(android.R.id.tabs);
+		final int tabChildrenCount = tabWidget.getChildCount();
+		View currentView;
+		for (int i = 0; i < tabChildrenCount - 1; i++) {
+		    currentView = tabWidget.getChildAt(i);
+		    LinearLayout.LayoutParams currentLayout =
+		        (LinearLayout.LayoutParams) currentView.getLayoutParams();
+		    currentLayout.setMargins(0, 0, 1, 0);
+		}
+		tabWidget.requestLayout();
+		
+		periodTabHost.setOnTabChangedListener(new OnTabChangeListener() {
+			public void onTabChanged(String tabId) {
+				period = tabId;
+			}
+		});
+	}
 
 	private OrdersListAdapter adapter;
 	private ListView ordersListView;
+	private CustomTabHost periodTabHost;
+	private String period;
 }

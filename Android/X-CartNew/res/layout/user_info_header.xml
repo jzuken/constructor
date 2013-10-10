@@ -14,9 +14,11 @@
         android:orientation="horizontal" >
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
             android:layout_marginRight="0.5dp"
+            android:layout_weight="0.5"
             android:background="@drawable/left_rounded_blue_button"
             android:onClick="sendMessageClick"
             android:padding="10dp"
@@ -25,14 +27,14 @@
             android:textStyle="bold" />
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="0.5dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="0.5"
             android:background="@drawable/right_rounded_green_button"
             android:onClick="callClick"
             android:paddingBottom="10dp"
-            android:paddingLeft="48dp"
-            android:paddingRight="48dp"
             android:paddingTop="10dp"
             android:text="@string/call"
             android:textColor="@color/white"
@@ -157,8 +159,8 @@
                 android:id="@+id/address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="right"
                 android:layout_alignParentRight="true"
+                android:gravity="right"
                 android:textColor="@color/blue" />
         </RelativeLayout>
 
