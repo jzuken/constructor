@@ -11,7 +11,7 @@ using System.Text;
 
 namespace ApplicationServerListener.Controllers
 {
-    private class RegisterInfo
+    public class RegisterInfo
     {
         public string ShopUrl { get; set; }
         public string ShopApiUrl { get; set; }
@@ -56,7 +56,7 @@ namespace ApplicationServerListener.Controllers
             project.keyHash = shopKeyHash;
             project.ExpirationDate = shopExpirationDate;
             WebClient client = new WebClient();
-            string returnCode = client.DownloadString("https://secure.x-cart.com/service.php?target=recurring_plans&password=pmh6_2lGTENNqewuhd&url=" + url);
+            string returnCode = client.DownloadString("https://secure.x-cart.com/service.php?target=recurring_plans&password=pmh6_2lGTENNqewuhd&url=" + shopUrl);
             string expDate = "";
             XmlDocument xml = new XmlDocument();
             xml.LoadXml(returnCode);
