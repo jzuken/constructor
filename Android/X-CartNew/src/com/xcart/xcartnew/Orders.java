@@ -39,14 +39,9 @@ public class Orders extends PinSupportNetworkActivity {
 		setupListViewAdapter();
 		setupPeriodTabs();
 		setupSearchLine();
+		period = "today";
 		settingsData = PreferenceManager.getDefaultSharedPreferences(this);
 		authorizationData = getSharedPreferences("AuthorizationData", MODE_PRIVATE);
-
-		// test
-		// addOrderToList("1000", "Smith, Michelle", "$460.99", "Complete",
-		// "JUN\n22");
-		// addOrderToList("999", "Smith, John", "$914.99", "Complete",
-		// "JUN\n22");
 	}
 
 	@Override
@@ -78,7 +73,11 @@ public class Orders extends PinSupportNetworkActivity {
 						for (int i = 0; i < length; i++) {
 							JSONObject obj = array.getJSONObject(i);
 							String id = obj.getString("orderid");
-							String name = obj.getString("title") + obj.getString("firstname")
+							String title = obj.getString("title");
+							if (!title.equals("")) {
+								title += " ";
+							}
+							String name = title + obj.getString("firstname") + " "
 									+ obj.getString("lastname");
 							String status = obj.getString("status");
 							String date = obj.getString("month") + "\n" + obj.getString("day");

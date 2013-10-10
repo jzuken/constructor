@@ -69,7 +69,11 @@ public class Users extends PinSupportNetworkActivity {
 						for (int i = 0; i < length; i++) {
 							JSONObject obj = array.getJSONObject(i);
 							String id = obj.getString("id");
-							String name = obj.getString("title") + " " + obj.getString("firstname") + " "
+							String title = obj.getString("title");
+							if (!title.equals("")) {
+								title += " ";
+							}
+							String name = title + obj.getString("firstname") + " "
 									+ obj.getString("lastname");
 							String login = obj.getString("login");
 							String phone = obj.getString("phone");
