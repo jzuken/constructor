@@ -114,6 +114,7 @@ public class OrderInfo extends PinSupportNetworkActivity {
 			}
 		};
 
+		setRequester(dataRequester);
 		dataRequester.execute("https://54.213.38.9/api/api2.php?request=order_info&id="
 				+ getIntent().getStringExtra("orderId") + "&sid=" + authorizationData.getString("sid", ""));
 	}

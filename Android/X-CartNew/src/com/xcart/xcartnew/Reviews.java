@@ -82,6 +82,7 @@ public class Reviews extends PinSupportNetworkActivity {
 			}
 		};
 
+		setRequester(dataRequester);
 		dataRequester.execute("https://54.213.38.9/xcart/api.php?request=reviews&from=" + String.valueOf(currentAmount)
 				+ "&size=" + String.valueOf(packAmount));
 		currentAmount += packAmount;

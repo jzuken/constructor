@@ -30,6 +30,16 @@
             android:background="@drawable/settings_button"
             android:contentDescription="@string/settings_description"
             android:onClick="settingsClick" />
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:visibility="gone" >
+        </ProgressBar>
     </RelativeLayout>
 
     <LinearLayout

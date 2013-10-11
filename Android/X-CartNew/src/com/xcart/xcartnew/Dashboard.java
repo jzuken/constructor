@@ -1,10 +1,16 @@
 package com.xcart.xcartnew;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -13,12 +19,78 @@ public class Dashboard extends PinSupportNetworkActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.dashboard);
+		progressBar = (ProgressBar) findViewById(R.id.progress_bar);
 		initTodaySales();
 		initLowStock();
 		initVisitorsToday();
 		initProductsSold();
 		initReviewsToday();
 		initLastOrders();
+		authorizationData = getSharedPreferences("AuthorizationData", MODE_PRIVATE);
+	}
+
+	@Override
+	protected void withoutPinAction() {
+		if (isNeedDownload()) {
+			clearData();
+			updateData();
+		}
+		super.withoutPinAction();
+	}
+
+	private void updateData() {
+		progressBar.setVisibility(View.VISIBLE);
+		GetRequester dataRequester = new GetRequester() {
+			@Override
+			protected void onPostExecute(String result) {
+				if (result != null) {
+					try {
+						JSONObject obj = new JSONObject(result);
+						todaySales.setText(obj.getString("today_sales"));
+						lowStock.setText(obj.getString("low_stock"));
+						visitorsToday.setText(obj.getString("today_visitors"));
+						reviewsToday.setText(obj.getString("reviews_today"));
+						productsSold.setText(obj.getString("today_sold"));
+						lastOrdersCount.setText("(" + obj.getString("today_orders_count") + ")");
+						JSONArray orders = obj.getJSONArray("today_orders");
+						for (int i = 0; i < orders.length(); i++) {
+							JSONObject order = orders.getJSONObject(i);
+							String title = order.getString("title");
+							if (!title.equals("")) {
+								title += " ";
+							}
+							String name = title + order.getString("firstname") + " "
+									+ order.getString("lastname");
+							customers[i].setText(name);
+							customersPaid[i].setText(order.getString("total"));
+						}
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+				} else {
+					showConnectionErrorMessage();
+				}
+				progressBar.setVisibility(View.GONE);
+
+			}
+		};
+
+		setRequester(dataRequester);
+		dataRequester.execute("https://54.213.38.9/api/api2.php?request=dashboard" + "&sid="
+				+ authorizationData.getString("sid", ""));
+	}
+
+	private void clearData() {
+		todaySales.setText("");
+		lowStock.setText("");
+		visitorsToday.setText("");
+		productsSold.setText("");
+		reviewsToday.setText("");
+		lastOrdersCount.setText("");
+		for (int i = 0; i < 3; i++) {
+			customers[i].setText("");
+			customersPaid[i].setText("");
+		}
 	}
 
 	private void initTodaySales() {
@@ -110,14 +182,15 @@ public class Dashboard extends PinSupportNetworkActivity {
 			}
 		});
 
-		firstCustomer = (TextView) findViewById(R.id.first_customer);
-		firstCustomerPaid = (TextView) findViewById(R.id.first_customer_paid);
-		secondCustomer = (TextView) findViewById(R.id.second_customer);
-		secondCustomerPaid = (TextView) findViewById(R.id.second_customer_paid);
-		thirdCustomer = (TextView) findViewById(R.id.third_customer);
-		thirdCustomerPaid = (TextView) findViewById(R.id.third_customer_paid);
+		customers[0] = (TextView) findViewById(R.id.first_customer);
+		customersPaid[0] = (TextView) findViewById(R.id.first_customer_paid);
+		customers[1] = (TextView) findViewById(R.id.second_customer);
+		customersPaid[1] = (TextView) findViewById(R.id.second_customer_paid);
+		customers[2] = (TextView) findViewById(R.id.third_customer);
+		customersPaid[2] = (TextView) findViewById(R.id.third_customer_paid);
 	}
 
+	private ProgressBar progressBar;
 	private LinearLayout todaySalesLayout;
 	private TextView todaySales;
 	private LinearLayout lowStockLayout;
@@ -130,10 +203,7 @@ public class Dashboard extends PinSupportNetworkActivity {
 	private TextView reviewsToday;
 	private RelativeLayout lastOrdersLayout;
 	private TextView lastOrdersCount;
-	private TextView firstCustomer;
-	private TextView firstCustomerPaid;
-	private TextView secondCustomer;
-	private TextView secondCustomerPaid;
-	private TextView thirdCustomer;
-	private TextView thirdCustomerPaid;
+	private TextView[] customers = new TextView[3];
+	private TextView[] customersPaid = new TextView[3];
+	private SharedPreferences authorizationData;
 }

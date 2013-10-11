@@ -124,6 +124,7 @@ public class UserInfo extends PinSupportNetworkActivity {
 			}
 		};
 
+		setRequester(dataRequester);
 		SharedPreferences authorizationData = getSharedPreferences("AuthorizationData", MODE_PRIVATE);
 		String sid = authorizationData.getString("sid", "");
 		dataRequester.execute("https://54.213.38.9/api/api2.php?request=user_info&id=" + id + "&sid=" + sid);

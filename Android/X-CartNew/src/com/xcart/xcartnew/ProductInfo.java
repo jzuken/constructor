@@ -75,6 +75,7 @@ public class ProductInfo extends PinSupportNetworkActivity {
 			}
 		};
 
+		setRequester(dataRequester);
 		dataRequester.execute("https://54.213.38.9/api/api2.php?request=product_info&id="
 				+ getIntent().getStringExtra("id") + "&sid=" + authorizationData.getString("sid", ""));
 	}
