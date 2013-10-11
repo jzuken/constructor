@@ -6,7 +6,6 @@ import org.json.JSONObject;
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.webkit.WebSettings;
@@ -22,6 +21,7 @@ public class ProductInfo extends PinSupportNetworkActivity {
 		setContentView(R.layout.product_full_info);
 		progressBar = (ProgressBar) findViewById(R.id.progress_bar);
 		name = (TextView) findViewById(R.id.product_name);
+		name.setText(getIntent().getStringExtra("name"));
 		productImage = (ImageView) findViewById(R.id.product_image);
 		description = (WebView) findViewById(R.id.description);
 		initDescriptionWebView(description);
@@ -54,7 +54,6 @@ public class ProductInfo extends PinSupportNetworkActivity {
 				if (result != null) {
 					try {
 						JSONObject obj = new JSONObject(result);
-						name.setText(obj.getString("product"));
 						description.loadDataWithBaseURL("", obj.getString("descr"), "text/html", "UTF-8", "");
 						fullDescription.loadDataWithBaseURL("", obj.getString("fulldescr"), "text/html", "UTF-8", "");
 						price.setText("$" + obj.getString("list_price"));
@@ -85,7 +84,6 @@ public class ProductInfo extends PinSupportNetworkActivity {
 	}
 
 	private void clearData() {
-		name.setText("");
 		description.loadUrl("about:blank");
 		fullDescription.loadUrl("about:blank");
 		hideFullDescr();

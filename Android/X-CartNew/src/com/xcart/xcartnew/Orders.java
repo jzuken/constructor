@@ -98,7 +98,7 @@ public class Orders extends PinSupportNetworkActivity {
 			}
 		};
 
-		currentDataRequester = dataRequester;
+		setRequester(dataRequester);
 		dataRequester.execute("https://54.213.38.9/api/api2.php?request=last_orders&from="
 				+ String.valueOf(currentAmount) + "&size=" + String.valueOf(packAmount) + "&status=&date=" + period
 				+ "&sid=" + authorizationData.getString("sid", "") + "&search=" + searchWord);
@@ -249,7 +249,7 @@ public class Orders extends PinSupportNetworkActivity {
 		periodTabHost.setOnTabChangedListener(new OnTabChangeListener() {
 			public void onTabChanged(String tabId) {
 				period = tabId;
-				currentDataRequester.cancel(true);
+				cancelRequest();
 				clearList();
 				updateOrdersList();
 			}
@@ -283,12 +283,6 @@ public class Orders extends PinSupportNetworkActivity {
 		currentAmount = 0;
 	}
 
-	@Override
-	public void onPause() {
-		currentDataRequester.cancel(true);
-		super.onPause();
-	}
-
 	private ProgressBar progressBar;
 	private OrdersListAdapter adapter;
 	private ListView ordersListView;
@@ -303,5 +297,4 @@ public class Orders extends PinSupportNetworkActivity {
 	private SharedPreferences authorizationData;
 	private String searchWord = "";
 	private EditText ordersSearchLine;
-	private GetRequester currentDataRequester = new GetRequester();
 }

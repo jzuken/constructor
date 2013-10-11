@@ -21,12 +21,14 @@ import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.TabHost.OnTabChangeListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TabWidget;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,6 +39,10 @@ public class Products extends PinSupportNetworkActivity {
 		setContentView(R.layout.products);
 		setupListViewAdapter();
 		String sortOption = getIntent().getStringExtra("sortOption");
+		if (sortOption.equals("lowStock")) {
+			option = "&low_stock=1";
+		}
+		setupTabs(sortOption);
 		settingsData = PreferenceManager.getDefaultSharedPreferences(this);
 		authorizationData = getSharedPreferences("AuthorizationData", MODE_PRIVATE);
 		setupSearchLine();
@@ -91,9 +97,10 @@ public class Products extends PinSupportNetworkActivity {
 			}
 		};
 
+		setRequester(dataRequester);
 		dataRequester.execute("https://54.213.38.9/api/api2.php?request=products&from=" + String.valueOf(currentAmount)
-				+ "&size=" + String.valueOf(packAmount) + "&sid=" + authorizationData.getString("sid", "") + "&search="
-				+ searchWord);
+				+ "&size=" + String.valueOf(packAmount) + option + "&sid=" + authorizationData.getString("sid", "")
+				+ "&search=" + searchWord);
 		currentAmount += packAmount;
 	}
 
@@ -150,7 +157,7 @@ public class Products extends PinSupportNetworkActivity {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				switch (position) {
 				case 0:
-					showFullInfo(item.getId());
+					showFullInfo(item.getId(), item.getName());
 					dialog.dismiss();
 					break;
 				case 1:
@@ -176,10 +183,11 @@ public class Products extends PinSupportNetworkActivity {
 		dialog.show();
 	}
 
-	private void showFullInfo(final String id) {
+	private void showFullInfo(final String id, final String name) {
 		setNeedDownloadValue(false);
 		Intent intent = new Intent(this, ProductInfo.class);
 		intent.putExtra("id", id);
+		intent.putExtra("name", name);
 		startActivityForResult(intent, 1);
 	}
 
@@ -300,9 +308,35 @@ public class Products extends PinSupportNetworkActivity {
 		});
 	}
 
+	private void setupTabs(String sortOption) {
+		optionTabHost = (CustomTabHost) findViewById(android.R.id.tabhost);
+		optionTabHost.setup();
+		optionTabHost.addEmptyTab("&low_stock=1", getResources().getString(R.string.low_stock_text), -1, 
+				10, 10, 10, 10);
+		optionTabHost.addEmptyTab("", getResources().getString(R.string.all), 1, 10, 10, 10, 10);
+		if (sortOption.equals("all")) {
+			optionTabHost.setCurrentTab(1);
+		}
+		TabWidget tabWidget = (TabWidget) findViewById(android.R.id.tabs);
+		LinearLayout.LayoutParams currentLayout = (LinearLayout.LayoutParams) tabWidget.getChildAt(0).getLayoutParams();
+		currentLayout.setMargins(0, 0, 1, 0);
+		tabWidget.requestLayout();
+
+		optionTabHost.setOnTabChangedListener(new OnTabChangeListener() {
+			public void onTabChanged(String tabId) {
+				option = tabId;
+				cancelRequest();
+				clearList();
+				updateProductsList();
+			}
+		});
+	}
+
 	private ProgressBar progressBar;
 	private ProductsListAdapter adapter;
 	private int currentAmount;
+	private CustomTabHost optionTabHost;
+	private String option = "";
 	private boolean isDownloading;
 	private boolean hasNext;
 	private int packAmount;

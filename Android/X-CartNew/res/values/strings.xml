@@ -88,4 +88,5 @@
 	<string name="this_week">This\nweek</string>
 	<string name="this_month">This\nmonth</string>
 	<string name="all">All</string>
+	<string name="low_stock_text">Low stock</string>
 </resources>
