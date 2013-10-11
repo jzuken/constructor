@@ -16,6 +16,7 @@ public class Settings extends PreferenceActivity {
 		addPreferencesFromResource(R.xml.settings);
 
 		setupPasswordEditText();
+		setupOrdersAmountEditText();
 		setupUsersAmountEditText();
 		setupReviewsAmountEditText();
 		setupProductsAmountEditText();
@@ -36,6 +37,12 @@ public class Settings extends PreferenceActivity {
 				return true;
 			}
 		});
+	}
+
+	@SuppressWarnings("deprecation")
+	private void setupOrdersAmountEditText() {
+		EditTextPreference usersAmount = (EditTextPreference) findPreference("orders_amount");
+		setPackChangeListener(usersAmount, minPack);
 	}
 
 	@SuppressWarnings("deprecation")
@@ -98,13 +105,13 @@ public class Settings extends PreferenceActivity {
 			fromPin = true;
 		}
 	}
-	
+
 	@Override
 	public void onBackPressed() {
 		setResult(fromSettingCode);
 		super.onBackPressed();
 	}
-	
+
 	public static final int fromSettingCode = 3;
 	private final int minPack = 10;
 }
