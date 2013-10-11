@@ -40,6 +40,7 @@ public class OrderProductsList extends LinearLayout {
 				pinSupActivity.setNeedDownloadValue(false);
 				Intent intent = new Intent(context, ProductInfo.class);
 				intent.putExtra("id", id);
+				intent.putExtra("name", name);
 				pinSupActivity.startActivityForResult(intent, 1);
 			}
 		});

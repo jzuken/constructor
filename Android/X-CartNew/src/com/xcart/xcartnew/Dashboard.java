@@ -59,8 +59,7 @@ public class Dashboard extends PinSupportNetworkActivity {
 							if (!title.equals("")) {
 								title += " ";
 							}
-							String name = title + order.getString("firstname") + " "
-									+ order.getString("lastname");
+							String name = title + order.getString("firstname") + " " + order.getString("lastname");
 							customers[i].setText(name);
 							customersPaid[i].setText(order.getString("total"));
 						}
@@ -101,6 +100,7 @@ public class Dashboard extends PinSupportNetworkActivity {
 
 			@Override
 			public void onClick(View v) {
+				setNeedDownloadValue(false);
 				Intent completeOrders = new Intent(getBaseContext(), Orders.class);
 				completeOrders.putExtra("sortOption", "complete");
 				startActivityForResult(completeOrders, 1);
@@ -116,6 +116,7 @@ public class Dashboard extends PinSupportNetworkActivity {
 
 			@Override
 			public void onClick(View v) {
+				setNeedDownloadValue(false);
 				Intent lowStockProducts = new Intent(getBaseContext(), Products.class);
 				lowStockProducts.putExtra("sortOption", "lowStock");
 				startActivityForResult(lowStockProducts, 1);
@@ -131,6 +132,7 @@ public class Dashboard extends PinSupportNetworkActivity {
 
 			@Override
 			public void onClick(View v) {
+				setNeedDownloadValue(false);
 				Intent todayUsers = new Intent(getBaseContext(), Users.class);
 				todayUsers.putExtra("sortOption", "today");
 				startActivityForResult(todayUsers, 1);
@@ -146,6 +148,7 @@ public class Dashboard extends PinSupportNetworkActivity {
 
 			@Override
 			public void onClick(View v) {
+				setNeedDownloadValue(false);
 				Intent todayProducts = new Intent(getBaseContext(), Products.class);
 				todayProducts.putExtra("sortOption", "all");
 				startActivityForResult(todayProducts, 1);
@@ -161,6 +164,7 @@ public class Dashboard extends PinSupportNetworkActivity {
 
 			@Override
 			public void onClick(View v) {
+				setNeedDownloadValue(false);
 				Intent todayReviews = new Intent(getBaseContext(), Reviews.class);
 				todayReviews.putExtra("sortOption", "today");
 				startActivityForResult(todayReviews, 1);
@@ -176,6 +180,7 @@ public class Dashboard extends PinSupportNetworkActivity {
 
 			@Override
 			public void onClick(View v) {
+				setNeedDownloadValue(false);
 				Intent lastOrders = new Intent(getBaseContext(), Orders.class);
 				lastOrders.putExtra("sortOption", "all");
 				startActivityForResult(lastOrders, 1);

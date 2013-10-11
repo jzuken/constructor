@@ -10,11 +10,7 @@ public class PinSupportActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		if (savedInstanceState == null) {
-			needDownload = true;
-		} else {
-			needDownload = false;
-		}
+		needDownload = true;
 	}
 
 	private boolean isPaused;
@@ -70,6 +66,23 @@ public class PinSupportActivity extends Activity {
 
 	public void setNeedDownloadValue(boolean value) {
 		needDownload = value;
+	}
+	
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		outState.putBoolean("fromOtherPage", fromOtherPage);
+		outState.putBoolean("isPaused", isPaused);
+		outState.putBoolean("fromPin", fromPin);
+		super.onSaveInstanceState(outState);
+	}
+	
+	@Override
+	protected void onRestoreInstanceState(Bundle savedInstanceState) {
+		fromOtherPage = savedInstanceState.getBoolean("fromOtherPage");
+		isPaused = savedInstanceState.getBoolean("isPaused");
+		fromPin = savedInstanceState.getBoolean("fromPin");
+		needDownload = true;
+		super.onRestoreInstanceState(savedInstanceState);
 	}
 
 	private boolean needDownload;

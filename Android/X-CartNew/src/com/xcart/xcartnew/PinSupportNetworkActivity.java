@@ -14,9 +14,9 @@ public class PinSupportNetworkActivity extends PinSupportActivity {
 	}
 
 	@Override
-	public void onPause() {
+	public void onDestroy() {
 		cancelRequest();
-		super.onPause();
+		super.onDestroy();
 	}
 	
 	public void cancelRequest() {
