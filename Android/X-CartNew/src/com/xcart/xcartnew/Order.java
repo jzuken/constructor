@@ -28,6 +28,10 @@ public class Order {
 	public String getDate() {
 		return date;
 	}
+	
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
 	private String id;
 	private String userName;

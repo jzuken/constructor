@@ -38,7 +38,7 @@ public class OrdersListAdapter extends ArrayAdapter<Order> {
 		setupItem(holder);
 		return row;
 	}
-	
+
 	private enum StatusSymbols {
 		I, Q, P, B, D, F, C
 	}
@@ -46,12 +46,12 @@ public class OrdersListAdapter extends ArrayAdapter<Order> {
 	private void setupItem(OrderHolder holder) {
 		holder.userName.setText(holder.order.getUserName() + " (#" + holder.order.getId() + ")");
 		holder.paid.setText(holder.order.getPaid());
-		StatusSymbols statusSymbol = StatusSymbols.valueOf(holder.order.getStatus());	
+		StatusSymbols statusSymbol = StatusSymbols.valueOf(holder.order.getStatus());
 		holder.status.setText(getStatusBySymbol(statusSymbol));
 		holder.status.setTextColor(getColorResourceBySymbol(statusSymbol));
 		holder.date.setText(holder.order.getDate());
 	}
-	
+
 	private String getStatusBySymbol(StatusSymbols symbol) {
 		switch (symbol) {
 		case I:
@@ -72,13 +72,13 @@ public class OrdersListAdapter extends ArrayAdapter<Order> {
 			return "";
 		}
 	}
-	
+
 	private int getColorResourceBySymbol(StatusSymbols symbol) {
 		Resources resources = context.getResources();
 		switch (symbol) {
 		case I:
 		case D:
-		case F:		
+		case F:
 			return resources.getColor(R.color.red_status);
 		case Q:
 		case B:

@@ -58,14 +58,15 @@ public class Orders extends PinSupportNetworkActivity {
 			isDownloading = true;
 		}
 		hasNext = false;
-        final String from = String.valueOf(currentAmount);
+		final String from = String.valueOf(currentAmount);
 		GetRequester dataRequester = new GetRequester() {
-            @Override
-            protected String doInBackground(Void... params) {
-                return new HttpManager(authorizationData.getString("sid", "")).getLastOrders(from, String.valueOf(packAmount), period, searchWord, null);
-            }
+			@Override
+			protected String doInBackground(Void... params) {
+				return new HttpManager(authorizationData.getString("sid", "")).getLastOrders(from,
+						String.valueOf(packAmount), period, searchWord, null);
+			}
 
-            @Override
+			@Override
 			protected void onPostExecute(String result) {
 				if (result != null) {
 					try {
@@ -140,6 +141,7 @@ public class Orders extends PinSupportNetworkActivity {
 		ordersListView.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				setNeedDownloadValue(false);
+				lastPositionClicked = position;
 				Intent intent = new Intent(getBaseContext(), OrderInfo.class);
 				intent.putExtra("orderId", ((Order) view.getTag()).getId());
 				startActivityForResult(intent, 1);
@@ -204,6 +206,15 @@ public class Orders extends PinSupportNetworkActivity {
 		currentAmount = 0;
 	}
 
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (resultCode == ChangeStatus.changeStatusResultCode) {
+			((Order) ordersListView.getChildAt(lastPositionClicked).getTag()).setStatus(data.getStringExtra("status"));
+			adapter.notifyDataSetChanged();
+		}
+		super.onActivityResult(requestCode, resultCode, data);
+	}
+
 	private ProgressBar progressBar;
 	private OrdersListAdapter adapter;
 	private ListView ordersListView;
@@ -218,4 +229,5 @@ public class Orders extends PinSupportNetworkActivity {
 	private SharedPreferences authorizationData;
 	private String searchWord = "";
 	private EditText ordersSearchLine;
+	private int lastPositionClicked;
 }

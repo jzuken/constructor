@@ -71,20 +71,22 @@ public class OrderInfo extends PinSupportNetworkActivity {
 		statusItem.setClickable(false);
 		trackingNumberItem.setClickable(false);
 		customerItem.setClickable(false);
-        final String orderId = getIntent().getStringExtra("orderId");
+		final String orderId = getIntent().getStringExtra("orderId");
 		GetRequester dataRequester = new GetRequester() {
 
-            @Override
-            protected String doInBackground(Void... params) {
-                return new HttpManager(authorizationData.getString("sid", "")).getOrderInfo(orderId);
-            }
+			@Override
+			protected String doInBackground(Void... params) {
+				return new HttpManager(authorizationData.getString("sid", "")).getOrderInfo(orderId);
+			}
 
-            @Override
+			@Override
 			protected void onPostExecute(String result) {
 				if (result != null) {
 					try {
 						JSONObject obj = new JSONObject(result);
-						status.setText(getStatusBySymbol(StatusSymbols.valueOf(obj.getString("status"))));
+
+						statusSymbol = obj.getString("status");
+						status.setText(getStatusBySymbol(StatusSymbols.valueOf(statusSymbol)));
 						trackingNumber.setText(obj.getString("tracking"));
 						paymentMethod.setText(obj.getString("payment_method"));
 						deliveryMethod.setText(obj.getString("shipping"));
@@ -184,6 +186,7 @@ public class OrderInfo extends PinSupportNetworkActivity {
 			public void onClick(View v) {
 				setNeedDownloadValue(false);
 				Intent intent = new Intent(getBaseContext(), ChangeStatus.class);
+				intent.putExtra("status", statusSymbol);
 				intent.putExtra("orderId", orderIdValue);
 				startActivityForResult(intent, 1);
 			}
@@ -237,25 +240,25 @@ public class OrderInfo extends PinSupportNetworkActivity {
 	private void setNewTrackingNumber(final String newNumber) {
 		try {
 			new GetRequester() {
-                @Override
-                protected String doInBackground(Void... params) {
-                    return new HttpManager(sid).changeTrackingNumber(orderIdValue, newNumber);
-                }
+				@Override
+				protected String doInBackground(Void... params) {
+					return new HttpManager(sid).changeTrackingNumber(orderIdValue, newNumber);
+				}
 
-                @Override
-                protected void onPostExecute(String response) {
-                    super.onPostExecute(response);
+				@Override
+				protected void onPostExecute(String response) {
+					super.onPostExecute(response);
 
-                    if (response != null) {
-                        Toast.makeText(getBaseContext(), "Success", Toast.LENGTH_SHORT).show();
-                        trackingNumber.setText(newNumber);
-                    } else {
-                        showConnectionErrorMessage();
-                    }
-                }
-            }.execute();
+					if (response != null) {
+						Toast.makeText(getBaseContext(), "Success", Toast.LENGTH_SHORT).show();
+						trackingNumber.setText(newNumber);
+					} else {
+						showConnectionErrorMessage();
+					}
+				}
+			}.execute();
 		} catch (Exception e) {
-            showConnectionErrorMessage();
+			showConnectionErrorMessage();
 		}
 	}
 
@@ -267,6 +270,18 @@ public class OrderInfo extends PinSupportNetworkActivity {
 	private void setupCustomerItem() {
 		customer = (TextView) findViewById(R.id.customer);
 		customerItem = (RelativeLayout) findViewById(R.id.customer_item);
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (resultCode == ChangeStatus.changeStatusResultCode) {
+			statusSymbol = data.getStringExtra("status");
+			status.setText(getStatusBySymbol(StatusSymbols.valueOf(statusSymbol)));
+			Intent resultIntent = new Intent();
+			resultIntent.putExtra("status", statusSymbol);
+			setResult(ChangeStatus.changeStatusResultCode, resultIntent);
+		}
+		super.onActivityResult(requestCode, resultCode, data);
 	}
 
 	private String orderIdValue = "";
@@ -294,4 +309,5 @@ public class OrderInfo extends PinSupportNetworkActivity {
 	private RelativeLayout customerItem;
 	private SharedPreferences authorizationData;
 	private String sid;
+	private String statusSymbol;
 }
