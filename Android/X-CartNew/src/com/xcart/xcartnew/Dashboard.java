@@ -1,11 +1,5 @@
 package com.xcart.xcartnew;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,9 +18,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.xcart.xcartnew.managers.network.HttpManager;
-
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 
 public class Dashboard extends PinSupportNetworkActivity {
 	@Override
