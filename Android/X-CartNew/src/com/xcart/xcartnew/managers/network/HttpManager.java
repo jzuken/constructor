@@ -1,9 +1,7 @@
 package com.xcart.xcartnew.managers.network;
 
-import android.net.Uri;
-
-import com.xcart.xcartnew.SSLDefaultHttpClient;
-import com.xcart.xcartnew.managers.LogManager;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -12,9 +10,10 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.util.EntityUtils;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URI;
+import android.net.Uri;
+
+import com.xcart.xcartnew.SSLDefaultHttpClient;
+import com.xcart.xcartnew.managers.LogManager;
 
 /**
  * Created by Nikita on 13.10.13.

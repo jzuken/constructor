@@ -6,6 +6,7 @@ import org.json.JSONObject;
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.webkit.WebSettings;
@@ -35,7 +36,7 @@ public class ProductInfo extends PinSupportNetworkActivity {
 		sold = (TextView) findViewById(R.id.sold);
 		inStock = (TextView) findViewById(R.id.in_stock);
 		availability = (TextView) findViewById(R.id.availability);
-		initFullDescrLable();	
+		initFullDescrLable();
 		authorizationData = getSharedPreferences("AuthorizationData", MODE_PRIVATE);
 	}
 
@@ -51,14 +52,14 @@ public class ProductInfo extends PinSupportNetworkActivity {
 	private void updateData() {
 		progressBar.setVisibility(View.VISIBLE);
 
-        final String id = getIntent().getStringExtra("id");
+		final String id = getIntent().getStringExtra("id");
 		GetRequester dataRequester = new GetRequester() {
-            @Override
-            protected String doInBackground(Void... params) {
-                return new HttpManager(authorizationData.getString("sid", "")).getProductInfo(id);
-            }
+			@Override
+			protected String doInBackground(Void... params) {
+				return new HttpManager(authorizationData.getString("sid", "")).getProductInfo(id);
+			}
 
-            @Override
+			@Override
 			protected void onPostExecute(String result) {
 				if (result != null) {
 					try {
@@ -74,13 +75,21 @@ public class ProductInfo extends PinSupportNetworkActivity {
 						} else {
 							availability.setText("Not available");
 						}
+						String imageUrl = obj.getString("url");
+						if (!imageUrl.equals(NO_IMAGE_URL)) {
+							new DownloadImageTask(productImage, progressBar).execute(imageUrl);
+						} else {
+							productImage.setImageDrawable(getResources().getDrawable(R.drawable.no_image));
+							progressBar.setVisibility(View.GONE);
+						}
 					} catch (JSONException e) {
 						e.printStackTrace();
+						progressBar.setVisibility(View.GONE);
 					}
 				} else {
 					showConnectionErrorMessage();
+					progressBar.setVisibility(View.GONE);
 				}
-				progressBar.setVisibility(View.GONE);
 			}
 		};
 
@@ -100,6 +109,7 @@ public class ProductInfo extends PinSupportNetworkActivity {
 		sold.setText("");
 		inStock.setText("");
 		availability.setText("");
+		productImage.setImageResource(android.R.color.transparent);
 	}
 
 	private void initFullDescrLable() {
@@ -149,4 +159,5 @@ public class ProductInfo extends PinSupportNetworkActivity {
 	private TextView availability;
 	private TextView fullDescrLabel;
 	private SharedPreferences authorizationData;
+	private static final String NO_IMAGE_URL = "http://54.213.38.9/xcart";
 }
