@@ -19,6 +19,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.xcart.xcartnew.managers.network.HttpManager;
+
 public class OrderInfo extends PinSupportNetworkActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -69,8 +71,15 @@ public class OrderInfo extends PinSupportNetworkActivity {
 		statusItem.setClickable(false);
 		trackingNumberItem.setClickable(false);
 		customerItem.setClickable(false);
+        final String orderId = getIntent().getStringExtra("orderId");
 		GetRequester dataRequester = new GetRequester() {
-			@Override
+
+            @Override
+            protected String doInBackground(Void... params) {
+                return new HttpManager(authorizationData.getString("sid", "")).getOrderInfo(orderId);
+            }
+
+            @Override
 			protected void onPostExecute(String result) {
 				if (result != null) {
 					try {
@@ -134,7 +143,7 @@ public class OrderInfo extends PinSupportNetworkActivity {
 		};
 
 		setRequester(dataRequester);
-		dataRequester.execute("https://54.213.38.9/api/api2.php?request=order_info&id=" + orderIdValue + "&sid=" + sid);
+		dataRequester.execute();
 	}
 
 	private String getStatusBySymbol(StatusSymbols symbol) {
@@ -225,20 +234,28 @@ public class OrderInfo extends PinSupportNetworkActivity {
 		});
 	}
 
-	private void setNewTrackingNumber(String newNumber) {
-		String response;
+	private void setNewTrackingNumber(final String newNumber) {
 		try {
-			response = new GetRequester().execute(
-					"https://54.213.38.9/api/api2.php?request=change_tracking&order_id=" + orderIdValue
-							+ "&tracking_number=" + newNumber + "&sid=" + sid).get();
+			new GetRequester() {
+                @Override
+                protected String doInBackground(Void... params) {
+                    return new HttpManager(sid).changeTrackingNumber(orderIdValue, newNumber);
+                }
+
+                @Override
+                protected void onPostExecute(String response) {
+                    super.onPostExecute(response);
+
+                    if (response != null) {
+                        Toast.makeText(getBaseContext(), "Success", Toast.LENGTH_SHORT).show();
+                        trackingNumber.setText(newNumber);
+                    } else {
+                        showConnectionErrorMessage();
+                    }
+                }
+            }.execute();
 		} catch (Exception e) {
-			response = null;
-		}
-		if (response != null) {
-			Toast.makeText(getBaseContext(), "Success", Toast.LENGTH_SHORT).show();
-			trackingNumber.setText(newNumber);
-		} else {
-			showConnectionErrorMessage();
+            showConnectionErrorMessage();
 		}
 	}
 

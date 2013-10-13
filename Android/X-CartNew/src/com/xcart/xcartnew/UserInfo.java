@@ -19,6 +19,8 @@ import android.widget.TextView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView.OnItemClickListener;
 
+import com.xcart.xcartnew.managers.network.HttpManager;
+
 public class UserInfo extends PinSupportNetworkActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -100,8 +102,16 @@ public class UserInfo extends PinSupportNetworkActivity {
 	private void updateData() {
 		progressBar.setVisibility(View.VISIBLE);
 
+        SharedPreferences authorizationData = getSharedPreferences("AuthorizationData", MODE_PRIVATE);
+        final String sid = authorizationData.getString("sid", "");
+
 		GetRequester dataRequester = new GetRequester() {
-			@Override
+            @Override
+            protected String doInBackground(Void... params) {
+                return new HttpManager(sid).getUserInfo(id);
+            }
+
+            @Override
 			protected void onPostExecute(String result) {
 				if (result != null) {
 					try {
@@ -125,9 +135,7 @@ public class UserInfo extends PinSupportNetworkActivity {
 		};
 
 		setRequester(dataRequester);
-		SharedPreferences authorizationData = getSharedPreferences("AuthorizationData", MODE_PRIVATE);
-		String sid = authorizationData.getString("sid", "");
-		dataRequester.execute("https://54.213.38.9/api/api2.php?request=user_info&id=" + id + "&sid=" + sid);
+		dataRequester.execute();
 	}
 
 	private void addOrderToList(final String id, final String userName, final String paid, final String status,

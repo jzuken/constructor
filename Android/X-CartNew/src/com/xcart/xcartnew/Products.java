@@ -33,6 +33,8 @@ import android.widget.TabWidget;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.xcart.xcartnew.managers.network.HttpManager;
+
 public class Products extends PinSupportNetworkActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +43,9 @@ public class Products extends PinSupportNetworkActivity {
 		setupListViewAdapter();
 		String sortOption = getIntent().getStringExtra("sortOption");
 		if (sortOption.equals("lowStock")) {
-			option = "&low_stock=1";
+            option = "1";
+        } else {
+            option = null;
 		}
 		setupTabs(sortOption);
 		settingsData = PreferenceManager.getDefaultSharedPreferences(this);
@@ -65,8 +69,15 @@ public class Products extends PinSupportNetworkActivity {
 			isDownloading = true;
 		}
 		hasNext = false;
+        final String from = String.valueOf(currentAmount);
 		GetRequester dataRequester = new GetRequester() {
+
 			@Override
+            protected String doInBackground(Void... params) {
+                return new HttpManager(authorizationData.getString("sid", "")).getProducts(from, String.valueOf(packAmount), searchWord, option);
+            }
+
+            @Override
 			protected void onPostExecute(String result) {
 				if (result != null) {
 					try {
@@ -99,11 +110,9 @@ public class Products extends PinSupportNetworkActivity {
 		};
 
 		setRequester(dataRequester);
-		dataRequester.execute("https://54.213.38.9/api/api2.php?request=products&from=" + String.valueOf(currentAmount)
-				+ "&size=" + String.valueOf(packAmount) + option + "&sid=" + authorizationData.getString("sid", "")
-				+ "&search=" + searchWord);
-		currentAmount += packAmount;
-	}
+        dataRequester.execute();
+        currentAmount += packAmount;
+    }
 
 	private void addProductToList(final String id, final String name, final String sku, final String inStock,
 			final String price) {
@@ -220,25 +229,35 @@ public class Products extends PinSupportNetworkActivity {
 			}
 		});
 
-		dialog.show();
-	}
+        dialog.show();
+    }
 
-	private void setNewPrice(String id, String newPrice) {
-		String response;
-		try {
-			response = new GetRequester().execute(
-					"https://54.213.38.9/xcart/api.php?request=update_product&id=" + id + "&price=" + newPrice).get();
-		} catch (Exception e) {
-			response = null;
-		}
-		if (response != null) {
-			Toast.makeText(getBaseContext(), "Success", Toast.LENGTH_SHORT).show();
-			clearList();
-			updateProductsList();
-		} else {
-			showConnectionErrorMessage();
-		}
-	}
+    private void setNewPrice(final String id, final String newPrice) {
+        String response;
+        try {
+            new GetRequester() {
+                @Override
+                protected String doInBackground(Void... params) {
+                    return new HttpManager(authorizationData.getString("sid", "")).updateProductPrice(id, newPrice);
+                }
+
+                @Override
+                protected void onPostExecute(String response) {
+                    super.onPostExecute(response);
+                    if (response != null) {
+                        Toast.makeText(getBaseContext(), "Success", Toast.LENGTH_SHORT).show();
+                        clearList();
+                        updateProductsList();
+
+                    } else {
+                        showConnectionErrorMessage();
+                    }
+                }
+            }.execute();
+        } catch (Exception e) {
+            showConnectionErrorMessage();
+        }
+    }
 
 	private void hideKeyboard(EditText edit) {
 		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -270,22 +289,32 @@ public class Products extends PinSupportNetworkActivity {
 		dialog.show();
 	}
 
-	private void deleteProduct(String id) {
-		String response;
-		try {
-			response = new GetRequester().execute("https://54.213.38.9/xcart/api.php?request=delete_product&id=" + id)
-					.get();
-		} catch (Exception e) {
-			response = null;
-		}
-		if (response != null) {
-			Toast.makeText(getBaseContext(), "Success", Toast.LENGTH_SHORT).show();
-			clearList();
-			updateProductsList();
-		} else {
-			showConnectionErrorMessage();
-		}
-	}
+    private void deleteProduct(final String id) {
+        String response;
+        try {
+            new GetRequester() {
+                @Override
+                protected String doInBackground(Void... params) {
+                    return new HttpManager(authorizationData.getString("sid", "")).deleteProduct(id);
+                }
+
+                @Override
+                protected void onPostExecute(String result) {
+                    super.onPostExecute(result);
+                    if (result != null) {
+                        Toast.makeText(getBaseContext(), "Success", Toast.LENGTH_SHORT).show();
+                        clearList();
+                        updateProductsList();
+                    } else {
+                        showConnectionErrorMessage();
+                    }
+                }
+            }.execute();
+        } catch (Exception e) {
+            showConnectionErrorMessage();
+        }
+
+    }
 
 	private void clearList() {
 		adapter.clear();
@@ -312,40 +341,40 @@ public class Products extends PinSupportNetworkActivity {
 	private void setupTabs(String sortOption) {
 		optionTabHost = (CustomTabHost) findViewById(android.R.id.tabhost);
 		optionTabHost.setup();
-		optionTabHost.addEmptyTab("&low_stock=1", getResources().getString(R.string.low_stock_text), -1, 
-				10, 10, 10, 10);
-		optionTabHost.addEmptyTab("", getResources().getString(R.string.all), 1, 10, 10, 10, 10);
-		if (sortOption.equals("all")) {
-			optionTabHost.setCurrentTab(1);
-		}
-		TabWidget tabWidget = (TabWidget) findViewById(android.R.id.tabs);
-		LinearLayout.LayoutParams currentLayout = (LinearLayout.LayoutParams) tabWidget.getChildAt(0).getLayoutParams();
-		currentLayout.setMargins(0, 0, 1, 0);
-		tabWidget.requestLayout();
+        optionTabHost.addEmptyTab("low_stock", getResources().getString(R.string.low_stock_text), -1,
+                10, 10, 10, 10);
+        optionTabHost.addEmptyTab("", getResources().getString(R.string.all), 1, 10, 10, 10, 10);
+        if (sortOption.equals("all")) {
+            optionTabHost.setCurrentTab(1);
+        }
+        TabWidget tabWidget = (TabWidget) findViewById(android.R.id.tabs);
+        LinearLayout.LayoutParams currentLayout = (LinearLayout.LayoutParams) tabWidget.getChildAt(0).getLayoutParams();
+        currentLayout.setMargins(0, 0, 1, 0);
+        tabWidget.requestLayout();
 
-		optionTabHost.setOnTabChangedListener(new OnTabChangeListener() {
-			public void onTabChanged(String tabId) {
-				option = tabId;
-				cancelRequest();
-				clearList();
-				updateProductsList();
-			}
-		});
-	}
+        optionTabHost.setOnTabChangedListener(new OnTabChangeListener() {
+            public void onTabChanged(String tabId) {
+                option = tabId.equals("low_stock") ? "1" : null;
+                cancelRequest();
+                clearList();
+                updateProductsList();
+            }
+        });
+    }
 
-	private ProgressBar progressBar;
-	private ProductsListAdapter adapter;
-	private int currentAmount;
-	private CustomTabHost optionTabHost;
-	private String option = "";
-	private boolean isDownloading;
-	private boolean hasNext;
-	private int packAmount;
-	private final int startItemCount = 4;
-	private String searchWord = "";
-	private ListView productsListView;
-	private Object lock = new Object();
-	private SharedPreferences settingsData;
-	private SharedPreferences authorizationData;
-	private EditText productsSearchLine;
+    private ProgressBar progressBar;
+    private ProductsListAdapter adapter;
+    private int currentAmount;
+    private CustomTabHost optionTabHost;
+    private String option;
+    private boolean isDownloading;
+    private boolean hasNext;
+    private int packAmount;
+    private final int startItemCount = 4;
+    private String searchWord = "";
+    private ListView productsListView;
+    private Object lock = new Object();
+    private SharedPreferences settingsData;
+    private SharedPreferences authorizationData;
+    private EditText productsSearchLine;
 }

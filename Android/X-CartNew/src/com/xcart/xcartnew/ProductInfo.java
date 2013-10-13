@@ -14,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.xcart.xcartnew.managers.network.HttpManager;
+
 public class ProductInfo extends PinSupportNetworkActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +50,15 @@ public class ProductInfo extends PinSupportNetworkActivity {
 
 	private void updateData() {
 		progressBar.setVisibility(View.VISIBLE);
+
+        final String id = getIntent().getStringExtra("id");
 		GetRequester dataRequester = new GetRequester() {
-			@Override
+            @Override
+            protected String doInBackground(Void... params) {
+                return new HttpManager(authorizationData.getString("sid", "")).getProductInfo(id);
+            }
+
+            @Override
 			protected void onPostExecute(String result) {
 				if (result != null) {
 					try {
@@ -76,8 +85,7 @@ public class ProductInfo extends PinSupportNetworkActivity {
 		};
 
 		setRequester(dataRequester);
-		dataRequester.execute("https://54.213.38.9/api/api2.php?request=product_info&id="
-				+ getIntent().getStringExtra("id") + "&sid=" + authorizationData.getString("sid", ""));
+		dataRequester.execute();
 	}
 
 	private boolean isAvailable(String inStock, String minStock) {
