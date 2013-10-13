@@ -26,5 +26,8 @@
         android:inputType="number"
         android:key="products_amount"
         android:title="Products pack size" />
+    <Preference 
+        android:key="logout"
+        android:title="Log out"/>
 
 </PreferenceScreen>
