@@ -38,6 +38,7 @@ public class HttpManager {
     private static final String LAST_ORDERS = "last_orders";
     private static final String REVIEWS = "reviews";
     private static final String DELETE_REVIEW = "delete_review";
+    private static final String CHANGE_TRACKING = "change_tracking";
 
     // parameters
     private static final String REQUEST = "request";
@@ -51,6 +52,8 @@ public class HttpManager {
     private static final String LOW_STOCK = "low_stock";
     private static final String DATE = "date";
     private static final String STATUS = "status";
+    private static final String ORDER_ID = "order_id";
+    private static final String TRACKING_NUMBER = "tracking_number";
 
     private HttpClient client;
 
@@ -170,6 +173,16 @@ public class HttpManager {
         Uri uri = Uri.parse(SERVER_URL).buildUpon().path(API)
                 .appendQueryParameter(REQUEST, DELETE_REVIEW)
                 .appendQueryParameter(ID, id)
+                .appendQueryParameter(SID, sid)
+                .build();
+        return get(uri);
+    }
+
+    public String changeTrackingNumber(String id, String tracking) {
+        Uri uri = Uri.parse(SERVER_URL).buildUpon().path(API)
+                .appendQueryParameter(REQUEST, CHANGE_TRACKING)
+                .appendQueryParameter(ORDER_ID, id)
+                .appendQueryParameter(TRACKING_NUMBER, tracking)
                 .appendQueryParameter(SID, sid)
                 .build();
         return get(uri);
