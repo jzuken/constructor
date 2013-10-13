@@ -23,6 +23,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TabHost.OnTabChangeListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -35,345 +36,318 @@ import android.widget.Toast;
 import com.xcart.xcartnew.managers.network.HttpManager;
 
 public class Products extends PinSupportNetworkActivity {
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.products);
-        setupListViewAdapter();
-        String sortOption = getIntent().getStringExtra("sortOption");
-        if (sortOption.equals("lowStock")) {
-            option = "1";
-        } else {
-            option = null;
-        }
-        setupTabs(sortOption);
-        settingsData = PreferenceManager.getDefaultSharedPreferences(this);
-        authorizationData = getSharedPreferences("AuthorizationData", MODE_PRIVATE);
-        setupSearchLine();
-    }
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.products);
+		setupListViewAdapter();
+		String sortOption = getIntent().getStringExtra("sortOption");
+		if (sortOption.equals("lowStock")) {
+			option = "&low_stock=1";
+		}
+		setupTabs(sortOption);
+		settingsData = PreferenceManager.getDefaultSharedPreferences(this);
+		authorizationData = getSharedPreferences("AuthorizationData", MODE_PRIVATE);
+		setupSearchLine();
+	}
 
-    @Override
-    protected void withoutPinAction() {
-        packAmount = Integer.parseInt(settingsData.getString("products_amount", "10"));
-        if (isNeedDownload()) {
-            clearList();
-            updateProductsList();
-        }
-        super.withoutPinAction();
-    }
+	@Override
+	protected void withoutPinAction() {
+		packAmount = Integer.parseInt(settingsData.getString("products_amount", "10"));
+		if (isNeedDownload()) {
+			clearList();
+			updateProductsList();
+		}
+		super.withoutPinAction();
+	}
 
-    private void updateProductsList() {
-        progressBar.setVisibility(View.VISIBLE);
-        synchronized (lock) {
-            isDownloading = true;
-        }
-        hasNext = false;
-        final String from = String.valueOf(currentAmount);
-        GetRequester dataRequester = new GetRequester() {
+	private void updateProductsList() {
+		progressBar.setVisibility(View.VISIBLE);
+		synchronized (lock) {
+			isDownloading = true;
+		}
+		hasNext = false;
+		GetRequester dataRequester = new GetRequester() {
+			@Override
+			protected void onPostExecute(String result) {
+				if (result != null) {
+					try {
+						JSONArray array = new JSONArray(result);
+						int length = array.length();
+						if (length == packAmount) {
+							hasNext = true;
+						}
+						for (int i = 0; i < length; i++) {
+							JSONObject obj = array.getJSONObject(i);
+							String id = obj.getString("productid");
+							String name = obj.getString("product");
+							String productCode = obj.getString("productcode");
+							String sku = productCode.substring(3, productCode.length());
+							String inStock = obj.getString("avail");
+							String price = obj.getString("list_price");
+							addProductToList(id, name, sku, inStock, price);
+						}
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+				} else {
+					showConnectionErrorMessage();
+				}
+				progressBar.setVisibility(View.GONE);
+				synchronized (lock) {
+					isDownloading = false;
+				}
+			}
+		};
 
-            @Override
-            protected String doInBackground(Void... params) {
-                return new HttpManager(authorizationData.getString("sid", "")).getProducts(from, String.valueOf(packAmount), searchWord, option);
-            }
+		setRequester(dataRequester);
+		dataRequester.execute("https://54.213.38.9/api/api2.php?request=products&from=" + String.valueOf(currentAmount)
+				+ "&size=" + String.valueOf(packAmount) + option + "&sid=" + authorizationData.getString("sid", "")
+				+ "&search=" + searchWord);
+		currentAmount += packAmount;
+	}
 
-            @Override
-            protected void onPostExecute(String result) {
-                if (result != null) {
-                    try {
-                        JSONArray array = new JSONArray(result);
-                        int length = array.length();
-                        if (length == packAmount) {
-                            hasNext = true;
-                        }
-                        for (int i = 0; i < length; i++) {
-                            JSONObject obj = array.getJSONObject(i);
-                            String id = obj.getString("productid");
-                            String name = obj.getString("product");
-                            String productCode = obj.getString("productcode");
-                            String sku = productCode.substring(3, productCode.length());
-                            String inStock = obj.getString("avail");
-                            String price = obj.getString("list_price");
-                            addProductToList(id, name, sku, inStock, price);
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    showConnectionErrorMessage();
-                }
-                progressBar.setVisibility(View.GONE);
-                synchronized (lock) {
-                    isDownloading = false;
-                }
-            }
-        };
+	private void addProductToList(final String id, final String name, final String sku, final String inStock,
+			final String price) {
+		adapter.add(new Product(id, name, sku, inStock, price));
+	}
 
-        setRequester(dataRequester);
-        dataRequester.execute();
-        currentAmount += packAmount;
-    }
+	private void setupListViewAdapter() {
+		adapter = new ProductsListAdapter(this, R.layout.product_item, new ArrayList<Product>());
+		productsListView = (ListView) findViewById(R.id.products_list);
+		LayoutInflater inflater = getLayoutInflater();
 
-    private void addProductToList(final String id, final String name, final String sku, final String inStock,
-                                  final String price) {
-        adapter.add(new Product(id, name, sku, inStock, price));
-    }
+		View listFooter = inflater.inflate(R.layout.on_demand_footer, null, false);
+		progressBar = (ProgressBar) listFooter.findViewById(R.id.progress_bar);
+		productsListView.addFooterView(listFooter, null, false);
 
-    private void setupListViewAdapter() {
-        adapter = new ProductsListAdapter(this, R.layout.product_item, new ArrayList<Product>());
-        productsListView = (ListView) findViewById(R.id.products_list);
-        LayoutInflater inflater = getLayoutInflater();
+		productsListView.setFooterDividersEnabled(false);
 
-        View listFooter = inflater.inflate(R.layout.on_demand_footer, null, false);
-        progressBar = (ProgressBar) listFooter.findViewById(R.id.progress_bar);
-        productsListView.addFooterView(listFooter, null, false);
+		productsListView.setOnScrollListener(new OnScrollListener() {
 
-        productsListView.setFooterDividersEnabled(false);
+			@Override
+			public void onScrollStateChanged(AbsListView arg0, int arg1) {
+			}
 
-        productsListView.setOnScrollListener(new OnScrollListener() {
+			@Override
+			public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+				if (totalItemCount > startItemCount && firstVisibleItem + visibleItemCount == totalItemCount
+						&& !isDownloading && hasNext) {
+					updateProductsList();
+				}
+			}
+		});
 
-            @Override
-            public void onScrollStateChanged(AbsListView arg0, int arg1) {
-            }
+		productsListView.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				showActionDialog(((Product) view.getTag()));
+			}
+		});
 
-            @Override
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                if (totalItemCount > startItemCount && firstVisibleItem + visibleItemCount == totalItemCount
-                        && !isDownloading && hasNext) {
-                    updateProductsList();
-                }
-            }
-        });
+		productsListView.setAdapter(adapter);
+	}
 
-        productsListView.setOnItemClickListener(new OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                showActionDialog(((Product) view.getTag()));
-            }
-        });
+	private void showActionDialog(final Product item) {
+		LinearLayout action_view = (LinearLayout) getLayoutInflater().inflate(R.layout.action_dialog, null);
+		final CustomDialog dialog = new CustomDialog(this, action_view);
 
-        productsListView.setAdapter(adapter);
-    }
+		ListView actionList = (ListView) action_view.findViewById(R.id.action_list);
 
-    private void showActionDialog(final Product item) {
-        LinearLayout action_view = (LinearLayout) getLayoutInflater().inflate(R.layout.action_dialog, null);
-        final CustomDialog dialog = new CustomDialog(this, action_view);
+		String[] actions = { "Full info", "Set price", "Remove", "Cancel" };
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.action_item, R.id.textItem, actions);
 
-        ListView actionList = (ListView) action_view.findViewById(R.id.action_list);
+		actionList.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				switch (position) {
+				case 0:
+					showFullInfo(item.getId(), item.getName());
+					dialog.dismiss();
+					break;
+				case 1:
+					editPriceClick(item.getId(), item.getPrice());
+					dialog.dismiss();
+					break;
+				case 2:
+					deleteClick(item.getId());
+					dialog.dismiss();
+					break;
+				case 3:
+					dialog.dismiss();
+					break;
+				default:
+					break;
+				}
 
-        String[] actions = {"Full info", "Set price", "Remove", "Cancel"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.action_item, R.id.textItem, actions);
+			}
+		});
 
-        actionList.setOnItemClickListener(new OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                switch (position) {
-                    case 0:
-                        showFullInfo(item.getId(), item.getName());
-                        dialog.dismiss();
-                        break;
-                    case 1:
-                        editPriceClick(item.getId(), item.getPrice());
-                        dialog.dismiss();
-                        break;
-                    case 2:
-                        deleteClick(item.getId());
-                        dialog.dismiss();
-                        break;
-                    case 3:
-                        dialog.dismiss();
-                        break;
-                    default:
-                        break;
-                }
+		actionList.setAdapter(adapter);
 
-            }
-        });
+		dialog.show();
+	}
 
-        actionList.setAdapter(adapter);
+	private void showFullInfo(final String id, final String name) {
+		setNeedDownloadValue(false);
+		Intent intent = new Intent(this, ProductInfo.class);
+		intent.putExtra("id", id);
+		intent.putExtra("name", name);
+		startActivityForResult(intent, 1);
+	}
 
-        dialog.show();
-    }
+	private void editPriceClick(final String id, final String oldPrice) {
+		LinearLayout view = (LinearLayout) getLayoutInflater().inflate(R.layout.change_price_dialog, null);
+		final EditText newPriceEditor = (EditText) view.findViewById(R.id.product_price_editor);
+		newPriceEditor.setText(oldPrice);
+		final CustomDialog dialog = new CustomDialog(this, view);
 
-    private void showFullInfo(final String id, final String name) {
-        setNeedDownloadValue(false);
-        Intent intent = new Intent(this, ProductInfo.class);
-        intent.putExtra("id", id);
-        intent.putExtra("name", name);
-        startActivityForResult(intent, 1);
-    }
+		ImageButton okButton = (ImageButton) view.findViewById(R.id.dialog_ok_button);
+		okButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				hideKeyboard(newPriceEditor);
+				String newPrice = newPriceEditor.getText().toString();
+				try {
+					Double price = Double.parseDouble(newPrice);
+					if (price > 0) {
+						dialog.dismiss();
+						if (!newPrice.equals(oldPrice)) {
+							setNewPrice(id, newPrice);
+						}
+					} else {
+						Toast.makeText(getBaseContext(), "The price can not be zero", Toast.LENGTH_SHORT).show();
+					}
+				} catch (Exception e) {
+					Toast.makeText(getBaseContext(), "Incorrect input", Toast.LENGTH_SHORT).show();
+				}
+			}
+		});
 
-    private void editPriceClick(final String id, final String oldPrice) {
-        LinearLayout view = (LinearLayout) getLayoutInflater().inflate(R.layout.change_price_dialog, null);
-        final EditText newPriceEditor = (EditText) view.findViewById(R.id.product_price_editor);
-        newPriceEditor.setText(oldPrice);
-        final CustomDialog dialog = new CustomDialog(this, view);
+		dialog.show();
+	}
 
-        ImageButton okButton = (ImageButton) view.findViewById(R.id.dialog_ok_button);
-        okButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                hideKeyboard(newPriceEditor);
-                String newPrice = newPriceEditor.getText().toString();
-                try {
-                    Double price = Double.parseDouble(newPrice);
-                    if (price > 0) {
-                        dialog.dismiss();
-                        if (!newPrice.equals(oldPrice)) {
-                            setNewPrice(id, newPrice);
-                        }
-                    } else {
-                        Toast.makeText(getBaseContext(), "The price can not be zero", Toast.LENGTH_SHORT).show();
-                    }
-                } catch (Exception e) {
-                    Toast.makeText(getBaseContext(), "Incorrect input", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+	private void setNewPrice(String id, String newPrice) {
+		String response;
+		try {
+			response = new GetRequester().execute(
+					"https://54.213.38.9/xcart/api.php?request=update_product&id=" + id + "&price=" + newPrice).get();
+		} catch (Exception e) {
+			response = null;
+		}
+		if (response != null) {
+			Toast.makeText(getBaseContext(), "Success", Toast.LENGTH_SHORT).show();
+			clearList();
+			updateProductsList();
+		} else {
+			showConnectionErrorMessage();
+		}
+	}
 
-        dialog.show();
-    }
+	private void hideKeyboard(EditText edit) {
+		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+		imm.hideSoftInputFromWindow(edit.getWindowToken(), 0);
+	}
 
-    private void setNewPrice(final String id, final String newPrice) {
-        String response;
-        try {
-            new GetRequester() {
-                @Override
-                protected String doInBackground(Void... params) {
-                    return new HttpManager(authorizationData.getString("sid", "")).updateProductPrice(id, newPrice);
-                }
+	private void deleteClick(final String id) {
+		LinearLayout view = (LinearLayout) getLayoutInflater().inflate(R.layout.confirmation_dialog, null);
+		((TextView) view.findViewById(R.id.confirm_question)).setText("Are you sure you want to remove this product?");
+		final CustomDialog dialog = new CustomDialog(this, view);
 
-                @Override
-                protected void onPostExecute(String response) {
-                    super.onPostExecute(response);
-                    if (response != null) {
-                        Toast.makeText(getBaseContext(), "Success", Toast.LENGTH_SHORT).show();
-                        clearList();
-                        updateProductsList();
+		ImageButton noButton = (ImageButton) view.findViewById(R.id.dialog_no_button);
+		noButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				dialog.dismiss();
+			}
+		});
 
-                    } else {
-                        showConnectionErrorMessage();
-                    }
-                }
-            }.execute();
-        } catch (Exception e) {
-            showConnectionErrorMessage();
-        }
-    }
+		ImageButton yesButton = (ImageButton) view.findViewById(R.id.dialog_yes_button);
+		yesButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				dialog.dismiss();
+				deleteProduct(id);
+			}
+		});
 
-    private void hideKeyboard(EditText edit) {
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(edit.getWindowToken(), 0);
-    }
+		dialog.show();
+	}
 
-    private void deleteClick(final String id) {
-        LinearLayout view = (LinearLayout) getLayoutInflater().inflate(R.layout.confirmation_dialog, null);
-        ((TextView) view.findViewById(R.id.confirm_question)).setText("Are you sure you want to remove this product?");
-        final CustomDialog dialog = new CustomDialog(this, view);
+	private void deleteProduct(String id) {
+		String response;
+		try {
+			response = new GetRequester().execute("https://54.213.38.9/xcart/api.php?request=delete_product&id=" + id)
+					.get();
+		} catch (Exception e) {
+			response = null;
+		}
+		if (response != null) {
+			Toast.makeText(getBaseContext(), "Success", Toast.LENGTH_SHORT).show();
+			clearList();
+			updateProductsList();
+		} else {
+			showConnectionErrorMessage();
+		}
+	}
 
-        ImageButton noButton = (ImageButton) view.findViewById(R.id.dialog_no_button);
-        noButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
+	private void clearList() {
+		adapter.clear();
+		currentAmount = 0;
+	}
 
-        ImageButton yesButton = (ImageButton) view.findViewById(R.id.dialog_yes_button);
-        yesButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                deleteProduct(id);
-            }
-        });
+	private void setupSearchLine() {
+		productsSearchLine = (EditText) findViewById(R.id.search_line);
+		productsSearchLine.setOnKeyListener(new OnKeyListener() {
+			public boolean onKey(View v, int keyCode, KeyEvent event) {
+				// If the event is a key-down event on the "enter" button
+				if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+					searchWord = productsSearchLine.getText().toString();
+					hideKeyboard(productsSearchLine);
+					clearList();
+					updateProductsList();
+					return true;
+				}
+				return false;
+			}
+		});
+	}
 
-        dialog.show();
-    }
+	private void setupTabs(String sortOption) {
+		optionTabHost = (CustomTabHost) findViewById(android.R.id.tabhost);
+		optionTabHost.setup();
+		optionTabHost.addEmptyTab("&low_stock=1", getResources().getString(R.string.low_stock_text), -1, 
+				10, 10, 10, 10);
+		optionTabHost.addEmptyTab("", getResources().getString(R.string.all), 1, 10, 10, 10, 10);
+		if (sortOption.equals("all")) {
+			optionTabHost.setCurrentTab(1);
+		}
+		TabWidget tabWidget = (TabWidget) findViewById(android.R.id.tabs);
+		LinearLayout.LayoutParams currentLayout = (LinearLayout.LayoutParams) tabWidget.getChildAt(0).getLayoutParams();
+		currentLayout.setMargins(0, 0, 1, 0);
+		tabWidget.requestLayout();
 
-    private void deleteProduct(final String id) {
-        String response;
-        try {
-            new GetRequester() {
-                @Override
-                protected String doInBackground(Void... params) {
-                    return new HttpManager(authorizationData.getString("sid", "")).deleteProduct(id);
-                }
+		optionTabHost.setOnTabChangedListener(new OnTabChangeListener() {
+			public void onTabChanged(String tabId) {
+				option = tabId;
+				cancelRequest();
+				clearList();
+				updateProductsList();
+			}
+		});
+	}
 
-                @Override
-                protected void onPostExecute(String result) {
-                    super.onPostExecute(result);
-                    if (result != null) {
-                        Toast.makeText(getBaseContext(), "Success", Toast.LENGTH_SHORT).show();
-                        clearList();
-                        updateProductsList();
-                    } else {
-                        showConnectionErrorMessage();
-                    }
-                }
-            }.execute();
-        } catch (Exception e) {
-            showConnectionErrorMessage();
-        }
-
-    }
-
-    private void clearList() {
-        adapter.clear();
-        currentAmount = 0;
-    }
-
-    private void setupSearchLine() {
-        productsSearchLine = (EditText) findViewById(R.id.search_line);
-        productsSearchLine.setOnKeyListener(new OnKeyListener() {
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                // If the event is a key-down event on the "enter" button
-                if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                    searchWord = productsSearchLine.getText().toString();
-                    hideKeyboard(productsSearchLine);
-                    clearList();
-                    updateProductsList();
-                    return true;
-                }
-                return false;
-            }
-        });
-    }
-
-    private void setupTabs(String sortOption) {
-        optionTabHost = (CustomTabHost) findViewById(android.R.id.tabhost);
-        optionTabHost.setup();
-        optionTabHost.addEmptyTab("low_stock", getResources().getString(R.string.low_stock_text), -1,
-                10, 10, 10, 10);
-        optionTabHost.addEmptyTab("", getResources().getString(R.string.all), 1, 10, 10, 10, 10);
-        if (sortOption.equals("all")) {
-            optionTabHost.setCurrentTab(1);
-        }
-        TabWidget tabWidget = (TabWidget) findViewById(android.R.id.tabs);
-        LinearLayout.LayoutParams currentLayout = (LinearLayout.LayoutParams) tabWidget.getChildAt(0).getLayoutParams();
-        currentLayout.setMargins(0, 0, 1, 0);
-        tabWidget.requestLayout();
-
-        optionTabHost.setOnTabChangedListener(new OnTabChangeListener() {
-            public void onTabChanged(String tabId) {
-                option = tabId.equals("low_stock") ? "1" : null;
-                cancelRequest();
-                clearList();
-                updateProductsList();
-            }
-        });
-    }
-
-    private ProgressBar progressBar;
-    private ProductsListAdapter adapter;
-    private int currentAmount;
-    private CustomTabHost optionTabHost;
-    private String option;
-    private boolean isDownloading;
-    private boolean hasNext;
-    private int packAmount;
-    private final int startItemCount = 4;
-    private String searchWord = "";
-    private ListView productsListView;
-    private Object lock = new Object();
-    private SharedPreferences settingsData;
-    private SharedPreferences authorizationData;
-    private EditText productsSearchLine;
+	private ProgressBar progressBar;
+	private ProductsListAdapter adapter;
+	private int currentAmount;
+	private CustomTabHost optionTabHost;
+	private String option = "";
+	private boolean isDownloading;
+	private boolean hasNext;
+	private int packAmount;
+	private final int startItemCount = 4;
+	private String searchWord = "";
+	private ListView productsListView;
+	private Object lock = new Object();
+	private SharedPreferences settingsData;
+	private SharedPreferences authorizationData;
+	private EditText productsSearchLine;
 }

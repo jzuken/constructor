@@ -14,22 +14,18 @@ import android.preference.PreferenceManager;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
-import android.widget.AbsListView.OnScrollListener;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.TabHost.OnTabChangeListener;
 import android.widget.AbsListView;
-import android.widget.ArrayAdapter;
+import android.widget.AbsListView.OnScrollListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TabWidget;
-import android.widget.TextView;
 
 import com.xcart.xcartnew.managers.network.HttpManager;
 
@@ -85,8 +81,7 @@ public class Orders extends PinSupportNetworkActivity {
 							if (!title.equals("")) {
 								title += " ";
 							}
-							String name = title + obj.getString("firstname") + " "
-									+ obj.getString("lastname");
+							String name = title + obj.getString("firstname") + " " + obj.getString("lastname");
 							String status = obj.getString("status");
 							String date = obj.getString("month") + "\n" + obj.getString("day");
 							;
@@ -144,94 +139,14 @@ public class Orders extends PinSupportNetworkActivity {
 
 		ordersListView.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				showActionDialog(((Order) view.getTag()));
+				setNeedDownloadValue(false);
+				Intent intent = new Intent(getBaseContext(), OrderInfo.class);
+				intent.putExtra("orderId", ((Order) view.getTag()).getId());
+				startActivityForResult(intent, 1);
 			}
 		});
 
 		ordersListView.setAdapter(adapter);
-	}
-
-	private void showActionDialog(final Order item) {
-		LinearLayout action_view = (LinearLayout) getLayoutInflater().inflate(R.layout.action_dialog, null);
-		final CustomDialog dialog = new CustomDialog(this, action_view);
-
-		ListView actionList = (ListView) action_view.findViewById(R.id.action_list);
-
-		String[] actions = { "Change status", "Full info", "User info", "Delete", "Cancel" };
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.action_item, R.id.textItem, actions);
-
-		actionList.setOnItemClickListener(new OnItemClickListener() {
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				switch (position) {
-				case 0:
-					changeStatusClick(item.getId());
-					dialog.dismiss();
-					break;
-				case 1:
-					fullInfoClick(item.getId());
-					dialog.dismiss();
-					break;
-				case 2:
-					dialog.dismiss();
-					break;
-				case 3:
-					deleteClick(item.getId());
-					dialog.dismiss();
-					break;
-				case 4:
-					dialog.dismiss();
-					break;
-				default:
-					break;
-				}
-
-			}
-		});
-
-		actionList.setAdapter(adapter);
-
-		dialog.show();
-	}
-
-	private void changeStatusClick(final String id) {
-		Intent intent = new Intent(this, ChangeStatus.class);
-		intent.putExtra("orderId", id);
-		startActivityForResult(intent, 1);
-	}
-
-	private void fullInfoClick(final String id) {
-		Intent intent = new Intent(this, OrderInfo.class);
-		intent.putExtra("orderId", id);
-		startActivityForResult(intent, 1);
-	}
-
-	private void deleteClick(final String id) {
-		LinearLayout view = (LinearLayout) getLayoutInflater().inflate(R.layout.confirmation_dialog, null);
-		((TextView) view.findViewById(R.id.confirm_question)).setText("Are you sure you want to delete this order?");
-		final CustomDialog dialog = new CustomDialog(this, view);
-
-		ImageButton noButton = (ImageButton) view.findViewById(R.id.dialog_no_button);
-		noButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				dialog.dismiss();
-			}
-		});
-
-		ImageButton yesButton = (ImageButton) view.findViewById(R.id.dialog_yes_button);
-		yesButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				dialog.dismiss();
-				deleteOrder(id);
-			}
-		});
-
-		dialog.show();
-	}
-
-	private void deleteOrder(String id) {
-
 	}
 
 	private void setupPeriodTabs() {
