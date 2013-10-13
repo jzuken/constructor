@@ -236,19 +236,19 @@ public class OrderInfo extends PinSupportNetworkActivity {
 
 	private void setNewTrackingNumber(String newNumber) {
 		String response;
-		try {
-			response = new GetRequester().execute(
-					"https://54.213.38.9/api/api2.php?request=change_tracking&order_id=" + orderIdValue
-							+ "&tracking_number=" + newNumber + "&sid=" + sid).get();
-		} catch (Exception e) {
-			response = null;
-		}
-		if (response != null) {
-			Toast.makeText(getBaseContext(), "Success", Toast.LENGTH_SHORT).show();
-			trackingNumber.setText(newNumber);
-		} else {
-			showConnectionErrorMessage();
-		}
+//		try {
+//			response = new GetRequester().execute(
+//					"https://54.213.38.9/api/api2.php?request=change_tracking&order_id=" + orderIdValue
+//							+ "&tracking_number=" + newNumber + "&sid=" + sid).get();
+//		} catch (Exception e) {
+//			response = null;
+//		}
+//		if (response != null) {
+//			Toast.makeText(getBaseContext(), "Success", Toast.LENGTH_SHORT).show();
+//			trackingNumber.setText(newNumber);
+//		} else {
+//			showConnectionErrorMessage();
+//		}
 	}
 
 	private void hideKeyboard(EditText edit) {
