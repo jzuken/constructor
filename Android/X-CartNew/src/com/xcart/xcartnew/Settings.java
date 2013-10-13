@@ -1,6 +1,8 @@
 package com.xcart.xcartnew;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.preference.Preference;
@@ -20,6 +22,7 @@ public class Settings extends PreferenceActivity {
 		setupUsersAmountEditText();
 		setupReviewsAmountEditText();
 		setupProductsAmountEditText();
+		setupLogoutButton();
 	}
 
 	@SuppressWarnings("deprecation")
@@ -78,8 +81,40 @@ public class Settings extends PreferenceActivity {
 		});
 	}
 
-	private boolean isPaused;
-	private boolean fromPin;
+	@SuppressWarnings("deprecation")
+	private void setupLogoutButton() {
+		Preference button = (Preference) findPreference("logout");
+		button.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+			@Override
+			public boolean onPreferenceClick(Preference arg0) {
+				SharedPreferences authorizationData = getSharedPreferences("AuthorizationData", MODE_PRIVATE);
+				Editor editor = authorizationData.edit();
+				editor.remove("logged");
+				editor.commit();
+				Intent broadcastIntent = new Intent();
+				broadcastIntent.setAction("com.package.ACTION_LOGOUT");
+				sendBroadcast(broadcastIntent);
+				Intent intent = new Intent(getBaseContext(), Authorization.class);
+				startActivity(intent);
+				finish();
+				return true;
+			}
+		});
+	}
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		outState.putBoolean("isPaused", isPaused);
+		outState.putBoolean("fromPin", fromPin);
+		super.onSaveInstanceState(outState);
+	}
+	
+	@Override
+	protected void onRestoreInstanceState(Bundle savedInstanceState) {
+		isPaused = savedInstanceState.getBoolean("isPaused");
+		fromPin = savedInstanceState.getBoolean("fromPin");
+		super.onRestoreInstanceState(savedInstanceState);
+	}
 
 	@Override
 	protected void onPause() {
@@ -114,4 +149,7 @@ public class Settings extends PreferenceActivity {
 
 	public static final int fromSettingCode = 3;
 	private final int minPack = 10;
+	private boolean isPaused;
+	private boolean fromPin;
+	
 }
