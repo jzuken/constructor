@@ -16,7 +16,7 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="2dp"
             android:layout_marginRight="0.5dp"
             android:layout_weight="0.5"
             android:background="@drawable/left_rounded_blue_button"
@@ -30,7 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="0.5dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginRight="2dp"
             android:layout_weight="0.5"
             android:background="@drawable/right_rounded_green_button"
             android:onClick="callClick"
