@@ -73,10 +73,12 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginTop="10dp"
+                    android:background="@drawable/clickable_selector"
+                    android:clickable="true"
+                    android:paddingBottom="10dp"
                     android:paddingLeft="10dp"
-                    android:paddingRight="10dp" >
+                    android:paddingRight="10dp"
+                    android:paddingTop="10dp" >
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -85,11 +87,21 @@
                         android:text="@string/status"
                         android:textStyle="bold" />
 
+                    <ImageView
+                        android:id="@+id/status_arrow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:contentDescription="@string/arrow_description"
+                        android:src="@drawable/arrow" />
+
                     <TextView
                         android:id="@+id/status"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="10dp"
+                        android:layout_toLeftOf="@id/status_arrow"
                         android:textColor="@color/blue" />
                 </RelativeLayout>
 
@@ -101,10 +113,12 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginTop="10dp"
+                    android:background="@drawable/clickable_selector"
+                    android:clickable="true"
+                    android:paddingBottom="10dp"
                     android:paddingLeft="10dp"
-                    android:paddingRight="10dp" >
+                    android:paddingRight="10dp"
+                    android:paddingTop="10dp" >
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -113,11 +127,21 @@
                         android:text="@string/tracking_number"
                         android:textStyle="bold" />
 
+                    <ImageView
+                        android:id="@+id/tracking_arrow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:contentDescription="@string/arrow_description"
+                        android:src="@drawable/arrow" />
+
                     <TextView
                         android:id="@+id/tracking_number"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="10dp"
+                        android:layout_toLeftOf="@id/tracking_arrow"
                         android:textColor="@color/blue" />
                 </RelativeLayout>
 
@@ -129,10 +153,10 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginTop="10dp"
+                    android:paddingBottom="10dp"
                     android:paddingLeft="10dp"
-                    android:paddingRight="10dp" >
+                    android:paddingRight="10dp"
+                    android:paddingTop="10dp" >
 
                     <TextView
                         android:id="@+id/payment_method_label"
@@ -150,6 +174,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_toRightOf="@id/payment_method_label"
                         android:gravity="right"
+                        android:paddingRight="17dp"
                         android:textColor="@color/blue" />
                 </RelativeLayout>
 
@@ -161,10 +186,10 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginTop="10dp"
+                    android:paddingBottom="10dp"
                     android:paddingLeft="10dp"
-                    android:paddingRight="10dp" >
+                    android:paddingRight="10dp"
+                    android:paddingTop="10dp" >
 
                     <TextView
                         android:id="@+id/delivery_method_label"
@@ -182,6 +207,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_toRightOf="@id/delivery_method_label"
                         android:gravity="right"
+                        android:paddingRight="17dp"
                         android:textColor="@color/blue" />
                 </RelativeLayout>
 
@@ -193,10 +219,12 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginTop="10dp"
+                    android:background="@drawable/clickable_selector"
+                    android:clickable="true"
+                    android:paddingBottom="10dp"
                     android:paddingLeft="10dp"
-                    android:paddingRight="10dp" >
+                    android:paddingRight="10dp"
+                    android:paddingTop="10dp" >
 
                     <TextView
                         android:id="@+id/customer_label"
@@ -206,12 +234,22 @@
                         android:text="@string/customer"
                         android:textStyle="bold" />
 
+                    <ImageView
+                        android:id="@+id/customer_arrow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:contentDescription="@string/arrow_description"
+                        android:src="@drawable/arrow" />
+
                     <TextView
                         android:id="@+id/customer"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
                         android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_toLeftOf="@id/customer_arrow"
                         android:layout_toRightOf="@id/customer_label"
                         android:gravity="right"
                         android:textColor="@color/blue" />
@@ -225,10 +263,10 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginTop="10dp"
+                    android:paddingBottom="10dp"
                     android:paddingLeft="10dp"
-                    android:paddingRight="10dp" >
+                    android:paddingRight="10dp"
+                    android:paddingTop="10dp" >
 
                     <TextView
                         android:id="@+id/billing_info_title"
@@ -246,6 +284,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_toRightOf="@id/billing_info_title"
                         android:gravity="right"
+                        android:paddingRight="17dp"
                         android:textColor="@color/blue" />
                 </RelativeLayout>
 
@@ -266,6 +305,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
+                        android:paddingRight="17dp"
                         android:textColor="@color/blue" />
                 </RelativeLayout>
 
@@ -287,6 +327,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
+                        android:paddingRight="17dp"
                         android:textColor="@color/blue" />
                 </RelativeLayout>
 
@@ -318,6 +359,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_toRightOf="@id/shipping_info_title"
                         android:gravity="right"
+                        android:paddingRight="17dp"
                         android:textColor="@color/blue" />
                 </RelativeLayout>
 
@@ -338,6 +380,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
+                        android:paddingRight="17dp"
                         android:textColor="@color/blue" />
                 </RelativeLayout>
 
@@ -359,6 +402,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
+                        android:paddingRight="17dp"
                         android:textColor="@color/blue" />
                 </RelativeLayout>
             </LinearLayout>
