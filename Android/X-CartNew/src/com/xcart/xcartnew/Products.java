@@ -23,6 +23,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TabHost.OnTabChangeListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -192,13 +193,13 @@ public class Products extends PinSupportNetworkActivity {
 	}
 
 	private void editPriceClick(final String id, final String oldPrice) {
-		LinearLayout view = (LinearLayout) getLayoutInflater().inflate(R.layout.change_price_dialog, null);
-		final EditText newPriceEditor = (EditText) view.findViewById(R.id.product_price_editor);
+		LinearLayout view = (LinearLayout) getLayoutInflater().inflate(R.layout.change_value_dialog, null);
+		final EditText newPriceEditor = (EditText) view.findViewById(R.id.value_editor);
 		newPriceEditor.setText(oldPrice);
 		final CustomDialog dialog = new CustomDialog(this, view);
 
-		ImageButton okButton = (ImageButton) view.findViewById(R.id.dialog_ok_button);
-		okButton.setOnClickListener(new OnClickListener() {
+		Button saveButton = (Button) view.findViewById(R.id.dialog_save_button);
+		saveButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				hideKeyboard(newPriceEditor);
