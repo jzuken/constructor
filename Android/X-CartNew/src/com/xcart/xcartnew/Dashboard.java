@@ -1,5 +1,11 @@
 package com.xcart.xcartnew;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -13,6 +19,11 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.xcart.xcartnew.managers.network.HttpManager;
+
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 public class Dashboard extends PinSupportNetworkActivity {
 	@Override
@@ -41,6 +52,12 @@ public class Dashboard extends PinSupportNetworkActivity {
 	private void updateData() {
 		progressBar.setVisibility(View.VISIBLE);
 		GetRequester dataRequester = new GetRequester() {
+
+            @Override
+            protected String doInBackground(Void... voids) {
+                return new HttpManager(authorizationData.getString("sid", "")).getDashboard();
+            }
+
 			@Override
 			protected void onPostExecute(String result) {
 				if (result != null) {
@@ -70,13 +87,11 @@ public class Dashboard extends PinSupportNetworkActivity {
 					showConnectionErrorMessage();
 				}
 				progressBar.setVisibility(View.GONE);
-
 			}
 		};
 
 		setRequester(dataRequester);
-		dataRequester.execute("https://54.213.38.9/api/api2.php?request=dashboard" + "&sid="
-				+ authorizationData.getString("sid", ""));
+		dataRequester.execute();
 	}
 
 	private void clearData() {

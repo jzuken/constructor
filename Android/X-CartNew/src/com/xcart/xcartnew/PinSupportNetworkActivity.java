@@ -23,5 +23,10 @@ public class PinSupportNetworkActivity extends PinSupportActivity {
 		currentDataRequester.cancel(true);
 	}
 
-	private GetRequester currentDataRequester = new GetRequester();
+	private GetRequester currentDataRequester = new GetRequester() {
+        @Override
+        protected String doInBackground(Void... params) {
+            return null;
+        }
+    };
 }

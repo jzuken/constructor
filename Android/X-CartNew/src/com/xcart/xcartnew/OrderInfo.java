@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.xcart.xcartnew.managers.network.HttpManager;
+
 public class OrderInfo extends PinSupportNetworkActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +56,15 @@ public class OrderInfo extends PinSupportNetworkActivity {
 
 	private void updateData() {
 		progressBar.setVisibility(View.VISIBLE);
+        final String orderId = getIntent().getStringExtra("orderId");
 		GetRequester dataRequester = new GetRequester() {
-			@Override
+
+            @Override
+            protected String doInBackground(Void... params) {
+                return new HttpManager(authorizationData.getString("sid", "")).getOrderInfo(orderId);
+            }
+
+            @Override
 			protected void onPostExecute(String result) {
 				if (result != null) {
 					try {
@@ -115,8 +124,7 @@ public class OrderInfo extends PinSupportNetworkActivity {
 		};
 
 		setRequester(dataRequester);
-		dataRequester.execute("https://54.213.38.9/api/api2.php?request=order_info&id="
-				+ getIntent().getStringExtra("orderId") + "&sid=" + authorizationData.getString("sid", ""));
+		dataRequester.execute();
 	}
 
 	private String getStatusBySymbol(StatusSymbols symbol) {

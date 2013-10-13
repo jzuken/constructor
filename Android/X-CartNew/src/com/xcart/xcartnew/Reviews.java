@@ -25,6 +25,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.xcart.xcartnew.managers.network.HttpManager;
+
 public class Reviews extends PinSupportNetworkActivity {
 
 	@Override
@@ -51,8 +53,18 @@ public class Reviews extends PinSupportNetworkActivity {
 			isDownloading = true;
 		}
 		hasNext = false;
+
+        final SharedPreferences authorizationData = getSharedPreferences("AuthorizationData", MODE_PRIVATE);
+        final String sid = authorizationData.getString("sid", "");
+        final String from = String.valueOf(currentAmount);
+
 		GetRequester dataRequester = new GetRequester() {
-			@Override
+            @Override
+            protected String doInBackground(Void... params) {
+                return new HttpManager(sid).getReviews(from, String.valueOf(packAmount));
+            }
+
+            @Override
 			protected void onPostExecute(String result) {
 				if (result != null) {
 					try {
@@ -83,8 +95,7 @@ public class Reviews extends PinSupportNetworkActivity {
 		};
 
 		setRequester(dataRequester);
-		dataRequester.execute("https://54.213.38.9/xcart/api.php?request=reviews&from=" + String.valueOf(currentAmount)
-				+ "&size=" + String.valueOf(packAmount));
+		dataRequester.execute();
 		currentAmount += packAmount;
 
 	}
@@ -118,21 +129,32 @@ public class Reviews extends PinSupportNetworkActivity {
 		dialog.show();
 	}
 
-	private void deleteReview(String id) {
-		String response;
+	private void deleteReview(final String id) {
 		try {
-			response = new GetRequester().execute("https://54.213.38.9/xcart/api.php?request=delete_review&id=" + id)
-					.get();
+            final SharedPreferences authorizationData = getSharedPreferences("AuthorizationData", MODE_PRIVATE);
+            final String sid = authorizationData.getString("sid", "");
+			new GetRequester() {
+                @Override
+                protected String doInBackground(Void... params) {
+                    return new HttpManager(sid).deleteReview(id);
+                }
+
+                @Override
+                protected void onPostExecute(String response) {
+                    super.onPostExecute(response);
+                    if (response != null) {
+                        Toast.makeText(getBaseContext(), "Success", Toast.LENGTH_SHORT).show();
+                        clearList();
+                        updateReviewsList();
+                    } else {
+                        showConnectionErrorMessage();
+                    }
+                }
+            }.execute();
 		} catch (Exception e) {
-			response = null;
+            showConnectionErrorMessage();
 		}
-		if (response != null) {
-			Toast.makeText(getBaseContext(), "Success", Toast.LENGTH_SHORT).show();
-			clearList();
-			updateReviewsList();
-		} else {
-			showConnectionErrorMessage();
-		}
+
 	}
 
 	private void showFullMessage(String email, String product, String message) {

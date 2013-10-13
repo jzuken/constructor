@@ -30,261 +30,269 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.xcart.xcartnew.managers.network.HttpManager;
+
 public class Users extends PinSupportNetworkActivity {
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.users);
-		settingsData = PreferenceManager.getDefaultSharedPreferences(this);
-		setupListViewAdapter();
-		setupSearchLine();
-	}
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.users);
+        settingsData = PreferenceManager.getDefaultSharedPreferences(this);
+        setupListViewAdapter();
+        setupSearchLine();
+    }
 
-	@Override
-	protected void withoutPinAction() {
-		packAmount = Integer.parseInt(settingsData.getString("users_amount", "10"));
-		if (isNeedDownload()) {
-			clearList();
-			updateUsersList();
-		}
-		super.withoutPinAction();
-	}
+    @Override
+    protected void withoutPinAction() {
+        packAmount = Integer.parseInt(settingsData.getString("users_amount", "10"));
+        if (isNeedDownload()) {
+            clearList();
+            updateUsersList();
+        }
+        super.withoutPinAction();
+    }
 
-	private void updateUsersList() {
-		progressBar.setVisibility(View.VISIBLE);
-		synchronized (lock) {
-			isDownloading = true;
-		}
-		hasNext = false;
-		GetRequester dataRequester = new GetRequester() {
-			@Override
-			protected void onPostExecute(String result) {
-				if (result != null) {
-					try {
-						JSONArray array = new JSONArray(result);
-						int length = array.length();
-						if (length == packAmount) {
-							hasNext = true;
-						}
-						for (int i = 0; i < length; i++) {
-							JSONObject obj = array.getJSONObject(i);
-							String id = obj.getString("id");
-							String title = obj.getString("title");
-							if (!title.equals("")) {
-								title += " ";
-							}
-							String name = title + obj.getString("firstname") + " "
-									+ obj.getString("lastname");
-							String login = obj.getString("login");
-							String phone = obj.getString("phone");
+    private void updateUsersList() {
+        progressBar.setVisibility(View.VISIBLE);
+        synchronized (lock) {
+            isDownloading = true;
+        }
+        hasNext = false;
 
-							String lastLogin = obj.getString("last_login");
-							if (lastLogin.equals("Jan-01-1970")) {
-								lastLogin = "Never logged in";
-							}
-							addUserToList(id, name, login, phone, lastLogin);
-						}
-					} catch (JSONException e) {
-						e.printStackTrace();
-					}
-				} else {
-					showConnectionErrorMessage();
-				}
-				progressBar.setVisibility(View.GONE);
-				synchronized (lock) {
-					isDownloading = false;
-				}
-			}
-		};
+        final SharedPreferences authorizationData = getSharedPreferences("AuthorizationData", MODE_PRIVATE);
+        final String sid = authorizationData.getString("sid", "");
+        final String from = String.valueOf(currentAmount);
+        GetRequester dataRequester = new GetRequester() {
 
-		setRequester(dataRequester);
-		SharedPreferences authorizationData = getSharedPreferences("AuthorizationData", MODE_PRIVATE);
-		String sid = authorizationData.getString("sid", "");
-		dataRequester.execute("https://54.213.38.9/api/api2.php?request=users&from=" + String.valueOf(currentAmount)
-				+ "&size=" + String.valueOf(packAmount) + "&sort=" + getCurrentSort() + "&sid=" + sid + "&search="
-				+ searchWord);
-		currentAmount += packAmount;
-	}
+            @Override
+            protected String doInBackground(Void... params) {
+                return new HttpManager(sid).getUsers(from, String.valueOf(packAmount), searchWord, getCurrentSort());
+            }
 
-	private void clearList() {
-		adapter.clear();
-		currentAmount = 0;
-	}
+            @Override
+            protected void onPostExecute(String result) {
+                if (result != null) {
+                    try {
+                        JSONArray array = new JSONArray(result);
+                        int length = array.length();
+                        if (length == packAmount) {
+                            hasNext = true;
+                        }
+                        for (int i = 0; i < length; i++) {
+                            JSONObject obj = array.getJSONObject(i);
+                            String id = obj.getString("id");
+                            String title = obj.getString("title");
+                            if (!title.equals("")) {
+                                title += " ";
+                            }
+                            String name = title + obj.getString("firstname") + " "
+                                    + obj.getString("lastname");
+                            String login = obj.getString("login");
+                            String phone = obj.getString("phone");
 
-	private String getCurrentSort() {
-		switch (currentSortOption) {
-		case 0:
-			return "login_date";
-		case 1:
-			return "order_date";
-		case 2:
-			return "orders";
-		case 3:
-			return "none";
-		default:
-			return null;
-		}
-	}
+                            String lastLogin = obj.getString("last_login");
+                            if (lastLogin.equals("Jan-01-1970")) {
+                                lastLogin = "Never logged in";
+                            }
+                            addUserToList(id, name, login, phone, lastLogin);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    showConnectionErrorMessage();
+                }
+                progressBar.setVisibility(View.GONE);
+                synchronized (lock) {
+                    isDownloading = false;
+                }
+            }
+        };
 
-	private void addUserToList(final String id, final String name, final String login, final String phone,
-			final String lastLogin) {
-		adapter.add(new User(id, name, login, phone, lastLogin));
-	}
+        setRequester(dataRequester);
+        dataRequester.execute();
+        currentAmount += packAmount;
+    }
 
-	private void setupListViewAdapter() {
-		adapter = new UsersListAdapter(this, R.layout.user_item, new ArrayList<User>());
-		usersListView = (ListView) findViewById(R.id.users_list);
-		LayoutInflater inflater = getLayoutInflater();
+    private void clearList() {
+        adapter.clear();
+        currentAmount = 0;
+    }
 
-		View listFooter = inflater.inflate(R.layout.on_demand_footer, null, false);
-		progressBar = (ProgressBar) listFooter.findViewById(R.id.progress_bar);
-		usersListView.addFooterView(listFooter, null, false);
+    private String getCurrentSort() {
+        switch (currentSortOption) {
+            case 0:
+                return "login_date";
+            case 1:
+                return "order_date";
+            case 2:
+                return "orders";
+            case 3:
+                return "none";
+            default:
+                return null;
+        }
+    }
 
-		usersListView.setFooterDividersEnabled(false);
+    private void addUserToList(final String id, final String name, final String login, final String phone,
+                               final String lastLogin) {
+        adapter.add(new User(id, name, login, phone, lastLogin));
+    }
 
-		usersListView.setOnScrollListener(new OnScrollListener() {
+    private void setupListViewAdapter() {
+        adapter = new UsersListAdapter(this, R.layout.user_item, new ArrayList<User>());
+        usersListView = (ListView) findViewById(R.id.users_list);
+        LayoutInflater inflater = getLayoutInflater();
 
-			@Override
-			public void onScrollStateChanged(AbsListView arg0, int arg1) {
-			}
+        View listFooter = inflater.inflate(R.layout.on_demand_footer, null, false);
+        progressBar = (ProgressBar) listFooter.findViewById(R.id.progress_bar);
+        usersListView.addFooterView(listFooter, null, false);
 
-			@Override
-			public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-				if (totalItemCount > startItemCount && firstVisibleItem + visibleItemCount == totalItemCount
-						&& !isDownloading && hasNext) {
-					updateUsersList();
-				}
-			}
-		});
+        usersListView.setFooterDividersEnabled(false);
 
-		usersListView.setOnItemClickListener(new OnItemClickListener() {
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				showActionDialog(((User) view.getTag()));
-			}
-		});
+        usersListView.setOnScrollListener(new OnScrollListener() {
 
-		usersListView.setAdapter(adapter);
-	}
+            @Override
+            public void onScrollStateChanged(AbsListView arg0, int arg1) {
+            }
 
-	private void showActionDialog(final User user) {
-		LinearLayout action_view = (LinearLayout) getLayoutInflater().inflate(R.layout.action_dialog, null);
-		final CustomDialog dialog = new CustomDialog(this, action_view);
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                if (totalItemCount > startItemCount && firstVisibleItem + visibleItemCount == totalItemCount
+                        && !isDownloading && hasNext) {
+                    updateUsersList();
+                }
+            }
+        });
 
-		ListView actionList = (ListView) action_view.findViewById(R.id.action_list);
+        usersListView.setOnItemClickListener(new OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                showActionDialog(((User) view.getTag()));
+            }
+        });
 
-		String[] actions = { "Full info", "Send message", "Ban user", "Cancel" };
+        usersListView.setAdapter(adapter);
+    }
 
-		ArrayAdapter<String> adapter;
+    private void showActionDialog(final User user) {
+        LinearLayout action_view = (LinearLayout) getLayoutInflater().inflate(R.layout.action_dialog, null);
+        final CustomDialog dialog = new CustomDialog(this, action_view);
 
-		adapter = new ArrayAdapter<String>(this, R.layout.action_item, R.id.textItem, actions);
+        ListView actionList = (ListView) action_view.findViewById(R.id.action_list);
 
-		actionList.setOnItemClickListener(new OnItemClickListener() {
+        String[] actions = {"Full info", "Send message", "Ban user", "Cancel"};
 
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				switch (position) {
-				case 0:
-					fullInfoClick(user.getId(), user.getName());
-					dialog.dismiss();
-					break;
-				case 1:
-					sendMessage(user.getLogin());
-					dialog.dismiss();
-					break;
-				case 2:
-					banClick(user.getId());
-					dialog.dismiss();
-					break;
-				case 3:
-					dialog.dismiss();
-					break;
-				default:
-					break;
-				}
+        ArrayAdapter<String> adapter;
 
-			}
-		});
+        adapter = new ArrayAdapter<String>(this, R.layout.action_item, R.id.textItem, actions);
 
-		actionList.setAdapter(adapter);
+        actionList.setOnItemClickListener(new OnItemClickListener() {
 
-		dialog.show();
-	}
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                switch (position) {
+                    case 0:
+                        fullInfoClick(user.getId(), user.getName());
+                        dialog.dismiss();
+                        break;
+                    case 1:
+                        sendMessage(user.getLogin());
+                        dialog.dismiss();
+                        break;
+                    case 2:
+                        banClick(user.getId());
+                        dialog.dismiss();
+                        break;
+                    case 3:
+                        dialog.dismiss();
+                        break;
+                    default:
+                        break;
+                }
 
-	private void fullInfoClick(final String id, final String name) {
-		setNeedDownloadValue(false);
-		Intent intent = new Intent(this, UserInfo.class);
-		intent.putExtra("userName", name);
-		intent.putExtra("userId", id);
-		startActivityForResult(intent, 1);
-	}
+            }
+        });
 
-	private void sendMessage(String recipientEmail) {
-		setNeedDownloadValue(false);
-		Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", recipientEmail, null));
-		startActivityForResult(Intent.createChooser(emailIntent, "Send message..."), 3);
-	}
+        actionList.setAdapter(adapter);
 
-	public void banClick(final String id) {
-		LinearLayout view = (LinearLayout) getLayoutInflater().inflate(R.layout.confirmation_dialog, null);
-		((TextView) view.findViewById(R.id.confirm_question)).setText("Are you sure you want to ban this user?");
-		final CustomDialog dialog = new CustomDialog(this, view);
+        dialog.show();
+    }
 
-		ImageButton noButton = (ImageButton) view.findViewById(R.id.dialog_no_button);
-		noButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				dialog.dismiss();
-			}
-		});
+    private void fullInfoClick(final String id, final String name) {
+        setNeedDownloadValue(false);
+        Intent intent = new Intent(this, UserInfo.class);
+        intent.putExtra("userName", name);
+        intent.putExtra("userId", id);
+        startActivityForResult(intent, 1);
+    }
 
-		ImageButton yesButton = (ImageButton) view.findViewById(R.id.dialog_yes_button);
-		yesButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				dialog.dismiss();
-				banUser(id);
-			}
-		});
+    private void sendMessage(String recipientEmail) {
+        setNeedDownloadValue(false);
+        Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", recipientEmail, null));
+        startActivityForResult(Intent.createChooser(emailIntent, "Send message..."), 3);
+    }
 
-		dialog.show();
-	}
+    public void banClick(final String id) {
+        LinearLayout view = (LinearLayout) getLayoutInflater().inflate(R.layout.confirmation_dialog, null);
+        ((TextView) view.findViewById(R.id.confirm_question)).setText("Are you sure you want to ban this user?");
+        final CustomDialog dialog = new CustomDialog(this, view);
 
-	private void banUser(String id) {
+        ImageButton noButton = (ImageButton) view.findViewById(R.id.dialog_no_button);
+        noButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
 
-	}
+        ImageButton yesButton = (ImageButton) view.findViewById(R.id.dialog_yes_button);
+        yesButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                banUser(id);
+            }
+        });
 
-	private void setupSearchLine() {
-		usersSearchLine = (EditText) findViewById(R.id.search_line);
-		usersSearchLine.setOnKeyListener(new OnKeyListener() {
-			public boolean onKey(View v, int keyCode, KeyEvent event) {
-				// If the event is a key-down event on the "enter" button
-				if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-					searchWord = usersSearchLine.getText().toString();
-					hideKeyboard(usersSearchLine);
-					clearList();
-					updateUsersList();
-					return true;
-				}
-				return false;
-			}
-		});
-	}
+        dialog.show();
+    }
 
-	private void hideKeyboard(EditText edit) {
-		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-		imm.hideSoftInputFromWindow(edit.getWindowToken(), 0);
-	}
+    private void banUser(String id) {
 
-	private ProgressBar progressBar;
-	private UsersListAdapter adapter;
-	private int currentAmount;
-	private boolean isDownloading;
-	private int currentSortOption;
-	private boolean hasNext;
-	private int packAmount;
-	private final int startItemCount = 4;
-	private ListView usersListView;
-	private Object lock = new Object();
-	private SharedPreferences settingsData;
-	private EditText usersSearchLine;
-	private String searchWord = "";
+    }
+
+    private void setupSearchLine() {
+        usersSearchLine = (EditText) findViewById(R.id.search_line);
+        usersSearchLine.setOnKeyListener(new OnKeyListener() {
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                // If the event is a key-down event on the "enter" button
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    searchWord = usersSearchLine.getText().toString();
+                    hideKeyboard(usersSearchLine);
+                    clearList();
+                    updateUsersList();
+                    return true;
+                }
+                return false;
+            }
+        });
+    }
+
+    private void hideKeyboard(EditText edit) {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(edit.getWindowToken(), 0);
+    }
+
+    private ProgressBar progressBar;
+    private UsersListAdapter adapter;
+    private int currentAmount;
+    private boolean isDownloading;
+    private int currentSortOption;
+    private boolean hasNext;
+    private int packAmount;
+    private final int startItemCount = 4;
+    private ListView usersListView;
+    private Object lock = new Object();
+    private SharedPreferences settingsData;
+    private EditText usersSearchLine;
+    private String searchWord = "";
 }

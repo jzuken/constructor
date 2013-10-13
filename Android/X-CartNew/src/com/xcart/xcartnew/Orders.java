@@ -31,6 +31,8 @@ import android.widget.ProgressBar;
 import android.widget.TabWidget;
 import android.widget.TextView;
 
+import com.xcart.xcartnew.managers.network.HttpManager;
+
 public class Orders extends PinSupportNetworkActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +62,14 @@ public class Orders extends PinSupportNetworkActivity {
 			isDownloading = true;
 		}
 		hasNext = false;
+        final String from = String.valueOf(currentAmount);
 		GetRequester dataRequester = new GetRequester() {
-			@Override
+            @Override
+            protected String doInBackground(Void... params) {
+                return new HttpManager(authorizationData.getString("sid", "")).getLastOrders(from, String.valueOf(packAmount), period, searchWord, null);
+            }
+
+            @Override
 			protected void onPostExecute(String result) {
 				if (result != null) {
 					try {
@@ -99,9 +107,7 @@ public class Orders extends PinSupportNetworkActivity {
 		};
 
 		setRequester(dataRequester);
-		dataRequester.execute("https://54.213.38.9/api/api2.php?request=last_orders&from="
-				+ String.valueOf(currentAmount) + "&size=" + String.valueOf(packAmount) + "&status=&date=" + period
-				+ "&sid=" + authorizationData.getString("sid", "") + "&search=" + searchWord);
+		dataRequester.execute();
 		currentAmount += packAmount;
 	}
 
