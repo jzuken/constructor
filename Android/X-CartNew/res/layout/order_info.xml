@@ -425,12 +425,12 @@
                     android:text="@string/items"
                     android:textSize="16sp" />
 
-                <com.xcart.xcartnew.OrderProductsList
+                <com.xcart.xcartnew.views.OrderProductsList
                     android:id="@+id/items_list"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical" >
-                </com.xcart.xcartnew.OrderProductsList>
+                </com.xcart.xcartnew.views.OrderProductsList>
             </LinearLayout>
 
             <LinearLayout

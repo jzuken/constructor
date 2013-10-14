@@ -12,7 +12,7 @@ import org.apache.http.util.EntityUtils;
 
 import android.net.Uri;
 
-import com.xcart.xcartnew.SSLDefaultHttpClient;
+import com.xcart.xcartnew.managers.network.SSLDefaultHttpClient;
 import com.xcart.xcartnew.managers.LogManager;
 
 /**

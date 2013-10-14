@@ -32,7 +32,7 @@
             android:onClick="settingsClick" />
     </RelativeLayout>
     
-    <com.xcart.xcartnew.CustomTabHost
+    <com.xcart.xcartnew.views.CustomTabHost
         android:id="@android:id/tabhost"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -64,7 +64,7 @@
                 </LinearLayout>
             </FrameLayout>
         </LinearLayout>
-    </com.xcart.xcartnew.CustomTabHost>
+    </com.xcart.xcartnew.views.CustomTabHost>
 
     <EditText
         android:id="@+id/search_line"
