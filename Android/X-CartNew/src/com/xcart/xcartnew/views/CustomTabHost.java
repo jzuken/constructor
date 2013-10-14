@@ -22,7 +22,7 @@ public class CustomTabHost extends TabHost {
 	}
 
 	/**
-	 * @param side = {-1, 1, 1}; 
+	 * @param side = {-1, 0, 1}; 
 	 * -1 - left tab; 
 	 *  0 - middle tab; 
 	 *  1 - right tab;

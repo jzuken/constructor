@@ -148,7 +148,7 @@ public class Authorization extends FragmentActivity {
                 }
             }
         };
-        String authResult = null;
+
         postReq.execute("https://54.213.38.9/api/api2.php?request=login");
     }
 
