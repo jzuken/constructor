@@ -97,4 +97,6 @@
     <string name="connection_error">Sorry, unable to connect to server. Please check your internet connection</string>
     <string name="login_error">Incorrect email or password</string>
     <string name="logging_in">Logging in…</string>
+    <string name="updating_status">Updating status…</string>
+    <string name="change_tracking_number">Change tracking number</string>
 </resources>

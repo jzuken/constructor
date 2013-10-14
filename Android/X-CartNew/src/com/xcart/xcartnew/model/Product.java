@@ -28,6 +28,10 @@ public class Product {
 	public String getPrice() {
 		return price;
 	}
+	
+	public void setPrice(String price) {
+		this.price = price;
+	}
 
 	private String id;
 	private String name;

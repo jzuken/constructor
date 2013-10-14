@@ -99,13 +99,15 @@
                 android:id="@+id/full_description_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
+                android:layout_gravity="left"
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp"
-                android:gravity="right"
+                android:gravity="left"
+                android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:text="@string/show_full_decription"
-                android:textColor="@color/blue" />
+                android:textColor="@color/blue"
+                android:visibility="gone" />
 
             <View
                 android:id="@+id/full_description_divider"
@@ -128,12 +130,15 @@
                 android:background="@color/frame_color" />
 
             <RelativeLayout
+                android:id="@+id/price_item"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
+                android:background="@drawable/clickable_selector"
+                android:clickable="true"
+                android:paddingBottom="10dp"
                 android:paddingLeft="10dp"
-                android:paddingRight="10dp" >
+                android:paddingRight="10dp"
+                android:paddingTop="10dp" >
 
                 <TextView
                     android:id="@+id/price_title"
@@ -142,11 +147,21 @@
                     android:layout_alignParentLeft="true"
                     android:text="@string/price_colon" />
 
+                <ImageView
+                    android:id="@+id/price_arrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:contentDescription="@string/arrow_description"
+                    android:src="@drawable/arrow" />
+
                 <TextView
                     android:id="@+id/price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_toLeftOf="@id/price_arrow"
                     android:textColor="@color/blue"
                     android:textStyle="bold" />
             </RelativeLayout>
@@ -227,15 +242,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
                     android:text="@string/availability_colon" />
 
-                <TextView
-                    android:id="@+id/availability"
+                <org.jraf.android.backport.switchwidget.Switch
+                    android:id="@+id/availability_switch"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:textColor="@color/blue"
-                    android:textStyle="bold" />
+                    android:layout_centerVertical="true" />
             </RelativeLayout>
         </LinearLayout>
     </ScrollView>

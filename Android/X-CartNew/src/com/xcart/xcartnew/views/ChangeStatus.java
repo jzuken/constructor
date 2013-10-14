@@ -3,6 +3,8 @@ package com.xcart.xcartnew.views;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -11,6 +13,7 @@ import android.widget.Toast;
 import com.xcart.xcartnew.R;
 import com.xcart.xcartnew.managers.network.GetRequester;
 import com.xcart.xcartnew.managers.network.HttpManager;
+import com.xcart.xcartnew.views.dialogs.ProgressDialog;
 
 public class ChangeStatus extends PinSupportNetworkActivity {
 	@Override
@@ -84,6 +87,9 @@ public class ChangeStatus extends PinSupportNetworkActivity {
 	}
 
 	public void saveClick(View v) {
+		progressDialog = new ProgressDialog(R.string.updating_status);
+		progressDialog.setCancelable(false);
+		progressDialog.show(getSupportFragmentManager(), "progress");
 		try {
 			new GetRequester() {
 				@Override
@@ -104,6 +110,8 @@ public class ChangeStatus extends PinSupportNetworkActivity {
 					} else {
 						showConnectionErrorMessage();
 					}
+
+					progressDialog.dismiss();
 				}
 			}.execute();
 		} catch (Exception e) {
@@ -120,5 +128,6 @@ public class ChangeStatus extends PinSupportNetworkActivity {
 	private RadioButton failed;
 	private RadioButton backordered;
 	private String sid;
-	public static final int changeStatusResultCode = 100; 
+	public static final int changeStatusResultCode = 100;
+	private DialogFragment progressDialog;
 }

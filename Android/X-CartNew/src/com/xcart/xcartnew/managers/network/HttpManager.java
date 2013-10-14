@@ -39,6 +39,7 @@ public class HttpManager {
     private static final String DELETE_REVIEW = "delete_review";
     private static final String CHANGE_TRACKING = "change_tracking";
     private static final String CHANGE_STATUS = "change_status";
+    private static final String CHANGE_AVAILABLE = "change_available";
 
     // parameters
     private static final String REQUEST = "request";
@@ -54,6 +55,8 @@ public class HttpManager {
     private static final String STATUS = "status";
     private static final String ORDER_ID = "order_id";
     private static final String TRACKING_NUMBER = "tracking_number";
+    private static final String PRODUCT_ID = "product_id";
+    private static final String AVAILABLE = "available";
 
     //Dev server
     private static final String DEV_SERVER_URL = "http://vm-constructor.cloudapp.net";
@@ -202,6 +205,16 @@ public class HttpManager {
                 .appendQueryParameter(ORDER_ID, id)
                 .appendQueryParameter(STATUS, status)
                 .appendQueryParameter(SID, sid)
+                .build();
+        return get(uri);
+    }
+    
+    public String changeAvailable(String id, String availability) {
+    	Uri uri = Uri.parse(SERVER_URL).buildUpon().path(API)
+                .appendQueryParameter(REQUEST, CHANGE_AVAILABLE)
+                .appendQueryParameter(PRODUCT_ID, id)
+                .appendQueryParameter(SID, sid)
+                .appendQueryParameter(AVAILABLE, availability)
                 .build();
         return get(uri);
     }

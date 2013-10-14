@@ -3,6 +3,7 @@
     <!-- Application theme. -->
     <style name="AppTheme" parent="android:Theme.Light.NoTitleBar">
         <item name="android:editTextStyle">@android:style/Widget.EditText</item>
+        <item name="switchStyle">@style/Widget.Holo.Light.CompoundButton.Switch</item>
     </style>
 
 </resources>

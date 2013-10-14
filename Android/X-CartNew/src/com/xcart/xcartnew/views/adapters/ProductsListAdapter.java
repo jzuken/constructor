@@ -45,7 +45,7 @@ public class ProductsListAdapter extends ArrayAdapter<Product> {
 		holder.name.setText(holder.product.getName());
 		holder.sku.setText(holder.product.getSku());
 		holder.inStock.setText(holder.product.getInStock());
-		holder.price.setText(holder.product.getPrice());
+		holder.price.setText("$" + holder.product.getPrice());
 	}
 
 	private static class ProductHolder {
