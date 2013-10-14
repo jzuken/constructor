@@ -16,19 +16,22 @@ import android.os.Bundle;
 import android.provider.Settings.Secure;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.xcart.xcartnew.R;
+import com.xcart.xcartnew.managers.network.DevServerApiManager;
 import com.xcart.xcartnew.managers.network.PostRequester;
+import com.xcart.xcartnew.managers.network.SubscriptionCallback;
+import com.xcart.xcartnew.managers.network.SubscriptionStatus;
 import com.xcart.xcartnew.views.dialogs.ConnectionErrorDialog;
 import com.xcart.xcartnew.views.dialogs.ErrorDialog;
 import com.xcart.xcartnew.views.dialogs.ProgressDialog;
 import com.xcart.xcartnew.managers.LogManager;
-import com.xcart.xcartnew.managers.network.CheckSubscriptionTask;
 
-public class Authorization extends FragmentActivity {
+public class Authorization extends FragmentActivity implements SubscriptionCallback {
 
     private static final LogManager LOG = new LogManager(Authorization.class.getSimpleName());
 
@@ -43,6 +46,8 @@ public class Authorization extends FragmentActivity {
 
         authorizationLogin.setText("elengor91@gmail.com");
         authorizationPassword.setText("hgD4pH0");
+
+        DevServerApiManager.getInstance().addSubscriptionCallback(this);
     }
 
     public void okButtonClick(View v) {
@@ -55,62 +60,19 @@ public class Authorization extends FragmentActivity {
         progressDialog.show(getSupportFragmentManager(), "progress");
 
         //TODO: create url input
-        new CheckSubscriptionTask("54.213.38.9") {
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-
-                if (s == null) {
-                    ConnectionErrorDialog dialog = new ConnectionErrorDialog();
-                    dialog.show(getSupportFragmentManager(), "subscription");
-                }
-
-                progressDialog.dismiss();
-                parseSubscriptionResponse(s);
-            }
-        }.execute();
-    }
-
-    private void parseSubscriptionResponse(String response) {
-        LOG.d("parseSubscriptionResponse: " + response);
-
-        try {
-            JSONObject obj = new JSONObject(response);
-            if (!obj.has("subscribed")) {
-                ErrorDialog dialog = new ErrorDialog(R.string.no_subscription, finishListener);
-                dialog.show(getSupportFragmentManager(), "subscribed");
-                return;
-            }
-
-            String subscription = obj.getString("subscribed");
-            if (subscription.equals("none")) {
-                ErrorDialog dialog = new ErrorDialog(R.string.no_subscription, finishListener);
-                dialog.show(getSupportFragmentManager(), "subscribed");
-            } else if (subscription.equals("expired")) {
-                ErrorDialog dialog = new ErrorDialog(R.string.subscription_expired, finishListener);
-                dialog.show(getSupportFragmentManager(), "subscribed");
-            } else if (subscription.equals("active")) {
-                String androidId = Secure.getString(this.getContentResolver(), Secure.ANDROID_ID);
-                String login = authorizationLogin.getText().toString();
-                String password = authorizationPassword.getText().toString();
-
-                List<NameValuePair> loginData = new ArrayList<NameValuePair>(3);
-                loginData.add(new BasicNameValuePair("name", login));
-                loginData.add(new BasicNameValuePair("pass", password));
-                loginData.add(new BasicNameValuePair("udid", androidId));
-
-                trySignIn(loginData);
-            }
-
-        } catch (JSONException e) {
-            LOG.e("JSONException", e);
-        }
+        DevServerApiManager.getInstance().checkSubscription("54.213.38.9");
     }
 
     private void trySignIn(List<NameValuePair> loginData) {
         progressDialog = new ProgressDialog(R.string.logging_in);
         progressDialog.setCancelable(false);
-        progressDialog.show(getSupportFragmentManager(), "progress");
+
+        //strange Android bug
+        //progressDialog.show(getSupportFragmentManager(), "progress");
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.add(progressDialog, "progress");
+        transaction.commitAllowingStateLoss();
+
         PostRequester postReq = new PostRequester(loginData) {
             @Override
             protected void onPostExecute(String authResult) {
@@ -148,7 +110,6 @@ public class Authorization extends FragmentActivity {
                 }
             }
         };
-        String authResult = null;
         postReq.execute("https://54.213.38.9/api/api2.php?request=login");
     }
 
@@ -159,6 +120,37 @@ public class Authorization extends FragmentActivity {
             Authorization.this.finish();
         }
     };
+
+    @Override
+    public void onSubscriptionChecked(SubscriptionStatus status) {
+        if (progressDialog != null) {
+            progressDialog.dismiss();
+        }
+
+        switch (status) {
+            case Active:
+                String androidId = Secure.getString(this.getContentResolver(), Secure.ANDROID_ID);
+                String login = authorizationLogin.getText().toString();
+                String password = authorizationPassword.getText().toString();
+
+                List<NameValuePair> loginData = new ArrayList<NameValuePair>(3);
+                loginData.add(new BasicNameValuePair("name", login));
+                loginData.add(new BasicNameValuePair("pass", password));
+                loginData.add(new BasicNameValuePair("udid", androidId));
+
+                trySignIn(loginData);
+                break;
+            case Expired:
+                new ErrorDialog(R.string.subscription_expired, finishListener).show(getSupportFragmentManager(), "subscribed");
+                break;
+            case None:
+                new ErrorDialog(R.string.no_subscription, finishListener).show(getSupportFragmentManager(), "subscribed");
+                break;
+            case NetworkError:
+                new ConnectionErrorDialog().show(getSupportFragmentManager(), "subscription");
+                break;
+        }
+    }
 
     private EditText authorizationLogin;
     private EditText authorizationPassword;
