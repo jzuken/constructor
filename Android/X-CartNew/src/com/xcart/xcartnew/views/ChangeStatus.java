@@ -86,7 +86,7 @@ public class ChangeStatus extends PinSupportNetworkActivity {
 	}
 
 	public void saveClick(View v) {
-		progressDialog = new ProgressDialog(R.string.checking_subscription);
+		progressDialog = new ProgressDialog(R.string.updating_status);
         progressDialog.setCancelable(false);
         progressDialog.show(getSupportFragmentManager(), "progress");
 		try {
