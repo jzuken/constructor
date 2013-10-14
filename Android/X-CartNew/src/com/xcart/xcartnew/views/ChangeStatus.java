@@ -89,9 +89,7 @@ public class ChangeStatus extends PinSupportNetworkActivity {
 	public void saveClick(View v) {
 		progressDialog = new ProgressDialog(R.string.updating_status);
 		progressDialog.setCancelable(false);
-		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-		transaction.add(progressDialog, "progress");
-		transaction.commitAllowingStateLoss();
+		progressDialog.show(getSupportFragmentManager(), "progress");
 		try {
 			new GetRequester() {
 				@Override

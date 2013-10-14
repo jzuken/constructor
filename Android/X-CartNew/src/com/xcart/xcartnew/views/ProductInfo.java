@@ -1,5 +1,6 @@
 package com.xcart.xcartnew.views;
 
+import org.jraf.android.backport.switchwidget.Switch;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -14,6 +15,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -46,9 +49,9 @@ public class ProductInfo extends PinSupportNetworkActivity {
 		fullDescriptionDivider = findViewById(R.id.full_description_divider);
 		sold = (TextView) findViewById(R.id.sold);
 		inStock = (TextView) findViewById(R.id.in_stock);
-		availability = (TextView) findViewById(R.id.availability);
 		initFullDescrLable();
 		setupPriceItem();
+		setupAvailabilitySwitch();
 		authorizationData = getSharedPreferences("AuthorizationData", MODE_PRIVATE);
 	}
 
@@ -83,13 +86,11 @@ public class ProductInfo extends PinSupportNetworkActivity {
 						}
 						price.setText("$" + obj.getString("list_price"));
 						sold.setText(obj.getString("sales_stats"));
-						String inStockString = obj.getString("avail");
-						inStock.setText(inStockString);
-						if (isAvailable(inStockString, obj.getString("low_avail_limit"))) {
-							availability.setText("Available");
-						} else {
-							availability.setText("Not available");
+						inStock.setText(obj.getString("avail"));
+						if (obj.getString("forsale").equals("Y")) {
+							availabilitySwitch.setChecked(true);
 						}
+						isNeedAvailabilityChange = true;
 						String imageUrl = obj.getString("url");
 						if (!imageUrl.equals(NO_IMAGE_URL)) {
 							new DownloadImageTask(productImage, progressBar).execute(imageUrl);
@@ -112,10 +113,6 @@ public class ProductInfo extends PinSupportNetworkActivity {
 		dataRequester.execute();
 	}
 
-	private boolean isAvailable(String inStock, String minStock) {
-		return (Integer.parseInt(inStock) > Integer.parseInt(minStock));
-	}
-
 	private void clearData() {
 		description.loadUrl("about:blank");
 		fullDescription.loadUrl("about:blank");
@@ -123,8 +120,9 @@ public class ProductInfo extends PinSupportNetworkActivity {
 		price.setText("");
 		sold.setText("");
 		inStock.setText("");
-		availability.setText("");
 		productImage.setImageResource(android.R.color.transparent);
+		isNeedAvailabilityChange = false;
+		availabilitySwitch.setChecked(false);
 	}
 
 	private void initFullDescrLable() {
@@ -245,6 +243,45 @@ public class ProductInfo extends PinSupportNetworkActivity {
 		imm.hideSoftInputFromWindow(edit.getWindowToken(), 0);
 	}
 
+	private void setupAvailabilitySwitch() {
+		availabilitySwitch = (Switch) findViewById(R.id.availability_switch);
+		availabilitySwitch.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				if (isNeedAvailabilityChange) {
+					setNewAvailability(productId, isChecked);
+				}
+			}
+		});
+	}
+
+	private void setNewAvailability(final String productId, final boolean available) {
+		final String availability = available ? "1" : "2";
+
+		try {
+			new GetRequester() {
+				@Override
+				protected String doInBackground(Void... params) {
+					return new HttpManager(authorizationData.getString("sid", "")).changeAvailable(productId,
+							availability);
+				}
+
+				@Override
+				protected void onPostExecute(String response) {
+					super.onPostExecute(response);
+					if (response != null) {
+						Toast.makeText(getBaseContext(), "Success", Toast.LENGTH_SHORT).show();
+					} else {
+						showConnectionErrorMessage();
+					}
+				}
+			}.execute();
+		} catch (Exception e) {
+			showConnectionErrorMessage();
+		}
+	}
+
 	private ProgressBar progressBar;
 	private String productId = "";
 	private TextView name;
@@ -256,10 +293,11 @@ public class ProductInfo extends PinSupportNetworkActivity {
 	private TextView price;
 	private TextView sold;
 	private TextView inStock;
-	private TextView availability;
 	private TextView fullDescrLabel;
 	private SharedPreferences authorizationData;
 	private RelativeLayout priceItem;
+	private Switch availabilitySwitch;
+	private boolean isNeedAvailabilityChange;
 	private static final String NO_IMAGE_URL = "http://54.213.38.9/xcart";
 	public static final int changePriceResultCode = 200;
 }
