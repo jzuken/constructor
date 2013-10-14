@@ -55,9 +55,17 @@ public class HttpManager {
     private static final String ORDER_ID = "order_id";
     private static final String TRACKING_NUMBER = "tracking_number";
 
+    //Dev server
+    private static final String DEV_SERVER_URL = "http://vm-constructor.cloudapp.net";
+    private static final String CHECK_SUBSCRIPTION = "/AppServerListener/api/shops/%s/checksubscribtion";
+
     private HttpClient client;
 
     private String sid;
+
+    public HttpManager(){
+        this(null);
+    }
 
     public HttpManager(String sid) {
         client = new SSLDefaultHttpClient();
@@ -198,10 +206,18 @@ public class HttpManager {
         return get(uri);
     }
 
-    private String get(Uri uri) {
-        LOG.d("get uri " + uri.toString());
+    public String checkSubscription(String shopUrl){
+        Uri uri = Uri.parse(DEV_SERVER_URL)
+                .buildUpon().path(String.format(CHECK_SUBSCRIPTION, shopUrl))
+                .build();
+        return get(uri);
+    }
 
-        HttpGet get = new HttpGet(uri.toString());
+    private String get(Uri uri) {
+        String url = uri.toString();
+        LOG.d("get url " + url);
+
+        HttpGet get = new HttpGet(url);
 
         try {
             HttpResponse responseGet = client.execute(get);
