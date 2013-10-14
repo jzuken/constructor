@@ -76,7 +76,11 @@ public class ProductInfo extends PinSupportNetworkActivity {
 					try {
 						JSONObject obj = new JSONObject(result);
 						description.loadDataWithBaseURL("", obj.getString("descr"), "text/html", "UTF-8", "");
-						fullDescription.loadDataWithBaseURL("", obj.getString("fulldescr"), "text/html", "UTF-8", "");
+						String fullDescriptionText = obj.getString("fulldescr");
+						if (!fullDescriptionText.equals("")) {
+							fullDescription.loadDataWithBaseURL("", fullDescriptionText, "text/html", "UTF-8", "");
+							fullDescrLabel.setVisibility(View.VISIBLE);
+						}
 						price.setText("$" + obj.getString("list_price"));
 						sold.setText(obj.getString("sales_stats"));
 						String inStockString = obj.getString("avail");
