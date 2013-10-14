@@ -110,7 +110,10 @@ public class Authorization extends FragmentActivity implements SubscriptionCallb
                 }
             }
         };
+<<<<<<< HEAD
 
+=======
+>>>>>>> b02d4ad144671b10b628d93083ba71a50769b8ba
         postReq.execute("https://54.213.38.9/api/api2.php?request=login");
     }
 
