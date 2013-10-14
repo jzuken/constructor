@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -87,8 +88,10 @@ public class ChangeStatus extends PinSupportNetworkActivity {
 
 	public void saveClick(View v) {
 		progressDialog = new ProgressDialog(R.string.updating_status);
-        progressDialog.setCancelable(false);
-        progressDialog.show(getSupportFragmentManager(), "progress");
+		progressDialog.setCancelable(false);
+		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+		transaction.add(progressDialog, "progress");
+		transaction.commitAllowingStateLoss();
 		try {
 			new GetRequester() {
 				@Override
@@ -109,7 +112,7 @@ public class ChangeStatus extends PinSupportNetworkActivity {
 					} else {
 						showConnectionErrorMessage();
 					}
-					
+
 					progressDialog.dismiss();
 				}
 			}.execute();
@@ -127,6 +130,6 @@ public class ChangeStatus extends PinSupportNetworkActivity {
 	private RadioButton failed;
 	private RadioButton backordered;
 	private String sid;
-	public static final int changeStatusResultCode = 100; 
+	public static final int changeStatusResultCode = 100;
 	private DialogFragment progressDialog;
 }
