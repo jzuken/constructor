@@ -13,7 +13,6 @@
         android:layout_gravity="center"
         android:background="@drawable/top_rounded_subtitle"
         android:gravity="center"
-        android:text="@string/set_price"
         android:textSize="20sp" />
 
     <EditText

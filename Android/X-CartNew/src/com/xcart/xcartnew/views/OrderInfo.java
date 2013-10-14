@@ -206,6 +206,7 @@ public class OrderInfo extends PinSupportNetworkActivity {
 			public void onClick(View v) {
 				trackingNumberItem.setClickable(false);
 				LinearLayout view = (LinearLayout) getLayoutInflater().inflate(R.layout.change_value_dialog, null);
+				((TextView) view.findViewById(R.id.label)).setText(R.string.change_tracking_number);
 				final EditText numberEditor = (EditText) view.findViewById(R.id.value_editor);
 				final String oldNumber = trackingNumber.getText().toString();
 				numberEditor.setText(oldNumber);
