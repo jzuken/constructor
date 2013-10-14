@@ -46,8 +46,18 @@ public class Authorization extends FragmentActivity implements SubscriptionCallb
 
         authorizationLogin.setText("elengor91@gmail.com");
         authorizationPassword.setText("hgD4pH0");
+    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
         DevServerApiManager.getInstance().addSubscriptionCallback(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        DevServerApiManager.getInstance().removeSubscriptionCallback(this);
     }
 
     public void okButtonClick(View v) {

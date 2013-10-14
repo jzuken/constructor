@@ -27,6 +27,10 @@ public class DevServerApiManager {
         }
     }
 
+    public void  removeSubscriptionCallback(SubscriptionCallback callback){
+        subscriptionCallbacks.remove(callback);
+    }
+
     private void notifySubscriptionListeners(SubscriptionStatus status) {
         for (SubscriptionCallback callback : subscriptionCallbacks) {
             callback.onSubscriptionChecked(status);
