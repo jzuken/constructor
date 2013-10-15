@@ -73,11 +73,6 @@ public class UserInfo extends PinSupportNetworkActivity {
 		});
 
 		ordersListView.setAdapter(adapter);
-
-		// test
-		addOrderToList("1000", "Smith, Michelle", "$460.99", "C", "JUN\n22");
-		addOrderToList("999", "Smith, John", "$914.99", "C", "JUN\n22");
-
 		userName = (TextView) findViewById(R.id.user_title);
 		userName.setText(getIntent().getStringExtra("userName"));
 		firstName = (TextView) header.findViewById(R.id.first_name);
@@ -86,7 +81,6 @@ public class UserInfo extends PinSupportNetworkActivity {
 		address = (TextView) header.findViewById(R.id.address);
 		phone = (TextView) header.findViewById(R.id.phone);
 		fax = (TextView) header.findViewById(R.id.fax);
-
 		id = getIntent().getStringExtra("userId");
 		authorizationData = getSharedPreferences("AuthorizationData", MODE_PRIVATE);
 		settingsData = PreferenceManager.getDefaultSharedPreferences(this);
