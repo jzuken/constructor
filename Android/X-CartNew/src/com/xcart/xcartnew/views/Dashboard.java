@@ -34,17 +34,6 @@ public class Dashboard extends PinSupportNetworkActivity {
 		initReviewsToday();
 		initLastOrders();
 		authorizationData = getSharedPreferences("AuthorizationData", MODE_PRIVATE);
-
-		// for logout
-		IntentFilter intentFilter = new IntentFilter();
-		intentFilter.addAction("com.package.ACTION_LOGOUT");
-		registerReceiver(new BroadcastReceiver() {
-
-			@Override
-			public void onReceive(Context context, Intent intent) {
-				finish();
-			}
-		}, intentFilter);
 	}
 
 	@Override
