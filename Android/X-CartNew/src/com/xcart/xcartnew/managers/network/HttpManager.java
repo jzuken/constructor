@@ -45,6 +45,7 @@ public class HttpManager {
     private static final String CHANGE_STATUS = "change_status";
     private static final String CHANGE_AVAILABLE = "change_available";
     private static final String LOGIN = "login";
+    private static final String USER_ORDERS = "user_orders";
 
     // parameters
     private static final String REQUEST = "request";
@@ -62,6 +63,7 @@ public class HttpManager {
     private static final String TRACKING_NUMBER = "tracking_number";
     private static final String PRODUCT_ID = "product_id";
     private static final String AVAILABLE = "available";
+    private static final String USER_ID = "user_id";
 
     //Dev server
     private static final String DEV_SERVER_URL = "http://vm-constructor.cloudapp.net";
@@ -109,7 +111,7 @@ public class HttpManager {
         return get(uri);
     }
 
-    public String getProducts(String from,String size, String search, String lowStock) {
+    public String getProducts(String from, String size, String search, String lowStock) {
         Uri.Builder builder = Uri.parse(SERVER_URL).buildUpon().path(API)
                 .appendQueryParameter(REQUEST, PRODUCTS)
                 .appendQueryParameter(FROM, from)
@@ -146,6 +148,17 @@ public class HttpManager {
         Uri uri = Uri.parse(SERVER_URL).buildUpon().path(API)
                 .appendQueryParameter(REQUEST, USER_INFO)
                 .appendQueryParameter(ID, id)
+                .appendQueryParameter(SID, sid)
+                .build();
+        return get(uri);
+    }
+    
+    public String getUserOrders(String from, String size, String id) {
+    	Uri uri = Uri.parse(SERVER_URL).buildUpon().path(API)
+                .appendQueryParameter(REQUEST, USER_ORDERS)
+                .appendQueryParameter(USER_ID, id)
+                .appendQueryParameter(FROM, from)
+                .appendQueryParameter(SIZE, size)
                 .appendQueryParameter(SID, sid)
                 .build();
         return get(uri);
