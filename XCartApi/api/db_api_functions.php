@@ -184,7 +184,7 @@ class DbApiFunctions
 
         $order_query = mysql_query
         ("
-          SELECT orderid, status, total, subtotal, discount, coupon, coupon_discount, shippingid, shipping, tracking, shipping_cost, tax, taxes_applied, title, firstname, lastname, company, b_title, b_firstname, b_lastname, b_address, b_city, b_county, b_state, b_country, b_zipcode, b_zip4, b_phone, b_fax, s_title, s_firstname, s_lastname, s_address, s_city, s_county, s_state, s_country, s_zipcode, s_phone, s_fax, s_zip4, shippingid, shipping, tracking, payment_method, date
+          SELECT orderid, userid, status, total, subtotal, discount, coupon, coupon_discount, shippingid, shipping, tracking, shipping_cost, tax, taxes_applied, title, firstname, lastname, company, b_title, b_firstname, b_lastname, b_address, b_city, b_county, b_state, b_country, b_zipcode, b_zip4, b_phone, b_fax, s_title, s_firstname, s_lastname, s_address, s_city, s_county, s_state, s_country, s_zipcode, s_phone, s_fax, s_zip4, shippingid, shipping, tracking, payment_method, date
           FROM $sql_tbl[orders]
           WHERE orderid = $id
         ") or die(mysql_error());
@@ -457,6 +457,38 @@ class DbApiFunctions
 
         return $user_info;
     }
+
+    public function get_orders_for_user($user_id, $from, $size)
+    {
+        global $sql_tbl;
+
+        $order_query = mysql_query
+        ("
+
+           SELECT orderid, status, total, title, firstname, lastname, date,
+          (
+            SELECT COUNT(*)
+            FROM $sql_tbl[order_details]
+            WHERE $sql_tbl[order_details].orderid=$sql_tbl[orders].orderid
+          )
+          AS items
+
+          FROM $sql_tbl[orders]
+          WHERE  userid = $user_id
+          ORDER BY date DESC LIMIT $from, $size
+        ") or die(mysql_error());
+
+        $orders = array();
+
+        while ($row = mysql_fetch_assoc($order_query)) {
+            $row['month'] = strtoupper(gmdate("M", $row['date']));
+            $row['day'] = gmdate("d", $row['date']);
+            array_push($orders, $row);
+        }
+
+        return $orders;
+    }
+
 
     public function check_session($sid)
     {

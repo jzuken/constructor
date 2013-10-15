@@ -130,6 +130,15 @@ if (isset($_GET["request"])) {
                 );
                 $pr->print_array_json($array);
                 break;
+
+            case 'user_orders':
+                $array = $db->get_orders_for_user(
+                    (int)get_get_parameter('user_id', 0),
+                    (int)get_get_parameter('from', 0),
+                    (int)get_get_parameter('size', 20)
+                );
+                $pr->print_array_json($array);
+                break;
         }
     }
 }
