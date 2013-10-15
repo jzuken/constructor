@@ -2,12 +2,16 @@ package com.xcart.xcartnew.managers.network;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.util.EntityUtils;
 
 import android.net.Uri;
@@ -40,6 +44,7 @@ public class HttpManager {
     private static final String CHANGE_TRACKING = "change_tracking";
     private static final String CHANGE_STATUS = "change_status";
     private static final String CHANGE_AVAILABLE = "change_available";
+    private static final String LOGIN = "login";
 
     // parameters
     private static final String REQUEST = "request";
@@ -219,6 +224,13 @@ public class HttpManager {
         return get(uri);
     }
 
+    public String login(List<NameValuePair> nameValuePairs){
+        Uri uri = Uri.parse(SERVER_URL).buildUpon().path(API)
+                .appendQueryParameter(REQUEST, LOGIN)
+                .build();
+        return post(uri, nameValuePairs);
+    }
+
     public String checkSubscription(String shopUrl){
         Uri uri = Uri.parse(DEV_SERVER_URL)
                 .buildUpon().path(String.format(CHECK_SUBSCRIPTION, shopUrl))
@@ -239,11 +251,34 @@ public class HttpManager {
                 return EntityUtils.toString(resEntityGet);
             }
         } catch (UnsupportedEncodingException e) {
-            LOG.e("UnsupportedEncodingException", e);
+            LOG.e(e.getMessage(), e);
         } catch (ClientProtocolException e) {
-            LOG.e("ClientProtocolException", e);
+            LOG.e(e.getMessage(), e);
         } catch (IOException e) {
-            LOG.e("IOException", e);
+            LOG.e(e.getMessage(), e);
+        }
+        return null;
+    }
+
+    private String post(Uri uri, List<NameValuePair> nameValuePairs) {
+        String url  = uri.toString();
+        HttpClient client = new SSLDefaultHttpClient();
+        HttpPost httppost = new HttpPost(url);
+
+        try {
+            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+            HttpResponse response = client.execute(httppost);
+            HttpEntity responseEntity = response.getEntity();
+            if (responseEntity != null) {
+                return EntityUtils.toString(responseEntity);
+            }
+        } catch (UnsupportedEncodingException e) {
+            LOG.e(e.getMessage(), e);
+        } catch (ClientProtocolException e) {
+            LOG.e(e.getMessage(), e);
+        } catch (IOException e) {
+            LOG.e(e.getMessage(), e);
         }
         return null;
     }

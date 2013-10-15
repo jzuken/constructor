@@ -18,72 +18,58 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".views.StartActivity"
-            android:configChanges="orientation|screenSize"
             android:noHistory="true"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".views.Unlock"
-            android:configChanges="orientation|screenSize"
             android:launchMode="singleTop"
             android:noHistory="true"
             android:screenOrientation="portrait" />
         <activity
             android:name=".views.Authorization"
-            android:configChanges="orientation|screenSize"
             android:launchMode="singleTop"
             android:noHistory="true"
             android:screenOrientation="portrait" />
         <activity
             android:name=".views.Settings"
-            android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait" />
         <activity
             android:name=".views.Products"
-            android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".views.Dashboard"
-            android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait" />
         <activity
             android:name=".views.Users"
-            android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".views.Reviews"
-            android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait" />
         <activity
             android:name=".views.Orders"
-            android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait" />
         <activity
             android:name=".views.FullMessage"
-            android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait" />
         <activity
             android:name=".views.ProductInfo"
-            android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait" />
         <activity
             android:name=".views.ChangeStatus"
-            android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait" />
         <activity
             android:name=".views.OrderInfo"
-            android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait" />
         <activity
             android:name=".views.UserInfo"
-            android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait" />
     </application>
 

@@ -8,10 +8,14 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.ActivityManager;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.Settings.Secure;
 import android.support.v4.app.DialogFragment;
@@ -23,6 +27,7 @@ import android.widget.Toast;
 
 import com.xcart.xcartnew.R;
 import com.xcart.xcartnew.managers.network.DevServerApiManager;
+import com.xcart.xcartnew.managers.network.HttpManager;
 import com.xcart.xcartnew.managers.network.PostRequester;
 import com.xcart.xcartnew.managers.network.SubscriptionCallback;
 import com.xcart.xcartnew.managers.network.SubscriptionStatus;
@@ -35,7 +40,9 @@ public class Authorization extends FragmentActivity implements SubscriptionCallb
 
     private static final LogManager LOG = new LogManager(Authorization.class.getSimpleName());
 
-    private DialogFragment progressDialog;
+    private static final String PROGRESS_DIALOG = "progress";
+
+    private boolean isActive = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,12 +59,20 @@ public class Authorization extends FragmentActivity implements SubscriptionCallb
     protected void onStart() {
         super.onStart();
         DevServerApiManager.getInstance().addSubscriptionCallback(this);
+        isActive = true;
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         DevServerApiManager.getInstance().removeSubscriptionCallback(this);
+        isActive = false;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        dismissProgress();
     }
 
     public void okButtonClick(View v) {
@@ -65,30 +80,30 @@ public class Authorization extends FragmentActivity implements SubscriptionCallb
     }
 
     private void checkSubscription() {
-        progressDialog = new ProgressDialog(R.string.checking_subscription);
-        progressDialog.setCancelable(false);
-        progressDialog.show(getSupportFragmentManager(), "progress");
+        shoProgressDialog(R.string.checking_subscription);
 
         //TODO: create url input
         DevServerApiManager.getInstance().checkSubscription("54.213.38.9");
     }
 
-    private void trySignIn(List<NameValuePair> loginData) {
-        progressDialog = new ProgressDialog(R.string.logging_in);
-        progressDialog.setCancelable(false);
+    private void trySignIn(final List<NameValuePair> loginData) {
+        shoProgressDialog(R.string.logging_in);
 
-        //strange Android bug
-        //progressDialog.show(getSupportFragmentManager(), "progress");
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.add(progressDialog, "progress");
-        transaction.commitAllowingStateLoss();
+        AsyncTask<Void,Void, String> postReq = new AsyncTask<Void,Void, String>() {
+            @Override
+            protected String doInBackground(Void... params) {
+                return new HttpManager().login(loginData);
+            }
 
-        PostRequester postReq = new PostRequester(loginData) {
             @Override
             protected void onPostExecute(String authResult) {
                 super.onPostExecute(authResult);
 
-                progressDialog.dismiss();
+                if(!isActive){
+                    return;
+                }
+
+                dismissProgress();
 
                 if (authResult != null) {
                     if (authResult.equals("")) {
@@ -111,7 +126,7 @@ public class Authorization extends FragmentActivity implements SubscriptionCallb
                                 Toast.makeText(Authorization.this, "Incorrect email or password", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
-                            e.printStackTrace();
+                            LOG.e(e.getMessage(), e);
                         }
                     }
                 } else {
@@ -119,9 +134,15 @@ public class Authorization extends FragmentActivity implements SubscriptionCallb
                     errorDialog.show(getSupportFragmentManager(), "login_error");
                 }
             }
+
+            @Override
+            protected void onCancelled() {
+                super.onCancelled();
+                dismissProgress();
+            }
         };
 
-        postReq.execute("https://54.213.38.9/api/api2.php?request=login");
+        postReq.execute();
     }
 
 
@@ -134,9 +155,7 @@ public class Authorization extends FragmentActivity implements SubscriptionCallb
 
     @Override
     public void onSubscriptionChecked(SubscriptionStatus status) {
-        if (progressDialog != null) {
-            progressDialog.dismiss();
-        }
+        dismissProgress();
 
         switch (status) {
             case Active:
@@ -160,6 +179,19 @@ public class Authorization extends FragmentActivity implements SubscriptionCallb
             case NetworkError:
                 new ConnectionErrorDialog().show(getSupportFragmentManager(), "subscription");
                 break;
+        }
+    }
+
+    private void shoProgressDialog(int messageId) {
+        DialogFragment progressDialog = new ProgressDialog(messageId);
+        progressDialog.setCancelable(false);
+        progressDialog.show(getSupportFragmentManager(), PROGRESS_DIALOG);
+    }
+
+    private void dismissProgress() {
+        ProgressDialog progressDialog = (ProgressDialog) getSupportFragmentManager().findFragmentByTag("progress");
+        if (progressDialog != null) {
+            progressDialog.dismiss();
         }
     }
 

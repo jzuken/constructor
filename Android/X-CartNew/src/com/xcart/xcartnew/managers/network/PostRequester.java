@@ -17,34 +17,10 @@ import android.os.AsyncTask;
 
 import com.xcart.xcartnew.managers.network.SSLDefaultHttpClient;
 
-public class PostRequester extends AsyncTask<String, Void, String> {
+public abstract class PostRequester extends AsyncTask<String, Void, String> {
 
 	public PostRequester(List<NameValuePair> nameValuePairs) {
 		this.nameValuePairs = nameValuePairs;
-	}
-
-	@Override
-	protected String doInBackground(String... urls) {
-		String url = new String(urls[0]);
-		HttpClient client = new SSLDefaultHttpClient();
-		HttpPost httppost = new HttpPost(url);
-
-		try {
-			httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-			HttpResponse response = client.execute(httppost);
-			HttpEntity responseEntity = response.getEntity();
-			if (responseEntity != null) {
-				return EntityUtils.toString(responseEntity);
-			}
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		} catch (ClientProtocolException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return null;
 	}
 
 	private List<NameValuePair> nameValuePairs;
