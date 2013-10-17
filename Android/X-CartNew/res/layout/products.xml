@@ -9,7 +9,9 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/light_gray_title" >
+        android:background="@drawable/light_gray_title"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp" >
 
         <TextView
             android:layout_width="match_parent"
@@ -27,11 +29,13 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:background="@drawable/settings_button"
             android:contentDescription="@string/settings_description"
             android:onClick="settingsClick" />
     </RelativeLayout>
-    
+
     <com.xcart.xcartnew.views.CustomTabHost
         android:id="@android:id/tabhost"
         android:layout_width="match_parent"

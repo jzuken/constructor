@@ -8,7 +8,9 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/gray_title" >
+        android:background="@drawable/gray_title"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp" >
 
         <TextView
             android:layout_width="match_parent"
@@ -26,6 +28,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:background="@drawable/settings_button"
             android:contentDescription="@string/settings_description"
             android:onClick="settingsClick" />
