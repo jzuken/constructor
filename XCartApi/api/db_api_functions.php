@@ -105,7 +105,13 @@ class DbApiFunctions
         $today_visitors_sql = "SELECT COUNT(*) FROM $sql_tbl[customers] WHERE last_login >= '$start_date'";
         $today_visitors = $this->get_first_cell($today_visitors_sql);
 
-        $today_sold_sql = "SELECT COUNT(*) FROM $sql_tbl[orders] WHERE (status='P' OR status='C') AND $date_condition";
+        $today_sold_sql =
+        "SELECT  COUNT(1) FROM $sql_tbl[orders]
+         INNER JOIN $sql_tbl[order_details]
+         ON $sql_tbl[order_details].orderid=$sql_tbl[orders].orderid
+         WHERE ($sql_tbl[orders].status='P' OR $sql_tbl[orders].status='C') AND $date_condition";
+
+        //$result = mysql_query($today_sold_sql);
         $today_sold = $this->get_first_cell($today_sold_sql);
 
         return array(
