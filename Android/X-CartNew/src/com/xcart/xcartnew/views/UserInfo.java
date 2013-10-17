@@ -141,7 +141,7 @@ public class UserInfo extends PinSupportNetworkActivity {
 				} else {
 					showConnectionErrorMessage();
 				}
-				progressBar.setVisibility(View.GONE);
+				progressBar.setVisibility(View.INVISIBLE);
 			}
 		};
 

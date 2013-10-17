@@ -71,7 +71,7 @@ public class Dashboard extends PinSupportNetworkActivity {
 							}
 							String name = title + order.getString("firstname") + " " + order.getString("lastname");
 							customers[i].setText(name);
-							customersPaid[i].setText(order.getString("total"));
+							customersPaid[i].setText("$" + order.getString("total"));
 						}
 					} catch (JSONException e) {
 						e.printStackTrace();
