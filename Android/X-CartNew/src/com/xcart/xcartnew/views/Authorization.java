@@ -15,7 +15,6 @@ import android.content.SharedPreferences.Editor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.Settings.Secure;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.EditText;
@@ -23,14 +22,13 @@ import android.widget.Toast;
 
 import com.xcart.xcartnew.R;
 import com.xcart.xcartnew.managers.DialogManager;
+import com.xcart.xcartnew.managers.LogManager;
 import com.xcart.xcartnew.managers.network.DevServerApiManager;
 import com.xcart.xcartnew.managers.network.HttpManager;
 import com.xcart.xcartnew.managers.network.SubscriptionCallback;
 import com.xcart.xcartnew.managers.network.SubscriptionStatus;
 import com.xcart.xcartnew.views.dialogs.ConnectionErrorDialog;
 import com.xcart.xcartnew.views.dialogs.ErrorDialog;
-import com.xcart.xcartnew.views.dialogs.ProgressDialog;
-import com.xcart.xcartnew.managers.LogManager;
 
 public class Authorization extends FragmentActivity implements SubscriptionCallback {
 
