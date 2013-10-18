@@ -26,8 +26,9 @@ public class HttpManager {
 
     private static final LogManager LOG = new LogManager(HttpManager.class.getSimpleName());
 
-    private static final String SERVER_URL = "https://54.213.38.9";
-    private static final String API = "/api/api2.php";
+    public static final String SHOP_NAME = "ec2-54-213-169-59.us-west-2.compute.amazonaws.com"; //TODO:
+    private static final String SERVER_URL = "http://ec2-54-213-169-59.us-west-2.compute.amazonaws.com";
+    private static final String API = "/xcart/api/api2.php";
 
     //requests
     private static final String DASHBOARD = "dashboard";
@@ -261,7 +262,8 @@ public class HttpManager {
             HttpResponse responseGet = client.execute(get);
             HttpEntity resEntityGet = responseGet.getEntity();
             if (resEntityGet != null) {
-                return EntityUtils.toString(resEntityGet);
+                String res =  EntityUtils.toString(resEntityGet);
+                return res;
             }
         } catch (UnsupportedEncodingException e) {
             LOG.e(e.getMessage(), e);
@@ -275,6 +277,7 @@ public class HttpManager {
 
     private String post(Uri uri, List<NameValuePair> nameValuePairs) {
         String url  = uri.toString();
+        LOG.d("post url " + url);
         HttpClient client = new SSLDefaultHttpClient();
         HttpPost httppost = new HttpPost(url);
 
