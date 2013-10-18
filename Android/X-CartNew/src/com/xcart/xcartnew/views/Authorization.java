@@ -49,6 +49,10 @@ public class Authorization extends FragmentActivity implements SubscriptionCallb
         authorizationLogin.setText("kuzma@x-cart.com");
         authorizationPassword.setText("kuzmacdevru‏");
 
+//        authorizationLogin.setText("elengor91@gmail.com");
+//        authorizationPassword.setText("hgD4pH0");
+
+
         dialogManager = new DialogManager(getSupportFragmentManager());
     }
 

@@ -27,12 +27,12 @@ public class HttpManager {
     private static final LogManager LOG = new LogManager(HttpManager.class.getSimpleName());
 
     public static final String SHOP_NAME = "ec2-54-213-169-59.us-west-2.compute.amazonaws.com"; //TODO:
-    //public static final String SHOP_NAME = "54.213.38.9"; //TODO:
-    private static final String SERVER_URL = "http://ec2-54-213-169-59.us-west-2.compute.amazonaws.com";
     private static final String API = "/xcart/api/api2.php";
+    private static final String SERVER_URL = "http://ec2-54-213-169-59.us-west-2.compute.amazonaws.com";
 
-    //private static final String SERVER_URL = "https://54.213.38.9";
-    //private static final String API = "/api/api2.php";
+//    public static final String SHOP_NAME = "54.213.38.9"; //TODO:
+//    private static final String SERVER_URL = "https://54.213.38.9";
+//    private static final String API = "/api/api2.php";
 
     //requests
     private static final String DASHBOARD = "dashboard";
