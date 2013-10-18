@@ -48,7 +48,7 @@ public class OrdersListAdapter extends ArrayAdapter<Order> {
 
 	private void setupItem(OrderHolder holder) {
 		holder.userName.setText(holder.order.getUserName() + " (#" + holder.order.getId() + ")");
-		holder.paid.setText(holder.order.getPaid());
+		holder.paid.setText("$" + holder.order.getPaid());
 		StatusSymbols statusSymbol = StatusSymbols.valueOf(holder.order.getStatus());
 		holder.status.setText(getStatusBySymbol(statusSymbol));
 		holder.status.setTextColor(getColorResourceBySymbol(statusSymbol));

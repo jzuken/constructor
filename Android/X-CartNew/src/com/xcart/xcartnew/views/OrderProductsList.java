@@ -35,7 +35,7 @@ public class OrderProductsList extends LinearLayout {
 		TextView productName = (TextView) item.findViewById(R.id.product_name);
 		TextView productPrice = (TextView) item.findViewById(R.id.product_price);
 		productName.setText(name);
-		productPrice.setText(price);
+		productPrice.setText("$" + price);
 		productLayout.setOnClickListener(new OnClickListener() {
 
 			@Override
