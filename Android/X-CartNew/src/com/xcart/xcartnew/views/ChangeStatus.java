@@ -3,16 +3,15 @@ package com.xcart.xcartnew.views;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.xcart.xcartnew.R;
+import com.xcart.xcartnew.managers.DialogManager;
 import com.xcart.xcartnew.managers.network.GetRequester;
 import com.xcart.xcartnew.managers.network.HttpManager;
-import com.xcart.xcartnew.views.dialogs.ProgressDialog;
 
 public class ChangeStatus extends PinSupportNetworkActivity {
 	@Override
@@ -33,6 +32,7 @@ public class ChangeStatus extends PinSupportNetworkActivity {
 		activeButtonBySymbol(StatusSymbols.valueOf(getIntent().getStringExtra("status")));
 		SharedPreferences authorizationData = getSharedPreferences("AuthorizationData", MODE_PRIVATE);
 		sid = authorizationData.getString("sid", "");
+		dialogManager = new DialogManager(getSupportFragmentManager());
 	}
 
 	private enum StatusSymbols {
@@ -86,9 +86,7 @@ public class ChangeStatus extends PinSupportNetworkActivity {
 	}
 
 	public void saveClick(View v) {
-		progressDialog = new ProgressDialog(R.string.updating_status);
-		progressDialog.setCancelable(false);
-		progressDialog.show(getSupportFragmentManager(), "progress");
+		dialogManager.showProgressDialog(R.string.updating_status, PROGRESS_DIALOG);
 		try {
 			new GetRequester() {
 				@Override
@@ -100,6 +98,10 @@ public class ChangeStatus extends PinSupportNetworkActivity {
 				protected void onPostExecute(String response) {
 					super.onPostExecute(response);
 
+					if (!isActive) {
+						return;
+					}
+
 					if (response != null) {
 						Toast.makeText(getBaseContext(), "Success", Toast.LENGTH_SHORT).show();
 						Intent resultIntent = new Intent();
@@ -110,12 +112,30 @@ public class ChangeStatus extends PinSupportNetworkActivity {
 						showConnectionErrorMessage();
 					}
 
-					progressDialog.dismiss();
+					dialogManager.dismissDialog(PROGRESS_DIALOG);
 				}
 			}.execute();
 		} catch (Exception e) {
 			showConnectionErrorMessage();
 		}
+	}
+
+	@Override
+	protected void onStart() {
+		super.onStart();
+		isActive = true;
+	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		isActive = false;
+	}
+
+	@Override
+	protected void onPause() {
+		super.onResume();
+		dialogManager.dismissDialog(PROGRESS_DIALOG);
 	}
 
 	private TextView orderIdTitle;
@@ -128,5 +148,7 @@ public class ChangeStatus extends PinSupportNetworkActivity {
 	private RadioButton backordered;
 	private String sid;
 	public static final int changeStatusResultCode = 100;
-	private DialogFragment progressDialog;
+	private DialogManager dialogManager;
+	private static final String PROGRESS_DIALOG = "Change_status_progress";
+	private boolean isActive = false;
 }
