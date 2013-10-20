@@ -77,10 +77,13 @@ public class DevServerApiManager {
                 notifySubscriptionListeners(SubscriptionStatus.Expired);
             } else if (subscription.equals("active")) {
                 notifySubscriptionListeners(SubscriptionStatus.Active);
+            }else {
+                notifySubscriptionListeners(SubscriptionStatus.None);
             }
 
         } catch (JSONException e) {
             LOG.e("JSONException", e);
+            notifySubscriptionListeners(SubscriptionStatus.None);
         }
     }
 }
