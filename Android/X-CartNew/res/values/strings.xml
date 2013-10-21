@@ -99,4 +99,7 @@
     <string name="logging_in">Logging in…</string>
     <string name="updating_status">Updating status…</string>
     <string name="change_tracking_number">Change tracking number</string>
+    <string name="shop_url">Shop url</string>
+    <string name="authorization_key">Authorization key</string>
+    <string name="checking">Checking…</string>
 </resources>

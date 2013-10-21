@@ -22,7 +22,12 @@ public class StartActivity extends Activity {
 			editor.putString("password", "0000");
 			editor.commit();
 		}
-		if (!(authorizationData.getBoolean("logged", false))) {
+		if (!(authorizationData.getBoolean("shop_logged", false))) {
+			Intent intent = new Intent(this, ShopAuthorization.class);
+			intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+			startActivity(intent);
+		}
+		else if (!(authorizationData.getBoolean("logged", false))) {
 			Intent intent = new Intent(this, Authorization.class);
 			intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
 			startActivity(intent);

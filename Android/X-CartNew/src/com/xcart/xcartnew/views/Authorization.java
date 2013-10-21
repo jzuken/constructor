@@ -46,12 +46,8 @@ public class Authorization extends FragmentActivity implements SubscriptionCallb
         authorizationLogin = (EditText) findViewById(R.id.authorizationLogin);
         authorizationPassword = (EditText) findViewById(R.id.authorizationPassword);
 
-        authorizationLogin.setText("kuzma@x-cart.com");
-        authorizationPassword.setText("kuzmacdevru‏");
-
-//        authorizationLogin.setText("elengor91@gmail.com");
-//        authorizationPassword.setText("hgD4pH0");
-
+        authorizationLogin.setText("elengor91@gmail.com");
+        authorizationPassword.setText("hgD4pH0");
 
         dialogManager = new DialogManager(getSupportFragmentManager());
     }
@@ -84,7 +80,7 @@ public class Authorization extends FragmentActivity implements SubscriptionCallb
         dialogManager.showProgressDialog(R.string.checking_subscription, PROGRESS_DIALOG);
 
         //TODO: create url input
-        DevServerApiManager.getInstance().checkSubscription(HttpManager.SHOP_NAME);
+        DevServerApiManager.getInstance().checkSubscription("54.213.38.9");
     }
 
     private void trySignIn(final List<NameValuePair> loginData) {

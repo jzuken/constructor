@@ -116,6 +116,7 @@ public class ChangeStatus extends PinSupportNetworkActivity {
 				}
 			}.execute();
 		} catch (Exception e) {
+			dialogManager.dismissDialog(PROGRESS_DIALOG);
 			showConnectionErrorMessage();
 		}
 	}
