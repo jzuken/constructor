@@ -74,50 +74,43 @@ namespace ApplicationServerListener.Controllers
             }
         }
 
-        [ActionName("ApiURL")]
-        public HttpResponseMessage GetApiURL(string name)
+        [ActionName("DefaultAction")]
+        public HttpResponseMessage Get()
         {
             NameValueCollection getParams = Request.RequestUri.ParseQueryString();
             if (getParams["key"] != null)
             {
                 string key = getParams["key"].ToString();
                 string hash = this.CreateMD5Hash(key);
-                RepoLibraryReference.Project project = wcfClient.GetProject(@name);
+                RepoLibraryReference.Project project = wcfClient.GetProjectByKey(key);
                 if (project == null)
                 {
-                    return new HttpResponseMessage() { Content = new StringContent("{}") };
+                    return new HttpResponseMessage() { Content = new StringContent("{\"api\": \"noKey\"}") };
                 }
-                else
+                string expirationDate = project.ExpirationDate;
+                DateTime todate = DateTime.Today;
+                DateTime expiring;
+                bool parsed = DateTime.TryParse(expirationDate, out expiring);
+                if (parsed)
                 {
-                    if (project.keyHash == hash)
+                    if (DateTime.Compare(todate, expiring) > 0)
                     {
-                        string expirationDate = project.ExpirationDate;
-                        DateTime todate = DateTime.Today;
-                        DateTime expiring;
-                        bool parsed = DateTime.TryParse(expirationDate, out expiring);
-                        if (parsed)
-                        {
-                            if (DateTime.Compare(todate, expiring) > 0)
-                            {
-                                return new HttpResponseMessage() { Content = new StringContent("{}") };
-                            }
-                            else
-                            {
-                                return new HttpResponseMessage() { Content = new StringContent("{\"apiUrl\": \"" + project.apiUrl + "\"}") };
-                            }
-                        }
-                        else
-                        {
-                            return new HttpResponseMessage() { Content = new StringContent("{}") };
-                        }
+                        return new HttpResponseMessage() { Content = new StringContent("{\"api\": \"expired\"}") };
                     }
                     else
                     {
-                        return new HttpResponseMessage() { Content = new StringContent("{}") };
+                        return new HttpResponseMessage() { Content = new StringContent("{\"api\": \"" + project.apiUrl + "\"}") };
                     }
                 }
+                else
+                {
+                    return new HttpResponseMessage() { Content = new StringContent("{\"api\": \"notSubscribed\"}") };
+                }
             }
-            return new HttpResponseMessage() { Content = new StringContent("{}") };
+            else
+            {
+                return new HttpResponseMessage() { Content = new StringContent("{}") };
+            }
         }
     }
 }

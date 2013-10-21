@@ -1,14 +1,53 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace RepoLibrary
 {
     class MSSQLDatabaseGateway : IDatabaseGateway
     {
+
+        private string CreateMD5Hash(string input)
+        {
+            MD5 md5 = System.Security.Cryptography.MD5.Create();
+            byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(input);
+            byte[] hashBytes = md5.ComputeHash(inputBytes);
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < hashBytes.Length; i++)
+            {
+                sb.Append(hashBytes[i].ToString("X2"));
+            }
+            return sb.ToString();
+        }
+
         public MSSQLDatabaseGateway(string connectionString)
         {
             this.connectionString = connectionString;
+        }
+
+        public Project GetProjectByKey(string key)
+        {
+            SqlConnection connection = new SqlConnection(this.connectionString);
+            connection.Open();
+            SqlDataReader myReader = null;
+            SqlCommand myCommand = new SqlCommand("select * from shops where shopKeyHash=@key", connection);
+            myCommand.Parameters.Add("@key", SqlDbType.VarChar).Value = this.CreateMD5Hash(key);
+            myReader = myCommand.ExecuteReader();
+            while (myReader.Read())
+            {
+                Project project = new Project();
+                project.Settings = myReader["shopSettings"].ToString();
+                project.Url = myReader["shopUrl"].ToString();
+                project.ExpirationDate = myReader["shopExpirationDate"].ToString();
+                project.apiUrl = myReader["shopApiUrl"].ToString();
+                project.keyHash = myReader["shopKeyHash"].ToString();
+                connection.Close();
+                return project;
+            }
+            connection.Close();
+            return null;
         }
 
         public Project GetProject(string url)
