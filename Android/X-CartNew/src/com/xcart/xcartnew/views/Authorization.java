@@ -16,7 +16,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.Settings.Secure;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -112,7 +111,6 @@ public class Authorization extends FragmentActivity implements SubscriptionCallb
                         errorDialog.show(getSupportFragmentManager(), "login_error");
                     } else {
                         try {
-                        	Log.i("adds", authResult);
                             JSONObject obj = new JSONObject(authResult);
                             if (obj.optString("upload_status").equals("login success")) {
                                 SharedPreferences authorizationData = getSharedPreferences("AuthorizationData", MODE_PRIVATE);

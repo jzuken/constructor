@@ -11,22 +11,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
-        android:text="@string/shop_url"
-        android:textSize="20sp" />
-
-    <EditText
-        android:id="@+id/shop_url"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
-        android:background="@drawable/edit_text"
-        android:inputType="textUri" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
         android:layout_marginTop="30dp"
         android:text="@string/authorization_key"
         android:textSize="20sp" />

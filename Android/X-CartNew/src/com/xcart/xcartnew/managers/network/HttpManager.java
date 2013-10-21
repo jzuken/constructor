@@ -75,7 +75,7 @@ public class HttpManager {
 	// Dev server
 	private static final String DEV_SERVER_URL = "http://vm-constructor.cloudapp.net";
 	private static final String CHECK_SUBSCRIPTION = "/AppServerListener/api/shops/%s/checksubscribtion";
-	private static final String SHOP_AUTHORIZATION = "/AppServerListener/api/shops/%s/apiUrl";
+	private static final String SHOP_AUTHORIZATION = "/AppServerListener/api/shops";
 
 	private HttpClient client;
 
@@ -206,8 +206,8 @@ public class HttpManager {
 		return get(uri);
 	}
 	
-	public String shopAuthorization(String shopUrl, String key) {
-		Uri uri = Uri.parse(DEV_SERVER_URL).buildUpon().path(String.format(SHOP_AUTHORIZATION, shopUrl))
+	public String shopAuthorization(String key) {
+		Uri uri = Uri.parse(DEV_SERVER_URL).buildUpon().path(SHOP_AUTHORIZATION)
 				.appendQueryParameter(KEY, key).build();
 		return get(uri);
 	}
