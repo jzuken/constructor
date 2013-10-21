@@ -23,7 +23,7 @@ public class ShopAuthorization extends FragmentActivity {
 		shopUrl = (EditText) findViewById(R.id.shop_url);
 		authorizationKey = (EditText) findViewById(R.id.authorization_key);
 
-		shopUrl.setText("54.213.38.9");
+		shopUrl.setText(HttpManager.SHOP_NAME);
 		authorizationKey.setText("testKey");
 
 		dialogManager = new DialogManager(getSupportFragmentManager());

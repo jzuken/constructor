@@ -16,6 +16,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.Settings.Secure;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -46,6 +47,9 @@ public class Authorization extends FragmentActivity implements SubscriptionCallb
         authorizationLogin = (EditText) findViewById(R.id.authorizationLogin);
         authorizationPassword = (EditText) findViewById(R.id.authorizationPassword);
 
+        //authorizationLogin.setText("kuzma@x-cart.com");
+        //authorizationPassword.setText("kuzmacdevru‏");
+        
         authorizationLogin.setText("elengor91@gmail.com");
         authorizationPassword.setText("hgD4pH0");
 
@@ -80,7 +84,7 @@ public class Authorization extends FragmentActivity implements SubscriptionCallb
         dialogManager.showProgressDialog(R.string.checking_subscription, PROGRESS_DIALOG);
 
         //TODO: create url input
-        DevServerApiManager.getInstance().checkSubscription("54.213.38.9");
+        DevServerApiManager.getInstance().checkSubscription(HttpManager.SHOP_NAME);
     }
 
     private void trySignIn(final List<NameValuePair> loginData) {
@@ -108,6 +112,7 @@ public class Authorization extends FragmentActivity implements SubscriptionCallb
                         errorDialog.show(getSupportFragmentManager(), "login_error");
                     } else {
                         try {
+                        	Log.i("adds", authResult);
                             JSONObject obj = new JSONObject(authResult);
                             if (obj.optString("upload_status").equals("login success")) {
                                 SharedPreferences authorizationData = getSharedPreferences("AuthorizationData", MODE_PRIVATE);
