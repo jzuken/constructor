@@ -97,7 +97,9 @@ public class OrderInfo extends PinSupportNetworkActivity {
 						if (!title.equals("")) {
 							title += " ";
 						}
-						customer.setText(title + obj.getString("firstname") + " " + obj.getString("lastname"));
+						userName = title + obj.getString("firstname") + " " + obj.getString("lastname");
+						customer.setText(userName);
+						userId = obj.getString("userid");
 
 						String bTitle = obj.getString("b_title");
 						if (!bTitle.equals("")) {
@@ -274,6 +276,17 @@ public class OrderInfo extends PinSupportNetworkActivity {
 	private void setupCustomerItem() {
 		customer = (TextView) findViewById(R.id.customer);
 		customerItem = (RelativeLayout) findViewById(R.id.customer_item);
+		customerItem.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				setNeedDownloadValue(false);
+				Intent intent = new Intent(getBaseContext(), UserInfo.class);
+				intent.putExtra("userId", userId);
+				intent.putExtra("userName", userName);
+				startActivityForResult(intent, 1);
+			}
+		});
 	}
 
 	@Override
@@ -314,4 +327,6 @@ public class OrderInfo extends PinSupportNetworkActivity {
 	private SharedPreferences authorizationData;
 	private String sid;
 	private String statusSymbol;
+	private String userId;
+	private String userName;
 }
