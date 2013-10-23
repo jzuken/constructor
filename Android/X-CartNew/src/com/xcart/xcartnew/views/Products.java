@@ -72,7 +72,7 @@ public class Products extends PinSupportNetworkActivity {
 
 			@Override
 			protected String doInBackground(Void... params) {
-				return new HttpManager(authorizationData.getString("sid", "")).getProducts(from,
+				return new HttpManager(getBaseContext(), authorizationData.getString("sid", "")).getProducts(from,
 						String.valueOf(packAmount), searchWord, option);
 			}
 

@@ -27,11 +27,13 @@ public class StartActivity extends Activity {
 			intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
 			startActivity(intent);
 		}
-		else if (!(authorizationData.getBoolean("logged", false))) {
-			Intent intent = new Intent(this, Authorization.class);
-			intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-			startActivity(intent);
-		} else {
+//		else
+//        if (!(authorizationData.getBoolean("logged", false))) {
+//			Intent intent = new Intent(this, Authorization.class);
+//			intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+//			startActivity(intent);
+//		}
+        else {
 			Intent intent = new Intent(this, Unlock.class);
 			intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
 			startActivity(intent);

@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.xcart.xcartnew.R;
 import com.xcart.xcartnew.managers.DialogManager;
 import com.xcart.xcartnew.managers.network.DevServerApiManager;
+import com.xcart.xcartnew.managers.network.HttpManager;
 import com.xcart.xcartnew.managers.network.SubscriptionCallback;
 import com.xcart.xcartnew.managers.network.SubscriptionStatus;
 import com.xcart.xcartnew.views.Dashboard;
@@ -79,10 +80,8 @@ public class Unlock extends FragmentActivity  implements SubscriptionCallback {
         dialogManager.showProgressDialog(R.string.checking_subscription, PROGRESS_DIALOG);
 
         //TODO: create url input
-        DevServerApiManager.getInstance().checkSubscription("54.213.38.9");
+        DevServerApiManager.getInstance().checkSubscription(HttpManager.SHOP_NAME);
     }
-
-
 
 	private void initWheel(WheelView wheel) {
 		wheel.setViewAdapter(new NumericWheelAdapter(this, 0, 9));

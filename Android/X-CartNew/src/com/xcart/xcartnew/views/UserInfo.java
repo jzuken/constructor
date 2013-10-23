@@ -119,7 +119,7 @@ public class UserInfo extends PinSupportNetworkActivity {
 		GetRequester dataRequester = new GetRequester() {
 			@Override
 			protected String doInBackground(Void... params) {
-				return new HttpManager(sid).getUserInfo(id);
+				return new HttpManager(getBaseContext(),sid).getUserInfo(id);
 			}
 
 			@Override
@@ -159,7 +159,7 @@ public class UserInfo extends PinSupportNetworkActivity {
 		GetRequester dataRequester = new GetRequester() {
 			@Override
 			protected String doInBackground(Void... params) {
-				return new HttpManager(authorizationData.getString("sid", "")).getUserOrders(from,
+				return new HttpManager(getBaseContext(), authorizationData.getString("sid", "")).getUserOrders(from,
 						String.valueOf(packAmount), id);
 			}
 

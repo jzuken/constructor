@@ -48,7 +48,7 @@ public class Dashboard extends PinSupportNetworkActivity {
 
             @Override
             protected String doInBackground(Void... voids) {
-                return new HttpManager(authorizationData.getString("sid", "")).getDashboard();
+                return new HttpManager(getBaseContext(),authorizationData.getString("sid", "")).getDashboard();
             }
 
 			@Override

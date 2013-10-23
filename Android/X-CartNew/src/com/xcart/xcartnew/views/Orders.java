@@ -66,7 +66,7 @@ public class Orders extends PinSupportNetworkActivity {
 		GetRequester dataRequester = new GetRequester() {
 			@Override
 			protected String doInBackground(Void... params) {
-				return new HttpManager(authorizationData.getString("sid", "")).getLastOrders(from,
+				return new HttpManager(getBaseContext(),authorizationData.getString("sid", "")).getLastOrders(from,
 						String.valueOf(packAmount), period, searchWord, null);
 			}
 

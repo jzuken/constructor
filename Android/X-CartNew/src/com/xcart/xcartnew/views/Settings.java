@@ -96,7 +96,7 @@ public class Settings extends PreferenceActivity {
 				Intent broadcastIntent = new Intent();
 				broadcastIntent.setAction("com.package.ACTION_LOGOUT");
 				sendBroadcast(broadcastIntent);
-				Intent intent = new Intent(getBaseContext(), Authorization.class);
+				Intent intent = new Intent(getBaseContext(), ShopAuthorization.class);
 				startActivity(intent);
 				finish();
 				return true;

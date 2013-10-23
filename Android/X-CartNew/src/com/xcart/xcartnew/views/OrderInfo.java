@@ -79,7 +79,7 @@ public class OrderInfo extends PinSupportNetworkActivity {
 
 			@Override
 			protected String doInBackground(Void... params) {
-				return new HttpManager(authorizationData.getString("sid", "")).getOrderInfo(orderId);
+				return new HttpManager(getBaseContext(),authorizationData.getString("sid", "")).getOrderInfo(orderId);
 			}
 
 			@Override
@@ -248,7 +248,7 @@ public class OrderInfo extends PinSupportNetworkActivity {
 			new GetRequester() {
 				@Override
 				protected String doInBackground(Void... params) {
-					return new HttpManager(sid).changeTrackingNumber(orderIdValue, newNumber);
+					return new HttpManager(getBaseContext(),sid).changeTrackingNumber(orderIdValue, newNumber);
 				}
 
 				@Override

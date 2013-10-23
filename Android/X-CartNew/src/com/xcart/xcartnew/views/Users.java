@@ -64,7 +64,7 @@ public class Users extends PinSupportNetworkActivity {
 
 			@Override
 			protected String doInBackground(Void... params) {
-				return new HttpManager(sid).getUsers(from, String.valueOf(packAmount), searchWord, getCurrentSort());
+				return new HttpManager(getBaseContext(),sid).getUsers(from, String.valueOf(packAmount), searchWord, getCurrentSort());
 			}
 
 			@Override
