@@ -74,43 +74,50 @@ namespace ApplicationServerListener.Controllers
             }
         }
 
-        [ActionName("DefaultAction")]
-        public HttpResponseMessage Get()
+        [ActionName("ApiURL")]
+        public HttpResponseMessage GetApiURL(string name)
         {
             NameValueCollection getParams = Request.RequestUri.ParseQueryString();
             if (getParams["key"] != null)
             {
                 string key = getParams["key"].ToString();
                 string hash = this.CreateMD5Hash(key);
-                RepoLibraryReference.Project project = wcfClient.GetProjectByKey(key);
+                RepoLibraryReference.Project project = wcfClient.GetProject(@name);
                 if (project == null)
                 {
-                    return new HttpResponseMessage() { Content = new StringContent("{\"api\": \"noKey\"}") };
-                }
-                string expirationDate = project.ExpirationDate;
-                DateTime todate = DateTime.Today;
-                DateTime expiring;
-                bool parsed = DateTime.TryParse(expirationDate, out expiring);
-                if (parsed)
-                {
-                    if (DateTime.Compare(todate, expiring) > 0)
-                    {
-                        return new HttpResponseMessage() { Content = new StringContent("{\"api\": \"expired\"}") };
-                    }
-                    else
-                    {
-                        return new HttpResponseMessage() { Content = new StringContent("{\"api\": \"" + project.apiUrl + "\"}") };
-                    }
+                    return new HttpResponseMessage() { Content = new StringContent("{\"api\": \"noShop\"}") };
                 }
                 else
                 {
-                    return new HttpResponseMessage() { Content = new StringContent("{\"api\": \"notSubscribed\"}") };
+                    if (project.keyHash == hash)
+                    {
+                        string expirationDate = project.ExpirationDate;
+                        DateTime todate = DateTime.Today;
+                        DateTime expiring;
+                        bool parsed = DateTime.TryParse(expirationDate, out expiring);
+                        if (parsed)
+                        {
+                            if (DateTime.Compare(todate, expiring) > 0)
+                            {
+                                return new HttpResponseMessage() { Content = new StringContent("{\"api\": \"expired\"}") };
+                            }
+                            else
+                            {
+                                return new HttpResponseMessage() { Content = new StringContent("{\"api\": \"" + project.apiUrl + "\"}") };
+                            }
+                        }
+                        else
+                        {
+                            return new HttpResponseMessage() { Content = new StringContent("{\"api\": \"notSubscribed\"}") };
+                        }
+                    }
+                    else
+                    {
+                        return new HttpResponseMessage() { Content = new StringContent("{\"api\": \"wrongKey\"}") };
+                    }
                 }
             }
-            else
-            {
-                return new HttpResponseMessage() { Content = new StringContent("{}") };
-            }
+            return new HttpResponseMessage() { Content = new StringContent("{}") };
         }
     }
 }

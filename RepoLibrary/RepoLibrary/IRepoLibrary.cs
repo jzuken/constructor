@@ -13,9 +13,6 @@ namespace RepoLibrary
         Project GetProject(string url);
 
         [OperationContract]
-        Project GetProjectByKey(string key);
-
-        [OperationContract]
         string SaveProject(Project data);
     }
 
