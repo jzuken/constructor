@@ -85,7 +85,7 @@ namespace ApplicationServerListener.Controllers
                 RepoLibraryReference.Project project = wcfClient.GetProject(@name);
                 if (project == null)
                 {
-                    return new HttpResponseMessage() { Content = new StringContent("{}") };
+                    return new HttpResponseMessage() { Content = new StringContent("{\"api\": \"noShop\"}") };
                 }
                 else
                 {
@@ -99,21 +99,21 @@ namespace ApplicationServerListener.Controllers
                         {
                             if (DateTime.Compare(todate, expiring) > 0)
                             {
-                                return new HttpResponseMessage() { Content = new StringContent("{}") };
+                                return new HttpResponseMessage() { Content = new StringContent("{\"api\": \"expired\"}") };
                             }
                             else
                             {
-                                return new HttpResponseMessage() { Content = new StringContent("{\"apiUrl\": \"" + project.apiUrl + "\"}") };
+                                return new HttpResponseMessage() { Content = new StringContent("{\"api\": \"" + project.apiUrl + "\"}") };
                             }
                         }
                         else
                         {
-                            return new HttpResponseMessage() { Content = new StringContent("{}") };
+                            return new HttpResponseMessage() { Content = new StringContent("{\"api\": \"notSubscribed\"}") };
                         }
                     }
                     else
                     {
-                        return new HttpResponseMessage() { Content = new StringContent("{}") };
+                        return new HttpResponseMessage() { Content = new StringContent("{\"api\": \"wrongKey\"}") };
                     }
                 }
             }
