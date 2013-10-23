@@ -37,11 +37,6 @@ namespace RepoLibrary
             return Db.GetProject(name);
         }
 
-        public Project GetProjectByKey(string key)
-        {
-            return Db.GetProjectByKey(key);
-        }
-
         public string SaveProject(Project data)
         {
             return Db.SaveProject(data);
