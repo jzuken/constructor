@@ -57,7 +57,6 @@ public class HttpManager {
 
     // parameters
     private static final String REQUEST = "request";
-    private static final String SID = "sid";
     private static final String ID = "id";
     private static final String FROM = "from";
     private static final String SIZE = "size";
@@ -83,20 +82,14 @@ public class HttpManager {
 
     private Context context;
 
-    private String sid;
     private String key;
 
     public HttpManager() {
-        this(null, "");
+        this(null);
     }
 
     public HttpManager(Context context) {
-        this(context, "");
-    }
-
-    public HttpManager(Context context, String sid) {
         client = new SSLDefaultHttpClient();
-        this.sid = sid;
         this.context = context;
         if (context != null) {
             SharedPreferences authorizationData = context.getSharedPreferences("AuthorizationData", Context.MODE_PRIVATE);
@@ -106,28 +99,28 @@ public class HttpManager {
 
     public String getDashboard() {
         Uri uri = Uri.parse(SERVER_URL).buildUpon().path(API).appendQueryParameter(REQUEST, DASHBOARD)
-                .appendQueryParameter(SID, sid)
                 .appendQueryParameter(KEY, key).build();
         return get(uri);
     }
 
     public String getOrderInfo(String orderId) {
         Uri uri = Uri.parse(SERVER_URL).buildUpon().path(API).appendQueryParameter(REQUEST, ORDER_INFO)
-                .appendQueryParameter(ID, orderId).appendQueryParameter(SID, sid).appendQueryParameter(KEY, key).build();
+                .appendQueryParameter(ID, orderId)
+                .appendQueryParameter(KEY, key).build();
         return get(uri);
     }
 
     public String getUsers(String from, String size, String search, String sort) {
         Uri uri = Uri.parse(SERVER_URL).buildUpon().path(API).appendQueryParameter(REQUEST, USERS)
                 .appendQueryParameter(FROM, from).appendQueryParameter(SIZE, size).appendQueryParameter(SEARCH, search)
-                .appendQueryParameter(SORT, sort).appendQueryParameter(SID, sid).appendQueryParameter(KEY, key).build();
+                .appendQueryParameter(SORT, sort).appendQueryParameter(KEY, key).build();
         return get(uri);
     }
 
     public String getProducts(String from, String size, String search, String lowStock) {
         Uri.Builder builder = Uri.parse(SERVER_URL).buildUpon().path(API).appendQueryParameter(REQUEST, PRODUCTS)
                 .appendQueryParameter(FROM, from).appendQueryParameter(SIZE, size).appendQueryParameter(SEARCH, search)
-                .appendQueryParameter(SID, sid)
+                
                 .appendQueryParameter(KEY, key);
         if (lowStock != null) {
             builder.appendQueryParameter(LOW_STOCK, "1");
@@ -138,40 +131,40 @@ public class HttpManager {
 
     public String updateProductPrice(String id, String price) {
         Uri uri = Uri.parse(SERVER_URL).buildUpon().path(API).appendQueryParameter(REQUEST, UPDATE_PRODUCT_PRICE)
-                .appendQueryParameter(ID, id).appendQueryParameter(PRICE, price).appendQueryParameter(SID, sid).
+                .appendQueryParameter(ID, id).appendQueryParameter(PRICE, price).
                         appendQueryParameter(KEY, key).build();
         return get(uri);
     }
 
     public String deleteProduct(String id) {
         Uri uri = Uri.parse(SERVER_URL).buildUpon().path(API).appendQueryParameter(REQUEST, DELETE_PRODUCT)
-                .appendQueryParameter(ID, id).appendQueryParameter(SID, sid).appendQueryParameter(KEY, key).build();
+                .appendQueryParameter(ID, id).appendQueryParameter(KEY, key).build();
         return get(uri);
     }
 
     public String getUserInfo(String id) {
         Uri uri = Uri.parse(SERVER_URL).buildUpon().path(API).appendQueryParameter(REQUEST, USER_INFO)
-                .appendQueryParameter(ID, id).appendQueryParameter(SID, sid).appendQueryParameter(KEY, key).build();
+                .appendQueryParameter(ID, id).appendQueryParameter(KEY, key).build();
         return get(uri);
     }
 
     public String getUserOrders(String from, String size, String id) {
         Uri uri = Uri.parse(SERVER_URL).buildUpon().path(API).appendQueryParameter(REQUEST, USER_ORDERS)
                 .appendQueryParameter(USER_ID, id).appendQueryParameter(FROM, from).appendQueryParameter(SIZE, size)
-                .appendQueryParameter(SID, sid).appendQueryParameter(KEY, key).build();
+                .appendQueryParameter(KEY, key).build();
         return get(uri);
     }
 
     public String getProductInfo(String id) {
         Uri uri = Uri.parse(SERVER_URL).buildUpon().path(API).appendQueryParameter(REQUEST, PRODUCT_INFO)
-                .appendQueryParameter(ID, id).appendQueryParameter(SID, sid).appendQueryParameter(KEY, key).build();
+                .appendQueryParameter(ID, id).appendQueryParameter(KEY, key).build();
         return get(uri);
     }
 
     public String getLastOrders(String from, String size, String date, String search, String status) {
         Uri.Builder builder = Uri.parse(SERVER_URL).buildUpon().path(API).appendQueryParameter(REQUEST, LAST_ORDERS)
                 .appendQueryParameter(FROM, from).appendQueryParameter(SIZE, size).appendQueryParameter(DATE, date)
-                .appendQueryParameter(SEARCH, search).appendQueryParameter(SID, sid).appendQueryParameter(KEY, key);
+                .appendQueryParameter(SEARCH, search).appendQueryParameter(KEY, key);
 
         if (status != null) {
             builder.appendQueryParameter(STATUS, status);
@@ -181,34 +174,34 @@ public class HttpManager {
 
     public String getReviews(String from, String size) {
         Uri uri = Uri.parse(SERVER_URL).buildUpon().path(API).appendQueryParameter(REQUEST, REVIEWS)
-                .appendQueryParameter(FROM, from).appendQueryParameter(SIZE, size).appendQueryParameter(SID, sid).appendQueryParameter(KEY, key)
+                .appendQueryParameter(FROM, from).appendQueryParameter(SIZE, size).appendQueryParameter(KEY, key)
                 .build();
         return get(uri);
     }
 
     public String deleteReview(String id) {
         Uri uri = Uri.parse(SERVER_URL).buildUpon().path(API).appendQueryParameter(REQUEST, DELETE_REVIEW)
-                .appendQueryParameter(ID, id).appendQueryParameter(SID, sid).appendQueryParameter(KEY, key).build();
+                .appendQueryParameter(ID, id).appendQueryParameter(KEY, key).build();
         return get(uri);
     }
 
     public String changeTrackingNumber(String id, String tracking) {
         Uri uri = Uri.parse(SERVER_URL).buildUpon().path(API).appendQueryParameter(REQUEST, CHANGE_TRACKING)
                 .appendQueryParameter(ORDER_ID, id).appendQueryParameter(TRACKING_NUMBER, tracking).appendQueryParameter(KEY, key)
-                .appendQueryParameter(SID, sid).build();
+                .build();
         return get(uri);
     }
 
     public String changeStatus(String id, String status) {
         Uri uri = Uri.parse(SERVER_URL).buildUpon().path(API).appendQueryParameter(REQUEST, CHANGE_STATUS)
-                .appendQueryParameter(ORDER_ID, id).appendQueryParameter(STATUS, status).appendQueryParameter(SID, sid).appendQueryParameter(KEY, key)
+                .appendQueryParameter(ORDER_ID, id).appendQueryParameter(STATUS, status).appendQueryParameter(KEY, key)
                 .build();
         return get(uri);
     }
 
     public String changeAvailable(String id, String availability) {
         Uri uri = Uri.parse(SERVER_URL).buildUpon().path(API).appendQueryParameter(REQUEST, CHANGE_AVAILABLE)
-                .appendQueryParameter(PRODUCT_ID, id).appendQueryParameter(SID, sid)
+                .appendQueryParameter(PRODUCT_ID, id)
                 .appendQueryParameter(AVAILABLE, availability).appendQueryParameter(KEY, key).build();
         return get(uri);
     }

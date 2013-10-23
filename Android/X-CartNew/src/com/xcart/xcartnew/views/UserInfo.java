@@ -82,7 +82,6 @@ public class UserInfo extends PinSupportNetworkActivity {
 		phone = (TextView) header.findViewById(R.id.phone);
 		fax = (TextView) header.findViewById(R.id.fax);
 		id = getIntent().getStringExtra("userId");
-		authorizationData = getSharedPreferences("AuthorizationData", MODE_PRIVATE);
 		settingsData = PreferenceManager.getDefaultSharedPreferences(this);
 
 	}
@@ -114,12 +113,11 @@ public class UserInfo extends PinSupportNetworkActivity {
 
 	private void updateData() {
 		progressBar.setVisibility(View.VISIBLE);
-		final String sid = authorizationData.getString("sid", "");
 
 		GetRequester dataRequester = new GetRequester() {
 			@Override
 			protected String doInBackground(Void... params) {
-				return new HttpManager(getBaseContext(),sid).getUserInfo(id);
+				return new HttpManager(getBaseContext()).getUserInfo(id);
 			}
 
 			@Override
@@ -159,7 +157,7 @@ public class UserInfo extends PinSupportNetworkActivity {
 		GetRequester dataRequester = new GetRequester() {
 			@Override
 			protected String doInBackground(Void... params) {
-				return new HttpManager(getBaseContext(), authorizationData.getString("sid", "")).getUserOrders(from,
+				return new HttpManager(getBaseContext()).getUserOrders(from,
 						String.valueOf(packAmount), id);
 			}
 
@@ -245,7 +243,6 @@ public class UserInfo extends PinSupportNetworkActivity {
 	private String id;
 	private Object lock = new Object();
 	private int lastPositionClicked;
-	private SharedPreferences authorizationData;
 	private SharedPreferences settingsData;
 	private boolean isDownloading;
 	private boolean hasNext;

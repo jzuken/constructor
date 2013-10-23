@@ -31,7 +31,6 @@ public class ChangeStatus extends PinSupportNetworkActivity {
 		backordered = (RadioButton) findViewById(R.id.backordered_button);
 		activeButtonBySymbol(StatusSymbols.valueOf(getIntent().getStringExtra("status")));
 		SharedPreferences authorizationData = getSharedPreferences("AuthorizationData", MODE_PRIVATE);
-		sid = authorizationData.getString("sid", "");
 		dialogManager = new DialogManager(getSupportFragmentManager());
 	}
 
@@ -91,7 +90,7 @@ public class ChangeStatus extends PinSupportNetworkActivity {
 			new GetRequester() {
 				@Override
 				protected String doInBackground(Void... params) {
-					return new HttpManager(getBaseContext(),sid).changeStatus(getIntent().getStringExtra("orderId"), getSymbolStatus());
+					return new HttpManager(getBaseContext()).changeStatus(getIntent().getStringExtra("orderId"), getSymbolStatus());
 				}
 
 				@Override
@@ -147,7 +146,6 @@ public class ChangeStatus extends PinSupportNetworkActivity {
 	private RadioButton declined;
 	private RadioButton failed;
 	private RadioButton backordered;
-	private String sid;
 	public static final int changeStatusResultCode = 100;
 	private DialogManager dialogManager;
 	private static final String PROGRESS_DIALOG = "Change_status_progress";

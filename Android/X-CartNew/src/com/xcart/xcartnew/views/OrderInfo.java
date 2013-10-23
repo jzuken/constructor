@@ -50,9 +50,6 @@ public class OrderInfo extends PinSupportNetworkActivity {
 		setupCustomerItem();
 		setupStatusItem();
 		setupTrackingNumberItem();
-
-		authorizationData = getSharedPreferences("AuthorizationData", MODE_PRIVATE);
-		sid = authorizationData.getString("sid", "");
 	}
 
 	@Override
@@ -79,7 +76,7 @@ public class OrderInfo extends PinSupportNetworkActivity {
 
 			@Override
 			protected String doInBackground(Void... params) {
-				return new HttpManager(getBaseContext(),authorizationData.getString("sid", "")).getOrderInfo(orderId);
+				return new HttpManager(getBaseContext()).getOrderInfo(orderId);
 			}
 
 			@Override
@@ -248,7 +245,7 @@ public class OrderInfo extends PinSupportNetworkActivity {
 			new GetRequester() {
 				@Override
 				protected String doInBackground(Void... params) {
-					return new HttpManager(getBaseContext(),sid).changeTrackingNumber(orderIdValue, newNumber);
+					return new HttpManager(getBaseContext()).changeTrackingNumber(orderIdValue, newNumber);
 				}
 
 				@Override
@@ -324,7 +321,6 @@ public class OrderInfo extends PinSupportNetworkActivity {
 	private RelativeLayout statusItem;
 	private RelativeLayout trackingNumberItem;
 	private RelativeLayout customerItem;
-	private SharedPreferences authorizationData;
 	private String sid;
 	private String statusSymbol;
 	private String userId;

@@ -58,13 +58,12 @@ public class Users extends PinSupportNetworkActivity {
 		hasNext = false;
 
 		final SharedPreferences authorizationData = getSharedPreferences("AuthorizationData", MODE_PRIVATE);
-		final String sid = authorizationData.getString("sid", "");
 		final String from = String.valueOf(currentAmount);
 		GetRequester dataRequester = new GetRequester() {
 
 			@Override
 			protected String doInBackground(Void... params) {
-				return new HttpManager(getBaseContext(),sid).getUsers(from, String.valueOf(packAmount), searchWord, getCurrentSort());
+				return new HttpManager(getBaseContext()).getUsers(from, String.valueOf(packAmount), searchWord, getCurrentSort());
 			}
 
 			@Override

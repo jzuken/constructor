@@ -30,7 +30,6 @@ public class Dashboard extends PinSupportNetworkActivity {
 		initProductsSold();
 		initReviewsToday();
 		initLastOrders();
-		authorizationData = getSharedPreferences("AuthorizationData", MODE_PRIVATE);
 	}
 
 	@Override
@@ -48,7 +47,7 @@ public class Dashboard extends PinSupportNetworkActivity {
 
             @Override
             protected String doInBackground(Void... voids) {
-                return new HttpManager(getBaseContext(),authorizationData.getString("sid", "")).getDashboard();
+                return new HttpManager(getBaseContext()).getDashboard();
             }
 
 			@Override
@@ -218,5 +217,4 @@ public class Dashboard extends PinSupportNetworkActivity {
 	private TextView lastOrdersCount;
 	private TextView[] customers = new TextView[3];
 	private TextView[] customersPaid = new TextView[3];
-	private SharedPreferences authorizationData;
 }

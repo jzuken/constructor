@@ -52,7 +52,6 @@ public class ProductInfo extends PinSupportNetworkActivity {
 		initFullDescrLable();
 		setupPriceItem();
 		setupAvailabilitySwitch();
-		authorizationData = getSharedPreferences("AuthorizationData", MODE_PRIVATE);
 	}
 
 	@Override
@@ -70,7 +69,7 @@ public class ProductInfo extends PinSupportNetworkActivity {
 		GetRequester dataRequester = new GetRequester() {
 			@Override
 			protected String doInBackground(Void... params) {
-				return new HttpManager(getBaseContext(),authorizationData.getString("sid", "")).getProductInfo(productId);
+				return new HttpManager(getBaseContext()).getProductInfo(productId);
 			}
 
 			@Override
@@ -215,7 +214,7 @@ public class ProductInfo extends PinSupportNetworkActivity {
 			new GetRequester() {
 				@Override
 				protected String doInBackground(Void... params) {
-					return new HttpManager(getBaseContext(),authorizationData.getString("sid", "")).updateProductPrice(productId,
+					return new HttpManager(getBaseContext()).updateProductPrice(productId,
 							newPrice);
 				}
 
@@ -263,7 +262,7 @@ public class ProductInfo extends PinSupportNetworkActivity {
 			new GetRequester() {
 				@Override
 				protected String doInBackground(Void... params) {
-					return new HttpManager(getBaseContext(),authorizationData.getString("sid", "")).changeAvailable(productId,
+					return new HttpManager(getBaseContext()).changeAvailable(productId,
 							availability);
 				}
 
@@ -294,7 +293,6 @@ public class ProductInfo extends PinSupportNetworkActivity {
 	private TextView sold;
 	private TextView inStock;
 	private TextView fullDescrLabel;
-	private SharedPreferences authorizationData;
 	private RelativeLayout priceItem;
 	private Switch availabilitySwitch;
 	private boolean isNeedAvailabilityChange;

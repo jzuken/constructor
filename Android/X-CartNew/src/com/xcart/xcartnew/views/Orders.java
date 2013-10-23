@@ -43,7 +43,6 @@ public class Orders extends PinSupportNetworkActivity {
 		setupSearchLine();
 		period = "today";
 		settingsData = PreferenceManager.getDefaultSharedPreferences(this);
-		authorizationData = getSharedPreferences("AuthorizationData", MODE_PRIVATE);
 	}
 
 	@Override
@@ -66,7 +65,7 @@ public class Orders extends PinSupportNetworkActivity {
 		GetRequester dataRequester = new GetRequester() {
 			@Override
 			protected String doInBackground(Void... params) {
-				return new HttpManager(getBaseContext(),authorizationData.getString("sid", "")).getLastOrders(from,
+				return new HttpManager(getBaseContext()).getLastOrders(from,
 						String.valueOf(packAmount), period, searchWord, null);
 			}
 
@@ -230,7 +229,6 @@ public class Orders extends PinSupportNetworkActivity {
 	private boolean hasNext;
 	private int packAmount;
 	private SharedPreferences settingsData;
-	private SharedPreferences authorizationData;
 	private String searchWord = "";
 	private EditText ordersSearchLine;
 	private int lastPositionClicked;

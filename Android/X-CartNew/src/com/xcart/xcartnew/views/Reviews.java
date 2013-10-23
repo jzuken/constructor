@@ -53,13 +53,12 @@ public class Reviews extends PinSupportNetworkActivity {
 		hasNext = false;
 
 		final SharedPreferences authorizationData = getSharedPreferences("AuthorizationData", MODE_PRIVATE);
-		final String sid = authorizationData.getString("sid", "");
 		final String from = String.valueOf(currentAmount);
 
 		GetRequester dataRequester = new GetRequester() {
 			@Override
 			protected String doInBackground(Void... params) {
-				return new HttpManager(getBaseContext(),sid).getReviews(from, String.valueOf(packAmount));
+				return new HttpManager(getBaseContext()).getReviews(from, String.valueOf(packAmount));
 			}
 
 			@Override
