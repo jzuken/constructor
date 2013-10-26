@@ -77,6 +77,7 @@ public class HttpManager {
     private static final String DEV_SERVER_URL = "http://vm-constructor.cloudapp.net";
     private static final String CHECK_SUBSCRIPTION = "/AppServerListener/api/shops/%s/checksubscribtion";
     private static final String SHOP_AUTHORIZATION = "/AppServerListener/api/shops/%s/ApiURL";
+    private static final String GCM_REGISTRATION = "/api/gcm/register.php";
 
     private HttpClient client;
 
@@ -220,6 +221,11 @@ public class HttpManager {
         Uri uri = Uri.parse(DEV_SERVER_URL).buildUpon().path(String.format(SHOP_AUTHORIZATION, shopUrl))
                 .appendQueryParameter(KEY, key).build();
         return get(uri);
+    }
+    
+    public String sendRegIdToBackend(List<NameValuePair> nameValuePairs) {
+    	Uri uri = Uri.parse(SERVER_URL).buildUpon().path(GCM_REGISTRATION).build();
+        return post(uri, nameValuePairs);
     }
 
     private String get(Uri uri) {

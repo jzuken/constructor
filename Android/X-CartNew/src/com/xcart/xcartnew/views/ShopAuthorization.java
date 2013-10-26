@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.xcart.xcartnew.R;
+import com.xcart.xcartnew.gcm.GCMManager;
 import com.xcart.xcartnew.managers.DialogManager;
 import com.xcart.xcartnew.managers.network.GetRequester;
 import com.xcart.xcartnew.managers.network.HttpManager;
@@ -26,6 +27,14 @@ public class ShopAuthorization extends FragmentActivity {
         //authorizationKey.setText("testKey");
 
         dialogManager = new DialogManager(getSupportFragmentManager());
+        gcmManager = new GCMManager(this);
+        if (gcmManager != null) {
+			String regid = gcmManager.getRegistrationId();
+
+			if (isEmpty(regid)) {
+				gcmManager.registerInBackground();
+			}
+		}
     }
 
     public void okButtonClick(View v) {
@@ -107,9 +116,14 @@ public class ShopAuthorization extends FragmentActivity {
         super.onResume();
         dialogManager.dismissDialog(PROGRESS_DIALOG);
     }
+    
+    private boolean isEmpty(String string) {
+		return string.equals("");
+	}
 
     private static final String PROGRESS_DIALOG = "Shop_authorization_progress";
     private DialogManager dialogManager;
     private boolean isActive = false;
     private EditText authorizationKey;
+    private GCMManager gcmManager;
 }
