@@ -91,7 +91,7 @@ public class Settings extends PreferenceActivity {
 			public boolean onPreferenceClick(Preference arg0) {
 				SharedPreferences authorizationData = getSharedPreferences("AuthorizationData", MODE_PRIVATE);
 				Editor editor = authorizationData.edit();
-				editor.remove("logged");
+				editor.remove("shop_logged");
 				editor.commit();
 				Intent broadcastIntent = new Intent();
 				broadcastIntent.setAction("com.package.ACTION_LOGOUT");

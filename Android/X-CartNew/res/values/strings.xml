@@ -102,4 +102,6 @@
     <string name="shop_url">Shop url</string>
     <string name="authorization_key">Authorization key</string>
     <string name="checking">Checking…</string>
+    <string name="log_in">Log in</string>
+    <string name="xcart_icon">X-Cart icon</string>
 </resources>
