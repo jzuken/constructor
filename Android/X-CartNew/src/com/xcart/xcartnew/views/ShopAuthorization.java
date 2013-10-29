@@ -27,17 +27,17 @@ public class ShopAuthorization extends FragmentActivity {
 		setContentView(R.layout.shop_authorization);
 		shopUrl = (EditText) findViewById(R.id.shop_url);
 		setupKeyEditText();
-		// authorizationKey.setText("testKey");
-
+		//authorizationKey.setText("testKey");
+ 
 		dialogManager = new DialogManager(getSupportFragmentManager());
-		gcmManager = new GCMManager(this);
+		/*gcmManager = new GCMManager(this);
 		if (gcmManager != null) {
 			String regid = gcmManager.getRegistrationId();
 
 			if (isEmpty(regid)) {
 				gcmManager.registerInBackground();
 			}
-		}
+		}*/
 	}
 
 	public void okButtonClick(View v) {
@@ -48,6 +48,7 @@ public class ShopAuthorization extends FragmentActivity {
 		SharedPreferences authorizationData = getSharedPreferences("AuthorizationData", MODE_PRIVATE);
 		Editor editor = authorizationData.edit();
 		editor.putString("shop_key", authorizationKey.getText().toString());
+		editor.putString("shop_name", shopUrl.getText().toString());
 		editor.commit();
 
 		dialogManager.showProgressDialog(R.string.checking, PROGRESS_DIALOG);
