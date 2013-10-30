@@ -7,7 +7,6 @@ import org.json.JSONObject;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -90,7 +89,7 @@ public class ProductInfo extends PinSupportNetworkActivity {
 							availabilitySwitch.setChecked(true);
 						}
 						isNeedAvailabilityChange = true;
-						String imageUrl = obj.getString("url");
+						String imageUrl = obj.getString("image_url");
 						if (!imageUrl.equals(NO_IMAGE_URL)) {
 							new DownloadImageTask(productImage, progressBar).execute(imageUrl);
 						} else {
@@ -296,6 +295,6 @@ public class ProductInfo extends PinSupportNetworkActivity {
 	private RelativeLayout priceItem;
 	private Switch availabilitySwitch;
 	private boolean isNeedAvailabilityChange;
-	private static final String NO_IMAGE_URL = "http://54.213.38.9/xcart";
+	private static final String NO_IMAGE_URL = "/xcart/default_image.gif";
 	public static final int changePriceResultCode = 200;
 }
