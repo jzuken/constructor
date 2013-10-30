@@ -82,7 +82,7 @@ public class ProductInfo extends PinSupportNetworkActivity {
 							fullDescription.loadDataWithBaseURL("", fullDescriptionText, "text/html", "UTF-8", "");
 							fullDescrLabel.setVisibility(View.VISIBLE);
 						}
-						price.setText("$" + obj.getString("list_price"));
+						price.setText("$" + obj.getString("price"));
 						sold.setText(obj.getString("sales_stats"));
 						inStock.setText(obj.getString("avail"));
 						if (obj.getString("forsale").equals("Y")) {
