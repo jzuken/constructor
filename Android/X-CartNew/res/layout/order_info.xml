@@ -127,6 +127,7 @@
                     android:paddingTop="10dp" >
 
                     <TextView
+                        android:id="@+id/tracking_number_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
@@ -146,8 +147,11 @@
                         android:id="@+id/tracking_number"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:layout_toLeftOf="@id/tracking_arrow"
+                        android:layout_toRightOf="@id/tracking_number_label"
+                        android:gravity="right"
                         android:textColor="@color/blue" />
                 </RelativeLayout>
 

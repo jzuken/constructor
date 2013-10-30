@@ -6,8 +6,10 @@ import org.json.JSONObject;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.InputFilter;
+import android.text.InputType;
+import android.text.Spanned;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
@@ -206,7 +208,21 @@ public class OrderInfo extends PinSupportNetworkActivity {
 				trackingNumberItem.setClickable(false);
 				LinearLayout view = (LinearLayout) getLayoutInflater().inflate(R.layout.change_value_dialog, null);
 				((TextView) view.findViewById(R.id.label)).setText(R.string.change_tracking_number);
+				InputFilter filter = new InputFilter() {
+					public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart,
+							int dend) {
+						for (int i = start; i < end; i++) {
+							if (!Character.isLetterOrDigit(source.charAt(i))) {
+								return "";
+							}
+						}
+						return null;
+					}
+				};
 				final EditText numberEditor = (EditText) view.findViewById(R.id.value_editor);
+				numberEditor.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_FILTER
+						| InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS | InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS);
+				numberEditor.setFilters(new InputFilter[]{filter, new InputFilter.AllCaps()});
 				final String oldNumber = trackingNumber.getText().toString();
 				numberEditor.setText(oldNumber);
 				final CustomDialog dialog = new CustomDialog(context, view) {
@@ -223,14 +239,9 @@ public class OrderInfo extends PinSupportNetworkActivity {
 					public void onClick(View v) {
 						hideKeyboard(numberEditor);
 						String newNumber = numberEditor.getText().toString();
-						try {
-							Integer number = Integer.parseInt(newNumber);
-							dialog.dismiss();
-							if (!newNumber.equals(oldNumber)) {
-								setNewTrackingNumber(newNumber);
-							}
-						} catch (Exception e) {
-							Toast.makeText(context, "Incorrect input", Toast.LENGTH_SHORT).show();
+						dialog.dismiss();
+						if (!newNumber.equals(oldNumber)) {						
+							setNewTrackingNumber(newNumber);
 						}
 					}
 				});
