@@ -128,11 +128,13 @@ public class UserInfo extends PinSupportNetworkActivity {
 						firstName.setText(obj.getString("firstname"));
 						lastName.setText(obj.getString("lastname"));
 						email.setText(obj.getString("login"));
-						address.setText(obj.getString("address") + "\n" + obj.getString("city") + ", "
-								+ obj.getString("state") + " " + obj.getString("zipcode") + "\n"
-								+ obj.getString("country"));
-						phone.setText(obj.getString("phone"));
-						fax.setText(obj.getString("fax"));
+						JSONObject addressObj = obj.getJSONObject("address");
+						JSONObject shippingObj = addressObj.getJSONObject("S");
+						address.setText(shippingObj.get("address") + "\n" + shippingObj.getString("city") + ", "
+								+ shippingObj.getString("state") + " " + shippingObj.getString("zipcode") + "\n"
+								+ shippingObj.getString("country"));
+						phone.setText(shippingObj.getString("phone"));
+						fax.setText(shippingObj.getString("fax"));
 					} catch (JSONException e) {
 						e.printStackTrace();
 					}
@@ -157,8 +159,7 @@ public class UserInfo extends PinSupportNetworkActivity {
 		GetRequester dataRequester = new GetRequester() {
 			@Override
 			protected String doInBackground(Void... params) {
-				return new HttpManager(getBaseContext()).getUserOrders(from,
-						String.valueOf(packAmount), id);
+				return new HttpManager(getBaseContext()).getUserOrders(from, String.valueOf(packAmount), id);
 			}
 
 			@Override
