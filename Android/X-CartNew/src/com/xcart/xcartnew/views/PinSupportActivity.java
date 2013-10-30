@@ -15,16 +15,17 @@ public class PinSupportActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		needDownload = true;
 
-        // for logout
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction("com.package.ACTION_LOGOUT");
-        registerReceiver(new BroadcastReceiver() {
+		// for logout
+		IntentFilter intentFilter = new IntentFilter();
+		intentFilter.addAction("com.package.ACTION_LOGOUT");
+		receiver = new BroadcastReceiver() {
 
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                finish();
-            }
-        }, intentFilter);
+			@Override
+			public void onReceive(Context context, Intent intent) {
+				finish();
+			}
+		};
+		registerReceiver(receiver, intentFilter);
 	}
 
 	private boolean isPaused;
@@ -81,7 +82,7 @@ public class PinSupportActivity extends FragmentActivity {
 	public void setNeedDownloadValue(boolean value) {
 		needDownload = value;
 	}
-	
+
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		outState.putBoolean("fromOtherPage", fromOtherPage);
@@ -89,7 +90,7 @@ public class PinSupportActivity extends FragmentActivity {
 		outState.putBoolean("fromPin", fromPin);
 		super.onSaveInstanceState(outState);
 	}
-	
+
 	@Override
 	protected void onRestoreInstanceState(Bundle savedInstanceState) {
 		fromOtherPage = savedInstanceState.getBoolean("fromOtherPage");
@@ -99,6 +100,13 @@ public class PinSupportActivity extends FragmentActivity {
 		super.onRestoreInstanceState(savedInstanceState);
 	}
 
+	@Override
+	protected void onDestroy() {
+		unregisterReceiver(receiver);
+		super.onDestroy();
+	}
+
 	private boolean needDownload;
+	private BroadcastReceiver receiver;
 	private final int pinPageCode = 2;
 }
