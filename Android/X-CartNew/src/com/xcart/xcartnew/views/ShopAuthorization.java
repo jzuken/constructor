@@ -27,7 +27,8 @@ public class ShopAuthorization extends FragmentActivity {
 		setContentView(R.layout.shop_authorization);
 		shopUrl = (EditText) findViewById(R.id.shop_url);
 		setupKeyEditText();
-		//authorizationKey.setText("testKey");
+		shopUrl.setText("54.213.38.9");
+		authorizationKey.setText("MobileAdminApiKey");
  
 		dialogManager = new DialogManager(getSupportFragmentManager());
 		/*gcmManager = new GCMManager(this);

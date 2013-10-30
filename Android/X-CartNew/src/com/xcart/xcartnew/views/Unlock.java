@@ -4,13 +4,11 @@ import kankan.wheel.widget.OnWheelChangedListener;
 import kankan.wheel.widget.OnWheelScrollListener;
 import kankan.wheel.widget.WheelView;
 import kankan.wheel.widget.adapters.NumericWheelAdapter;
-import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.provider.*;
-import android.provider.Settings;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.animation.AnticipateOvershootInterpolator;
@@ -19,18 +17,10 @@ import android.widget.Toast;
 import com.xcart.xcartnew.R;
 import com.xcart.xcartnew.managers.DialogManager;
 import com.xcart.xcartnew.managers.network.DevServerApiManager;
-import com.xcart.xcartnew.managers.network.HttpManager;
 import com.xcart.xcartnew.managers.network.SubscriptionCallback;
 import com.xcart.xcartnew.managers.network.SubscriptionStatus;
-import com.xcart.xcartnew.views.Dashboard;
 import com.xcart.xcartnew.views.dialogs.ConnectionErrorDialog;
 import com.xcart.xcartnew.views.dialogs.ErrorDialog;
-
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class Unlock extends FragmentActivity  implements SubscriptionCallback {
 
@@ -79,8 +69,9 @@ public class Unlock extends FragmentActivity  implements SubscriptionCallback {
     private void checkSubscription() {
         dialogManager.showProgressDialog(R.string.checking_subscription, PROGRESS_DIALOG);
 
-        //TODO: create url input
-        DevServerApiManager.getInstance().checkSubscription(HttpManager.SHOP_NAME);
+        SharedPreferences authorizationData = getSharedPreferences("AuthorizationData", Context.MODE_PRIVATE);
+        String shopName = authorizationData.getString("shop_name", "");
+        DevServerApiManager.getInstance().checkSubscription(shopName);
     }
 
 	private void initWheel(WheelView wheel) {

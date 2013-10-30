@@ -8,6 +8,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -82,8 +83,9 @@ public class Authorization extends FragmentActivity implements SubscriptionCallb
     private void checkSubscription() {
         dialogManager.showProgressDialog(R.string.checking_subscription, PROGRESS_DIALOG);
 
-        //TODO: create url input
-        DevServerApiManager.getInstance().checkSubscription(HttpManager.SHOP_NAME);
+        SharedPreferences authorizationData = getSharedPreferences("AuthorizationData", Context.MODE_PRIVATE);
+        String shopName = authorizationData.getString("shop_name", "");
+        DevServerApiManager.getInstance().checkSubscription(shopName);
     }
 
     private void trySignIn(final List<NameValuePair> loginData) {

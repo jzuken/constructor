@@ -83,7 +83,6 @@ public class HttpManager {
 
     private Context context;
     private String serverUrl;
-    public static String SHOP_NAME;
     private String key;
 
     public HttpManager() {
@@ -97,7 +96,6 @@ public class HttpManager {
             SharedPreferences authorizationData = context.getSharedPreferences("AuthorizationData", Context.MODE_PRIVATE);
             key = authorizationData.getString("shop_key", "");
             serverUrl = authorizationData.getString("shop_api", "");
-            SHOP_NAME = authorizationData.getString("shop_name", "");
         }
     }
 
