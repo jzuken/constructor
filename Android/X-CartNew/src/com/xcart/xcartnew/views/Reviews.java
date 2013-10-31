@@ -130,7 +130,7 @@ public class Reviews extends PinSupportNetworkActivity {
 		reviewsListView.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				setNeedDownloadValue(false);
-				Review review = (Review) view.getTag();
+				Review review = ((ReviewsListAdapter.ReviewHolder) view.getTag()).getReview();
 				Intent intent = new Intent(getBaseContext(), FullMessage.class);
 				intent.putExtra("email", review.getEmail());
 				intent.putExtra("product", review.getProduct());

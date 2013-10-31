@@ -13,29 +13,28 @@ import android.widget.TextView;
 import com.xcart.xcartnew.R;
 import com.xcart.xcartnew.model.Review;
 
-public class ReviewsListAdapter extends ArrayAdapter<Review> {
+public class ReviewsListAdapter extends BaseArrayAdapter<Review> {
 
 	public ReviewsListAdapter(Context context, int resource, List<Review> items) {
 		super(context, resource, items);
-		this.context = context;
-		this.layoutResourceId = resource;
-		this.items = items;
 	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View row = convertView;
-		ReviewHolder holder = null;
+        if(row == null){
+            LayoutInflater inflater = ((Activity) context).getLayoutInflater();
+            row = inflater.inflate(layoutResourceId, parent, false);
+            ReviewHolder holder = new ReviewHolder();
+            row.setTag(holder);
+        }
 
-		LayoutInflater inflater = ((Activity) context).getLayoutInflater();
-		row = inflater.inflate(layoutResourceId, parent, false);
+        ReviewHolder holder = (ReviewHolder) row.getTag();
 
-		holder = new ReviewHolder();
 		holder.review = items.get(position);
 		holder.email = (TextView) row.findViewById(R.id.review_email);
 		holder.product = (TextView) row.findViewById(R.id.review_product);
 		holder.message = (TextView) row.findViewById(R.id.review_message);
-		row.setTag(holder.review);
 		setupItem(holder);
 		return row;
 	}
@@ -46,14 +45,14 @@ public class ReviewsListAdapter extends ArrayAdapter<Review> {
 		holder.message.setText(holder.review.getMessage());
 	}
 
-	private static class ReviewHolder {
+	public static class ReviewHolder {
 		Review review;
 		TextView email;
 		TextView product;
 		TextView message;
-	}
 
-	private List<Review> items;
-	private int layoutResourceId;
-	private Context context;
+        public Review getReview() {
+            return review;
+        }
+    }
 }
