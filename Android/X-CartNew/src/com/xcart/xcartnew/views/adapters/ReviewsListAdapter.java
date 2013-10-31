@@ -23,7 +23,6 @@ public class ReviewsListAdapter extends BaseArrayAdapter<Review> {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View row = convertView;
         if(row == null){
-            LayoutInflater inflater = ((Activity) context).getLayoutInflater();
             row = inflater.inflate(layoutResourceId, parent, false);
             ReviewHolder holder = new ReviewHolder();
             row.setTag(holder);

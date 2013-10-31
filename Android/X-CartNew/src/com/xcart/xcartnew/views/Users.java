@@ -165,7 +165,7 @@ public class Users extends PinSupportNetworkActivity {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				setNeedDownloadValue(false);
 				Intent intent = new Intent(getBaseContext(), UserInfo.class);
-				User user = (User) view.getTag();
+				User user = ((UsersListAdapter.UserHolder) view.getTag()).getUser();
 				intent.putExtra("userName", user.getName());
 				intent.putExtra("userId", user.getId());
 				startActivityForResult(intent, 1);
