@@ -1,11 +1,6 @@
 package com.xcart.xcartnew.views;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -17,6 +12,10 @@ import android.widget.TextView;
 import com.xcart.xcartnew.R;
 import com.xcart.xcartnew.managers.network.GetRequester;
 import com.xcart.xcartnew.managers.network.HttpManager;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class Dashboard extends PinSupportNetworkActivity {
 	@Override

@@ -8,10 +8,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.xcart.xcartnew.R;
-import com.xcart.xcartnew.managers.DialogManager;
+import com.xcart.xcartnew.managers.LogManager;
 import com.xcart.xcartnew.managers.network.GetRequester;
 import com.xcart.xcartnew.managers.network.HttpManager;
-import com.xcart.xcartnew.managers.LogManager;
 
 public class ChangeStatus extends PinSupportNetworkActivity {
 
@@ -33,7 +32,6 @@ public class ChangeStatus extends PinSupportNetworkActivity {
         failed = (RadioButton) findViewById(R.id.failed_button);
         backordered = (RadioButton) findViewById(R.id.backordered_button);
         activeButtonBySymbol(StatusSymbols.valueOf(getIntent().getStringExtra("status")));
-        dialogManager = new DialogManager(getSupportFragmentManager());
     }
 
     private enum StatusSymbols {
@@ -128,6 +126,5 @@ public class ChangeStatus extends PinSupportNetworkActivity {
     private RadioButton failed;
     private RadioButton backordered;
     public static final int changeStatusResultCode = 100;
-    private DialogManager dialogManager;
     private static final String PROGRESS_DIALOG = "Change_status_progress";
 }
