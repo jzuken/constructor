@@ -104,4 +104,5 @@
     <string name="checking">Checking…</string>
     <string name="log_in">Log in</string>
     <string name="xcart_icon">X-Cart icon</string>
+    <string name="success">Success</string>
 </resources>
