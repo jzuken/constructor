@@ -93,16 +93,20 @@ public class OrderInfo extends PinSupportNetworkActivity {
 						paymentMethod.setText(obj.getString("payment_method"));
 						deliveryMethod.setText(obj.getString("shipping"));
 						String title = obj.getString("title");
-						if (!title.equals("")) {
+						if (!title.equals("false")) {
 							title += " ";
+						} else {
+							title = "";
 						}
 						userName = title + obj.getString("firstname") + " " + obj.getString("lastname");
 						customer.setText(userName);
 						userId = obj.getString("userid");
 
 						String bTitle = obj.getString("b_title");
-						if (!bTitle.equals("")) {
+						if (!bTitle.equals("false")) {
 							bTitle += " ";
+						} else {
+							bTitle = "";
 						}
 						billingInfo.setText(bTitle + obj.getString("b_firstname") + " " + obj.getString("b_lastname")
 								+ "\n" + obj.getString("b_address") + obj.getString("b_city") + ", "
@@ -112,8 +116,10 @@ public class OrderInfo extends PinSupportNetworkActivity {
 						bFax.setText(obj.getString("b_fax"));
 
 						String sTitle = obj.getString("s_title");
-						if (!sTitle.equals("")) {
+						if (!sTitle.equals("false")) {
 							sTitle += " ";
+						} else {
+							sTitle = "";
 						}
 						shippingInfo.setText(sTitle + obj.getString("s_firstname") + " " + obj.getString("s_lastname")
 								+ "\n" + obj.getString("s_address") + obj.getString("s_city") + ", "
