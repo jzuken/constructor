@@ -1,4 +1,4 @@
-package com.xcart.xcartnew.gcm;
+package com.xcart.xcartnew.managers.gcm;
 
 import android.app.IntentService;
 import android.app.NotificationManager;

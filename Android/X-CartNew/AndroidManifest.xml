@@ -88,7 +88,7 @@
             android:name=".views.UserInfo"
             android:screenOrientation="portrait" />
         <receiver
-            android:name=".gcm.GcmBroadcastReceiver"
+            android:name=".managers.gcm.GcmBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND" >
             <intent-filter>
                 <!-- Receives the actual messages. -->
@@ -96,7 +96,7 @@
                 <category android:name="com.google.android.gcm.demo.app" />
             </intent-filter>
         </receiver>
-        <service android:name=".gcm.GcmIntentService" />
+        <service android:name=".managers.gcm.GcmIntentService" />
     </application>
 
 </manifest>

@@ -16,94 +16,118 @@ import com.xcart.xcartnew.model.Order;
 
 public class OrdersListAdapter extends ArrayAdapter<Order> {
 
-	public OrdersListAdapter(Context context, int resource, List<Order> items) {
-		super(context, resource, items);
-		this.context = context;
-		this.layoutResourceId = resource;
-		this.items = items;
-	}
+    public OrdersListAdapter(Context context, int resource, List<Order> items) {
+        super(context, resource, items);
+        this.context = context;
+        this.layoutResourceId = resource;
+        this.items = items;
+        inflater = ((Activity) context).getLayoutInflater();
+    }
 
-	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
-		View row = convertView;
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        View row = convertView;
 
-		LayoutInflater inflater = ((Activity) context).getLayoutInflater();
-		row = inflater.inflate(layoutResourceId, parent, false);
+        if (row == null) {
+            row = inflater.inflate(layoutResourceId, parent, false);
+            OrderHolder holder = new OrderHolder();
+            row.setTag(holder);
+        }
 
-		OrderHolder holder = new OrderHolder();
-		holder.order = items.get(position);
+        OrderHolder holder = (OrderHolder) row.getTag();
+        holder.order = items.get(position);
 
-		holder.userName = (TextView) row.findViewById(R.id.user_name);
-		holder.paid = (TextView) row.findViewById(R.id.paid);
-		holder.status = (TextView) row.findViewById(R.id.order_status);
-		holder.date = (TextView) row.findViewById(R.id.order_date);
-		row.setTag(holder.order);
-		setupItem(holder);
-		return row;
-	}
+        holder.userName = (TextView) row.findViewById(R.id.user_name);
+        holder.paid = (TextView) row.findViewById(R.id.paid);
+        holder.status = (TextView) row.findViewById(R.id.order_status);
+        holder.date = (TextView) row.findViewById(R.id.order_date);
+        setupItem(holder);
+        return row;
+    }
 
-	private enum StatusSymbols {
-		I, Q, P, B, D, F, C
-	}
+    private enum StatusSymbols {
+        I, Q, P, B, D, F, C
+    }
 
-	private void setupItem(OrderHolder holder) {
-		holder.userName.setText(holder.order.getUserName() + " (#" + holder.order.getId() + ")");
-		holder.paid.setText("$" + holder.order.getPaid());
-		StatusSymbols statusSymbol = StatusSymbols.valueOf(holder.order.getStatus());
-		holder.status.setText(getStatusBySymbol(statusSymbol));
-		holder.status.setTextColor(getColorResourceBySymbol(statusSymbol));
-		holder.date.setText(holder.order.getDate());
-	}
+    private void setupItem(OrderHolder holder) {
+        holder.userName.setText(holder.order.getUserName() + " (#" + holder.order.getId() + ")");
+        holder.paid.setText("$" + holder.order.getPaid());
+        StatusSymbols statusSymbol = StatusSymbols.valueOf(holder.order.getStatus());
+        holder.status.setText(getStatusBySymbol(statusSymbol));
+        holder.status.setTextColor(getColorResourceBySymbol(statusSymbol));
+        holder.date.setText(holder.order.getDate());
+    }
 
-	private String getStatusBySymbol(StatusSymbols symbol) {
-		switch (symbol) {
-		case I:
-			return "Not finished";
-		case Q:
-			return "Queued";
-		case P:
-			return "Processed";
-		case B:
-			return "Backordered";
-		case D:
-			return "Declined";
-		case F:
-			return "Failed";
-		case C:
-			return "Complete";
-		default:
-			return "";
-		}
-	}
+    private String getStatusBySymbol(StatusSymbols symbol) {
+        switch (symbol) {
+            case I:
+                return context.getString(R.string.not_finished);
+            case Q:
+                return context.getString(R.string.queued);
+            case P:
+                return context.getString(R.string.processed);
+            case B:
+                return context.getString(R.string.backordered);
+            case D:
+                return context.getString(R.string.declined);
+            case F:
+                return context.getString(R.string.failed);
+            case C:
+                return context.getString(R.string.complete);
+            default:
+                return "";
+        }
+    }
 
-	private int getColorResourceBySymbol(StatusSymbols symbol) {
-		Resources resources = context.getResources();
-		switch (symbol) {
-		case I:
-		case D:
-		case F:
-			return resources.getColor(R.color.red_status);
-		case Q:
-		case B:
-			return resources.getColor(R.color.dark_blue_status);
-		case P:
-			return resources.getColor(R.color.light_blue_status);
-		case C:
-			return resources.getColor(R.color.green_status);
-		default:
-			return resources.getColor(R.color.black);
-		}
-	}
+    private int getColorResourceBySymbol(StatusSymbols symbol) {
+        Resources resources = context.getResources();
+        switch (symbol) {
+            case I:
+            case D:
+            case F:
+                return resources.getColor(R.color.red_status);
+            case Q:
+            case B:
+                return resources.getColor(R.color.dark_blue_status);
+            case P:
+                return resources.getColor(R.color.light_blue_status);
+            case C:
+                return resources.getColor(R.color.green_status);
+            default:
+                return resources.getColor(R.color.black);
+        }
+    }
 
-	private static class OrderHolder {
-		Order order;
-		TextView userName;
-		TextView paid;
-		TextView status;
-		TextView date;;
-	}
+    public static class OrderHolder {
+        Order order;
+        TextView userName;
+        TextView paid;
+        TextView status;
+        TextView date;
 
-	private List<Order> items;
-	private int layoutResourceId;
-	private Context context;
+        public Order getOrder() {
+            return order;
+        }
+
+        public TextView getUserName() {
+            return userName;
+        }
+
+        public TextView getPaid() {
+            return paid;
+        }
+
+        public TextView getStatus() {
+            return status;
+        }
+
+        public TextView getDate() {
+            return date;
+        }
+    }
+
+    private List<Order> items;
+    private int layoutResourceId;
+    private Context context;
+    private LayoutInflater inflater;
 }

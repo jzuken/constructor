@@ -14,7 +14,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.xcart.xcartnew.R;
-import com.xcart.xcartnew.gcm.GCMManager;
+import com.xcart.xcartnew.managers.gcm.GCMManager;
 import com.xcart.xcartnew.managers.DialogManager;
 import com.xcart.xcartnew.managers.network.GetRequester;
 import com.xcart.xcartnew.managers.network.HttpManager;

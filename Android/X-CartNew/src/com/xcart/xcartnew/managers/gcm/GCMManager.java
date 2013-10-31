@@ -1,4 +1,4 @@
-package com.xcart.xcartnew.gcm;
+package com.xcart.xcartnew.managers.gcm;
 
 import java.io.IOException;
 import java.util.ArrayList;

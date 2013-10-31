@@ -146,7 +146,7 @@ public class Orders extends PinSupportNetworkActivity {
 				setNeedDownloadValue(false);
 				lastPositionClicked = position;
 				Intent intent = new Intent(getBaseContext(), OrderInfo.class);
-				intent.putExtra("orderId", ((Order) view.getTag()).getId());
+				intent.putExtra("orderId", ((OrdersListAdapter.OrderHolder) view.getTag()).getOrder().getId());
 				startActivityForResult(intent, 1);
 			}
 		});
