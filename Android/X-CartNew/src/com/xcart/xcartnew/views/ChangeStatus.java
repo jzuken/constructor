@@ -1,7 +1,6 @@
 package com.xcart.xcartnew.views;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RadioButton;
@@ -12,8 +11,12 @@ import com.xcart.xcartnew.R;
 import com.xcart.xcartnew.managers.DialogManager;
 import com.xcart.xcartnew.managers.network.GetRequester;
 import com.xcart.xcartnew.managers.network.HttpManager;
+import com.xcart.xcartnew.managers.LogManager;
 
 public class ChangeStatus extends PinSupportNetworkActivity {
+
+    private static final LogManager LOG = new LogManager(PinSupportNetworkActivity.class.getName());
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -30,7 +33,6 @@ public class ChangeStatus extends PinSupportNetworkActivity {
 		failed = (RadioButton) findViewById(R.id.failed_button);
 		backordered = (RadioButton) findViewById(R.id.backordered_button);
 		activeButtonBySymbol(StatusSymbols.valueOf(getIntent().getStringExtra("status")));
-		SharedPreferences authorizationData = getSharedPreferences("AuthorizationData", MODE_PRIVATE);
 		dialogManager = new DialogManager(getSupportFragmentManager());
 	}
 
@@ -97,7 +99,11 @@ public class ChangeStatus extends PinSupportNetworkActivity {
 				protected void onPostExecute(String response) {
 					super.onPostExecute(response);
 
+                    LOG.d("onPostExecute");
+                    dialogManager.dismissDialog(PROGRESS_DIALOG);
+
 					if (!isActive) {
+                        LOG.d("not Active");
 						return;
 					}
 
@@ -110,32 +116,12 @@ public class ChangeStatus extends PinSupportNetworkActivity {
 					} else {
 						showConnectionErrorMessage();
 					}
-
-					dialogManager.dismissDialog(PROGRESS_DIALOG);
 				}
 			}.execute();
 		} catch (Exception e) {
 			dialogManager.dismissDialog(PROGRESS_DIALOG);
 			showConnectionErrorMessage();
 		}
-	}
-
-	@Override
-	protected void onStart() {
-		super.onStart();
-		isActive = true;
-	}
-
-	@Override
-	protected void onStop() {
-		super.onStop();
-		isActive = false;
-	}
-
-	@Override
-	protected void onPause() {
-		super.onResume();
-		dialogManager.dismissDialog(PROGRESS_DIALOG);
 	}
 
 	private TextView orderIdTitle;

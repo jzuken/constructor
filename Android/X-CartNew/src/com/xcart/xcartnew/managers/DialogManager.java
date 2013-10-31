@@ -23,9 +23,9 @@ public class DialogManager {
     }
 
     public void dismissDialog(String key) {
-        ProgressDialog progressDialog = (ProgressDialog)fragmentManager.findFragmentByTag(key);
+        DialogFragment progressDialog = (DialogFragment)fragmentManager.findFragmentByTag(key);
         if (progressDialog != null) {
-            progressDialog.dismiss();
+            progressDialog.dismissAllowingStateLoss();
         }
     }
 
