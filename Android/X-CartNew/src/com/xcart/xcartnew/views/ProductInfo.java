@@ -1,9 +1,5 @@
 package com.xcart.xcartnew.views;
 
-import org.jraf.android.backport.switchwidget.Switch;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -26,9 +22,13 @@ import android.widget.Toast;
 
 import com.xcart.xcartnew.R;
 import com.xcart.xcartnew.managers.network.DownloadImageTask;
-import com.xcart.xcartnew.managers.network.GetRequester;
 import com.xcart.xcartnew.managers.network.HttpManager;
+import com.xcart.xcartnew.managers.network.Requester;
 import com.xcart.xcartnew.views.dialogs.CustomDialog;
+
+import org.jraf.android.backport.switchwidget.Switch;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class ProductInfo extends PinSupportNetworkActivity {
 	@Override
@@ -65,7 +65,7 @@ public class ProductInfo extends PinSupportNetworkActivity {
 	private void updateData() {
 		progressBar.setVisibility(View.VISIBLE);
 
-		GetRequester dataRequester = new GetRequester() {
+        requester = new Requester() {
 			@Override
 			protected String doInBackground(Void... params) {
 				return new HttpManager(getBaseContext()).getProductInfo(productId);
@@ -107,8 +107,7 @@ public class ProductInfo extends PinSupportNetworkActivity {
 			}
 		};
 
-		setRequester(dataRequester);
-		dataRequester.execute();
+        requester.execute();
 	}
 
 	private void clearData() {
@@ -210,7 +209,7 @@ public class ProductInfo extends PinSupportNetworkActivity {
 
 	private void setNewPrice(final String newPrice) {
 		try {
-			new GetRequester() {
+			new Requester() {
 				@Override
 				protected String doInBackground(Void... params) {
 					return new HttpManager(getBaseContext()).updateProductPrice(productId,
@@ -258,7 +257,7 @@ public class ProductInfo extends PinSupportNetworkActivity {
 		final String availability = available ? "1" : "2";
 
 		try {
-			new GetRequester() {
+			new Requester() {
 				@Override
 				protected String doInBackground(Void... params) {
 					return new HttpManager(getBaseContext()).changeAvailable(productId,

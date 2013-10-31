@@ -3,11 +3,13 @@ package com.xcart.xcartnew.views;
 import android.os.Bundle;
 
 import com.xcart.xcartnew.managers.DialogManager;
-import com.xcart.xcartnew.managers.network.GetRequester;
+import com.xcart.xcartnew.managers.network.Requester;
 
 public class PinSupportNetworkActivity extends PinSupportActivity {
 
     protected DialogManager dialogManager;
+
+    protected Requester requester;
 
 	public void showConnectionErrorMessage() {
         dialogManager.showNetworkErrorDialog();
@@ -19,9 +21,6 @@ public class PinSupportNetworkActivity extends PinSupportActivity {
         dialogManager = new DialogManager(getSupportFragmentManager());
     }
 
-    public void setRequester(GetRequester requester) {
-		this.currentDataRequester = requester;
-	}
 
 	@Override
 	public void onDestroy() {
@@ -30,13 +29,8 @@ public class PinSupportNetworkActivity extends PinSupportActivity {
 	}
 	
 	public void cancelRequest() {
-		currentDataRequester.cancel(true);
-	}
-
-	private GetRequester currentDataRequester = new GetRequester() {
-        @Override
-        protected String doInBackground(Void... params) {
-            return null;
+		if(requester != null && !requester.isCancelled()){
+            requester.cancel(true);
         }
-    };
+	}
 }

@@ -9,7 +9,7 @@ import android.widget.Toast;
 
 import com.xcart.xcartnew.R;
 import com.xcart.xcartnew.managers.LogManager;
-import com.xcart.xcartnew.managers.network.GetRequester;
+import com.xcart.xcartnew.managers.network.Requester;
 import com.xcart.xcartnew.managers.network.HttpManager;
 
 public class ChangeStatus extends PinSupportNetworkActivity {
@@ -87,7 +87,7 @@ public class ChangeStatus extends PinSupportNetworkActivity {
     public void saveClick(View v) {
         dialogManager.showProgressDialog(R.string.updating_status, PROGRESS_DIALOG);
         try {
-            new GetRequester() {
+            new Requester() {
                 @Override
                 protected String doInBackground(Void... params) {
                     return new HttpManager(getBaseContext()).changeStatus(getIntent().getStringExtra("orderId"), getSymbolStatus());

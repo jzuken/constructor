@@ -16,7 +16,7 @@ import android.widget.Toast;
 import com.xcart.xcartnew.R;
 import com.xcart.xcartnew.managers.gcm.GCMManager;
 import com.xcart.xcartnew.managers.DialogManager;
-import com.xcart.xcartnew.managers.network.GetRequester;
+import com.xcart.xcartnew.managers.network.Requester;
 import com.xcart.xcartnew.managers.network.HttpManager;
 
 public class ShopAuthorization extends FragmentActivity {
@@ -53,7 +53,7 @@ public class ShopAuthorization extends FragmentActivity {
 		editor.commit();
 
 		dialogManager.showProgressDialog(R.string.checking, PROGRESS_DIALOG);
-		new GetRequester() {
+		new Requester() {
 			@Override
 			protected String doInBackground(Void... params) {
 				return new HttpManager()

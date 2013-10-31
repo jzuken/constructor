@@ -1,11 +1,5 @@
 package com.xcart.xcartnew.views;
 
-import java.util.ArrayList;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -28,10 +22,16 @@ import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TabWidget;
 
 import com.xcart.xcartnew.R;
-import com.xcart.xcartnew.managers.network.GetRequester;
 import com.xcart.xcartnew.managers.network.HttpManager;
+import com.xcart.xcartnew.managers.network.Requester;
 import com.xcart.xcartnew.model.Product;
 import com.xcart.xcartnew.views.adapters.ProductsListAdapter;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public class Products extends PinSupportNetworkActivity {
     @Override
@@ -68,7 +68,7 @@ public class Products extends PinSupportNetworkActivity {
         }
         hasNext = false;
         final String from = String.valueOf(currentAmount);
-        GetRequester dataRequester = new GetRequester() {
+        requester = new Requester() {
 
             @Override
             protected String doInBackground(Void... params) {
@@ -108,8 +108,7 @@ public class Products extends PinSupportNetworkActivity {
             }
         };
 
-        setRequester(dataRequester);
-        dataRequester.execute();
+        requester.execute();
         currentAmount += packAmount;
     }
 

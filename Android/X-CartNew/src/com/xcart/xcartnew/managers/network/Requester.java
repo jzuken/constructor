@@ -2,5 +2,5 @@ package com.xcart.xcartnew.managers.network;
 
 import android.os.AsyncTask;
 
-public abstract class  GetRequester extends AsyncTask<Void, Void, String> {
+public abstract class Requester extends AsyncTask<Void, Void, String> {
 }

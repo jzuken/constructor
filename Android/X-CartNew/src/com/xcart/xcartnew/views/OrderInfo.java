@@ -1,9 +1,5 @@
 package com.xcart.xcartnew.views;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,9 +18,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.xcart.xcartnew.R;
-import com.xcart.xcartnew.managers.network.GetRequester;
 import com.xcart.xcartnew.managers.network.HttpManager;
+import com.xcart.xcartnew.managers.network.Requester;
 import com.xcart.xcartnew.views.dialogs.CustomDialog;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class OrderInfo extends PinSupportNetworkActivity {
 	@Override
@@ -74,7 +74,7 @@ public class OrderInfo extends PinSupportNetworkActivity {
 		trackingNumberItem.setClickable(false);
 		customerItem.setClickable(false);
 		final String orderId = getIntent().getStringExtra("orderId");
-		GetRequester dataRequester = new GetRequester() {
+        requester = new Requester() {
 
 			@Override
 			protected String doInBackground(Void... params) {
@@ -154,8 +154,7 @@ public class OrderInfo extends PinSupportNetworkActivity {
 			}
 		};
 
-		setRequester(dataRequester);
-		dataRequester.execute();
+        requester.execute();
 	}
 
 	private String getStatusBySymbol(StatusSymbols symbol) {
@@ -259,7 +258,7 @@ public class OrderInfo extends PinSupportNetworkActivity {
 
 	private void setNewTrackingNumber(final String newNumber) {
 		try {
-			new GetRequester() {
+			new Requester() {
 				@Override
 				protected String doInBackground(Void... params) {
 					return new HttpManager(getBaseContext()).changeTrackingNumber(orderIdValue, newNumber);

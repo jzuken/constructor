@@ -1,11 +1,5 @@
 package com.xcart.xcartnew.views;
 
-import java.util.ArrayList;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -20,10 +14,16 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.xcart.xcartnew.R;
-import com.xcart.xcartnew.managers.network.GetRequester;
 import com.xcart.xcartnew.managers.network.HttpManager;
+import com.xcart.xcartnew.managers.network.Requester;
 import com.xcart.xcartnew.model.Review;
 import com.xcart.xcartnew.views.adapters.ReviewsListAdapter;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public class Reviews extends PinSupportNetworkActivity {
 
@@ -52,10 +52,9 @@ public class Reviews extends PinSupportNetworkActivity {
 		}
 		hasNext = false;
 
-		final SharedPreferences authorizationData = getSharedPreferences("AuthorizationData", MODE_PRIVATE);
 		final String from = String.valueOf(currentAmount);
 
-		GetRequester dataRequester = new GetRequester() {
+        requester = new Requester() {
 			@Override
 			protected String doInBackground(Void... params) {
 				return new HttpManager(getBaseContext()).getReviews(from, String.valueOf(packAmount));
@@ -91,8 +90,7 @@ public class Reviews extends PinSupportNetworkActivity {
 			}
 		};
 
-		setRequester(dataRequester);
-		dataRequester.execute();
+        requester.execute();
 		currentAmount += packAmount;
 
 	}

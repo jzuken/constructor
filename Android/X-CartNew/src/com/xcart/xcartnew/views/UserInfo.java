@@ -1,11 +1,5 @@
 package com.xcart.xcartnew.views;
 
-import java.util.ArrayList;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -22,12 +16,19 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.xcart.xcartnew.R;
-import com.xcart.xcartnew.managers.network.GetRequester;
 import com.xcart.xcartnew.managers.network.HttpManager;
+import com.xcart.xcartnew.managers.network.Requester;
 import com.xcart.xcartnew.model.Order;
 import com.xcart.xcartnew.views.adapters.OrdersListAdapter;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
 public class UserInfo extends PinSupportNetworkActivity {
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -114,7 +115,7 @@ public class UserInfo extends PinSupportNetworkActivity {
 	private void updateData() {
 		progressBar.setVisibility(View.VISIBLE);
 
-		GetRequester dataRequester = new GetRequester() {
+        requester = new Requester() {
 			@Override
 			protected String doInBackground(Void... params) {
 				return new HttpManager(getBaseContext()).getUserInfo(id);
@@ -145,8 +146,7 @@ public class UserInfo extends PinSupportNetworkActivity {
 			}
 		};
 
-		setRequester(dataRequester);
-		dataRequester.execute();
+        requester.execute();
 	}
 
 	private void updateOrdersList() {
@@ -156,7 +156,7 @@ public class UserInfo extends PinSupportNetworkActivity {
 		}
 		hasNext = false;
 		final String from = String.valueOf(currentAmount);
-		GetRequester dataRequester = new GetRequester() {
+        requester = new Requester() {
 			@Override
 			protected String doInBackground(Void... params) {
 				return new HttpManager(getBaseContext()).getUserOrders(from, String.valueOf(packAmount), id);
@@ -181,7 +181,6 @@ public class UserInfo extends PinSupportNetworkActivity {
 							String name = title + obj.getString("firstname") + " " + obj.getString("lastname");
 							String status = obj.getString("status");
 							String date = obj.getString("month") + "\n" + obj.getString("day");
-							;
 							String paid = obj.getString("total");
 							addOrderToList(id, name, paid, status, date);
 						}
@@ -198,8 +197,7 @@ public class UserInfo extends PinSupportNetworkActivity {
 			}
 		};
 
-		setRequester(dataRequester);
-		dataRequester.execute();
+        requester.execute();
 		currentAmount += packAmount;
 	}
 

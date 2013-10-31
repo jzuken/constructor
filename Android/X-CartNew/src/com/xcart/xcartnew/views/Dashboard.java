@@ -10,7 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.xcart.xcartnew.R;
-import com.xcart.xcartnew.managers.network.GetRequester;
+import com.xcart.xcartnew.managers.network.Requester;
 import com.xcart.xcartnew.managers.network.HttpManager;
 
 import org.json.JSONArray;
@@ -42,7 +42,7 @@ public class Dashboard extends PinSupportNetworkActivity {
 
 	private void updateData() {
 		progressBar.setVisibility(View.VISIBLE);
-		GetRequester dataRequester = new GetRequester() {
+		requester = new Requester() {
 
             @Override
             protected String doInBackground(Void... voids) {
@@ -81,8 +81,7 @@ public class Dashboard extends PinSupportNetworkActivity {
 			}
 		};
 
-		setRequester(dataRequester);
-		dataRequester.execute();
+        requester.execute();
 	}
 
 	private void clearData() {
