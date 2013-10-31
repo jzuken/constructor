@@ -3,6 +3,7 @@ package com.xcart.xcartnew.managers;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 
+import com.xcart.xcartnew.views.dialogs.NetworkErrorDialog;
 import com.xcart.xcartnew.views.dialogs.ProgressDialog;
 
 /**
@@ -14,6 +15,11 @@ public class DialogManager {
 
     public DialogManager(FragmentManager fragmentManager) {
         this.fragmentManager = fragmentManager;
+    }
+
+    public void showNetworkErrorDialog() {
+        DialogFragment dialog = new NetworkErrorDialog();
+        dialog.show(fragmentManager, "network_error");
     }
 
     public void showProgressDialog(int messageId, String dialogTag) {

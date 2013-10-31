@@ -105,4 +105,5 @@
     <string name="log_in">Log in</string>
     <string name="xcart_icon">X-Cart icon</string>
     <string name="success">Success</string>
+    <string name="unable_to_connect_to_server">Sorry, unable to connect to server. Cannot update data. Please check your internet connection</string>
 </resources>

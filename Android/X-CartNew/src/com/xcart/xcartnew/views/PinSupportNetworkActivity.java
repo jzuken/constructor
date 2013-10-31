@@ -1,18 +1,25 @@
 package com.xcart.xcartnew.views;
 
-import android.widget.Toast;
+import android.os.Bundle;
 
-import com.xcart.xcartnew.views.PinSupportActivity;
+import com.xcart.xcartnew.managers.DialogManager;
 import com.xcart.xcartnew.managers.network.GetRequester;
 
 public class PinSupportNetworkActivity extends PinSupportActivity {
+
+    protected DialogManager dialogManager;
+
 	public void showConnectionErrorMessage() {
-		Toast.makeText(getBaseContext(),
-				"Sorry, unable to connect to server. Cannot update data. Please check your internet connection",
-				Toast.LENGTH_SHORT).show();
+        dialogManager.showNetworkErrorDialog();
 	}
 
-	public void setRequester(GetRequester requester) {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        dialogManager = new DialogManager(getSupportFragmentManager());
+    }
+
+    public void setRequester(GetRequester requester) {
 		this.currentDataRequester = requester;
 	}
 
