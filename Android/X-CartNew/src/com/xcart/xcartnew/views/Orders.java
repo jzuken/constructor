@@ -212,7 +212,8 @@ public class Orders extends PinSupportNetworkActivity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode == ChangeStatus.changeStatusResultCode) {
-			((Order) ordersListView.getChildAt(lastPositionClicked).getTag()).setStatus(data.getStringExtra("status"));
+			OrdersListAdapter.OrderHolder orderHolder = ((OrdersListAdapter.OrderHolder) ordersListView.getChildAt(lastPositionClicked).getTag());
+            orderHolder.getOrder().setStatus(data.getStringExtra("status"));
 			adapter.notifyDataSetChanged();
 		}
 		super.onActivityResult(requestCode, resultCode, data);

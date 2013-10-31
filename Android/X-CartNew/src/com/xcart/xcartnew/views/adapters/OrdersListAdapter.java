@@ -5,23 +5,17 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.xcart.xcartnew.R;
 import com.xcart.xcartnew.model.Order;
 
-public class OrdersListAdapter extends ArrayAdapter<Order> {
+public class OrdersListAdapter extends BaseArrayAdapter<Order> {
 
     public OrdersListAdapter(Context context, int resource, List<Order> items) {
         super(context, resource, items);
-        this.context = context;
-        this.layoutResourceId = resource;
-        this.items = items;
-        inflater = ((Activity) context).getLayoutInflater();
     }
 
     @Override
@@ -108,26 +102,5 @@ public class OrdersListAdapter extends ArrayAdapter<Order> {
         public Order getOrder() {
             return order;
         }
-
-        public TextView getUserName() {
-            return userName;
-        }
-
-        public TextView getPaid() {
-            return paid;
-        }
-
-        public TextView getStatus() {
-            return status;
-        }
-
-        public TextView getDate() {
-            return date;
-        }
     }
-
-    private List<Order> items;
-    private int layoutResourceId;
-    private Context context;
-    private LayoutInflater inflater;
 }

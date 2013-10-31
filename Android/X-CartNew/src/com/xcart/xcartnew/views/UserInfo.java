@@ -67,7 +67,7 @@ public class UserInfo extends PinSupportNetworkActivity {
 				setNeedDownloadValue(false);
 				lastPositionClicked = position;
 				Intent intent = new Intent(getBaseContext(), OrderInfo.class);
-				intent.putExtra("orderId", ((Order) view.getTag()).getId());
+				intent.putExtra("orderId", ((OrdersListAdapter.OrderHolder) view.getTag()).getOrder().getId());
 				startActivityForResult(intent, 1);
 			}
 		});
@@ -225,7 +225,8 @@ public class UserInfo extends PinSupportNetworkActivity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode == ChangeStatus.changeStatusResultCode) {
-			((Order) ordersListView.getChildAt(lastPositionClicked).getTag()).setStatus(data.getStringExtra("status"));
+            OrdersListAdapter.OrderHolder orderHolder = ((OrdersListAdapter.OrderHolder) ordersListView.getChildAt(lastPositionClicked).getTag());
+            orderHolder.getOrder().setStatus(data.getStringExtra("status"));
 			adapter.notifyDataSetChanged();
 		}
 		super.onActivityResult(requestCode, resultCode, data);
