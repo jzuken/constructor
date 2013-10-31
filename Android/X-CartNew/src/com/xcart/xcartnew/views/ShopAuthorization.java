@@ -1,7 +1,5 @@
 package com.xcart.xcartnew.views;
 
-import org.json.JSONObject;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -14,12 +12,18 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.xcart.xcartnew.R;
-import com.xcart.xcartnew.managers.gcm.GCMManager;
 import com.xcart.xcartnew.managers.DialogManager;
-import com.xcart.xcartnew.managers.network.Requester;
+import com.xcart.xcartnew.managers.LogManager;
+import com.xcart.xcartnew.managers.gcm.GCMManager;
 import com.xcart.xcartnew.managers.network.HttpManager;
+import com.xcart.xcartnew.managers.network.Requester;
+
+import org.json.JSONObject;
+
 
 public class ShopAuthorization extends FragmentActivity {
+
+    private static final LogManager LOG = new LogManager(ShopAuthorization.class.getName());
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -64,10 +68,6 @@ public class ShopAuthorization extends FragmentActivity {
 			protected void onPostExecute(String response) {
 				super.onPostExecute(response);
 
-				if (!isActive) {
-					return;
-				}
-
 				dialogManager.dismissDialog(PROGRESS_DIALOG);
 
 				if (response != null) {
@@ -96,33 +96,13 @@ public class ShopAuthorization extends FragmentActivity {
 							startActivity(intent);
 						}
 					} catch (Exception e) {
-						e.printStackTrace();
+                        LOG.e(e.getMessage(), e);
 					}
 				} else {
-					Toast.makeText(ShopAuthorization.this,
-							"Sorry, unable to connect to server. Please check your internet connection",
-							Toast.LENGTH_SHORT).show();
+					dialogManager.showNetworkErrorDialog();
 				}
 			}
 		}.execute();
-	}
-
-	@Override
-	protected void onStart() {
-		super.onStart();
-		isActive = true;
-	}
-
-	@Override
-	protected void onStop() {
-		super.onStop();
-		isActive = false;
-	}
-
-	@Override
-	protected void onPause() {
-		super.onResume();
-		dialogManager.dismissDialog(PROGRESS_DIALOG);
 	}
 
 	private boolean isEmpty(String string) {
@@ -145,7 +125,6 @@ public class ShopAuthorization extends FragmentActivity {
 
 	private static final String PROGRESS_DIALOG = "Shop_authorization_progress";
 	private DialogManager dialogManager;
-	private boolean isActive = false;
 	private EditText authorizationKey;
 	private EditText shopUrl;
 	private GCMManager gcmManager;

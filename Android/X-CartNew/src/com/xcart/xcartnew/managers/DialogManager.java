@@ -1,8 +1,10 @@
 package com.xcart.xcartnew.managers;
 
+import android.content.DialogInterface;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 
+import com.xcart.xcartnew.views.dialogs.ErrorDialog;
 import com.xcart.xcartnew.views.dialogs.NetworkErrorDialog;
 import com.xcart.xcartnew.views.dialogs.ProgressDialog;
 
@@ -35,4 +37,12 @@ public class DialogManager {
         }
     }
 
+    public void showErrorDialog(int messageId){
+        showErrorDialog(messageId, null);
+    }
+
+    public void showErrorDialog(int messageId, DialogInterface.OnClickListener onClickListener) {
+        DialogFragment dialog = new ErrorDialog(messageId, onClickListener);
+        dialog.show(fragmentManager, "error");
+    }
 }

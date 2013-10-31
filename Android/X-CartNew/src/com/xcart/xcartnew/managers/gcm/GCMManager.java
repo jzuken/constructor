@@ -1,25 +1,27 @@
 package com.xcart.xcartnew.managers.gcm;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.AsyncTask;
-import android.widget.Toast;
+import android.support.v4.app.FragmentActivity;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.xcart.xcartnew.R;
+import com.xcart.xcartnew.managers.DialogManager;
 import com.xcart.xcartnew.managers.LogManager;
 import com.xcart.xcartnew.managers.network.HttpManager;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GCMManager {
 	
@@ -86,7 +88,7 @@ public class GCMManager {
 				GooglePlayServicesUtil.getErrorDialog(resultCode, context, PLAY_SERVICES_RESOLUTION_REQUEST).show();
 			} else {
 				LOG.d("This device is not supported.");
-				Toast.makeText(context, "Your device doesn't support google play services", Toast.LENGTH_SHORT).show();
+                new DialogManager(((FragmentActivity) context).getSupportFragmentManager()).showErrorDialog(R.string.play_not_supported, null);
 			}
 			return false;
 		}

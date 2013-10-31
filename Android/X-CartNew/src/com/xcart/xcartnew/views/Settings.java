@@ -36,7 +36,7 @@ public class Settings extends PreferenceActivity {
 			public boolean onPreferenceChange(Preference preference, Object newValue) {
 				int newValueLength = ((String) newValue).length();
 				if (newValueLength != 4) {
-					Toast.makeText(getBaseContext(), "Password must consists of four digits", Toast.LENGTH_LONG).show();
+					Toast.makeText(getBaseContext(), getString(R.string.password_error), Toast.LENGTH_LONG).show();
 					return false;
 				}
 				return true;
@@ -74,7 +74,7 @@ public class Settings extends PreferenceActivity {
 			@Override
 			public boolean onPreferenceChange(Preference preference, Object newValue) {
 				if (newValue.equals("") || Integer.parseInt((String) newValue) < minPackSize) {
-					Toast.makeText(getBaseContext(), "Pack must be bigger than " + String.valueOf(minPack - 1),
+					Toast.makeText(getBaseContext(), getString(R.string.pack_error) + String.valueOf(minPack - 1),
 							Toast.LENGTH_LONG).show();
 					return false;
 				}

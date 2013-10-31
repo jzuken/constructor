@@ -1,11 +1,5 @@
 package com.xcart.xcartnew.views;
 
-import java.util.ArrayList;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -28,10 +22,16 @@ import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TabWidget;
 
 import com.xcart.xcartnew.R;
-import com.xcart.xcartnew.managers.network.Requester;
 import com.xcart.xcartnew.managers.network.HttpManager;
+import com.xcart.xcartnew.managers.network.Requester;
 import com.xcart.xcartnew.model.Order;
 import com.xcart.xcartnew.views.adapters.OrdersListAdapter;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public class Orders extends PinSupportNetworkActivity {
 	@Override
@@ -88,7 +88,6 @@ public class Orders extends PinSupportNetworkActivity {
 							String name = title + obj.getString("firstname") + " " + obj.getString("lastname");
 							String status = obj.getString("status");
 							String date = obj.getString("month") + "\n" + obj.getString("day");
-							;
 							String paid = obj.getString("total");
 							addOrderToList(id, name, paid, status, date);
 						}

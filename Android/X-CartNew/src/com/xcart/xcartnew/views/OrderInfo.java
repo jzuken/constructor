@@ -18,8 +18,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.xcart.xcartnew.R;
+import com.xcart.xcartnew.managers.StatusConverter;
 import com.xcart.xcartnew.managers.network.HttpManager;
 import com.xcart.xcartnew.managers.network.Requester;
+import com.xcart.xcartnew.model.OrderStatus;
 import com.xcart.xcartnew.views.dialogs.CustomDialog;
 
 import org.json.JSONArray;
@@ -63,10 +65,6 @@ public class OrderInfo extends PinSupportNetworkActivity {
 		super.withoutPinAction();
 	}
 
-	private enum StatusSymbols {
-		I, Q, P, B, D, F, C
-	}
-
 	private void updateData() {
 		progressBar.setVisibility(View.VISIBLE);
 
@@ -88,7 +86,7 @@ public class OrderInfo extends PinSupportNetworkActivity {
 						JSONObject obj = new JSONObject(result);
 
 						statusSymbol = obj.getString("status");
-						status.setText(getStatusBySymbol(StatusSymbols.valueOf(statusSymbol)));
+						status.setText(StatusConverter.getStatusBySymbol(getBaseContext(), OrderStatus.valueOf(statusSymbol)));
 						trackingNumber.setText(obj.getString("tracking"));
 						paymentMethod.setText(obj.getString("payment_method"));
 						deliveryMethod.setText(obj.getString("shipping"));
@@ -155,27 +153,6 @@ public class OrderInfo extends PinSupportNetworkActivity {
 		};
 
         requester.execute();
-	}
-
-	private String getStatusBySymbol(StatusSymbols symbol) {
-		switch (symbol) {
-		case I:
-			return "Not finished";
-		case Q:
-			return "Queued";
-		case P:
-			return "Processed";
-		case B:
-			return "Backordered";
-		case D:
-			return "Declined";
-		case F:
-			return "Failed";
-		case C:
-			return "Complete";
-		default:
-			return "";
-		}
 	}
 
 	private void clearData() {
@@ -306,7 +283,7 @@ public class OrderInfo extends PinSupportNetworkActivity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode == ChangeStatus.changeStatusResultCode) {
 			statusSymbol = data.getStringExtra("status");
-			status.setText(getStatusBySymbol(StatusSymbols.valueOf(statusSymbol)));
+			status.setText(StatusConverter.getStatusBySymbol(getBaseContext(), OrderStatus.valueOf(statusSymbol)));
 			Intent resultIntent = new Intent();
 			resultIntent.putExtra("status", statusSymbol);
 			setResult(ChangeStatus.changeStatusResultCode, resultIntent);
