@@ -33,5 +33,8 @@ namespace RepoLibrary
 
         [DataMember]
         public string keyHash { get; set; }
+
+        [DataMember]
+        public string firstExpiredLogin { get; set; }
     }
 }

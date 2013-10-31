@@ -99,10 +99,26 @@ namespace ApplicationServerListener.Controllers
                         {
                             if (DateTime.Compare(todate, expiring) > 0)
                             {
-                                return new HttpResponseMessage() { Content = new StringContent("{\"api\": \"expired\"}") };
+                                if (project.firstExpiredLogin == "Never")
+                                {
+                                    project.firstExpiredLogin = todate.ToString();
+                                    wcfClient.SaveProject(project);
+                                }
+                                DateTime expiredLogin = DateTime.Parse(project.firstExpiredLogin);
+                                int daysLeft = 5 - (todate - expiredLogin).Days;
+                                if (daysLeft > 0)
+                                {
+                                    return new HttpResponseMessage() { Content = new StringContent("{\"api\": \"expiring\", \"remains\": \"" + daysLeft.ToString() + "\",  \"url\": \"" + project.apiUrl + "\" }") };
+                                }
+                                else
+                                {
+                                    return new HttpResponseMessage() { Content = new StringContent("{\"api\": \"expired\"}") };
+                                }
                             }
                             else
                             {
+                                project.firstExpiredLogin = "Never";
+                                wcfClient.SaveProject(project);
                                 return new HttpResponseMessage() { Content = new StringContent("{\"api\": \"" + project.apiUrl + "\"}") };
                             }
                         }

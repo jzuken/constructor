@@ -27,6 +27,7 @@ namespace RepoLibrary
                 project.ExpirationDate = myReader["shopExpirationDate"].ToString();
                 project.apiUrl = myReader["shopApiUrl"].ToString();
                 project.keyHash = myReader["shopKeyHash"].ToString();
+                project.firstExpiredLogin = myReader["shopFirstExpiredDate"].ToString();
                 connection.Close();
                 return project;
             }
@@ -41,13 +42,14 @@ namespace RepoLibrary
             {
                 SqlConnection connection = new SqlConnection(this.connectionString);
                 connection.Open();
-                SqlCommand myCommand = new SqlCommand("INSERT INTO shops (shopUrl, shopSettings, shopExpirationDate, shopApiUrl, shopKeyHash) " +
-                    "Values (@url,@settings,@expiration,@apiUrl,@keyHash)", connection);
+                SqlCommand myCommand = new SqlCommand("INSERT INTO shops (shopUrl, shopSettings, shopExpirationDate, shopApiUrl, shopKeyHash, shopFirstExpiredDate) " +
+                    "Values (@url,@settings,@expiration,@apiUrl,@keyHash,@shopFirstExpired)", connection);
                 myCommand.Parameters.Add("@url", SqlDbType.VarChar).Value = data.Url;
                 myCommand.Parameters.Add("@settings", SqlDbType.VarChar).Value = data.Settings;
                 myCommand.Parameters.Add("@expiration", SqlDbType.VarChar).Value = data.ExpirationDate;
                 myCommand.Parameters.Add("@apiUrl", SqlDbType.VarChar).Value = data.apiUrl;
                 myCommand.Parameters.Add("@keyHash", SqlDbType.VarChar).Value = data.keyHash;
+                myCommand.Parameters.Add("@shopFirstExpired", SqlDbType.VarChar).Value = data.firstExpiredLogin;
                 int result = myCommand.ExecuteNonQuery();
                 connection.Close();
                 if (result > 0)
@@ -63,12 +65,13 @@ namespace RepoLibrary
             {
                 SqlConnection connection = new SqlConnection(this.connectionString);
                 connection.Open();
-                SqlCommand myCommand = new SqlCommand("UPDATE shops SET shopSettings=@settings, shopExpirationDate=@expiration, shopApiUrl=@apiUrl, shopKeyHash=@keyHash WHERE shopUrl=@url", connection);
+                SqlCommand myCommand = new SqlCommand("UPDATE shops SET shopSettings=@settings, shopExpirationDate=@expiration, shopApiUrl=@apiUrl, shopKeyHash=@keyHash, shopFirstExpiredDate=@shopFirstExpired WHERE shopUrl=@url", connection);
                 myCommand.Parameters.Add("@url", SqlDbType.VarChar).Value = data.Url;
                 myCommand.Parameters.Add("@settings", SqlDbType.VarChar).Value = data.Settings;
                 myCommand.Parameters.Add("@expiration", SqlDbType.VarChar).Value = data.ExpirationDate;
                 myCommand.Parameters.Add("@apiUrl", SqlDbType.VarChar).Value = data.apiUrl;
                 myCommand.Parameters.Add("@keyHash", SqlDbType.VarChar).Value = data.keyHash;
+                myCommand.Parameters.Add("@shopFirstExpired", SqlDbType.VarChar).Value = data.firstExpiredLogin;
                 int result = myCommand.ExecuteNonQuery();
                 connection.Close();
                 if (result > 0)

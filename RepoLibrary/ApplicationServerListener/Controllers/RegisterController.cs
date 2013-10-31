@@ -50,11 +50,11 @@ namespace ApplicationServerListener.Controllers
                 project = new RepoLibraryReference.Project();
                 project.Url = shopUrl;
                 project.Settings = defaultSettgins;
-                
             }
             project.apiUrl = shopApiUrl;
             project.keyHash = shopKeyHash;
             project.ExpirationDate = shopExpirationDate;
+            project.firstExpiredLogin = "Never";
             WebClient client = new WebClient();
             string returnCode = client.DownloadString("https://secure.x-cart.com/service.php?target=recurring_plans&password=pmh6_2lGTENNqewuhd&url=" + shopUrl);
             string expDate = "";
