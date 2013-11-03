@@ -44,17 +44,18 @@ public class Dashboard extends PinSupportNetworkActivity {
 		progressBar.setVisibility(View.VISIBLE);
 		requester = new Requester() {
 
-            @Override
-            protected String doInBackground(Void... voids) {
-                return new HttpManager(getBaseContext()).getDashboard();
-            }
+			@Override
+			protected String doInBackground(Void... voids) {
+				return new HttpManager(getBaseContext()).getDashboard();
+			}
 
 			@Override
 			protected void onPostExecute(String result) {
 				if (result != null) {
 					try {
 						JSONObject obj = new JSONObject(result);
-						todaySales.setText(obj.getString("today_sales"));
+						String todaySalesValue = roundTodaySales(obj.getString("today_sales"));		
+						todaySales.setText(todaySalesValue);
 						lowStock.setText(obj.getString("low_stock"));
 						visitorsToday.setText(obj.getString("today_visitors"));
 						reviewsToday.setText(obj.getString("reviews_today"));
@@ -81,7 +82,20 @@ public class Dashboard extends PinSupportNetworkActivity {
 			}
 		};
 
-        requester.execute();
+		requester.execute();
+	}
+	
+	private String roundTodaySales(String todaySalesValue) {
+		Double todaySalesDouble = Double.parseDouble(todaySalesValue);
+		if (todaySalesDouble >= 1000) {
+			if (todaySalesDouble >= 100000) {
+				todaySalesDouble /= 1000;
+				return todaySalesValue = String.valueOf(Math.round(todaySalesDouble)) + "K";
+			} 
+			return todaySalesValue = String.valueOf(Math.round(todaySalesDouble));
+		}
+		
+		return todaySalesValue;
 	}
 
 	private void clearData() {
