@@ -187,8 +187,8 @@ public class Products extends PinSupportNetworkActivity {
     private void setupTabs(String sortOption) {
         optionTabHost = (CustomTabHost) findViewById(android.R.id.tabhost);
         optionTabHost.setup();
-        optionTabHost.addEmptyTab("low_stock", getResources().getString(R.string.low_stock_text), -1, 10, 10, 10, 10);
-        optionTabHost.addEmptyTab("", getResources().getString(R.string.all), 1, 10, 10, 10, 10);
+        optionTabHost.addEmptyTab("low_stock", getResources().getString(R.string.low_stock_text), -1);
+        optionTabHost.addEmptyTab("", getResources().getString(R.string.all), 1);
         if (sortOption.equals("all")) {
             optionTabHost.setCurrentTab(1);
         }

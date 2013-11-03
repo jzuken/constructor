@@ -6,6 +6,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TabHost;
 import android.widget.TextView;
 
@@ -35,7 +36,7 @@ public class CustomTabHost extends TabHost {
 		TextView tabText = (TextView) indicatorView.findViewById(R.id.tab_text);
 		tabText.setText(indicator);
 		tabText.setTextColor(Color.WHITE);
-		LinearLayout tabLayout = (LinearLayout) indicatorView.findViewById(R.id.tab_layout);
+		RelativeLayout tabLayout = (RelativeLayout) indicatorView.findViewById(R.id.tab_layout);
 		switch (side) {
 		case -1:
 			tabLayout.setBackgroundDrawable(getResources().getDrawable(R.drawable.rounded_left_tab_selector));
@@ -57,6 +58,10 @@ public class CustomTabHost extends TabHost {
 	 * -1 - left tab; 
 	 *  0 - middle tab; 
 	 *  1 - right tab;
+	 *  @param left padding
+	 *  @param top padding
+	 *  @param right padding
+	 *  @param bottom padding
 	 */
 	@SuppressWarnings("deprecation")
 	public void addEmptyTab(String tag, String indicator, int side, int left, int top, int right, int bottom) {
@@ -67,7 +72,7 @@ public class CustomTabHost extends TabHost {
 		tabText.setText(indicator);
 		tabText.setTextColor(Color.WHITE);
 		tabText.setPadding(left, top, right, bottom);
-		LinearLayout tabLayout = (LinearLayout) indicatorView.findViewById(R.id.tab_layout);
+		RelativeLayout tabLayout = (RelativeLayout) indicatorView.findViewById(R.id.tab_layout);
 		switch (side) {
 		case -1:
 			tabLayout.setBackgroundDrawable(getResources().getDrawable(R.drawable.rounded_left_tab_selector));
