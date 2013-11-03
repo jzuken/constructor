@@ -14,6 +14,7 @@
         android:orientation="horizontal" >
 
         <Button
+            android:id="@+id/send_message_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="2dp"
@@ -27,6 +28,7 @@
             android:textStyle="bold" />
 
         <Button
+            android:id="@+id/call_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="0.5dp"

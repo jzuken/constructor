@@ -1,5 +1,11 @@
 package com.xcart.xcartnew.views;
 
+import java.util.ArrayList;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -11,6 +17,7 @@ import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -20,12 +27,6 @@ import com.xcart.xcartnew.managers.network.HttpManager;
 import com.xcart.xcartnew.managers.network.Requester;
 import com.xcart.xcartnew.model.Order;
 import com.xcart.xcartnew.views.adapters.OrdersListAdapter;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
 
 public class UserInfo extends PinSupportNetworkActivity {
 
@@ -83,6 +84,8 @@ public class UserInfo extends PinSupportNetworkActivity {
 		phone = (TextView) header.findViewById(R.id.phone);
 		fax = (TextView) header.findViewById(R.id.fax);
 		id = getIntent().getStringExtra("userId");
+		sendMessageButton = (Button) header.findViewById(R.id.send_message_button);
+		callButton = (Button) header.findViewById(R.id.call_button);
 		settingsData = PreferenceManager.getDefaultSharedPreferences(this);
 
 	}
@@ -115,7 +118,7 @@ public class UserInfo extends PinSupportNetworkActivity {
 	private void updateData() {
 		progressBar.setVisibility(View.VISIBLE);
 
-        requester = new Requester() {
+		requester = new Requester() {
 			@Override
 			protected String doInBackground(Void... params) {
 				return new HttpManager(getBaseContext()).getUserInfo(id);
@@ -128,13 +131,21 @@ public class UserInfo extends PinSupportNetworkActivity {
 						JSONObject obj = new JSONObject(result);
 						firstName.setText(obj.getString("firstname"));
 						lastName.setText(obj.getString("lastname"));
-						email.setText(obj.getString("login"));
+						String emailValue = obj.getString("login");
+						if (!isEmpty(emailValue)) {
+							sendMessageButton.setClickable(true);
+							email.setText(emailValue);
+						}
 						JSONObject addressObj = obj.getJSONObject("address");
 						JSONObject shippingObj = addressObj.getJSONObject("S");
 						address.setText(shippingObj.get("address") + "\n" + shippingObj.getString("city") + ", "
 								+ shippingObj.getString("state") + " " + shippingObj.getString("zipcode") + "\n"
 								+ shippingObj.getString("country"));
-						phone.setText(shippingObj.getString("phone"));
+						String phoneValue = shippingObj.getString("phone");
+						if (!isEmpty(phoneValue)) {
+							callButton.setClickable(true);
+							phone.setText(phoneValue);
+						}
 						fax.setText(shippingObj.getString("fax"));
 					} catch (JSONException e) {
 						e.printStackTrace();
@@ -146,7 +157,7 @@ public class UserInfo extends PinSupportNetworkActivity {
 			}
 		};
 
-        requester.execute();
+		requester.execute();
 	}
 
 	private void updateOrdersList() {
@@ -156,7 +167,7 @@ public class UserInfo extends PinSupportNetworkActivity {
 		}
 		hasNext = false;
 		final String from = String.valueOf(currentAmount);
-        requester = new Requester() {
+		requester = new Requester() {
 			@Override
 			protected String doInBackground(Void... params) {
 				return new HttpManager(getBaseContext()).getUserOrders(from, String.valueOf(packAmount), id);
@@ -175,7 +186,7 @@ public class UserInfo extends PinSupportNetworkActivity {
 							JSONObject obj = array.getJSONObject(i);
 							String id = obj.getString("orderid");
 							String title = obj.getString("title");
-							if (!title.equals("")) {
+							if (!isEmpty(title)) {
 								title += " ";
 							}
 							String name = title + obj.getString("firstname") + " " + obj.getString("lastname");
@@ -198,7 +209,7 @@ public class UserInfo extends PinSupportNetworkActivity {
 			}
 		};
 
-        requester.execute();
+		requester.execute();
 	}
 
 	private void addOrderToList(final String id, final String userName, final String paid, final String status,
@@ -217,14 +228,21 @@ public class UserInfo extends PinSupportNetworkActivity {
 
 	private void clearList() {
 		adapter.clear();
+		sendMessageButton.setClickable(false);
+		callButton.setClickable(false);
 		currentAmount = 0;
+	}
+
+	private boolean isEmpty(String string) {
+		return string.equals("");
 	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode == ChangeStatus.changeStatusResultCode) {
-            OrdersListAdapter.OrderHolder orderHolder = ((OrdersListAdapter.OrderHolder) ordersListView.getChildAt(lastPositionClicked).getTag());
-            orderHolder.getOrder().setStatus(data.getStringExtra("status"));
+			OrdersListAdapter.OrderHolder orderHolder = ((OrdersListAdapter.OrderHolder) ordersListView.getChildAt(
+					lastPositionClicked).getTag());
+			orderHolder.getOrder().setStatus(data.getStringExtra("status"));
 			adapter.notifyDataSetChanged();
 		}
 		super.onActivityResult(requestCode, resultCode, data);
@@ -239,6 +257,8 @@ public class UserInfo extends PinSupportNetworkActivity {
 	private TextView address;
 	private TextView phone;
 	private TextView fax;
+	private Button sendMessageButton;
+	private Button callButton;
 	private OrdersListAdapter adapter;
 	private String id;
 	private Object lock = new Object();
