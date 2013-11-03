@@ -88,6 +88,8 @@ public class OrderInfo extends PinSupportNetworkActivity {
 						statusSymbol = obj.getString("status");
 						status.setText(StatusConverter.getStatusBySymbol(getBaseContext(),
 								OrderStatus.valueOf(statusSymbol)));
+						status.setTextColor(StatusConverter.getColorResourceBySymbol(getBaseContext(),
+								OrderStatus.valueOf(statusSymbol)));
 						trackingNumber.setText(obj.getString("tracking"));
 						paymentMethod.setText(obj.getString("payment_method"));
 						deliveryMethod.setText(obj.getString("shipping"));
@@ -298,6 +300,8 @@ public class OrderInfo extends PinSupportNetworkActivity {
 		if (resultCode == ChangeStatus.changeStatusResultCode) {
 			statusSymbol = data.getStringExtra("status");
 			status.setText(StatusConverter.getStatusBySymbol(getBaseContext(), OrderStatus.valueOf(statusSymbol)));
+			status.setTextColor(StatusConverter.getColorResourceBySymbol(getBaseContext(),
+					OrderStatus.valueOf(statusSymbol)));
 			Intent resultIntent = new Intent();
 			resultIntent.putExtra("status", statusSymbol);
 			setResult(ChangeStatus.changeStatusResultCode, resultIntent);
