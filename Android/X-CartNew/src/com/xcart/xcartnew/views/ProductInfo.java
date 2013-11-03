@@ -97,7 +97,6 @@ public class ProductInfo extends PinSupportNetworkActivity {
 						if (obj.getString("forsale").equals("Y")) {
 							availabilitySwitch.setChecked(true);
 						}
-						isNeedAvailabilityChange = true;
 						String imageUrl = obj.getString("image_url");
 						if (!imageUrl.equals(NO_IMAGE_URL)) {
 							new DownloadImageTask(productImage, progressBar).execute(imageUrl);
@@ -122,6 +121,7 @@ public class ProductInfo extends PinSupportNetworkActivity {
 					showConnectionErrorMessage();
 					progressBar.setVisibility(View.GONE);
 				}
+				isNeedAvailabilityChange = true;
 			}
 		};
 
