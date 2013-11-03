@@ -47,15 +47,15 @@
         android:paddingTop="3dp" >
 
         <TextView
-            android:id="@+id/phone_title"
+            android:id="@+id/type_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:text="@string/phone_colon"
+            android:text="@string/user_type_colon"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/user_phone"
+            android:id="@+id/user_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"

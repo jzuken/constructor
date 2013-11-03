@@ -2,12 +2,9 @@ package com.xcart.xcartnew.views.adapters;
 
 import java.util.List;
 
-import android.app.Activity;
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.xcart.xcartnew.R;
@@ -37,7 +34,7 @@ public class UsersListAdapter extends BaseArrayAdapter<User> {
             holder.name.setBackgroundResource(R.drawable.top_rounded_subtitle);
         }
         holder.login = (TextView) row.findViewById(R.id.user_login);
-        holder.phone = (TextView) row.findViewById(R.id.user_phone);
+        holder.type = (TextView) row.findViewById(R.id.user_type);
         holder.lastLogin = (TextView) row.findViewById(R.id.last_login);
         setupItem(holder);
         return row;
@@ -46,7 +43,16 @@ public class UsersListAdapter extends BaseArrayAdapter<User> {
     private void setupItem(UserHolder holder) {
         holder.name.setText(holder.user.getName());
         holder.login.setText(holder.user.getLogin());
-        holder.phone.setText(holder.user.getPhone());
+        String typeSymbol = holder.user.getType();
+        String type = null;
+        if (typeSymbol.equals("C")) {
+			type = "Customer";
+		} else if (typeSymbol.equals("P")) {
+			type = "Administrator";
+		} else {
+			type = "Partner";
+		}
+        holder.type.setText(type);
         holder.lastLogin.setText(holder.user.getLastLogin());
     }
 
@@ -54,7 +60,7 @@ public class UsersListAdapter extends BaseArrayAdapter<User> {
         User user;
         TextView name;
         TextView login;
-        TextView phone;
+        TextView type;
         TextView lastLogin;
 
         public User getUser() {

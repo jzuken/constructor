@@ -58,11 +58,12 @@ public class Users extends PinSupportNetworkActivity {
 		hasNext = false;
 
 		final String from = String.valueOf(currentAmount);
-        requester = new Requester() {
+		requester = new Requester() {
 
 			@Override
 			protected String doInBackground(Void... params) {
-				return new HttpManager(getBaseContext()).getUsers(from, String.valueOf(packAmount), searchWord, getCurrentSort());
+				return new HttpManager(getBaseContext()).getUsers(from, String.valueOf(packAmount), searchWord,
+						getCurrentSort());
 			}
 
 			@Override
@@ -83,13 +84,13 @@ public class Users extends PinSupportNetworkActivity {
 							}
 							String name = title + obj.getString("firstname") + " " + obj.getString("lastname");
 							String login = obj.getString("login");
-							String phone = obj.getString("phone");
+							String typeSymbol = obj.getString("usertype");
 
 							String lastLogin = obj.getString("last_login");
 							if (lastLogin.equals("Jan-01-1970")) {
 								lastLogin = "Never logged in";
 							}
-							addUserToList(id, name, login, phone, lastLogin);
+							addUserToList(id, name, login, typeSymbol, lastLogin);
 						}
 						currentAmount += packAmount;
 					} catch (JSONException e) {
@@ -105,7 +106,7 @@ public class Users extends PinSupportNetworkActivity {
 			}
 		};
 
-        requester.execute();
+		requester.execute();
 	}
 
 	private void clearList() {
@@ -128,9 +129,9 @@ public class Users extends PinSupportNetworkActivity {
 		}
 	}
 
-	private void addUserToList(final String id, final String name, final String login, final String phone,
+	private void addUserToList(final String id, final String name, final String login, final String typeSymbol,
 			final String lastLogin) {
-		adapter.add(new User(id, name, login, phone, lastLogin));
+		adapter.add(new User(id, name, login, typeSymbol, lastLogin));
 	}
 
 	private void setupListViewAdapter() {

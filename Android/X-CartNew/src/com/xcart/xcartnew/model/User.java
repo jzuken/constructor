@@ -1,10 +1,11 @@
 package com.xcart.xcartnew.model;
 
 public class User {
-	public User(String id, String name, String login, String phone, String lastLogin) {
+	public User(String id, String name, String login, String type, String lastLogin) {
 		this.id = id;
 		this.name = name;
 		this.login = login;
+		this.type = type;
 		this.lastLogin = lastLogin;
 	}
 
@@ -20,8 +21,8 @@ public class User {
 		return login;
 	}
 	
-	public String getPhone() {
-		return phone;
+	public String getType() {
+		return type;
 	}
 
 	public String getLastLogin() {
@@ -31,6 +32,6 @@ public class User {
 	private String id;
 	private String name;
 	private String login;
-	private String phone;
+	private String type;
 	private String lastLogin;
 }
