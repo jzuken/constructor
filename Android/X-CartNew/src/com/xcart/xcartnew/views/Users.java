@@ -57,7 +57,6 @@ public class Users extends PinSupportNetworkActivity {
 		}
 		hasNext = false;
 
-		final SharedPreferences authorizationData = getSharedPreferences("AuthorizationData", MODE_PRIVATE);
 		final String from = String.valueOf(currentAmount);
         requester = new Requester() {
 
@@ -92,6 +91,7 @@ public class Users extends PinSupportNetworkActivity {
 							}
 							addUserToList(id, name, login, phone, lastLogin);
 						}
+						currentAmount += packAmount;
 					} catch (JSONException e) {
 						e.printStackTrace();
 					}
@@ -106,7 +106,6 @@ public class Users extends PinSupportNetworkActivity {
 		};
 
         requester.execute();
-		currentAmount += packAmount;
 	}
 
 	private void clearList() {

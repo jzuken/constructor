@@ -47,7 +47,6 @@ public class Products extends PinSupportNetworkActivity {
         }
         setupTabs(sortOption);
         settingsData = PreferenceManager.getDefaultSharedPreferences(this);
-        authorizationData = getSharedPreferences("AuthorizationData", MODE_PRIVATE);
         setupSearchLine();
     }
 
@@ -95,6 +94,7 @@ public class Products extends PinSupportNetworkActivity {
                             String price = obj.getString("list_price");
                             addProductToList(id, name, sku, inStock, price);
                         }
+                        currentAmount += packAmount;
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -109,7 +109,6 @@ public class Products extends PinSupportNetworkActivity {
         };
 
         requester.execute();
-        currentAmount += packAmount;
     }
 
     private void addProductToList(final String id, final String name, final String sku, final String inStock,
@@ -231,7 +230,6 @@ public class Products extends PinSupportNetworkActivity {
     private ListView productsListView;
     private Object lock = new Object();
     private SharedPreferences settingsData;
-    private SharedPreferences authorizationData;
     private EditText productsSearchLine;
     private int lastPositionClicked;
 }

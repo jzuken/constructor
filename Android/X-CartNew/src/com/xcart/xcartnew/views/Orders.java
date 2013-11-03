@@ -1,5 +1,11 @@
 package com.xcart.xcartnew.views;
 
+import java.util.ArrayList;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -20,18 +26,13 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TabWidget;
+import android.widget.TextView;
 
 import com.xcart.xcartnew.R;
 import com.xcart.xcartnew.managers.network.HttpManager;
 import com.xcart.xcartnew.managers.network.Requester;
 import com.xcart.xcartnew.model.Order;
 import com.xcart.xcartnew.views.adapters.OrdersListAdapter;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
 
 public class Orders extends PinSupportNetworkActivity {
 	@Override
@@ -75,6 +76,11 @@ public class Orders extends PinSupportNetworkActivity {
 					try {
 						JSONArray array = new JSONArray(result);
 						int length = array.length();
+						if (length == 0 && currentAmount == 0) {
+							progressBar.setVisibility(View.GONE);
+							noOrders.setVisibility(View.VISIBLE);
+							return;
+						}
 						if (length == packAmount) {
 							hasNext = true;
 						}
@@ -91,6 +97,7 @@ public class Orders extends PinSupportNetworkActivity {
 							String paid = obj.getString("total");
 							addOrderToList(id, name, paid, status, date);
 						}
+						currentAmount += packAmount;
 					} catch (JSONException e) {
 						e.printStackTrace();
 					}
@@ -105,7 +112,6 @@ public class Orders extends PinSupportNetworkActivity {
 		};
 
         requester.execute();
-		currentAmount += packAmount;
 	}
 
 	private void addOrderToList(final String id, final String userName, final String paid, final String status,
@@ -118,8 +124,9 @@ public class Orders extends PinSupportNetworkActivity {
 		ordersListView = (ListView) findViewById(R.id.orders_list);
 
 		LayoutInflater inflater = getLayoutInflater();
-		View listFooter = inflater.inflate(R.layout.on_demand_footer, null, false);
+		View listFooter = inflater.inflate(R.layout.orders_list_footer, null, false);
 		progressBar = (ProgressBar) listFooter.findViewById(R.id.progress_bar);
+		noOrders = (TextView) listFooter.findViewById(R.id.no_orders_message);
 		ordersListView.addFooterView(listFooter, null, false);
 
 		ordersListView.setFooterDividersEnabled(false);
@@ -205,6 +212,7 @@ public class Orders extends PinSupportNetworkActivity {
 	private void clearList() {
 		adapter.clear();
 		currentAmount = 0;
+		noOrders.setVisibility(View.GONE);
 	}
 
 	@Override
@@ -218,6 +226,7 @@ public class Orders extends PinSupportNetworkActivity {
 	}
 
 	private ProgressBar progressBar;
+	private TextView noOrders;
 	private OrdersListAdapter adapter;
 	private ListView ordersListView;
 	private CustomTabHost periodTabHost;

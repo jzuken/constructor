@@ -72,7 +72,7 @@ public class OrderInfo extends PinSupportNetworkActivity {
 		trackingNumberItem.setClickable(false);
 		customerItem.setClickable(false);
 		final String orderId = getIntent().getStringExtra("orderId");
-        requester = new Requester() {
+		requester = new Requester() {
 
 			@Override
 			protected String doInBackground(Void... params) {
@@ -86,7 +86,8 @@ public class OrderInfo extends PinSupportNetworkActivity {
 						JSONObject obj = new JSONObject(result);
 
 						statusSymbol = obj.getString("status");
-						status.setText(StatusConverter.getStatusBySymbol(getBaseContext(), OrderStatus.valueOf(statusSymbol)));
+						status.setText(StatusConverter.getStatusBySymbol(getBaseContext(),
+								OrderStatus.valueOf(statusSymbol)));
 						trackingNumber.setText(obj.getString("tracking"));
 						paymentMethod.setText(obj.getString("payment_method"));
 						deliveryMethod.setText(obj.getString("shipping"));
@@ -152,7 +153,7 @@ public class OrderInfo extends PinSupportNetworkActivity {
 			}
 		};
 
-        requester.execute();
+		requester.execute();
 	}
 
 	private void clearData() {
@@ -161,6 +162,18 @@ public class OrderInfo extends PinSupportNetworkActivity {
 		paymentMethod.setText("");
 		deliveryMethod.setText("");
 		customer.setText("");
+		billingInfo.setText("");
+		bPhone.setText("");
+		bFax.setText("");
+		shippingInfo.setText("");
+		sPhone.setText("");
+		sFax.setText("");
+		itemsList.clearList();
+		subtotal.setText("");
+		discount.setText("");
+		couponSaving.setText("");
+		shippingCost.setText("");
+		total.setText("");
 	}
 
 	private void setupStatusItem() {
@@ -204,7 +217,8 @@ public class OrderInfo extends PinSupportNetworkActivity {
 				final EditText numberEditor = (EditText) view.findViewById(R.id.value_editor);
 				numberEditor.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_FILTER
 						| InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS | InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS);
-				numberEditor.setFilters(new InputFilter[]{filter, new InputFilter.AllCaps()});
+				numberEditor.setFilters(new InputFilter[] { filter, new InputFilter.AllCaps(),
+						new InputFilter.LengthFilter(16) });
 				final String oldNumber = trackingNumber.getText().toString();
 				numberEditor.setText(oldNumber);
 				final CustomDialog dialog = new CustomDialog(context, view) {
@@ -222,7 +236,7 @@ public class OrderInfo extends PinSupportNetworkActivity {
 						hideKeyboard(numberEditor);
 						String newNumber = numberEditor.getText().toString();
 						dialog.dismiss();
-						if (!newNumber.equals(oldNumber)) {						
+						if (!newNumber.equals(oldNumber)) {
 							setNewTrackingNumber(newNumber);
 						}
 					}
@@ -314,7 +328,6 @@ public class OrderInfo extends PinSupportNetworkActivity {
 	private RelativeLayout statusItem;
 	private RelativeLayout trackingNumberItem;
 	private RelativeLayout customerItem;
-	private String sid;
 	private String statusSymbol;
 	private String userId;
 	private String userName;

@@ -77,6 +77,7 @@ public class Reviews extends PinSupportNetworkActivity {
 							String message = obj.getString("message");
 							addReviewToList(id, email, product, message);
 						}
+						currentAmount += packAmount;
 					} catch (JSONException e) {
 						e.printStackTrace();
 					}
@@ -91,8 +92,6 @@ public class Reviews extends PinSupportNetworkActivity {
 		};
 
         requester.execute();
-		currentAmount += packAmount;
-
 	}
 
 	private void addReviewToList(final String id, final String email, final String product, final String message) {

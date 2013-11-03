@@ -112,4 +112,5 @@
     <string name="incorrect_password">incorrect password</string>
     <string name="pack_error">Pack must be bigger than </string>
     <string name="password_error">Password must consists of four digits</string>
+    <string name="no_orders">No orders for selected period</string>
 </resources>

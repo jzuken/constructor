@@ -184,6 +184,7 @@ public class UserInfo extends PinSupportNetworkActivity {
 							String paid = obj.getString("total");
 							addOrderToList(id, name, paid, status, date);
 						}
+						currentAmount += packAmount;
 					} catch (JSONException e) {
 						e.printStackTrace();
 					}
@@ -198,7 +199,6 @@ public class UserInfo extends PinSupportNetworkActivity {
 		};
 
         requester.execute();
-		currentAmount += packAmount;
 	}
 
 	private void addOrderToList(final String id, final String userName, final String paid, final String status,

@@ -50,6 +50,10 @@ public class OrderProductsList extends LinearLayout {
 		});
 		this.addView(item);
 	}
+	
+	public void clearList() {
+		removeAllViews();
+	}
 
 	private Context context;
 }
