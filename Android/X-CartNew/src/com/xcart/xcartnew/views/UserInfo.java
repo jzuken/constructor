@@ -224,12 +224,12 @@ public class UserInfo extends PinSupportNetworkActivity {
 		address.setText("");
 		phone.setText("");
 		fax.setText("");
+		sendMessageButton.setClickable(false);
+		callButton.setClickable(false);
 	}
 
 	private void clearList() {
 		adapter.clear();
-		sendMessageButton.setClickable(false);
-		callButton.setClickable(false);
 		currentAmount = 0;
 	}
 

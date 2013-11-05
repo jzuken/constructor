@@ -57,9 +57,9 @@ public class ProductInfo extends PinSupportNetworkActivity {
 		initFullDescrLable();
 		setupPriceItem();
 		setupAvailabilitySwitch();
-		setupVariantsSpinner();
-		variantsList.add("new");
-		variantsAdapter.notifyDataSetChanged();
+		//setupVariantsSpinner();
+		//variantsList.add("new");
+		//variantsAdapter.notifyDataSetChanged();
 	}
 
 	@Override
@@ -92,11 +92,13 @@ public class ProductInfo extends PinSupportNetworkActivity {
 							fullDescrLabel.setVisibility(View.VISIBLE);
 						}
 						price.setText("$" + obj.getString("price"));
+						priceItem.setClickable(true);
 						sold.setText(obj.getString("sales_stats"));
 						inStock.setText(obj.getString("avail"));
 						if (obj.getString("forsale").equals("Y")) {
 							availabilitySwitch.setChecked(true);
 						}
+						isNeedAvailabilityChange = true;
 						String imageUrl = obj.getString("image_url");
 						if (!imageUrl.equals(NO_IMAGE_URL)) {
 							new DownloadImageTask(productImage, progressBar).execute(imageUrl);
@@ -104,7 +106,7 @@ public class ProductInfo extends PinSupportNetworkActivity {
 							productImage.setImageDrawable(getResources().getDrawable(R.drawable.no_image));
 							progressBar.setVisibility(View.GONE);
 						}
-						if (obj.optBoolean("variants", true)) {
+						/*if (obj.optBoolean("variants", true)) {
 							JSONObject variantsObject = obj.getJSONObject("variants");
 							JSONArray variantsNames = variantsObject.names();
 							for (int i = 0; i < variantsNames.length(); i++) {
@@ -112,7 +114,7 @@ public class ProductInfo extends PinSupportNetworkActivity {
 								variantsList.add(variant.getString("productcode"));
 							}
 							variantsAdapter.notifyDataSetChanged();
-						}
+						}*/
 					} catch (JSONException e) {
 						e.printStackTrace();
 						progressBar.setVisibility(View.GONE);
@@ -121,7 +123,6 @@ public class ProductInfo extends PinSupportNetworkActivity {
 					showConnectionErrorMessage();
 					progressBar.setVisibility(View.GONE);
 				}
-				isNeedAvailabilityChange = true;
 			}
 		};
 
@@ -138,6 +139,7 @@ public class ProductInfo extends PinSupportNetworkActivity {
 		productImage.setImageResource(android.R.color.transparent);
 		isNeedAvailabilityChange = false;
 		availabilitySwitch.setChecked(false);
+		priceItem.setClickable(false);
 	}
 
 	private void initFullDescrLable() {
@@ -177,6 +179,7 @@ public class ProductInfo extends PinSupportNetworkActivity {
 	private void setupPriceItem() {
 		price = (TextView) findViewById(R.id.price);
 		priceItem = (RelativeLayout) findViewById(R.id.price_item);
+		priceItem.setClickable(false);
 		final Context context = this;
 		priceItem.setOnClickListener(new OnClickListener() {
 
@@ -224,13 +227,13 @@ public class ProductInfo extends PinSupportNetworkActivity {
 		});
 	}
 
-	private void setupVariantsSpinner() {
+	/*private void setupVariantsSpinner() {
 		variantsSpinner = (Spinner) findViewById(R.id.variants_spinner);
 		variantsList = new ArrayList<String>();
 		variantsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, variantsList);
 		variantsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		variantsSpinner.setAdapter(variantsAdapter);
-	}
+	}*/
 
 	private void setNewPrice(final String newPrice) {
 		try {

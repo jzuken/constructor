@@ -67,10 +67,6 @@ public class OrderInfo extends PinSupportNetworkActivity {
 
 	private void updateData() {
 		progressBar.setVisibility(View.VISIBLE);
-
-		statusItem.setClickable(false);
-		trackingNumberItem.setClickable(false);
-		customerItem.setClickable(false);
 		final String orderId = getIntent().getStringExtra("orderId");
 		requester = new Requester() {
 
@@ -176,6 +172,9 @@ public class OrderInfo extends PinSupportNetworkActivity {
 		couponSaving.setText("");
 		shippingCost.setText("");
 		total.setText("");
+		statusItem.setClickable(false);
+		trackingNumberItem.setClickable(false);
+		customerItem.setClickable(false);
 	}
 
 	private void setupStatusItem() {
