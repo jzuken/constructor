@@ -12,11 +12,14 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -57,9 +60,11 @@ public class ProductInfo extends PinSupportNetworkActivity {
 		initFullDescrLable();
 		setupPriceItem();
 		setupAvailabilitySwitch();
-		//setupVariantsSpinner();
-		//variantsList.add("new");
-		//variantsAdapter.notifyDataSetChanged();
+		setupVariantsSpinner();
+		variantsLayout = (LinearLayout) findViewById(R.id.variants_layout);
+		variantsDivider = findViewById(R.id.variants_divider);
+		options = (TextView) findViewById(R.id.options);
+		variantsArray = new JSONArray();
 	}
 
 	@Override
@@ -106,15 +111,15 @@ public class ProductInfo extends PinSupportNetworkActivity {
 							productImage.setImageDrawable(getResources().getDrawable(R.drawable.no_image));
 							progressBar.setVisibility(View.GONE);
 						}
-						/*if (obj.optBoolean("variants", true)) {
-							JSONObject variantsObject = obj.getJSONObject("variants");
-							JSONArray variantsNames = variantsObject.names();
-							for (int i = 0; i < variantsNames.length(); i++) {
-								JSONObject variant = variantsObject.getJSONObject(variantsNames.getString(i));
+						if (!obj.get("variants").equals(null)) {
+							variantsArray = obj.getJSONArray("variants");
+							for (int i = 0; i < variantsArray.length(); i++) {
+								JSONObject variant = variantsArray.getJSONObject(i);
 								variantsList.add(variant.getString("productcode"));
 							}
 							variantsAdapter.notifyDataSetChanged();
-						}*/
+							showVariants();
+						}
 					} catch (JSONException e) {
 						e.printStackTrace();
 						progressBar.setVisibility(View.GONE);
@@ -133,6 +138,9 @@ public class ProductInfo extends PinSupportNetworkActivity {
 		description.loadUrl("about:blank");
 		fullDescription.loadUrl("about:blank");
 		hideFullDescr();
+		hideVariants();
+		variantsList.clear();
+		variantsAdapter.clear();
 		price.setText("");
 		sold.setText("");
 		inStock.setText("");
@@ -161,6 +169,16 @@ public class ProductInfo extends PinSupportNetworkActivity {
 		fullDescription.setVisibility(View.GONE);
 		fullDescriptionDivider.setVisibility(View.GONE);
 		isVisibleFoolDescr = false;
+	}
+
+	private void hideVariants() {
+		variantsLayout.setVisibility(View.GONE);
+		variantsDivider.setVisibility(View.GONE);
+	}
+
+	private void showVariants() {
+		variantsLayout.setVisibility(View.VISIBLE);
+		variantsDivider.setVisibility(View.VISIBLE);
 	}
 
 	private void showFullDescr() {
@@ -227,13 +245,30 @@ public class ProductInfo extends PinSupportNetworkActivity {
 		});
 	}
 
-	/*private void setupVariantsSpinner() {
+	private void setupVariantsSpinner() {
 		variantsSpinner = (Spinner) findViewById(R.id.variants_spinner);
+		variantsSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> arg0, View view, int position, long id) {	
+				try {
+					JSONObject variant = variantsArray.getJSONObject(position);
+					price.setText("$" + variant.getString("price"));
+					inStock.setText(variant.getString("avail"));				
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+			}
+		});
 		variantsList = new ArrayList<String>();
 		variantsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, variantsList);
 		variantsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		variantsSpinner.setAdapter(variantsAdapter);
-	}*/
+	}
 
 	private void setNewPrice(final String newPrice) {
 		try {
@@ -323,6 +358,10 @@ public class ProductInfo extends PinSupportNetworkActivity {
 	private static final String NO_IMAGE_URL = "/xcart/default_image.gif";
 	private ArrayAdapter<String> variantsAdapter;
 	private Spinner variantsSpinner;
+	private View variantsDivider;
+	private LinearLayout variantsLayout;
 	private List<String> variantsList;
+	private TextView options;
 	public static final int changePriceResultCode = 200;
+	private JSONArray variantsArray;
 }
