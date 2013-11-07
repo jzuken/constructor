@@ -19,5 +19,6 @@
     <color name="light_blue_status">#ff2276ac</color>
     <color name="dark_blue_status">#ff0c2a3e</color>
     <color name="total_field_color">#ff185880</color>
+    <color name="selected_tab_stroke_color">#ff7FFF00</color>
 
 </resources>

@@ -13,6 +13,9 @@
 				android:endColor="#ff2d3339"
 				android:startColor="#ff5a6571"
 				android:type="linear" />
+        	<stroke 
+        	    android:width="0.5dp" 
+    			android:color="@color/selected_tab_stroke_color" />
     	</shape>
     </item>
     <item>
