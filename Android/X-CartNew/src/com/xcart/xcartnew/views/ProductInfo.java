@@ -12,7 +12,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
@@ -104,6 +103,7 @@ public class ProductInfo extends PinSupportNetworkActivity {
 							availabilitySwitch.setChecked(true);
 						}
 						isNeedAvailabilityChange = true;
+						availabilitySwitch.setClickable(true);
 						String imageUrl = obj.getString("image_url");
 						if (!imageUrl.equals(NO_IMAGE_URL)) {
 							new DownloadImageTask(productImage, progressBar).execute(imageUrl);
@@ -116,6 +116,7 @@ public class ProductInfo extends PinSupportNetworkActivity {
 							for (int i = 0; i < variantsArray.length(); i++) {
 								JSONObject variant = variantsArray.getJSONObject(i);
 								variantsList.add(variant.getString("productcode"));
+								options.setText(getOptions(variant));
 							}
 							variantsAdapter.notifyDataSetChanged();
 							showVariants();
@@ -143,11 +144,13 @@ public class ProductInfo extends PinSupportNetworkActivity {
 		variantsAdapter.clear();
 		price.setText("");
 		sold.setText("");
+		options.setText("");
 		inStock.setText("");
 		productImage.setImageResource(android.R.color.transparent);
 		isNeedAvailabilityChange = false;
 		availabilitySwitch.setChecked(false);
 		priceItem.setClickable(false);
+		availabilitySwitch.setClickable(false);
 	}
 
 	private void initFullDescrLable() {
@@ -250,11 +253,12 @@ public class ProductInfo extends PinSupportNetworkActivity {
 		variantsSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			@Override
-			public void onItemSelected(AdapterView<?> arg0, View view, int position, long id) {	
+			public void onItemSelected(AdapterView<?> arg0, View view, int position, long id) {
 				try {
 					JSONObject variant = variantsArray.getJSONObject(position);
 					price.setText("$" + variant.getString("price"));
-					inStock.setText(variant.getString("avail"));				
+					inStock.setText(variant.getString("avail"));
+					options.setText(getOptions(variant));
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
@@ -268,6 +272,30 @@ public class ProductInfo extends PinSupportNetworkActivity {
 		variantsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, variantsList);
 		variantsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		variantsSpinner.setAdapter(variantsAdapter);
+	}
+
+	private String getOptions(JSONObject variant) {
+		JSONArray optionsArray;
+		try {
+			optionsArray = variant.getJSONArray("options_arr");
+			StringBuilder optionsBuilder = new StringBuilder();
+			int optionsLength = optionsArray.length();
+			for (int j = 0; j < optionsLength - 1; j++) {
+				JSONObject option = optionsArray.getJSONObject(j);
+				optionsBuilder.append(option.getString("class"));
+				optionsBuilder.append(": ");
+				optionsBuilder.append(option.getString("option_name"));
+				optionsBuilder.append("\n");
+			}
+			JSONObject option = optionsArray.getJSONObject(optionsLength - 1);
+			optionsBuilder.append(option.getString("class"));
+			optionsBuilder.append(": ");
+			optionsBuilder.append(option.getString("option_name"));
+			return optionsBuilder.toString();
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	private void setNewPrice(final String newPrice) {
