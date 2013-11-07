@@ -56,7 +56,6 @@ public class ProductInfo extends PinSupportNetworkActivity {
 		initDescriptionWebView(fullDescription);
 		isVisibleFoolDescr = false;
 		fullDescriptionDivider = findViewById(R.id.full_description_divider);
-		sold = (TextView) findViewById(R.id.sold);
 		inStock = (TextView) findViewById(R.id.in_stock);
 		initFullDescrLable();
 		setupPriceItem();
@@ -102,7 +101,6 @@ public class ProductInfo extends PinSupportNetworkActivity {
 						}
 						price.setText("$" + obj.getString("price"));
 						priceItem.setClickable(true);
-						sold.setText(obj.getString("sales_stats"));
 						inStock.setText(obj.getString("avail"));
 						if (obj.getString("forsale").equals("Y")) {
 							availabilitySwitch.setChecked(true);
@@ -157,7 +155,6 @@ public class ProductInfo extends PinSupportNetworkActivity {
 		variantsAdapter.clear();
 		price.setText("");
 		priceArrow.setVisibility(View.GONE);
-		sold.setText("");
 		options.setText("");
 		inStock.setText("");
 		productImage.setImageResource(android.R.color.transparent);
@@ -395,7 +392,6 @@ public class ProductInfo extends PinSupportNetworkActivity {
 	private View fullDescriptionDivider;
 	private TextView price;
 	private ImageView priceArrow;
-	private TextView sold;
 	private TextView inStock;
 	private TextView fullDescrLabel;
 	private RelativeLayout priceItem;

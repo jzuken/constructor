@@ -186,9 +186,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/clickable_selector"
+                android:paddingBottom="10dp"
                 android:paddingLeft="10dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp" >
+                android:paddingTop="10dp" >
 
                 <TextView
                     android:id="@+id/price_title"
@@ -225,8 +225,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:visibility="gone"
-                android:paddingBottom="10dp" >
+                android:paddingBottom="10dp"
+                android:visibility="gone" >
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -245,36 +245,6 @@
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp" />
             </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/frame_color" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp" >
-
-                <TextView
-                    android:id="@+id/sold_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:text="@string/sold_colon"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/sold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:textColor="@color/blue"
-                    android:textStyle="bold" />
-            </RelativeLayout>
 
             <View
                 android:layout_width="match_parent"
