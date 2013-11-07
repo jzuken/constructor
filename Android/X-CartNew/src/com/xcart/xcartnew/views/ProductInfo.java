@@ -11,7 +11,9 @@ import org.json.JSONObject;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
@@ -64,6 +66,9 @@ public class ProductInfo extends PinSupportNetworkActivity {
 		variantsDivider = findViewById(R.id.variants_divider);
 		options = (TextView) findViewById(R.id.options);
 		variantsArray = new JSONArray();
+		onlyAdminBackendLayout = (LinearLayout) findViewById(R.id.only_admin_backend_layout);
+		onlyAdminBackendLink = (TextView) findViewById(R.id.only_admin_backend_link);
+		onlyAdminBackendLink.setMovementMethod(LinkMovementMethod.getInstance());
 	}
 
 	@Override
@@ -120,6 +125,14 @@ public class ProductInfo extends PinSupportNetworkActivity {
 							}
 							variantsAdapter.notifyDataSetChanged();
 							showVariants();
+							priceItem.setClickable(false);
+							SharedPreferences authorizationData = getSharedPreferences("AuthorizationData",
+									Context.MODE_PRIVATE);
+							String shopName = authorizationData.getString("shop_name", "");
+							onlyAdminBackendLink.setText(String.format(ADMIN_BACKEND_URL, shopName, productId));
+							onlyAdminBackendLayout.setVisibility(View.VISIBLE);
+						} else {
+							priceArrow.setVisibility(View.VISIBLE);
 						}
 					} catch (JSONException e) {
 						e.printStackTrace();
@@ -143,6 +156,7 @@ public class ProductInfo extends PinSupportNetworkActivity {
 		variantsList.clear();
 		variantsAdapter.clear();
 		price.setText("");
+		priceArrow.setVisibility(View.GONE);
 		sold.setText("");
 		options.setText("");
 		inStock.setText("");
@@ -151,6 +165,8 @@ public class ProductInfo extends PinSupportNetworkActivity {
 		availabilitySwitch.setChecked(false);
 		priceItem.setClickable(false);
 		availabilitySwitch.setClickable(false);
+		onlyAdminBackendLink.setText("");
+		onlyAdminBackendLayout.setVisibility(View.GONE);
 	}
 
 	private void initFullDescrLable() {
@@ -199,6 +215,7 @@ public class ProductInfo extends PinSupportNetworkActivity {
 
 	private void setupPriceItem() {
 		price = (TextView) findViewById(R.id.price);
+		priceArrow = (ImageView) findViewById(R.id.price_arrow);
 		priceItem = (RelativeLayout) findViewById(R.id.price_item);
 		priceItem.setClickable(false);
 		final Context context = this;
@@ -377,6 +394,7 @@ public class ProductInfo extends PinSupportNetworkActivity {
 	boolean isVisibleFoolDescr;
 	private View fullDescriptionDivider;
 	private TextView price;
+	private ImageView priceArrow;
 	private TextView sold;
 	private TextView inStock;
 	private TextView fullDescrLabel;
@@ -392,4 +410,7 @@ public class ProductInfo extends PinSupportNetworkActivity {
 	private TextView options;
 	public static final int changePriceResultCode = 200;
 	private JSONArray variantsArray;
+	private LinearLayout onlyAdminBackendLayout;
+	private TextView onlyAdminBackendLink;
+	private static final String ADMIN_BACKEND_URL = "http://%s/admin/product_modify.php?productid=%s";
 }

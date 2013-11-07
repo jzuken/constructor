@@ -123,7 +123,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
-                    android:layout_marginTop="5dp"
                     android:gravity="left"
                     android:paddingLeft="10dp" />
             </LinearLayout>
@@ -187,16 +186,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/clickable_selector"
-                android:paddingBottom="10dp"
                 android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:paddingTop="10dp" >
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp" >
 
                 <TextView
                     android:id="@+id/price_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
+                    android:layout_marginRight="10dp"
                     android:text="@string/price_colon"
                     android:textStyle="bold" />
 
@@ -206,18 +205,46 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
                     android:contentDescription="@string/arrow_description"
                     android:src="@drawable/arrow" />
 
                 <TextView
                     android:id="@+id/price"
-                    android:layout_width="wrap_content"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
                     android:layout_toLeftOf="@id/price_arrow"
+                    android:gravity="right"
+                    android:paddingRight="10dp"
                     android:textColor="@color/blue"
                     android:textStyle="bold" />
             </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/only_admin_backend_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                android:paddingBottom="10dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text="@string/only_admin_backend" />
+
+                <TextView
+                    android:id="@+id/only_admin_backend_link"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:autoLink="web"
+                    android:gravity="left"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp" />
+            </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
