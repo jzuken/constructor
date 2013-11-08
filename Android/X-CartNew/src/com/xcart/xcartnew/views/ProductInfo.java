@@ -30,7 +30,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -119,9 +118,9 @@ public class ProductInfo extends PinSupportNetworkActivity {
 							for (int i = 0; i < variantsArray.length(); i++) {
 								JSONObject variant = variantsArray.getJSONObject(i);
 								variantsList.add(variant.getString("productcode"));
-								options.setText(getOptions(variant));
 							}
 							variantsAdapter.notifyDataSetChanged();
+							variantsSpinner.setSelection(currentVariant, true);
 							showVariants();
 							priceItem.setClickable(false);
 							SharedPreferences authorizationData = getSharedPreferences("AuthorizationData",
@@ -263,8 +262,8 @@ public class ProductInfo extends PinSupportNetworkActivity {
 	}
 
 	private void setupVariantsSpinner() {
-		variantsSpinner = (Spinner) findViewById(R.id.variants_spinner);
-		variantsSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+		variantsSpinner = (SameSelectableSpinner) findViewById(R.id.variants_spinner);
+		OnItemSelectedListener listener = new OnItemSelectedListener() {
 
 			@Override
 			public void onItemSelected(AdapterView<?> arg0, View view, int position, long id) {
@@ -273,6 +272,7 @@ public class ProductInfo extends PinSupportNetworkActivity {
 					price.setText("$" + variant.getString("price"));
 					inStock.setText(variant.getString("avail"));
 					options.setText(getOptions(variant));
+					currentVariant = position;
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
@@ -281,7 +281,9 @@ public class ProductInfo extends PinSupportNetworkActivity {
 			@Override
 			public void onNothingSelected(AdapterView<?> arg0) {
 			}
-		});
+		};
+		variantsSpinner.setOnItemSelectedListener(listener);
+		variantsSpinner.setOnItemSelectedEvenIfUnchangedListener(listener);
 		variantsList = new ArrayList<String>();
 		variantsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, variantsList);
 		variantsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -399,7 +401,7 @@ public class ProductInfo extends PinSupportNetworkActivity {
 	private boolean isNeedAvailabilityChange;
 	private static final String NO_IMAGE_URL = "/xcart/default_image.gif";
 	private ArrayAdapter<String> variantsAdapter;
-	private Spinner variantsSpinner;
+	private SameSelectableSpinner variantsSpinner;
 	private View variantsDivider;
 	private LinearLayout variantsLayout;
 	private List<String> variantsList;
@@ -409,4 +411,5 @@ public class ProductInfo extends PinSupportNetworkActivity {
 	private LinearLayout onlyAdminBackendLayout;
 	private TextView onlyAdminBackendLink;
 	private static final String ADMIN_BACKEND_URL = "http://%s/admin/product_modify.php?productid=%s";
+	private int currentVariant;
 }

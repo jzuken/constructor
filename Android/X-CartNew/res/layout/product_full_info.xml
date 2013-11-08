@@ -103,7 +103,7 @@
                     android:text="@string/variants_colon"
                     android:textStyle="bold" />
 
-                <Spinner
+                <com.xcart.xcartnew.views.SameSelectableSpinner
                     android:id="@+id/variants_spinner"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
