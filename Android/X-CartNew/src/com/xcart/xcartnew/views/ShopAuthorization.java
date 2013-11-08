@@ -1,5 +1,7 @@
 package com.xcart.xcartnew.views;
 
+import org.json.JSONObject;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -8,6 +10,7 @@ import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnKeyListener;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -18,12 +21,11 @@ import com.xcart.xcartnew.managers.gcm.GCMManager;
 import com.xcart.xcartnew.managers.network.HttpManager;
 import com.xcart.xcartnew.managers.network.Requester;
 
-import org.json.JSONObject;
-
 
 public class ShopAuthorization extends FragmentActivity {
 
     private static final LogManager LOG = new LogManager(ShopAuthorization.class.getName());
+    private Button loginButton;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +33,7 @@ public class ShopAuthorization extends FragmentActivity {
 		setContentView(R.layout.shop_authorization);
 		shopUrl = (EditText) findViewById(R.id.shop_url);
 		setupKeyEditText();
+		loginButton = (Button) findViewById(R.id.shop_login_button);
 		shopUrl.setText("54.213.38.9");
 		authorizationKey.setText("MobileAdminApiKey");
  
@@ -46,6 +49,7 @@ public class ShopAuthorization extends FragmentActivity {
 	}
 
 	public void okButtonClick(View v) {
+		loginButton.setEnabled(false);
 		checkAuthorizationData();
 	}
 
@@ -97,9 +101,12 @@ public class ShopAuthorization extends FragmentActivity {
 						}
 					} catch (Exception e) {
                         LOG.e(e.getMessage(), e);
+					} finally {
+						loginButton.setEnabled(true);
 					}
 				} else {
 					dialogManager.showNetworkErrorDialog();
+					loginButton.setEnabled(true);
 				}
 			}
 		}.execute();

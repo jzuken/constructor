@@ -1,5 +1,9 @@
 package com.xcart.xcartnew.views;
 
+import kankan.wheel.widget.OnWheelChangedListener;
+import kankan.wheel.widget.OnWheelScrollListener;
+import kankan.wheel.widget.WheelView;
+import kankan.wheel.widget.adapters.NumericWheelAdapter;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,6 +12,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.animation.AnticipateOvershootInterpolator;
+import android.widget.Button;
 
 import com.xcart.xcartnew.R;
 import com.xcart.xcartnew.managers.DialogManager;
@@ -17,14 +22,10 @@ import com.xcart.xcartnew.managers.network.SubscriptionStatus;
 import com.xcart.xcartnew.views.dialogs.ConnectionErrorDialog;
 import com.xcart.xcartnew.views.dialogs.ErrorDialog;
 
-import kankan.wheel.widget.OnWheelChangedListener;
-import kankan.wheel.widget.OnWheelScrollListener;
-import kankan.wheel.widget.WheelView;
-import kankan.wheel.widget.adapters.NumericWheelAdapter;
-
 public class Unlock extends FragmentActivity implements SubscriptionCallback {
 
     private static final String PROGRESS_DIALOG = "Unlock_progress";
+    private Button okButton;
     private DialogManager dialogManager;
 
 
@@ -33,6 +34,7 @@ public class Unlock extends FragmentActivity implements SubscriptionCallback {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.unlock);
         settingsData = PreferenceManager.getDefaultSharedPreferences(this);
+        okButton = (Button) findViewById(R.id.unlockOkButton);
         pin1 = (WheelView) findViewById(R.id.passw_1);
         initWheel(pin1);
         pin2 = (WheelView) findViewById(R.id.passw_2);
@@ -47,6 +49,7 @@ public class Unlock extends FragmentActivity implements SubscriptionCallback {
     }
 
     public void okButtonClick(View v) {
+    	okButton.setEnabled(false);
         tryUnlock();
     }
 
@@ -56,6 +59,7 @@ public class Unlock extends FragmentActivity implements SubscriptionCallback {
                 checkSubscription();
             } else {
                 dialogManager.showErrorDialog(R.string.incorrect_password);
+                okButton.setEnabled(true);
             }
         }
     }
@@ -160,5 +164,6 @@ public class Unlock extends FragmentActivity implements SubscriptionCallback {
                 new ConnectionErrorDialog().show(getSupportFragmentManager(), "subscription");
                 break;
         }
+        okButton.setEnabled(true);
     }
 }
