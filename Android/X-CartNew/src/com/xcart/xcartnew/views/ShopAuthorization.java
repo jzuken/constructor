@@ -38,14 +38,7 @@ public class ShopAuthorization extends FragmentActivity {
 		authorizationKey.setText("MobileAdminApiKey");
  
 		dialogManager = new DialogManager(getSupportFragmentManager());
-		/*gcmManager = new GCMManager(this);
-		if (gcmManager != null) {
-			String regid = gcmManager.getRegistrationId();
-
-			if (isEmpty(regid)) {
-				gcmManager.registerInBackground();
-			}
-		}*/
+		gcmManager = new GCMManager(this);
 	}
 
 	public void okButtonClick(View v) {
@@ -98,6 +91,7 @@ public class ShopAuthorization extends FragmentActivity {
 							Toast.makeText(ShopAuthorization.this, "Success", Toast.LENGTH_SHORT).show();
 							Intent intent = new Intent(ShopAuthorization.this, Dashboard.class);
 							startActivity(intent);
+							registerGCM();
 						}
 					} catch (Exception e) {
                         LOG.e(e.getMessage(), e);
@@ -114,6 +108,16 @@ public class ShopAuthorization extends FragmentActivity {
 
 	private boolean isEmpty(String string) {
 		return string.equals("");
+	}
+	
+	private void registerGCM() {
+		if (gcmManager != null) {
+			String regid = gcmManager.getRegistrationId();
+
+			if (isEmpty(regid)) {
+				gcmManager.registerInBackground();
+			}
+		}
 	}
 
 	private void setupKeyEditText() {

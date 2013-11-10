@@ -54,6 +54,7 @@ public class HttpManager {
     private static final String CHANGE_AVAILABLE = "change_available";
     private static final String LOGIN = "login";
     private static final String USER_ORDERS = "user_orders";
+    private static final String REGISTER_GCM = "register_gcm";
 
     // parameters
     private static final String REQUEST = "request";
@@ -72,12 +73,12 @@ public class HttpManager {
     private static final String AVAILABLE = "available";
     private static final String USER_ID = "user_id";
     private static final String KEY = "key";
+    private static final String REG_ID = "regid";
 
     // Dev server
     private static final String DEV_SERVER_URL = "http://vm-constructor.cloudapp.net";
     private static final String CHECK_SUBSCRIPTION = "/AppServerListener/api/shops/%s/checksubscribtion";
     private static final String SHOP_AUTHORIZATION = "/AppServerListener/api/shops/%s/ApiURL";
-    private static final String GCM_REGISTRATION = "/api/gcm/register.php";
 
     private HttpClient client;
 
@@ -224,9 +225,9 @@ public class HttpManager {
         return get(uri);
     }
     
-    public String sendRegIdToBackend(List<NameValuePair> nameValuePairs) {
-    	Uri uri = Uri.parse(serverUrl).buildUpon().path(GCM_REGISTRATION).build();
-        return post(uri, nameValuePairs);
+    public String sendRegIdToBackend(String regId) {
+    	Uri uri = Uri.parse(serverUrl).buildUpon().appendQueryParameter(REQUEST, REGISTER_GCM).appendQueryParameter(REG_ID, regId).appendQueryParameter(KEY, key).build();
+        return get(uri);
     }
 
     private String get(Uri uri) {

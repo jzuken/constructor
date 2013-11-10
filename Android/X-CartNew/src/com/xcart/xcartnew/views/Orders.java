@@ -63,11 +63,11 @@ public class Orders extends PinSupportNetworkActivity {
 		}
 		hasNext = false;
 		final String from = String.valueOf(currentAmount);
-        requester = new Requester() {
+		requester = new Requester() {
 			@Override
 			protected String doInBackground(Void... params) {
-				return new HttpManager(getBaseContext()).getLastOrders(from,
-						String.valueOf(packAmount), period, searchWord, null);
+				return new HttpManager(getBaseContext()).getLastOrders(from, String.valueOf(packAmount), period,
+						searchWord, null);
 			}
 
 			@Override
@@ -111,7 +111,7 @@ public class Orders extends PinSupportNetworkActivity {
 			}
 		};
 
-        requester.execute();
+		requester.execute();
 	}
 
 	private void addOrderToList(final String id, final String userName, final String paid, final String status,
@@ -149,9 +149,9 @@ public class Orders extends PinSupportNetworkActivity {
 		ordersListView.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				setNeedDownloadValue(false);
-				lastPositionClicked = position;
+				lastClickedOrder = ((OrdersListAdapter.OrderHolder) view.getTag()).getOrder();
 				Intent intent = new Intent(getBaseContext(), OrderInfo.class);
-				intent.putExtra("orderId", ((OrdersListAdapter.OrderHolder) view.getTag()).getOrder().getId());
+				intent.putExtra("orderId", lastClickedOrder.getId());
 				startActivityForResult(intent, 1);
 			}
 		});
@@ -218,8 +218,7 @@ public class Orders extends PinSupportNetworkActivity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode == ChangeStatus.changeStatusResultCode) {
-			OrdersListAdapter.OrderHolder orderHolder = ((OrdersListAdapter.OrderHolder) ordersListView.getChildAt(lastPositionClicked).getTag());
-            orderHolder.getOrder().setStatus(data.getStringExtra("status"));
+			lastClickedOrder.setStatus(data.getStringExtra("status"));
 			adapter.notifyDataSetChanged();
 		}
 		super.onActivityResult(requestCode, resultCode, data);
@@ -239,5 +238,5 @@ public class Orders extends PinSupportNetworkActivity {
 	private SharedPreferences settingsData;
 	private String searchWord = "";
 	private EditText ordersSearchLine;
-	private int lastPositionClicked;
+	private Order lastClickedOrder;
 }

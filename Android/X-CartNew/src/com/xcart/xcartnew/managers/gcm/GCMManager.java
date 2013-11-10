@@ -73,11 +73,8 @@ public class GCMManager {
 		}.execute(null, null, null);
 	}
 
-	private void sendRegistrationIdToBackend(String regid) {
-		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
-		nameValuePairs.add(new BasicNameValuePair("regId", regid));
-		
-		String authResult = new HttpManager().sendRegIdToBackend(nameValuePairs);
+	private void sendRegistrationIdToBackend(String regid) {		
+		String authResult = new HttpManager(context).sendRegIdToBackend(regid);
 		LOG.d("reg response" + authResult);
 	}
 
