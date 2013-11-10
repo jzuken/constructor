@@ -3,14 +3,15 @@ package com.xcart.xcartnew.views;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.xcart.xcartnew.R;
 import com.xcart.xcartnew.managers.LogManager;
-import com.xcart.xcartnew.managers.network.Requester;
 import com.xcart.xcartnew.managers.network.HttpManager;
+import com.xcart.xcartnew.managers.network.Requester;
 
 public class ChangeStatus extends PinSupportNetworkActivity {
 
@@ -31,6 +32,7 @@ public class ChangeStatus extends PinSupportNetworkActivity {
 		declined = (RadioButton) findViewById(R.id.declined_button);
 		failed = (RadioButton) findViewById(R.id.failed_button);
 		backordered = (RadioButton) findViewById(R.id.backordered_button);
+		saveButton = (Button) findViewById(R.id.save_button);
 		activeButtonBySymbol(StatusSymbols.valueOf(getIntent().getStringExtra("status")));
 	}
 
@@ -85,6 +87,7 @@ public class ChangeStatus extends PinSupportNetworkActivity {
 	}
 
 	public void saveClick(View v) {
+		saveButton.setEnabled(false);
 		dialogManager.showProgressDialog(R.string.updating_status, PROGRESS_DIALOG);
 		final String statusSymbol = getSymbolStatus();
 		try {
@@ -110,12 +113,14 @@ public class ChangeStatus extends PinSupportNetworkActivity {
 						finish();
 					} else {
 						showConnectionErrorMessage();
+						saveButton.setEnabled(true);
 					}
 				}
 			}.execute();
 		} catch (Exception e) {
 			dialogManager.dismissDialog(PROGRESS_DIALOG);
 			showConnectionErrorMessage();
+			saveButton.setEnabled(true);
 		}
 	}
 
@@ -127,6 +132,7 @@ public class ChangeStatus extends PinSupportNetworkActivity {
 	private RadioButton declined;
 	private RadioButton failed;
 	private RadioButton backordered;
+	private Button saveButton;
 	public static final int changeStatusResultCode = 100;
 	private static final String PROGRESS_DIALOG = "Change_status_progress";
 }
