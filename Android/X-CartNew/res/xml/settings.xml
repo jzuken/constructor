@@ -26,6 +26,9 @@
         android:inputType="number"
         android:key="products_amount"
         android:title="Products pack size" />
+    <CheckBoxPreference 
+        android:key="gcm_switch"
+        android:title="Push notifications"/>
     <Preference 
         android:key="logout"
         android:title="Log out"/>

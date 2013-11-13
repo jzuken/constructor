@@ -91,7 +91,7 @@ public class Products extends PinSupportNetworkActivity {
 							String productCode = obj.getString("productcode");
 							String sku = productCode.substring(3, productCode.length());
 							String inStock = obj.getString("avail");
-							String price = obj.getString("list_price");
+							String price = obj.getString("price");
 							addProductToList(id, name, sku, inStock, price);
 						}
 						currentAmount += packAmount;

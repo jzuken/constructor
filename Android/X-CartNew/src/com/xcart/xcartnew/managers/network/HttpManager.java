@@ -55,6 +55,7 @@ public class HttpManager {
     private static final String LOGIN = "login";
     private static final String USER_ORDERS = "user_orders";
     private static final String REGISTER_GCM = "register_gcm";
+    private static final String UNREGISTER_GCM = "unregister_gcm";
 
     // parameters
     private static final String REQUEST = "request";
@@ -227,6 +228,11 @@ public class HttpManager {
     
     public String sendRegIdToBackend(String regId) {
     	Uri uri = Uri.parse(serverUrl).buildUpon().appendQueryParameter(REQUEST, REGISTER_GCM).appendQueryParameter(REG_ID, regId).appendQueryParameter(KEY, key).build();
+        return get(uri);
+    }
+    
+    public String unregisterGCMInBackend(String regId) {
+    	Uri uri = Uri.parse(serverUrl).buildUpon().appendQueryParameter(REQUEST, UNREGISTER_GCM).appendQueryParameter(REG_ID, regId).appendQueryParameter(KEY, key).build();
         return get(uri);
     }
 

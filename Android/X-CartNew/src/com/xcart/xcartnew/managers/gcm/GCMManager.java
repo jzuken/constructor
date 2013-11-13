@@ -1,5 +1,7 @@
 package com.xcart.xcartnew.managers.gcm;
 
+import java.io.IOException;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -16,15 +18,8 @@ import com.xcart.xcartnew.managers.DialogManager;
 import com.xcart.xcartnew.managers.LogManager;
 import com.xcart.xcartnew.managers.network.HttpManager;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 public class GCMManager {
-	
+
 	public GCMManager(Context context) {
 		this.context = (Activity) context;
 		if (checkPlayServices()) {
@@ -33,7 +28,7 @@ public class GCMManager {
 			LOG.d("No valid Google Play Services APK found.");
 		}
 	}
-	
+
 	public String getRegistrationId() {
 		final SharedPreferences prefs = getGcmPreferences();
 		String registrationId = prefs.getString(PROPERTY_REG_ID, "");
@@ -73,9 +68,33 @@ public class GCMManager {
 		}.execute(null, null, null);
 	}
 
-	private void sendRegistrationIdToBackend(String regid) {		
-		String authResult = new HttpManager(context).sendRegIdToBackend(regid);
-		LOG.d("reg response" + authResult);
+	public void sendRegistrationIdToBackend(final String regid) {
+		new AsyncTask<Void, Void, String>() {
+			@Override
+			protected String doInBackground(Void... params) {
+				String authResult = new HttpManager(context).sendRegIdToBackend(regid);
+				LOG.d("reg response" + authResult);
+				return authResult;
+			}
+		}.execute(null, null, null);
+
+	}
+
+	public void unregisterGCMInBackend(final String regid) {
+		new AsyncTask<Void, Void, String>() {
+			@Override
+			protected String doInBackground(Void... params) {
+				String unregResult = new HttpManager(context).unregisterGCMInBackend(regid);
+				LOG.d("unreg response" + unregResult);
+				return unregResult;
+			}
+		}.execute(null, null, null);
+	}
+
+	public static boolean checkPlayServices(Context context) {
+		int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(context);
+		return resultCode == ConnectionResult.SUCCESS;
+
 	}
 
 	public boolean checkPlayServices() {
@@ -85,7 +104,8 @@ public class GCMManager {
 				GooglePlayServicesUtil.getErrorDialog(resultCode, context, PLAY_SERVICES_RESOLUTION_REQUEST).show();
 			} else {
 				LOG.d("This device is not supported.");
-                new DialogManager(((FragmentActivity) context).getSupportFragmentManager()).showErrorDialog(R.string.play_not_supported, null);
+				new DialogManager(((FragmentActivity) context).getSupportFragmentManager()).showErrorDialog(
+						R.string.play_not_supported, null);
 			}
 			return false;
 		}

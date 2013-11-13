@@ -1,9 +1,11 @@
 package com.xcart.xcartnew.views;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
@@ -11,6 +13,7 @@ import android.preference.PreferenceActivity;
 import android.widget.Toast;
 
 import com.xcart.xcartnew.R;
+import com.xcart.xcartnew.managers.gcm.GCMManager;
 
 public class Settings extends PreferenceActivity {
 	@SuppressWarnings("deprecation")
@@ -24,6 +27,7 @@ public class Settings extends PreferenceActivity {
 		setupUsersAmountEditText();
 		setupReviewsAmountEditText();
 		setupProductsAmountEditText();
+		setupGCMSwitch();
 		setupLogoutButton();
 	}
 
@@ -82,10 +86,41 @@ public class Settings extends PreferenceActivity {
 			}
 		});
 	}
+	
+	
+	@SuppressWarnings("deprecation")
+	private void setupGCMSwitch() {
+		final CheckBoxPreference gcmSwitch = (CheckBoxPreference)  findPreference("gcm_switch");
+		if (!GCMManager.checkPlayServices(Settings.this)) {
+			gcmSwitch.setEnabled(false);
+			gcmSwitch.setChecked(false);
+		} else {
+			gcmSwitch.setChecked(true);
+		}
+		gcmSwitch.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+			
+			@Override
+			public boolean onPreferenceChange(Preference preference, Object newValue) {
+				GCMManager gcmManager = new GCMManager(Settings.this);
+				final SharedPreferences prefs = getGcmPreferences();
+				String regid = prefs.getString("PROPERTY_REG_ID", "");
+				if (gcmSwitch.isChecked()) {
+					gcmManager.unregisterGCMInBackend(regid);
+				} else {
+					gcmManager.sendRegistrationIdToBackend(regid);
+				}
+				return true;
+			}
+		});
+	}
+	
+	private SharedPreferences getGcmPreferences() {
+		return getSharedPreferences("gcm preference", Context.MODE_PRIVATE);
+	}
 
 	@SuppressWarnings("deprecation")
 	private void setupLogoutButton() {
-		Preference button = (Preference) findPreference("logout");
+		Preference button = findPreference("logout");
 		button.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
 			@Override
 			public boolean onPreferenceClick(Preference arg0) {
