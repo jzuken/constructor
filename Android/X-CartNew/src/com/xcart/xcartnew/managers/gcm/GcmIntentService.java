@@ -1,6 +1,7 @@
 package com.xcart.xcartnew.managers.gcm;
 
 import android.app.IntentService;
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -35,8 +36,8 @@ public class GcmIntentService extends IntentService {
             } else if (GoogleCloudMessaging.MESSAGE_TYPE_DELETED.equals(messageType)) {
                 sendNotification("Deleted messages on server: " + extras.toString());
             } else if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE.equals(messageType)) {
-                sendNotification("Received: " + extras.getString("message"));
-                Log.i(TAG, "Received: " + extras.toString());
+                sendNotification(extras.getString("message"));
+                Log.i(TAG, extras.toString());
             }
         }
 
@@ -58,7 +59,11 @@ public class GcmIntentService extends IntentService {
         	.setContentText(msg)
         	.setAutoCancel(true);
 
+
         mBuilder.setContentIntent(contentIntent);
-        mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
+        Notification notification = mBuilder.build();
+        notification.defaults |= Notification.DEFAULT_SOUND;
+        notification.defaults |= Notification.DEFAULT_VIBRATE;
+        mNotificationManager.notify(NOTIFICATION_ID, notification);
     }
 }

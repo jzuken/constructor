@@ -86,11 +86,10 @@ public class Settings extends PreferenceActivity {
 			}
 		});
 	}
-	
-	
+
 	@SuppressWarnings("deprecation")
 	private void setupGCMSwitch() {
-		final CheckBoxPreference gcmSwitch = (CheckBoxPreference)  findPreference("gcm_switch");
+		gcmSwitch = (CheckBoxPreference) findPreference("gcm_switch");
 		if (!GCMManager.checkPlayServices(Settings.this)) {
 			gcmSwitch.setEnabled(false);
 			gcmSwitch.setChecked(false);
@@ -98,12 +97,11 @@ public class Settings extends PreferenceActivity {
 			gcmSwitch.setChecked(true);
 		}
 		gcmSwitch.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
-			
+
 			@Override
 			public boolean onPreferenceChange(Preference preference, Object newValue) {
 				GCMManager gcmManager = new GCMManager(Settings.this);
-				final SharedPreferences prefs = getGcmPreferences();
-				String regid = prefs.getString("PROPERTY_REG_ID", "");
+				String regid = gcmManager.getRegistrationId();
 				if (gcmSwitch.isChecked()) {
 					gcmManager.unregisterGCMInBackend(regid);
 				} else {
@@ -113,7 +111,7 @@ public class Settings extends PreferenceActivity {
 			}
 		});
 	}
-	
+
 	private SharedPreferences getGcmPreferences() {
 		return getSharedPreferences("gcm preference", Context.MODE_PRIVATE);
 	}
@@ -125,11 +123,25 @@ public class Settings extends PreferenceActivity {
 			@Override
 			public boolean onPreferenceClick(Preference arg0) {
 				SharedPreferences authorizationData = getSharedPreferences("AuthorizationData", MODE_PRIVATE);
+				final SharedPreferences prefs = getGcmPreferences();
+				if (GCMManager.checkPlayServices(Settings.this)) {
+					GCMManager gcmManager = new GCMManager(Settings.this);
+					if (gcmSwitch.isEnabled()) {
+						gcmManager.unregisterInBackground();
+					}
+					if (gcmSwitch.isChecked()) {
+						gcmManager.unregisterGCMInBackend(authorizationData.getString("shop_api", ""),
+								authorizationData.getString("shop_key", ""), prefs.getString("registration_id", ""));
+					}
+				}
 				Editor editor = authorizationData.edit();
 				editor.remove("shop_logged");
 				editor.remove("shop_api");
 				editor.remove("shop_name");
 				editor.remove("shop_key");
+				editor.commit();
+				editor = prefs.edit();
+				editor.remove("registration_id");
 				editor.commit();
 				Intent broadcastIntent = new Intent();
 				broadcastIntent.setAction("com.package.ACTION_LOGOUT");
@@ -148,7 +160,7 @@ public class Settings extends PreferenceActivity {
 		outState.putBoolean("fromPin", fromPin);
 		super.onSaveInstanceState(outState);
 	}
-	
+
 	@Override
 	protected void onRestoreInstanceState(Bundle savedInstanceState) {
 		isPaused = savedInstanceState.getBoolean("isPaused");
@@ -191,5 +203,6 @@ public class Settings extends PreferenceActivity {
 	private final int minPack = 10;
 	private boolean isPaused;
 	private boolean fromPin;
-	
+	private CheckBoxPreference gcmSwitch;
+
 }

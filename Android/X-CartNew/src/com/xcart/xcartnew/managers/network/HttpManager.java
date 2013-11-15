@@ -235,6 +235,11 @@ public class HttpManager {
     	Uri uri = Uri.parse(serverUrl).buildUpon().appendQueryParameter(REQUEST, UNREGISTER_GCM).appendQueryParameter(REG_ID, regId).appendQueryParameter(KEY, key).build();
         return get(uri);
     }
+    
+    public String unregisterGCMInBackend(String apiUrl, String apiKey, String regId) {
+    	Uri uri = Uri.parse(apiUrl).buildUpon().appendQueryParameter(REQUEST, UNREGISTER_GCM).appendQueryParameter(REG_ID, regId).appendQueryParameter(KEY, apiKey).build();
+        return get(uri);
+    }
 
     private String get(Uri uri) {
         String url = uri.toString();

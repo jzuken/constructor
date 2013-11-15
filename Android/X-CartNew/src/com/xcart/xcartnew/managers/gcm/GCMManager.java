@@ -67,6 +67,20 @@ public class GCMManager {
 			}
 		}.execute(null, null, null);
 	}
+	
+	public void unregisterInBackground() {
+		new AsyncTask<Void, Void, Void>() {
+			@Override
+			protected Void doInBackground(Void... params) {
+				try {
+					gcm.unregister();
+				} catch (IOException e) {
+					LOG.e(e.getMessage(), e);
+				}
+				return null;
+			}
+		}.execute(null, null, null);
+	}
 
 	public void sendRegistrationIdToBackend(final String regid) {
 		new AsyncTask<Void, Void, String>() {
@@ -85,6 +99,17 @@ public class GCMManager {
 			@Override
 			protected String doInBackground(Void... params) {
 				String unregResult = new HttpManager(context).unregisterGCMInBackend(regid);
+				LOG.d("unreg response" + unregResult);
+				return unregResult;
+			}
+		}.execute(null, null, null);
+	}
+	
+	public void unregisterGCMInBackend(final String apiUrl, final String apiKey, final String regid) {
+		new AsyncTask<Void, Void, String>() {
+			@Override
+			protected String doInBackground(Void... params) {
+				String unregResult = new HttpManager().unregisterGCMInBackend(apiUrl, apiKey, regid);
 				LOG.d("unreg response" + unregResult);
 				return unregResult;
 			}

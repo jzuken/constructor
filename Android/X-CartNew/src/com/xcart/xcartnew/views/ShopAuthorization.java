@@ -35,7 +35,9 @@ public class ShopAuthorization extends FragmentActivity {
 		setupKeyEditText();
 		loginButton = (Button) findViewById(R.id.shop_login_button);
 		shopUrl.setText("54.213.38.9");
+		//shopUrl.setText("ec2-54-213-169-59.us-west-2.compute.amazonaws.com");
 		authorizationKey.setText("MobileAdminApiKey");
+		//authorizationKey.setText("testKey");
  
 		dialogManager = new DialogManager(getSupportFragmentManager());
 		gcmManager = new GCMManager(this);
