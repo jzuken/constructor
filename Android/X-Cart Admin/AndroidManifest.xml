@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.xcart.xcartadmin"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="18" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    
+    <permission android:name="com.google.android.gcm.demo.app.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+    
+    <uses-permission android:name="com.google.android.gcm.demo.app.permission.C2D_MESSAGE" />
+    
+    <uses-permission
+        android:name="com.google.android.c2dm.permission.RECEIVE" />
+
+    <application
+        android:icon="@drawable/icon"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="com.xcart.xcartadmin.views.StartActivity"
+            android:noHistory="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.xcart.xcartadmin.views.Unlock"
+            android:launchMode="singleTop"
+            android:noHistory="true"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.xcart.xcartadmin.views.Authorization"
+            android:launchMode="singleTop"
+            android:noHistory="true"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.xcart.xcartadmin.views.ShopAuthorization"
+            android:launchMode="singleTop"
+            android:noHistory="true"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.xcart.xcartadmin.views.Settings"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.xcart.xcartadmin.views.Products"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name="com.xcart.xcartadmin.views.Dashboard"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop" />
+        <activity
+            android:name="com.xcart.xcartadmin.views.Users"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name="com.xcart.xcartadmin.views.Reviews"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.xcart.xcartadmin.views.Orders"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.xcart.xcartadmin.views.FullMessage"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.xcart.xcartadmin.views.ProductInfo"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.xcart.xcartadmin.views.ChangeStatus"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.xcart.xcartadmin.views.OrderInfo"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.xcart.xcartadmin.views.UserInfo"
+            android:screenOrientation="portrait" />
+        <receiver
+            android:name="com.xcart.xcartadmin.managers.gcm.GcmBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <!-- Receives the actual messages. -->
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <category android:name="com.google.android.gcm.demo.app" />
+            </intent-filter>
+        </receiver>
+        <service android:name="com.xcart.xcartadmin.managers.gcm.GcmIntentService" />
+    </application>
+
+</manifest>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="gray">#ff7f7f7f</color>
+    <color name="dark_grey">#ff464646</color>
+    <color name="blue">#ff1c6798</color>
+    <color name="blueLight">#ff66A2D4</color>
+    <color name="orange">#ffFFA500</color>
+    <color name="black">#ff000000</color>
+    <color name="white">#ffffffff</color>
+    <color name="ghostwhite">#ffF0F0F6</color>
+    <color name="green">#ff00AA00</color>
+    <color name="light_blue">#ffc8d3e3</color>
+    <color name="light_gray">#ffe5e5e5</color>
+    <color name="frame_color">#ffc3c3c3</color>
+    <color name="subtitle_color">#ffc8d3e3 </color>
+    <color name="green_status">#ff5ac53d</color>
+    <color name="red_status">#ffbc1e1e</color>
+    <color name="light_blue_status">#ff2276ac</color>
+    <color name="dark_blue_status">#ff0c2a3e</color>
+    <color name="total_field_color">#ff185880</color>
+    <color name="selected_tab_stroke_color">#ff7FFF00</color>
+
+</resources>
