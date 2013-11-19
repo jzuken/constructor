@@ -69,34 +69,30 @@
 
         <Button
             android:id="@+id/barcode_button"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="34dp"
             android:layout_gravity="center"
             android:background="@drawable/blue_rounded_button"
             android:onClick="barcodeButtonClick"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
             android:text="@string/scan_qr"
             android:textColor="@color/white"
             android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_weight="0.5"/>
 
         <Button
             android:id="@+id/shop_login_button"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="34dp"
             android:layout_gravity="center"
             android:background="@drawable/blue_rounded_button"
             android:onClick="okButtonClick"
             android:layout_marginLeft="20dp"
-            android:paddingLeft="30dp"
-            android:paddingRight="30dp"
             android:text="@string/log_in"
             android:textColor="@color/white"
             android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_weight="0.5"/>
     </LinearLayout>
-
-
 
 </LinearLayout>
