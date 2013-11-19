@@ -10,10 +10,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.xcart.admin.R;
+import com.xcart.admin.managers.LogManager;
 import com.xcart.admin.views.Dashboard;
 import com.xcart.admin.views.OrderInfo;
 import com.xcart.admin.views.Products;
@@ -21,15 +21,14 @@ import com.xcart.admin.views.Products;
 import java.util.List;
 
 public class GcmIntentService extends IntentService {
+
+    private static final LogManager LOG = new LogManager(GcmIntentService.class.getSimpleName());
+
     public static final int NOTIFICATION_ID = 1;
-    private NotificationManager mNotificationManager;
-    NotificationCompat.Builder builder;
 
     public GcmIntentService() {
         super("GcmIntentService");
     }
-
-    public static final String TAG = "GCM Demo";
 
     @Override
     protected void onHandleIntent(Intent intent) {
@@ -57,7 +56,7 @@ public class GcmIntentService extends IntentService {
                 if (message.equals(NEW_ORDER)) {
                     Intent screenIntent = new Intent(this, OrderInfo.class);
                     /*if (!isActivityFound) {
-						screenIntent.putExtra("pin_request", 10);
+                        screenIntent.putExtra("pin_request", 10);
 					}*/
                     screenIntent.putExtra("orderId", extras.getString("data"));
                     sendNotification(message, screenIntent);
@@ -70,7 +69,7 @@ public class GcmIntentService extends IntentService {
                     screenIntent.putExtra("sortOption", "lowStock");
                     sendNotification(message, screenIntent);
                 }
-                Log.i(TAG, extras.toString());
+                LOG.d(extras.toString());
             }
         }
 
@@ -78,19 +77,25 @@ public class GcmIntentService extends IntentService {
     }
 
     private void sendNotification(String msg, Intent screenIntent) {
-        mNotificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationManager notificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
 
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0, screenIntent, 0);
 
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this).setSmallIcon(R.drawable.gcm_icon)
-                .setContentTitle("Notification").setStyle(new NotificationCompat.BigTextStyle().bigText(msg))
-                .setContentText(msg).setAutoCancel(true);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+        builder.setSmallIcon(R.drawable.gcm_icon);
+        builder.setContentTitle("Notification");
+        builder.setStyle(
+                new NotificationCompat
+                        .BigTextStyle()
+                        .bigText(msg));
+        builder.setContentText(msg);
+        builder.setAutoCancel(true);
 
-        mBuilder.setContentIntent(contentIntent);
-        Notification notification = mBuilder.build();
+        builder.setContentIntent(contentIntent);
+        Notification notification = builder.build();
         notification.defaults |= Notification.DEFAULT_SOUND;
         notification.defaults |= Notification.DEFAULT_VIBRATE;
-        mNotificationManager.notify(NOTIFICATION_ID, notification);
+        notificationManager.notify(NOTIFICATION_ID, notification);
     }
 
     private final String NEW_ORDER = "New order received";
