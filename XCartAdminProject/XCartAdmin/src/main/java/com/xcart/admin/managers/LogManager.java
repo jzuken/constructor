@@ -11,7 +11,7 @@ public class LogManager {
     private final String TAG;
 
     public LogManager(String TAG) {
-        this.TAG = TAG;
+        this.TAG = "X-CartAdmin "+TAG;
     }
 
     public void d(String message) {

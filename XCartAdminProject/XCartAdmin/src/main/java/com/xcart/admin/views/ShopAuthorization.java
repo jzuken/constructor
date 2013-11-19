@@ -3,6 +3,7 @@ package com.xcart.admin.views;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
@@ -12,6 +13,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 import com.xcart.admin.R;
 import com.xcart.admin.managers.DialogManager;
 import com.xcart.admin.managers.LogManager;
@@ -49,6 +52,12 @@ public class ShopAuthorization extends FragmentActivity {
         checkAuthorizationData();
     }
 
+
+    public void barcodeButtonClick(View view) {
+        IntentIntegrator integrator = new IntentIntegrator(this);
+        integrator.initiateScan();
+    }
+
     private void checkAuthorizationData() {
         SharedPreferences authorizationData = getSharedPreferences("AuthorizationData", MODE_PRIVATE);
         Editor editor = authorizationData.edit();
@@ -77,15 +86,13 @@ public class ShopAuthorization extends FragmentActivity {
                         if (result.equals("wrongKey")) {
                             Toast.makeText(ShopAuthorization.this, "Incorrect key", Toast.LENGTH_SHORT).show();
                         } else if (result.equals("expired")) {
-                            Toast.makeText(ShopAuthorization.this, "Subscription has expired", Toast.LENGTH_SHORT)
-                                    .show();
+                            Toast.makeText(ShopAuthorization.this, "Subscription has expired", Toast.LENGTH_SHORT).show();
                         } else if (result.equals("notSubscribed")) {
                             Toast.makeText(ShopAuthorization.this, "Not subscribed", Toast.LENGTH_SHORT).show();
                         } else if (result.equals("noShop")) {
                             Toast.makeText(ShopAuthorization.this, "Incorrect shop url", Toast.LENGTH_SHORT).show();
                         } else {
-                            SharedPreferences authorizationData = getSharedPreferences("AuthorizationData",
-                                    MODE_PRIVATE);
+                            SharedPreferences authorizationData = getSharedPreferences("AuthorizationData", MODE_PRIVATE);
                             Editor editor = authorizationData.edit();
                             editor.putBoolean("shop_logged", true);
                             editor.putString("shop_api", result);
@@ -137,9 +144,22 @@ public class ShopAuthorization extends FragmentActivity {
         });
     }
 
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
+        if (scanResult != null) {
+            LOG.d("scanResult: " + scanResult);
+            Uri uri = Uri.parse(scanResult.getContents());
+            if (uri.getQueryParameters("key").size() > 0) {
+                shopUrl.setText(uri.getHost());
+                authorizationKey.setText(uri.getQueryParameters("key").get(0));
+            }
+        }
+    }
+
     private static final String PROGRESS_DIALOG = "Shop_authorization_progress";
     private DialogManager dialogManager;
     private EditText authorizationKey;
     private EditText shopUrl;
     private GcmManager gcmManager;
+
 }

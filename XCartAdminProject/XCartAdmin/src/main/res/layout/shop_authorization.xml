@@ -60,19 +60,39 @@
         android:background="@drawable/edit_text"
         android:inputType="textPassword" />
 
-    <Button
-        android:id="@+id/shop_login_button"
-        android:layout_width="wrap_content"
-        android:layout_height="34dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="25dp"
-        android:background="@drawable/blue_rounded_button"
-        android:onClick="okButtonClick"
-        android:paddingLeft="40dp"
-        android:paddingRight="40dp"
-        android:text="@string/log_in"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="25dp">
+
+        <Button
+            android:id="@+id/barcode_button"
+            android:layout_width="0dp"
+            android:layout_height="34dp"
+            android:layout_gravity="center"
+            android:background="@drawable/blue_rounded_button"
+            android:onClick="barcodeButtonClick"
+            android:text="@string/scan_qr"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_weight="0.5"/>
+
+        <Button
+            android:id="@+id/shop_login_button"
+            android:layout_width="0dp"
+            android:layout_height="34dp"
+            android:layout_gravity="center"
+            android:background="@drawable/blue_rounded_button"
+            android:onClick="okButtonClick"
+            android:layout_marginLeft="20dp"
+            android:text="@string/log_in"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_weight="0.5"/>
+    </LinearLayout>
 
 </LinearLayout>

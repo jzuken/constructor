@@ -136,6 +136,7 @@ public class GcmManager {
         return true;
     }
 
+    //TODO: create preferences manager
     private void storeRegistrationId(String regId) {
         final SharedPreferences prefs = getGcmPreferences();
         int appVersion = getAppVersion(context);
