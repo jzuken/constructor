@@ -10,3 +10,7 @@ obj
 /files
 
 /Android/X-CartNew/gen
+
+/XCartAdminProject/libraries/wheel/build
+
+/XCartAdminProject/libraries/android-switch-backport/build
