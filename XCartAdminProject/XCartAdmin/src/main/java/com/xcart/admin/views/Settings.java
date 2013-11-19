@@ -13,7 +13,7 @@ import android.preference.PreferenceActivity;
 import android.widget.Toast;
 
 import com.xcart.admin.R;
-import com.xcart.admin.managers.gcm.GCMManager;
+import com.xcart.admin.managers.gcm.GcmManager;
 
 public class Settings extends PreferenceActivity {
     @SuppressWarnings("deprecation")
@@ -90,7 +90,7 @@ public class Settings extends PreferenceActivity {
     @SuppressWarnings("deprecation")
     private void setupGCMSwitch() {
         gcmSwitch = (CheckBoxPreference) findPreference("gcm_switch");
-        if (!GCMManager.checkPlayServices(Settings.this)) {
+        if (!GcmManager.checkPlayServices(Settings.this)) {
             gcmSwitch.setEnabled(false);
             gcmSwitch.setChecked(false);
         } else {
@@ -100,7 +100,7 @@ public class Settings extends PreferenceActivity {
 
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
-                GCMManager gcmManager = new GCMManager(Settings.this);
+                GcmManager gcmManager = new GcmManager(Settings.this);
                 String regid = gcmManager.getRegistrationId();
                 if (gcmSwitch.isChecked()) {
                     gcmManager.unregisterGCMInBackend(regid);
@@ -124,8 +124,8 @@ public class Settings extends PreferenceActivity {
             public boolean onPreferenceClick(Preference arg0) {
                 SharedPreferences authorizationData = getSharedPreferences("AuthorizationData", MODE_PRIVATE);
                 final SharedPreferences prefs = getGcmPreferences();
-                if (GCMManager.checkPlayServices(Settings.this)) {
-                    GCMManager gcmManager = new GCMManager(Settings.this);
+                if (GcmManager.checkPlayServices(Settings.this)) {
+                    GcmManager gcmManager = new GcmManager(Settings.this);
                     if (gcmSwitch.isEnabled()) {
                         gcmManager.unregisterInBackground();
                     }

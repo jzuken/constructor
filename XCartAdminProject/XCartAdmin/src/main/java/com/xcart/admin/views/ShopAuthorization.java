@@ -15,7 +15,7 @@ import android.widget.Toast;
 import com.xcart.admin.R;
 import com.xcart.admin.managers.DialogManager;
 import com.xcart.admin.managers.LogManager;
-import com.xcart.admin.managers.gcm.GCMManager;
+import com.xcart.admin.managers.gcm.GcmManager;
 import com.xcart.admin.managers.network.HttpManager;
 import com.xcart.admin.managers.network.Requester;
 
@@ -35,7 +35,7 @@ public class ShopAuthorization extends FragmentActivity {
         setupKeyEditText();
         loginButton = (Button) findViewById(R.id.shop_login_button);
         dialogManager = new DialogManager(getSupportFragmentManager());
-        gcmManager = new GCMManager(this);
+        gcmManager = new GcmManager(this);
 
         //TODO: stub
         shopUrl.setText("54.213.38.9");
@@ -141,5 +141,5 @@ public class ShopAuthorization extends FragmentActivity {
     private DialogManager dialogManager;
     private EditText authorizationKey;
     private EditText shopUrl;
-    private GCMManager gcmManager;
+    private GcmManager gcmManager;
 }

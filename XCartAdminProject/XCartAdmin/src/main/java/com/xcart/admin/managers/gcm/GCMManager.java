@@ -18,9 +18,9 @@ import com.xcart.admin.managers.network.HttpManager;
 
 import java.io.IOException;
 
-public class GCMManager {
+public class GcmManager {
 
-    public GCMManager(Context context) {
+    public GcmManager(Context context) {
         this.context = (Activity) context;
         if (checkPlayServices()) {
             gcm = GoogleCloudMessaging.getInstance(context);
@@ -55,17 +55,17 @@ public class GCMManager {
                     if (gcm == null) {
                         gcm = GoogleCloudMessaging.getInstance(context);
                     }
-                    String regid = gcm.register(SENDER_ID);
-                    LOG.d("reg id = " + regid);
+                    String regId = gcm.register(SENDER_ID);
+                    LOG.d("reg id = " + regId);
 
-                    sendRegistrationIdToBackend(regid);
-                    storeRegistrationId(regid);
+                    sendRegistrationIdToBackend(regId);
+                    storeRegistrationId(regId);
                 } catch (IOException e) {
                     LOG.e(e.getMessage(), e);
                 }
                 return msg;
             }
-        }.execute(null, null, null);
+        }.execute();
     }
 
     public void unregisterInBackground() {
@@ -79,7 +79,7 @@ public class GCMManager {
                 }
                 return null;
             }
-        }.execute(null, null, null);
+        }.execute();
     }
 
     public void sendRegistrationIdToBackend(final String regid) {
@@ -90,7 +90,7 @@ public class GCMManager {
                 LOG.d("reg response" + authResult);
                 return authResult;
             }
-        }.execute(null, null, null);
+        }.execute();
 
     }
 
@@ -102,7 +102,7 @@ public class GCMManager {
                 LOG.d("unreg response" + unregResult);
                 return unregResult;
             }
-        }.execute(null, null, null);
+        }.execute();
     }
 
     public void unregisterGCMInBackend(final String apiUrl, final String apiKey, final String regid) {
@@ -110,16 +110,15 @@ public class GCMManager {
             @Override
             protected String doInBackground(Void... params) {
                 String unregResult = new HttpManager().unregisterGCMInBackend(apiUrl, apiKey, regid);
-                LOG.d("unreg response" + unregResult);
+                LOG.d("unreg response: " + unregResult);
                 return unregResult;
             }
-        }.execute(null, null, null);
+        }.execute();
     }
 
     public static boolean checkPlayServices(Context context) {
         int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(context);
         return resultCode == ConnectionResult.SUCCESS;
-
     }
 
     public boolean checkPlayServices() {
@@ -164,7 +163,7 @@ public class GCMManager {
         return string.equals("");
     }
 
-    private static final LogManager LOG = new LogManager(GCMManager.class.getSimpleName());
+    private static final LogManager LOG = new LogManager(GcmManager.class.getSimpleName());
     public static final String PROPERTY_REG_ID = "registration_id";
     private static final String PROPERTY_APP_VERSION = "appVersion";
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
