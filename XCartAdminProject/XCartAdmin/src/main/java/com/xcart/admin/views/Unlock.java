@@ -12,6 +12,8 @@ import android.widget.Button;
 
 import com.xcart.admin.R;
 import com.xcart.admin.managers.DialogManager;
+import com.xcart.admin.managers.MyActivityManager;
+import com.xcart.admin.managers.gcm.GcmIntentService;
 import com.xcart.admin.managers.network.DevServerApiManager;
 import com.xcart.admin.managers.network.SubscriptionCallback;
 import com.xcart.admin.managers.network.SubscriptionStatus;
@@ -28,7 +30,7 @@ public class Unlock extends FragmentActivity implements SubscriptionCallback {
     private static final String PROGRESS_DIALOG = "Unlock_progress";
     private Button okButton;
     private DialogManager dialogManager;
-
+    private static boolean isLockedState;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,11 +49,16 @@ public class Unlock extends FragmentActivity implements SubscriptionCallback {
         isScrolling = false;
 
         dialogManager = new DialogManager(getSupportFragmentManager());
+        isLockedState = true;
     }
 
     public void okButtonClick(View v) {
         okButton.setEnabled(false);
         tryUnlock();
+    }
+
+    public static boolean isLocked() {
+        return isLockedState;
     }
 
     private void tryUnlock() {
@@ -146,6 +153,8 @@ public class Unlock extends FragmentActivity implements SubscriptionCallback {
 
         switch (status) {
             case Active:
+                isLockedState = false;
+                MyActivityManager.setIsActivitiesFoundState(true);
                 Intent intent = getIntent();
                 if (intent.getIntExtra("afterPause", 0) == 0) {
                     Intent newIntent = new Intent(this, Dashboard.class);

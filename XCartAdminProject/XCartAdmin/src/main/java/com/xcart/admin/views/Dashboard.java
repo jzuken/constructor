@@ -33,10 +33,7 @@ public class Dashboard extends PinSupportNetworkActivity {
 
     @Override
     protected void withoutPinAction() {
-        if (isNeedDownload()) {
-            clearData();
-            updateData();
-        }
+        updateData();
         super.withoutPinAction();
     }
 

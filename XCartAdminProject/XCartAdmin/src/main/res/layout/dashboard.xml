@@ -75,7 +75,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="1370"
                     android:textColor="@color/white"
                     android:textSize="48sp"
                     android:textStyle="bold" />
@@ -103,7 +102,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="134"
                     android:textColor="@color/white"
                     android:textSize="48sp"
                     android:textStyle="bold" />
@@ -140,7 +138,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="75"
                     android:textColor="@color/white"
                     android:textSize="38sp"
                     android:textStyle="bold" />
@@ -169,7 +166,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="6"
                     android:textColor="@color/white"
                     android:textSize="38sp"
                     android:textStyle="bold" />
@@ -197,7 +193,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="8"
                     android:textColor="@color/white"
                     android:textSize="38sp"
                     android:textStyle="bold" />
@@ -239,7 +234,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:text="(5)"
                     android:textColor="@color/blue"
                     android:textSize="22sp"
                     android:textStyle="bold" />
@@ -266,7 +260,6 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_marginLeft="10dp"
-                        android:text="Smith, John"
                         android:textSize="16sp" />
 
                     <TextView
@@ -275,7 +268,6 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_marginRight="10dp"
-                        android:text="$123"
                         android:textColor="@color/blue"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -292,7 +284,6 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_marginLeft="10dp"
-                        android:text="Green, Lora"
                         android:textSize="16sp" />
 
                     <TextView
@@ -301,7 +292,6 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_marginRight="10dp"
-                        android:text="$364"
                         android:textColor="@color/blue"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -318,7 +308,6 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_marginLeft="10dp"
-                        android:text="Anderson, Jim"
                         android:textSize="16sp" />
 
                     <TextView
@@ -327,7 +316,6 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_marginRight="10dp"
-                        android:text="$324"
                         android:textColor="@color/blue"
                         android:textSize="16sp"
                         android:textStyle="bold" />
