@@ -116,4 +116,5 @@
     <string name="variants_colon">Variants:</string>
     <string name="options_colon">Options:</string>
     <string name="only_admin_backend">This product can be edited only via admin backend</string>
+    <string name="scan_qr">Scan QR</string>
 </resources>
