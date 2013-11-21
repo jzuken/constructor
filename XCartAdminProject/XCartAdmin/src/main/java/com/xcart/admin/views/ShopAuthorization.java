@@ -18,6 +18,7 @@ import com.google.zxing.integration.android.IntentResult;
 import com.xcart.admin.R;
 import com.xcart.admin.managers.DialogManager;
 import com.xcart.admin.managers.LogManager;
+import com.xcart.admin.managers.MyActivityManager;
 import com.xcart.admin.managers.gcm.GcmManager;
 import com.xcart.admin.managers.network.HttpManager;
 import com.xcart.admin.managers.network.Requester;
@@ -92,6 +93,7 @@ public class ShopAuthorization extends FragmentActivity {
                         } else if (result.equals("noShop")) {
                             Toast.makeText(ShopAuthorization.this, "Incorrect shop url", Toast.LENGTH_SHORT).show();
                         } else {
+                            MyActivityManager.setIsActivitiesFoundState(true);
                             SharedPreferences authorizationData = getSharedPreferences("AuthorizationData", MODE_PRIVATE);
                             Editor editor = authorizationData.edit();
                             editor.putBoolean("shop_logged", true);

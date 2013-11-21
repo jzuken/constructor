@@ -50,6 +50,7 @@ public class OrderInfo extends PinSupportNetworkActivity {
         discount = (TextView) findViewById(R.id.discount);
         couponSaving = (TextView) findViewById(R.id.coupon_saving);
         shippingCost = (TextView) findViewById(R.id.shipping_cost);
+        paymentMethodSurcharge = (TextView) findViewById(R.id.payment_method_surcharge);
         total = (TextView) findViewById(R.id.total);
         setupCustomerItem();
         setupStatusItem();
@@ -128,6 +129,7 @@ public class OrderInfo extends PinSupportNetworkActivity {
                         discount.setText("$" + obj.getString("discount"));
                         couponSaving.setText("$" + obj.getString("coupon_discount"));
                         shippingCost.setText("$" + obj.getString("shipping_cost"));
+                        paymentMethodSurcharge.setText("$" + obj.getString("payment_surcharge"));
                         total.setText("$" + obj.getString("total"));
                         JSONArray products = obj.getJSONArray("details");
                         for (int i = 0; i < products.length(); i++) {
@@ -171,6 +173,7 @@ public class OrderInfo extends PinSupportNetworkActivity {
         discount.setText("");
         couponSaving.setText("");
         shippingCost.setText("");
+        paymentMethodSurcharge.setText("");
         total.setText("");
         statusItem.setClickable(false);
         trackingNumberItem.setClickable(false);
@@ -327,6 +330,7 @@ public class OrderInfo extends PinSupportNetworkActivity {
     private TextView discount;
     private TextView couponSaving;
     private TextView shippingCost;
+    private TextView paymentMethodSurcharge;
     private TextView total;
     private RelativeLayout statusItem;
     private RelativeLayout trackingNumberItem;

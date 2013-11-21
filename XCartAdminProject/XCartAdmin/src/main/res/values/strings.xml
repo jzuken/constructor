@@ -118,4 +118,5 @@
     <string name="only_admin_backend">This product can be edited only via admin backend</string>
     <string name="scan_qr">Scan QR</string>
     <string name="shop_url_hint">www.example.com</string>
+    <string name="payment_method_surcharge">Payment method surcharge</string>
 </resources>
