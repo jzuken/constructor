@@ -57,6 +57,7 @@
         <activity
             android:name=".views.ShopAuthorization"
             android:launchMode="singleTop"
+            android:noHistory="true"
             android:screenOrientation="portrait" />
         <activity
             android:name=".views.Settings"
