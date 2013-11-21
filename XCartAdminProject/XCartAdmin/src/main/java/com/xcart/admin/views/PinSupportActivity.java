@@ -8,13 +8,15 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 
+import com.xcart.admin.managers.MyActivityManager;
+import com.xcart.admin.managers.gcm.GcmIntentService;
+
 public class PinSupportActivity extends FragmentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         needDownload = true;
-        isNeedPin = getIntent().getIntExtra("pin_request", 1);
 
         // for logout
         IntentFilter intentFilter = new IntentFilter();
@@ -32,7 +34,6 @@ public class PinSupportActivity extends FragmentActivity {
     private boolean isPaused;
     private boolean fromOtherPage;
     private boolean fromPin;
-    private int isNeedPin;
 
     @Override
     protected void onPause() {
@@ -45,12 +46,18 @@ public class PinSupportActivity extends FragmentActivity {
      */
     protected void withoutPinAction() {
         needDownload = true;
+        if (MyActivityManager.isAfterNotification()) {
+            MyActivityManager.setIsAfterNotificationValue(false);
+        } else if (MyActivityManager.isFromNotification()) {
+            MyActivityManager.setIsFromNotificationValue(false);
+            MyActivityManager.setIsAfterNotificationValue(true);
+        }
     }
 
     @Override
     protected void onResume() {
-        if ((isPaused && !fromOtherPage && !fromPin) || isNeedPin == 10) {
-            isNeedPin = 1;
+        if ((isPaused && !fromOtherPage && !fromPin && !MyActivityManager.isAfterNotification())
+                || !MyActivityManager.isActivitiesFound() || Unlock.isLocked()) {
             Intent intent = new Intent(this, Unlock.class);
             intent.putExtra("afterPause", 1);
             startActivityForResult(intent, pinPageCode);
