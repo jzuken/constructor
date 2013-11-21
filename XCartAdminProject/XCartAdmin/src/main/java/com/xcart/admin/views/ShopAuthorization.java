@@ -30,6 +30,7 @@ public class ShopAuthorization extends FragmentActivity {
 
     private static final LogManager LOG = new LogManager(ShopAuthorization.class.getName());
     private Button loginButton;
+    private boolean autoLogin = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +39,6 @@ public class ShopAuthorization extends FragmentActivity {
         shopUrl = (EditText) findViewById(R.id.shop_url);
         setupKeyEditText();
         loginButton = (Button) findViewById(R.id.shop_login_button);
-        dialogManager = new DialogManager(getSupportFragmentManager());
         gcmManager = new GcmManager(this);
 
         //TODO: stub
@@ -46,6 +46,18 @@ public class ShopAuthorization extends FragmentActivity {
         //authorizationKey.setText("MobileAdminApiKey");
         //shopUrl.setText("ec2-54-213-169-59.us-west-2.compute.amazonaws.com");
         //authorizationKey.setText("testKey");
+        LOG.d("onCreate");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        LOG.d("onStart");
+        dialogManager = new DialogManager(getSupportFragmentManager());
+        if(autoLogin){
+            okButtonClick(null);
+            autoLogin = false;
+        }
     }
 
     public void okButtonClick(View v) {
@@ -154,6 +166,8 @@ public class ShopAuthorization extends FragmentActivity {
             if (uri.getQueryParameters("key").size() > 0) {
                 shopUrl.setText(uri.getHost());
                 authorizationKey.setText(uri.getQueryParameters("key").get(0));
+                LOG.d("onActivityResult");
+                autoLogin = true;
             }
         }
     }
