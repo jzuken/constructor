@@ -41,8 +41,8 @@ public class ShopAuthorization extends FragmentActivity {
         gcmManager = new GcmManager(this);
 
         //TODO: stub
-        shopUrl.setText("54.213.38.9");
-        authorizationKey.setText("MobileAdminApiKey");
+        //shopUrl.setText("54.213.38.9");
+        //authorizationKey.setText("MobileAdminApiKey");
         //shopUrl.setText("ec2-54-213-169-59.us-west-2.compute.amazonaws.com");
         //authorizationKey.setText("testKey");
     }
