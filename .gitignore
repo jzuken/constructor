@@ -16,3 +16,5 @@ obj
 /XCartAdminProject/libraries/android-switch-backport/build
 
 /XCartAdminProject/XCartAdmin/*.iml
+
+*.iml
