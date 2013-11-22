@@ -116,6 +116,7 @@ public class ShopAuthorization extends FragmentActivity {
                             Intent intent = new Intent(ShopAuthorization.this, Dashboard.class);
                             startActivity(intent);
                             registerGCM();
+                            finish();
                         }
                     } catch (Exception e) {
                         LOG.e(e.getMessage(), e);
