@@ -13,7 +13,6 @@ import android.widget.Button;
 import com.xcart.admin.R;
 import com.xcart.admin.managers.DialogManager;
 import com.xcart.admin.managers.MyActivityManager;
-import com.xcart.admin.managers.gcm.GcmIntentService;
 import com.xcart.admin.managers.network.DevServerApiManager;
 import com.xcart.admin.managers.network.SubscriptionCallback;
 import com.xcart.admin.managers.network.SubscriptionStatus;

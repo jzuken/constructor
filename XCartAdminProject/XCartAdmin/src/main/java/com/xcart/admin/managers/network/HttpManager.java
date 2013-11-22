@@ -3,6 +3,7 @@ package com.xcart.admin.managers.network;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Build;
 
 import com.xcart.admin.managers.LogManager;
 
@@ -74,6 +75,12 @@ public class HttpManager {
     private static final String USER_ID = "user_id";
     private static final String KEY = "key";
     private static final String REG_ID = "regid";
+    private static final String MANUFACTURER = "manufacturer";
+    private static final String MODEL = "model";
+    private static final String SERIAL = "serial";
+    private static final String ANDROID_VERSION = "android_version";
+    private static final String IMEI = "imei";
+    private static final String IMSI = "imsi";
 
     // Dev server
     private static final String DEV_SERVER_URL = "http://vm-constructor.cloudapp.net";
@@ -226,12 +233,28 @@ public class HttpManager {
     }
 
     public String sendRegIdToBackend(String regId) {
-        Uri uri = Uri.parse(serverUrl).buildUpon().appendQueryParameter(REQUEST, REGISTER_GCM).appendQueryParameter(REG_ID, regId).appendQueryParameter(KEY, key).build();
+        android.telephony.TelephonyManager telephonyManager = (android.telephony.TelephonyManager)
+                context.getSystemService(Context.TELEPHONY_SERVICE);
+        String imeiString = telephonyManager.getDeviceId();
+        String imsiString = telephonyManager.getSubscriberId();
+        Uri uri = Uri.parse(serverUrl).buildUpon()
+                .appendQueryParameter(REQUEST, REGISTER_GCM)
+                .appendQueryParameter(REG_ID, regId)
+                .appendQueryParameter(KEY, key)
+                .appendQueryParameter(MANUFACTURER, Build.MANUFACTURER)
+                .appendQueryParameter(MODEL, Build.MODEL)
+                .appendQueryParameter(SERIAL, Build.SERIAL)
+                .appendQueryParameter(ANDROID_VERSION, Build.VERSION.RELEASE)
+                .appendQueryParameter(IMEI, imeiString)
+                .appendQueryParameter(IMSI, imsiString).build();
+
         return get(uri);
     }
 
     public String unregisterGCMInBackend(String regId) {
-        Uri uri = Uri.parse(serverUrl).buildUpon().appendQueryParameter(REQUEST, UNREGISTER_GCM).appendQueryParameter(REG_ID, regId).appendQueryParameter(KEY, key).build();
+        Uri uri = Uri.parse(serverUrl).buildUpon().appendQueryParameter(REQUEST, UNREGISTER_GCM)
+                .appendQueryParameter(REG_ID, regId)
+                .appendQueryParameter(KEY, key).build();
         return get(uri);
     }
 
