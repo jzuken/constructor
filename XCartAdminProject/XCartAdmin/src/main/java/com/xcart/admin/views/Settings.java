@@ -13,6 +13,7 @@ import android.preference.PreferenceActivity;
 import android.widget.Toast;
 
 import com.xcart.admin.R;
+import com.xcart.admin.managers.MyActivityManager;
 import com.xcart.admin.managers.gcm.GcmManager;
 
 public class Settings extends PreferenceActivity {
@@ -177,10 +178,15 @@ public class Settings extends PreferenceActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        if (isPaused && !fromPin) {
+        if (isPaused && !fromPin && !MyActivityManager.isAfterNotification()
+        || !MyActivityManager.isActivitiesFound() || Unlock.isLocked()) {
             Intent intent = new Intent(this, Unlock.class);
             intent.putExtra("afterPause", 1);
             startActivityForResult(intent, 1);
+        } else {
+            if (MyActivityManager.isAfterNotification()) {
+                MyActivityManager.setIsAfterNotificationValue(false);
+            }
         }
         isPaused = false;
         fromPin = false;

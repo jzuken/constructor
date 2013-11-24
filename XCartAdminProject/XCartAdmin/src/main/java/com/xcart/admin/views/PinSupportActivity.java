@@ -48,9 +48,6 @@ public class PinSupportActivity extends FragmentActivity {
         needDownload = true;
         if (MyActivityManager.isAfterNotification()) {
             MyActivityManager.setIsAfterNotificationValue(false);
-        } else if (MyActivityManager.isFromNotification()) {
-            MyActivityManager.setIsFromNotificationValue(false);
-            MyActivityManager.setIsAfterNotificationValue(true);
         }
     }
 
@@ -108,6 +105,15 @@ public class PinSupportActivity extends FragmentActivity {
         fromPin = savedInstanceState.getBoolean("fromPin");
         needDownload = true;
         super.onRestoreInstanceState(savedInstanceState);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (MyActivityManager.isFromNotification()) {
+            MyActivityManager.setIsFromNotificationValue(false);
+            MyActivityManager.setIsAfterNotificationValue(true);
+        }
+        super.onBackPressed();
     }
 
     @Override

@@ -52,7 +52,6 @@ public class Unlock extends FragmentActivity implements SubscriptionCallback {
     }
 
     public void okButtonClick(View v) {
-        okButton.setEnabled(false);
         tryUnlock();
     }
 
@@ -62,6 +61,7 @@ public class Unlock extends FragmentActivity implements SubscriptionCallback {
 
     private void tryUnlock() {
         if (!isScrolling) {
+            okButton.setEnabled(false);
             if (getPassword().equals(settingsData.getString("password", ""))) {
                 checkSubscription();
             } else {
