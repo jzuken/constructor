@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -74,6 +75,8 @@ namespace ApplicationServerListener.Controllers
             {
                 string oldUrl = getParams["old_url"].ToString();
                 string newUrl = getParams["new_url"].ToString();
+                Debug.WriteLine(oldUrl);
+                Debug.WriteLine(newUrl);
                 this.updateShopSubscription(oldUrl);
                 this.updateShopSubscription(newUrl);
                 return new HttpResponseMessage() { Content = new StringContent(oldUrl + " " + newUrl) };
