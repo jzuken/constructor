@@ -16,14 +16,6 @@ public class MyActivityManager {
     private static boolean isFromNotification;
     private static boolean isAfterNotification;
 
-    public static boolean isFromNotification() {
-        return  isFromNotification;
-    }
-
-    public static void setIsFromNotificationValue(boolean value) {
-        isFromNotification = value;
-    }
-
     public static boolean isAfterNotification() {
         return  isAfterNotification;
     }

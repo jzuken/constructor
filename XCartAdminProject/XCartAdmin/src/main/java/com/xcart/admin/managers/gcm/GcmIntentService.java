@@ -1,7 +1,5 @@
 package com.xcart.admin.managers.gcm;
 
-import android.app.ActivityManager;
-import android.app.ActivityManager.RunningTaskInfo;
 import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -19,8 +17,6 @@ import com.xcart.admin.views.Dashboard;
 import com.xcart.admin.views.OrderInfo;
 import com.xcart.admin.views.Products;
 
-import java.util.List;
-
 public class GcmIntentService extends IntentService {
 
     private static final LogManager LOG = new LogManager(GcmIntentService.class.getSimpleName());
@@ -36,10 +32,8 @@ public class GcmIntentService extends IntentService {
         Bundle extras = intent.getExtras();
         GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(this);
         String messageType = gcm.getMessageType(intent);
-        MyActivityManager.updateActivitiesState(getApplicationContext());
 
         if (!extras.isEmpty()) {
-            MyActivityManager.setIsFromNotificationValue(true);
             if (GoogleCloudMessaging.MESSAGE_TYPE_SEND_ERROR.equals(messageType)) {
                 sendNotification("Send error: " + extras.toString(), new Intent(this, Dashboard.class));
             } else if (GoogleCloudMessaging.MESSAGE_TYPE_DELETED.equals(messageType)) {
@@ -49,11 +43,13 @@ public class GcmIntentService extends IntentService {
                 if (message.equals(NEW_ORDER)) {
                     Intent screenIntent = new Intent(this, OrderInfo.class);
                     screenIntent.putExtra("orderId", extras.getString("data"));
+                    screenIntent.putExtra("isFromNotification", true);
                     sendNotification(message, screenIntent);
                 }
                 if (message.equals(LOW_STOCK)) {
                     Intent screenIntent = new Intent(this, Products.class);
                     screenIntent.putExtra("sortOption", "lowStock");
+                    screenIntent.putExtra("isFromNotification", true);
                     sendNotification(message, screenIntent);
                 }
                 LOG.d(extras.toString());

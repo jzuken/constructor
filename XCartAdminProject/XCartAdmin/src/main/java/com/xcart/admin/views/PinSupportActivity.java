@@ -29,16 +29,20 @@ public class PinSupportActivity extends FragmentActivity {
             }
         };
         registerReceiver(receiver, intentFilter);
+
+        fromNotification = getIntent().getBooleanExtra("isFromNotification", false);
     }
 
     private boolean isPaused;
     private boolean fromOtherPage;
     private boolean fromPin;
+    private boolean fromNotification;
 
     @Override
     protected void onPause() {
         super.onPause();
         isPaused = true;
+        MyActivityManager.updateActivitiesState(this);
     }
 
     /**
@@ -46,6 +50,7 @@ public class PinSupportActivity extends FragmentActivity {
      */
     protected void withoutPinAction() {
         needDownload = true;
+        MyActivityManager.setIsActivitiesFoundState(true);
         if (MyActivityManager.isAfterNotification()) {
             MyActivityManager.setIsAfterNotificationValue(false);
         }
@@ -109,8 +114,7 @@ public class PinSupportActivity extends FragmentActivity {
 
     @Override
     public void onBackPressed() {
-        if (MyActivityManager.isFromNotification()) {
-            MyActivityManager.setIsFromNotificationValue(false);
+        if (fromNotification) {
             MyActivityManager.setIsAfterNotificationValue(true);
         }
         super.onBackPressed();

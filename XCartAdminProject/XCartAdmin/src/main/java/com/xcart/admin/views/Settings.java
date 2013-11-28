@@ -173,23 +173,25 @@ public class Settings extends PreferenceActivity {
     protected void onPause() {
         super.onPause();
         isPaused = true;
+        MyActivityManager.updateActivitiesState(this);
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onResume() {
         if (isPaused && !fromPin && !MyActivityManager.isAfterNotification()
         || !MyActivityManager.isActivitiesFound() || Unlock.isLocked()) {
             Intent intent = new Intent(this, Unlock.class);
             intent.putExtra("afterPause", 1);
             startActivityForResult(intent, 1);
         } else {
+            MyActivityManager.setIsActivitiesFoundState(true);
             if (MyActivityManager.isAfterNotification()) {
                 MyActivityManager.setIsAfterNotificationValue(false);
             }
         }
         isPaused = false;
         fromPin = false;
+        super.onResume();
     }
 
     @Override
