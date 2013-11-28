@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -81,6 +82,7 @@ namespace ApplicationServerListener.Controllers
             if (getParams["key"] != null)
             {
                 string key = getParams["key"].ToString();
+                Debug.WriteLine(key);
                 string hash = this.CreateMD5Hash(key);
                 RepoLibraryReference.Project project = wcfClient.GetProject(@name);
                 if (project == null)
