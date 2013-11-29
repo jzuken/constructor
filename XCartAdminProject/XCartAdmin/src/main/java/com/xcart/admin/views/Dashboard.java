@@ -59,7 +59,8 @@ public class Dashboard extends PinSupportNetworkActivity {
                         productsSold.setText(obj.getString("today_sold"));
                         lastOrdersCount.setText("(" + obj.getString("today_orders_count") + ")");
                         JSONArray orders = obj.getJSONArray("today_orders");
-                        for (int i = 0; i < orders.length(); i++) {
+                        int ordersLength = orders.length();
+                        for (int i = 0; i < ordersLength; i++) {
                             JSONObject order = orders.getJSONObject(i);
                             String title = order.getString("title");
                             if (!title.equals("")) {
@@ -68,6 +69,11 @@ public class Dashboard extends PinSupportNetworkActivity {
                             String name = title + order.getString("firstname") + " " + order.getString("lastname");
                             customers[i].setText(name);
                             customersPaid[i].setText("$" + order.getString("total"));
+                        }
+
+                        for (int j = ordersLength; j < 3; j++) {
+                            customers[j].setText("");
+                            customersPaid[j].setText("");
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
