@@ -112,6 +112,10 @@ public class PinSupportActivity extends FragmentActivity {
         super.onRestoreInstanceState(savedInstanceState);
     }
 
+    public void onBackButtonClicked(View v) {
+        onBackPressed();
+    }
+
     @Override
     public void onBackPressed() {
         if (fromNotification) {

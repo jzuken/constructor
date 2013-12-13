@@ -23,6 +23,7 @@
     <string name="product">Product:</string>
     <string name="message_colon">Message:</string>
     <string name="settings_description">image for settings button</string>
+    <string name="back_description">image for back button</string>
     <string name="ok_description">image for OK button</string>
     <string name="yes_description">image for yes button</string>
     <string name="no_description">image for no button</string>
