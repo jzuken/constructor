@@ -46,6 +46,8 @@ public class ShopAuthorization extends FragmentActivity {
         //authorizationKey.setText("MobileAdminApiKey");
         //shopUrl.setText("ec2-54-213-169-59.us-west-2.compute.amazonaws.com");
         //authorizationKey.setText("testKey");
+        shopUrl.setText("mobileadmin.x-cart.com");
+        authorizationKey.setText("FQMTED8L");
         LOG.d("onCreate");
     }
 
@@ -161,7 +163,7 @@ public class ShopAuthorization extends FragmentActivity {
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
-        if (scanResult != null) {
+        if (scanResult != null && scanResult.getContents() != null) {
             LOG.d("scanResult: " + scanResult);
             Uri uri = Uri.parse(scanResult.getContents());
             if (uri.getQueryParameters("key").size() > 0) {
