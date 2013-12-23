@@ -3,6 +3,7 @@ package com.xcart.admin.views;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
@@ -144,6 +145,7 @@ public class UserInfo extends PinSupportNetworkActivity {
                         String phoneValue = shippingObj.getString("phone");
                         if (!isEmpty(phoneValue)) {
                             callButton.setClickable(true);
+                            callButton.setBackgroundResource(R.drawable.right_rounded_green_button);
                             phone.setText(phoneValue);
                         }
                         fax.setText(shippingObj.getString("fax"));

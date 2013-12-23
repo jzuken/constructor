@@ -20,5 +20,7 @@
     <color name="dark_blue_status">#ff0c2a3e</color>
     <color name="total_field_color">#ff185880</color>
     <color name="selected_tab_stroke_color">#ff7FFF00</color>
+    <color name="inaccessible_color_start">#ffA0A0A4</color>
+    <color name="inaccessible_color_end">#ff9797A1</color>
 
 </resources>
