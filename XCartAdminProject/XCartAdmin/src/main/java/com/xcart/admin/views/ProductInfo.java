@@ -2,6 +2,7 @@ package com.xcart.admin.views;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -256,6 +257,13 @@ public class ProductInfo extends PinSupportNetworkActivity {
                     }
                 });
 
+                dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+                    @Override
+                    public void onShow(DialogInterface dialogInterface) {
+                        showKeyboard();
+                        priceEditor.selectAll();
+                    }
+                });
                 dialog.show();
             }
         });
@@ -344,6 +352,11 @@ public class ProductInfo extends PinSupportNetworkActivity {
     private void hideKeyboard(EditText edit) {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(edit.getWindowToken(), 0);
+    }
+
+    private void showKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
     }
 
     private void setupAvailabilitySwitch() {

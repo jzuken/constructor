@@ -1,6 +1,7 @@
 package com.xcart.admin.views;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputFilter;
@@ -246,6 +247,14 @@ public class OrderInfo extends PinSupportNetworkActivity {
                     }
                 });
 
+                dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+                    @Override
+                    public void onShow(DialogInterface dialogInterface) {
+                        showKeyboard();
+                        numberEditor.selectAll();
+                    }
+                });
+
                 dialog.show();
             }
         });
@@ -279,6 +288,11 @@ public class OrderInfo extends PinSupportNetworkActivity {
     private void hideKeyboard(EditText edit) {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(edit.getWindowToken(), 0);
+    }
+
+    private void showKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
     }
 
     private void setupCustomerItem() {

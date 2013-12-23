@@ -176,6 +176,14 @@ public class Users extends PinSupportNetworkActivity {
 
     private void setupSearchLine() {
         usersSearchLine = (EditText) findViewById(R.id.search_line);
+        usersSearchLine.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (hasFocus) {
+                    usersSearchLine.selectAll();
+                }
+            }
+        });
         usersSearchLine.setOnKeyListener(new OnKeyListener() {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 // If the event is a key-down event on the "enter" button
