@@ -23,7 +23,7 @@
             android:background="@drawable/left_rounded_blue_button"
             android:onClick="sendMessageClick"
             android:padding="10dp"
-            android:text="@string/send_message"
+            android:text="@string/send_email"
             android:textColor="@color/white"
             android:textStyle="bold" />
 
