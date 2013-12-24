@@ -17,6 +17,7 @@ import com.xcart.admin.managers.MyActivityManager;
 import com.xcart.admin.managers.gcm.GcmManager;
 
 public class Settings extends PreferenceActivity {
+
     @SuppressWarnings("deprecation")
     @Override
     protected void onCreate(Bundle savedInstanceState) {

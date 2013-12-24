@@ -47,6 +47,7 @@ android {
 dependencies {
     compile 'com.android.support:support-v4:19.0.0'
     compile 'com.google.android.gms:play-services:4.0.+'
+    compile 'com.android.support:appcompat-v7:18.0.+'
     compile project (':libraries:android-switch-backport')
     compile project (':libraries:wheel')
 }

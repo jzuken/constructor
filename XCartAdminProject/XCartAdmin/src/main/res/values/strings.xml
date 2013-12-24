@@ -120,4 +120,6 @@
     <string name="scan_qr">Scan QR</string>
     <string name="shop_url_hint">www.example.com</string>
     <string name="payment_method_surcharge">Payment method surcharge</string>
+    <string name="download_limit">Download limits</string>
+    <string name="other">Other</string>
 </resources>
