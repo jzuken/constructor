@@ -187,14 +187,6 @@ public class Orders extends PinSupportNetworkActivity {
 
     private void setupSearchLine() {
         ordersSearchLine = (EditText) findViewById(R.id.search_line);
-        ordersSearchLine.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean hasFocus) {
-                if (hasFocus) {
-                    ordersSearchLine.selectAll();
-                }
-            }
-        });
         ordersSearchLine.setOnKeyListener(new OnKeyListener() {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 // If the event is a key-down event on the "enter" button
