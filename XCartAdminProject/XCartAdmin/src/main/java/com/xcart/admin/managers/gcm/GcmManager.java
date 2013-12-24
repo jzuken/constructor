@@ -2,9 +2,6 @@ package com.xcart.admin.managers.gcm;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.AsyncTask;
 import android.support.v4.app.FragmentActivity;
 
@@ -14,6 +11,8 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.xcart.admin.R;
 import com.xcart.admin.managers.DialogManager;
 import com.xcart.admin.managers.LogManager;
+import com.xcart.admin.managers.PreferenceManager;
+import com.xcart.admin.managers.XCartApplication;
 import com.xcart.admin.managers.network.HttpManager;
 
 import java.io.IOException;
@@ -30,15 +29,15 @@ public class GcmManager {
     }
 
     public String getRegistrationId() {
-        final SharedPreferences prefs = getGcmPreferences();
-        String registrationId = prefs.getString(PROPERTY_REG_ID, "");
+        PreferenceManager preferenceManager = XCartApplication.getInstance().getPreferenceManager();
+        String registrationId = preferenceManager.getRegistrationId();
         if (isEmpty(registrationId)) {
             LOG.d("Registration not found.");
             return "";
         }
 
-        int registeredVersion = prefs.getInt(PROPERTY_APP_VERSION, Integer.MIN_VALUE);
-        int currentVersion = getAppVersion(context);
+        int registeredVersion = preferenceManager.getAppVersion();
+        int currentVersion = preferenceManager.getCurrentAppVersion();
         if (registeredVersion != currentVersion) {
             LOG.d("App version changed.");
             return "";
@@ -59,7 +58,7 @@ public class GcmManager {
                     LOG.d("reg id = " + regId);
 
                     sendRegistrationIdToBackend(regId);
-                    storeRegistrationId(regId);
+                    XCartApplication.getInstance().getPreferenceManager().saveGcmRegistration(regId);
                 } catch (IOException e) {
                     LOG.e(e.getMessage(), e);
                 }
@@ -136,37 +135,11 @@ public class GcmManager {
         return true;
     }
 
-    //TODO: create preferences manager
-    private void storeRegistrationId(String regId) {
-        final SharedPreferences prefs = getGcmPreferences();
-        int appVersion = getAppVersion(context);
-        LOG.d("Saving regId on app version " + appVersion);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putString(PROPERTY_REG_ID, regId);
-        editor.putInt(PROPERTY_APP_VERSION, appVersion);
-        editor.commit();
-    }
-
-    private static int getAppVersion(Context context) {
-        try {
-            PackageInfo packageInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
-            return packageInfo.versionCode;
-        } catch (NameNotFoundException e) {
-            throw new RuntimeException("Could not get package name: " + e);
-        }
-    }
-
-    private SharedPreferences getGcmPreferences() {
-        return context.getSharedPreferences("gcm preference", Context.MODE_PRIVATE);
-    }
-
     private boolean isEmpty(String string) {
         return string.equals("");
     }
 
     private static final LogManager LOG = new LogManager(GcmManager.class.getSimpleName());
-    public static final String PROPERTY_REG_ID = "registration_id";
-    private static final String PROPERTY_APP_VERSION = "appVersion";
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private static final String SENDER_ID = "443902181577";
     private GoogleCloudMessaging gcm;

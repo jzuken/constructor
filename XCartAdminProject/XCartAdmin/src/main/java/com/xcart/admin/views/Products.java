@@ -2,9 +2,7 @@ package com.xcart.admin.views;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +20,7 @@ import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TabWidget;
 
 import com.xcart.admin.R;
+import com.xcart.admin.managers.XCartApplication;
 import com.xcart.admin.managers.network.HttpManager;
 import com.xcart.admin.managers.network.Requester;
 import com.xcart.admin.model.Product;
@@ -46,13 +45,12 @@ public class Products extends PinSupportNetworkActivity {
             option = null;
         }
         setupTabs(sortOption);
-        settingsData = PreferenceManager.getDefaultSharedPreferences(this);
         setupSearchLine();
     }
 
     @Override
     protected void withoutPinAction() {
-        packAmount = Integer.parseInt(settingsData.getString("products_amount", "10"));
+        packAmount = XCartApplication.getInstance().getPreferenceManager().getDownloadListLimit();
         if (isNeedDownload()) {
             clearList();
             updateProductsList();
@@ -235,7 +233,6 @@ public class Products extends PinSupportNetworkActivity {
     private String searchWord = "";
     private ListView productsListView;
     private Object lock = new Object();
-    private SharedPreferences settingsData;
     private EditText productsSearchLine;
     private Product lastClickedProduct;
 }

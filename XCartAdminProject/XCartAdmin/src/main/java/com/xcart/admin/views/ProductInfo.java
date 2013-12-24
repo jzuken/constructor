@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.view.View;
@@ -27,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.xcart.admin.R;
+import com.xcart.admin.managers.XCartApplication;
 import com.xcart.admin.managers.network.DownloadImageTask;
 import com.xcart.admin.managers.network.HttpManager;
 import com.xcart.admin.managers.network.Requester;
@@ -124,9 +124,8 @@ public class ProductInfo extends PinSupportNetworkActivity {
                             variantsSpinner.setSelection(currentVariant, true);
                             showVariants();
                             priceItem.setClickable(false);
-                            SharedPreferences authorizationData = getSharedPreferences("AuthorizationData",
-                                    Context.MODE_PRIVATE);
-                            String shopName = authorizationData.getString("shop_name", "");
+
+                            String shopName = XCartApplication.getInstance().getPreferenceManager().getShopName();
                             onlyAdminBackendLink.setText(String.format(ADMIN_BACKEND_URL, shopName, productId));
                             onlyAdminBackendLayout.setVisibility(View.VISIBLE);
                         } else {

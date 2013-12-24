@@ -1,9 +1,7 @@
 package com.xcart.admin.views;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AbsListView;
@@ -14,6 +12,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.xcart.admin.R;
+import com.xcart.admin.managers.XCartApplication;
 import com.xcart.admin.managers.network.HttpManager;
 import com.xcart.admin.managers.network.Requester;
 import com.xcart.admin.model.Review;
@@ -31,13 +30,12 @@ public class Reviews extends PinSupportNetworkActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.reviews);
-        settingsData = PreferenceManager.getDefaultSharedPreferences(this);
         setupListViewAdapter();
     }
 
     @Override
     protected void withoutPinAction() {
-        packAmount = Integer.parseInt(settingsData.getString("reviews_amount", "10"));
+        packAmount = XCartApplication.getInstance().getPreferenceManager().getDownloadListLimit();
         if (isNeedDownload()) {
             clearList();
             updateReviewsList();
@@ -153,5 +151,4 @@ public class Reviews extends PinSupportNetworkActivity {
     private final int startItemCount = 3;
     private ListView reviewsListView;
     private Object lock = new Object();
-    private SharedPreferences settingsData;
 }

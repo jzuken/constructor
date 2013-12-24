@@ -1,8 +1,6 @@
 package com.xcart.admin.views;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -19,6 +17,7 @@ import com.xcart.admin.R;
 import com.xcart.admin.managers.DialogManager;
 import com.xcart.admin.managers.LogManager;
 import com.xcart.admin.managers.MyActivityManager;
+import com.xcart.admin.managers.XCartApplication;
 import com.xcart.admin.managers.gcm.GcmManager;
 import com.xcart.admin.managers.network.HttpManager;
 import com.xcart.admin.managers.network.Requester;
@@ -40,7 +39,6 @@ public class ShopAuthorization extends FragmentActivity {
         setupKeyEditText();
         loginButton = (Button) findViewById(R.id.shop_login_button);
         gcmManager = new GcmManager(this);
-
         //TODO: stub
         //shopUrl.setText("54.213.38.9");
         //authorizationKey.setText("MobileAdminApiKey");
@@ -74,11 +72,7 @@ public class ShopAuthorization extends FragmentActivity {
     }
 
     private void checkAuthorizationData() {
-        SharedPreferences authorizationData = getSharedPreferences("AuthorizationData", MODE_PRIVATE);
-        Editor editor = authorizationData.edit();
-        editor.putString("shop_key", authorizationKey.getText().toString());
-        editor.putString("shop_name", shopUrl.getText().toString());
-        editor.commit();
+        XCartApplication.getInstance().getPreferenceManager().saveAuth(authorizationKey.getText().toString(), shopUrl.getText().toString());
 
         dialogManager.showProgressDialog(R.string.checking, PROGRESS_DIALOG);
         new Requester() {
@@ -108,16 +102,12 @@ public class ShopAuthorization extends FragmentActivity {
                             Toast.makeText(ShopAuthorization.this, "Incorrect shop url", Toast.LENGTH_SHORT).show();
                         } else {
                             MyActivityManager.setIsActivitiesFoundState(true);
-                            SharedPreferences authorizationData = getSharedPreferences("AuthorizationData", MODE_PRIVATE);
-                            Editor editor = authorizationData.edit();
-                            editor.putBoolean("shop_logged", true);
-                            editor.putString("shop_api", result);
-                            editor.commit();
+                            XCartApplication.getInstance().getPreferenceManager().saveShopUrl(result);
 
                             Toast.makeText(ShopAuthorization.this, "Success", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(ShopAuthorization.this, Dashboard.class);
                             startActivity(intent);
-                            registerGCM();
+                            registerGcm();
                             finish();
                         }
                     } catch (Exception e) {
@@ -137,7 +127,7 @@ public class ShopAuthorization extends FragmentActivity {
         return string.equals("");
     }
 
-    private void registerGCM() {
+    private void registerGcm() {
         if (gcmManager != null) {
             String regid = gcmManager.getRegistrationId();
 
@@ -161,6 +151,7 @@ public class ShopAuthorization extends FragmentActivity {
         });
     }
 
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
         if (scanResult != null && scanResult.getContents() != null) {
@@ -180,5 +171,4 @@ public class ShopAuthorization extends FragmentActivity {
     private EditText authorizationKey;
     private EditText shopUrl;
     private GcmManager gcmManager;
-
 }
