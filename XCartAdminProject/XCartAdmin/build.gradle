@@ -20,28 +20,6 @@ android {
         minSdkVersion 8
         targetSdkVersion 19
     }
-
-    signingConfigs {
-        debug {
-            storeFile file("debug.keystore")
-        }
-
-        //release {
-        //    storeFile file("")
-        //    storePassword ""
-        //    keyAlias ""
-        //    keyPassword ""
-        //}
-    }
-
-    buildTypes {
-
-        alpha {
-            debuggable false
-            jniDebugBuild false
-            signingConfig signingConfigs.debug
-        }
-    }
 }
 
 dependencies {
