@@ -71,5 +71,33 @@
                 android:text="@string/amount_colon"/>
 
         </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/product_options_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone" >
+
+            <TextView
+                android:id="@+id/product_options"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:textColor="@color/blue"
+                android:gravity="right"
+                android:layout_alignParentRight="true"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/product_options_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginRight="20dp"
+                android:layout_toLeftOf="@id/product_options"
+                android:gravity="left"
+                android:text="@string/options_colon"/>
+
+        </RelativeLayout>
     </LinearLayout>
 </RelativeLayout>

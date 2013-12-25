@@ -139,7 +139,13 @@ public class OrderInfo extends PinSupportNetworkActivity {
                             String name = detObj.getString("product");
                             String price = detObj.getString("price");
                             String amount = detObj.getString("amount");
-                            itemsList.addItem(id, name, price, amount);
+                            JSONArray optionsArray = detObj.optJSONArray("product_options");
+                            if (!(optionsArray == null)) {
+                                String options = getOptions(optionsArray);
+                                itemsList.addItem(id, name, price, amount, options);
+                            } else {
+                                itemsList.addItem(id, name, price, amount);
+                            }
                         }
 
                         statusItem.setClickable(true);
@@ -180,6 +186,28 @@ public class OrderInfo extends PinSupportNetworkActivity {
         statusItem.setClickable(false);
         trackingNumberItem.setClickable(false);
         customerItem.setClickable(false);
+    }
+
+    private String getOptions(JSONArray optionsArray) {
+        try {
+            StringBuilder optionsBuilder = new StringBuilder();
+            int optionsLength = optionsArray.length();
+            for (int j = 0; j < optionsLength - 1; j++) {
+                JSONObject option = optionsArray.getJSONObject(j);
+                optionsBuilder.append(option.getString("class"));
+                optionsBuilder.append(": ");
+                optionsBuilder.append(option.getString("option_name"));
+                optionsBuilder.append("\n");
+            }
+            JSONObject option = optionsArray.getJSONObject(optionsLength - 1);
+            optionsBuilder.append(option.getString("class"));
+            optionsBuilder.append(": ");
+            optionsBuilder.append(option.getString("option_name"));
+            return optionsBuilder.toString();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     private void setupStatusItem() {

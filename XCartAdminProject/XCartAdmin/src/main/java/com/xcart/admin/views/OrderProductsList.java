@@ -24,6 +24,20 @@ public class OrderProductsList extends LinearLayout {
     }
 
     public void addItem(final String id, final String name, final String price, final String amount) {
+        View item = addItemMain(id, name, price, amount);
+        this.addView(item);
+    }
+
+    public void addItem(final String id, final String name, final String price, final String amount, final String options) {
+        View item = addItemMain(id, name, price, amount);
+        RelativeLayout optionsLayout = (RelativeLayout) item.findViewById(R.id.product_options_layout);
+        TextView productOptions = (TextView) item.findViewById(R.id.product_options);
+        productOptions.setText(options);
+        optionsLayout.setVisibility(View.VISIBLE);
+        this.addView(item);
+    }
+
+    private View addItemMain(final String id, final String name, final String price, final String amount) {
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         if (this.getChildCount() > 0) {
             this.addView(inflater.inflate(R.layout.divider, null));
@@ -48,7 +62,7 @@ public class OrderProductsList extends LinearLayout {
                 pinSupActivity.startActivityForResult(intent, 1);
             }
         });
-        this.addView(item);
+        return item;
     }
 
     public void clearList() {
