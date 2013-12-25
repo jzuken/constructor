@@ -47,6 +47,7 @@ public class OrderInfo extends PinSupportNetworkActivity {
         sPhone = (TextView) findViewById(R.id.s_phone);
         sFax = (TextView) findViewById(R.id.s_fax);
         itemsList = (OrderProductsList) findViewById(R.id.items_list);
+        customerNotes = (TextView) findViewById(R.id.customer_notes);
         subtotal = (TextView) findViewById(R.id.subtotal);
         discount = (TextView) findViewById(R.id.discount);
         couponSaving = (TextView) findViewById(R.id.coupon_saving);
@@ -126,6 +127,12 @@ public class OrderInfo extends PinSupportNetworkActivity {
                                 + obj.getString("s_country"));
                         sPhone.setText(obj.getString("s_phone"));
                         sFax.setText(obj.getString("s_fax"));
+                        String customerNotesString = obj.getString("customer_notes");
+                        if (customerNotesString.equals("")) {
+                            customerNotes.setText(R.string.no_notes);
+                        } else {
+                            customerNotes.setText(customerNotesString);
+                        }
                         subtotal.setText("$" + obj.getString("subtotal"));
                         discount.setText("$" + obj.getString("discount"));
                         couponSaving.setText("$" + obj.getString("coupon_discount"));
@@ -177,6 +184,7 @@ public class OrderInfo extends PinSupportNetworkActivity {
         sPhone.setText("");
         sFax.setText("");
         itemsList.clearList();
+        customerNotes.setText("");
         subtotal.setText("");
         discount.setText("");
         couponSaving.setText("");
@@ -369,6 +377,7 @@ public class OrderInfo extends PinSupportNetworkActivity {
     private TextView sPhone;
     private TextView sFax;
     private OrderProductsList itemsList;
+    private TextView customerNotes;
     private TextView subtotal;
     private TextView discount;
     private TextView couponSaving;
