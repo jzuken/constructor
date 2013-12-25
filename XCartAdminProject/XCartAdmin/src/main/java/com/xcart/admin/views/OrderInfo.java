@@ -138,7 +138,8 @@ public class OrderInfo extends PinSupportNetworkActivity {
                             String id = detObj.getString("productid");
                             String name = detObj.getString("product");
                             String price = detObj.getString("price");
-                            itemsList.addItem(id, name, price);
+                            String amount = detObj.getString("amount");
+                            itemsList.addItem(id, name, price, amount);
                         }
 
                         statusItem.setClickable(true);

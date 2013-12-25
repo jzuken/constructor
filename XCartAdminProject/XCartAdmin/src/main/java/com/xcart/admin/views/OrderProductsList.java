@@ -23,7 +23,7 @@ public class OrderProductsList extends LinearLayout {
         this.context = context;
     }
 
-    public void addItem(final String id, final String name, final String price) {
+    public void addItem(final String id, final String name, final String price, final String amount) {
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         if (this.getChildCount() > 0) {
             this.addView(inflater.inflate(R.layout.divider, null));
@@ -32,8 +32,10 @@ public class OrderProductsList extends LinearLayout {
         RelativeLayout productLayout = (RelativeLayout) item.findViewById(R.id.order_product_layout);
         TextView productName = (TextView) item.findViewById(R.id.product_name);
         TextView productPrice = (TextView) item.findViewById(R.id.product_price);
+        TextView productAmount = (TextView) item.findViewById(R.id.product_amount);
         productName.setText(name);
         productPrice.setText("$" + price);
+        productAmount.setText(amount);
         productLayout.setOnClickListener(new OnClickListener() {
 
             @Override
