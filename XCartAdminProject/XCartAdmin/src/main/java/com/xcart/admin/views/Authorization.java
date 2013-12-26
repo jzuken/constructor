@@ -122,7 +122,7 @@ public class Authorization extends FragmentActivity implements SubscriptionCallb
                                 editor.commit();
 
                                 Toast.makeText(Authorization.this, "Success", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(Authorization.this, Dashboard.class);
+                                Intent intent = new Intent(Authorization.this, DashboardActivity.class);
                                 startActivity(intent);
                             } else {
                                 Toast.makeText(Authorization.this, "Incorrect email or password", Toast.LENGTH_SHORT).show();

@@ -86,15 +86,15 @@
     <string name="orders_list">Orders list</string>
     <string name="search">Search</string>
     <string name="today">Today</string>
-	<string name="this_week">This\nweek</string>
-	<string name="this_month">This\nmonth</string>
-	<string name="all">All</string>
-	<string name="low_stock_text">Low stock</string>
-	<string name="arrow_description">Arrow for clickable item</string>
-	<string name="checking_subscription">Checking subscription…</string>
-	<string name="error">Error</string>
-	<string name="no_subscription">No subscription</string>
-	<string name="subscription_expired">subscription expired</string>
+    <string name="this_week">This\nweek</string>
+    <string name="this_month">This\nmonth</string>
+    <string name="all">All</string>
+    <string name="low_stock_text">Low stock</string>
+    <string name="arrow_description">Arrow for clickable item</string>
+    <string name="checking_subscription">Checking subscription…</string>
+    <string name="error">Error</string>
+    <string name="no_subscription">No subscription</string>
+    <string name="subscription_expired">subscription expired</string>
     <string name="connection_error">Sorry, unable to connect to server. Please check your internet connection</string>
     <string name="login_error">Incorrect email or password</string>
     <string name="logging_in">Logging in…</string>
@@ -125,4 +125,8 @@
     <string name="amount_colon">Amount:</string>
     <string name="customer_notes">Customer notes</string>
     <string name="no_notes">No notes</string>
+    <string name="title_activity_about">AboutActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_about">About</string>
+
 </resources>

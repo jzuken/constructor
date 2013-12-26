@@ -105,7 +105,7 @@ public class ShopAuthorization extends FragmentActivity {
                             XCartApplication.getInstance().getPreferenceManager().saveShopUrl(result);
 
                             Toast.makeText(ShopAuthorization.this, "Success", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(ShopAuthorization.this, Dashboard.class);
+                            Intent intent = new Intent(ShopAuthorization.this, DashboardActivity.class);
                             startActivity(intent);
                             registerGcm();
                             finish();

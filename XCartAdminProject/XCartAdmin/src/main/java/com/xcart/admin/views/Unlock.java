@@ -150,7 +150,7 @@ public class Unlock extends FragmentActivity implements SubscriptionCallback {
                 MyActivityManager.setIsActivitiesFoundState(true);
                 Intent intent = getIntent();
                 if (intent.getIntExtra("afterPause", 0) == 0) {
-                    Intent newIntent = new Intent(this, Dashboard.class);
+                    Intent newIntent = new Intent(this, DashboardActivity.class);
                     startActivity(newIntent);
                 } else {
                     setResult(pinPageCode);

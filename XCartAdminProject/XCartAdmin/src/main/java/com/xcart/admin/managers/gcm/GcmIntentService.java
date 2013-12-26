@@ -12,8 +12,7 @@ import android.support.v4.app.NotificationCompat;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.xcart.admin.R;
 import com.xcart.admin.managers.LogManager;
-import com.xcart.admin.managers.MyActivityManager;
-import com.xcart.admin.views.Dashboard;
+import com.xcart.admin.views.DashboardActivity;
 import com.xcart.admin.views.OrderInfo;
 import com.xcart.admin.views.Products;
 
@@ -35,9 +34,9 @@ public class GcmIntentService extends IntentService {
 
         if (!extras.isEmpty()) {
             if (GoogleCloudMessaging.MESSAGE_TYPE_SEND_ERROR.equals(messageType)) {
-                sendNotification("Send error: " + extras.toString(), new Intent(this, Dashboard.class));
+                sendNotification("Send error: " + extras.toString(), new Intent(this, DashboardActivity.class));
             } else if (GoogleCloudMessaging.MESSAGE_TYPE_DELETED.equals(messageType)) {
-                sendNotification("Deleted messages on server: " + extras.toString(), new Intent(this, Dashboard.class));
+                sendNotification("Deleted messages on server: " + extras.toString(), new Intent(this, DashboardActivity.class));
             } else if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE.equals(messageType)) {
                 String message = extras.getString("message");
                 if (message.equals(NEW_ORDER)) {

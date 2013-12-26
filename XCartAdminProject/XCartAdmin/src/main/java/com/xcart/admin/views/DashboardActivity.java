@@ -2,6 +2,8 @@ package com.xcart.admin.views;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
@@ -17,7 +19,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Dashboard extends PinSupportNetworkActivity {
+public class DashboardActivity extends PinSupportNetworkActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -215,6 +218,23 @@ public class Dashboard extends PinSupportNetworkActivity {
         customersPaid[1] = (TextView) findViewById(R.id.second_customer_paid);
         customers[2] = (TextView) findViewById(R.id.third_customer);
         customersPaid[2] = (TextView) findViewById(R.id.third_customer_paid);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.dashboard, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_about) {
+            Intent intent = new Intent(this, AboutActivity.class);
+            startActivity(intent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private ProgressBar progressBar;
