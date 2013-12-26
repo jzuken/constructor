@@ -51,11 +51,6 @@
             android:noHistory="true"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.xcart.admin.views.Authorization"
-            android:launchMode="singleTop"
-            android:noHistory="true"
-            android:screenOrientation="portrait" />
-        <activity
             android:name="com.xcart.admin.views.ShopAuthorization"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
