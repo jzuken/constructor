@@ -4,12 +4,15 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
+import android.widget.TextView;
 
 import com.xcart.admin.R;
 
@@ -53,12 +56,23 @@ public class AboutActivity extends ActionBarActivity {
      */
     public static class PlaceholderFragment extends Fragment {
 
+        private static final String LINK_PATTERN = "<a href='%s'> %s </a>";
+
         public PlaceholderFragment() {
         }
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_about, container, false);
+
+            TextView mobileAdmin = ((TextView)rootView.findViewById(R.id.xcart_mobile_admin));
+            mobileAdmin.setMovementMethod(LinkMovementMethod.getInstance());
+            mobileAdmin.setText(Html.fromHtml(String.format(LINK_PATTERN, getString(R.string.xcart_mobile_admin_link), getString(R.string.xcart_mobile_admin))));
+
+            TextView help = ((TextView)rootView.findViewById(R.id.xcart_help));
+            help.setMovementMethod(LinkMovementMethod.getInstance());
+            help.setText(Html.fromHtml(String.format(LINK_PATTERN, getString(R.string.xcart_help_link), getString(R.string.xcart_help))));
+
             return rootView;
         }
     }

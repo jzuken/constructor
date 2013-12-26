@@ -14,6 +14,14 @@ public class StartActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //TODO: describe hack
+        SharedPreferences settingsData = PreferenceManager.getDefaultSharedPreferences(this);
+        if (!settingsData.contains("password")) {
+            Editor editor = settingsData.edit();
+            editor.putString("password", "0000");
+            editor.commit();
+        }
         if (!XCartApplication.getInstance().getPreferenceManager().isShopLogged()) {
             Intent intent = new Intent(this, ShopAuthorization.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);

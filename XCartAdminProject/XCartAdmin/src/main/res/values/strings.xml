@@ -126,7 +126,14 @@
     <string name="customer_notes">Customer notes</string>
     <string name="no_notes">No notes</string>
     <string name="title_activity_about">AboutActivity</string>
-    <string name="hello_world">Hello world!</string>
     <string name="action_about">About</string>
+    <string name="xcart_mobile_admin">X-Cart Mobile admin</string>
+    <string name="xcart_mobile_admin_link">http://www.x-cart.com/mobile-ecommerce-solution.html</string>
+    <string name="xcart_help">Help</string>
+    <string name="xcart_help_link">http://help.x-cart.com/index.php?title=X-Cart_Mobile_Admin</string>
+    <string name="contact_as">Contact US</string>
+    <string name="usa_phone">1–800–657–7957</string>
+    <string name="britan_phone">44–207–043–4988</string>
+    <string name="universe_phone">7–842–279–4038</string>
 
 </resources>
