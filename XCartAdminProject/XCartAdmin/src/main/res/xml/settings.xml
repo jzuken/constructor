@@ -1,45 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory
-        android:title="@string/download_limit"
-        android:key="pref_key_storage_settings">
-        <EditTextPreference
-            android:defaultValue="10"
-            android:inputType="number"
-            android:key="orders_amount"
-            android:title="Orders pack size" />
-        <EditTextPreference
-            android:defaultValue="10"
-            android:inputType="number"
-            android:key="users_amount"
-            android:title="Users pack size" />
-        <EditTextPreference
-            android:defaultValue="10"
-            android:inputType="number"
-            android:key="reviews_amount"
-            android:title="Reviews pack size" />
-        <EditTextPreference
-            android:defaultValue="10"
-            android:inputType="number"
-            android:key="products_amount"
-            android:title="Products pack size" />
-    </PreferenceCategory>
+    <CheckBoxPreference
+        android:key="gcm_switch"
+        android:title="Push notifications" />
 
-    <PreferenceCategory
-        android:title="@string/other"
-        android:key="pref_key_storage_settings">
-        <EditTextPreference
-            android:defaultValue="0000"
-            android:inputType="number"
-            android:key="password"
-            android:title="Password" />
-        <CheckBoxPreference
-            android:key="gcm_switch"
-            android:title="Push notifications" />
-        <Preference
-            android:key="logout"
-            android:title="Log out" />
-    </PreferenceCategory>
+    <EditTextPreference
+        android:defaultValue="10"
+        android:inputType="number"
+        android:key="download_limit"
+        android:title="@string/download_limit" />
+
+    <EditTextPreference
+        android:defaultValue="0000"
+        android:inputType="number"
+        android:key="password"
+        android:title="Password" />
+
+    <Preference
+        android:key="logout"
+        android:title="Log out" />
 
 </PreferenceScreen>

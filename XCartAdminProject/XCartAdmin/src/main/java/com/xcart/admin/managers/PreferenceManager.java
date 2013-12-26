@@ -45,6 +45,20 @@ public class PreferenceManager {
         return authorizationData.getString("shop_name", "");
     }
 
+    public void savePassword(String pass){
+        SharedPreferences.Editor editor = settingsData.edit();
+        editor.putString("password", pass);
+        editor.commit();
+    }
+
+    public String getPassword(){
+        return  settingsData.getString("password", "0000");
+    }
+
+    public Boolean isShopLogged(){
+        return authorizationData.getBoolean("shop_logged", false);
+    }
+
     public void saveShopUrl(String url) {
         SharedPreferences.Editor editor = authorizationData.edit();
         editor.putBoolean("shop_logged", true);
@@ -65,7 +79,7 @@ public class PreferenceManager {
 
     //TODO: set one limit for all lists
     public int getDownloadListLimit(){
-        return Integer.parseInt(settingsData.getString("orders_amount", "10"));
+        return Integer.parseInt(settingsData.getString("download_limit", "10"));
     }
 
     public int getCurrentAppVersion() {
@@ -76,5 +90,17 @@ public class PreferenceManager {
         } catch (PackageManager.NameNotFoundException e) {
             throw new RuntimeException("Could not get package name: " + e);
         }
+    }
+
+    public void logout() {
+        SharedPreferences.Editor editor = authorizationData.edit();
+        editor.remove("shop_logged");
+        editor.remove("shop_api");
+        editor.remove("shop_name");
+        editor.remove("shop_key");
+        editor.commit();
+        editor = gcmPreferences.edit();
+        editor.remove("registration_id");
+        editor.commit();
     }
 }

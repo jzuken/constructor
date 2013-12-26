@@ -1,10 +1,7 @@
 package com.xcart.admin.views;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.animation.AnticipateOvershootInterpolator;
@@ -13,6 +10,7 @@ import android.widget.Button;
 import com.xcart.admin.R;
 import com.xcart.admin.managers.DialogManager;
 import com.xcart.admin.managers.MyActivityManager;
+import com.xcart.admin.managers.XCartApplication;
 import com.xcart.admin.managers.network.DevServerApiManager;
 import com.xcart.admin.managers.network.SubscriptionCallback;
 import com.xcart.admin.managers.network.SubscriptionStatus;
@@ -35,7 +33,6 @@ public class Unlock extends FragmentActivity implements SubscriptionCallback {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.unlock);
-        settingsData = PreferenceManager.getDefaultSharedPreferences(this);
         okButton = (Button) findViewById(R.id.unlockOkButton);
         pin1 = (WheelView) findViewById(R.id.passw_1);
         initWheel(pin1);
@@ -62,7 +59,7 @@ public class Unlock extends FragmentActivity implements SubscriptionCallback {
     private void tryUnlock() {
         if (!isScrolling) {
             okButton.setEnabled(false);
-            if (getPassword().equals(settingsData.getString("password", ""))) {
+            if (getPassword().equals(XCartApplication.getInstance().getPreferenceManager().getPassword())) {
                 checkSubscription();
             } else {
                 dialogManager.showErrorDialog(R.string.incorrect_password);
@@ -73,9 +70,7 @@ public class Unlock extends FragmentActivity implements SubscriptionCallback {
 
     private void checkSubscription() {
         dialogManager.showProgressDialog(R.string.checking_subscription, PROGRESS_DIALOG);
-
-        SharedPreferences authorizationData = getSharedPreferences("AuthorizationData", Context.MODE_PRIVATE);
-        String shopName = authorizationData.getString("shop_name", "");
+        String shopName = XCartApplication.getInstance().getPreferenceManager().getShopName();
         DevServerApiManager.getInstance().checkSubscription(shopName);
     }
 
@@ -138,7 +133,6 @@ public class Unlock extends FragmentActivity implements SubscriptionCallback {
         dialogManager.dismissDialog(PROGRESS_DIALOG);
     }
 
-    private SharedPreferences settingsData;
     private WheelView pin1;
     private WheelView pin2;
     private WheelView pin3;

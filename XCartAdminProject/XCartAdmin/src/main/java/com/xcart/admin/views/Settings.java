@@ -1,9 +1,6 @@
 package com.xcart.admin.views;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
@@ -14,6 +11,8 @@ import android.widget.Toast;
 
 import com.xcart.admin.R;
 import com.xcart.admin.managers.MyActivityManager;
+import com.xcart.admin.managers.PreferenceManager;
+import com.xcart.admin.managers.XCartApplication;
 import com.xcart.admin.managers.gcm.GcmManager;
 
 public class Settings extends PreferenceActivity {
@@ -25,10 +24,7 @@ public class Settings extends PreferenceActivity {
         addPreferencesFromResource(R.xml.settings);
 
         setupPasswordEditText();
-        setupOrdersAmountEditText();
-        setupUsersAmountEditText();
-        setupReviewsAmountEditText();
-        setupProductsAmountEditText();
+        setupLimitEditText();
         setupGCMSwitch();
         setupLogoutButton();
     }
@@ -51,27 +47,9 @@ public class Settings extends PreferenceActivity {
     }
 
     @SuppressWarnings("deprecation")
-    private void setupOrdersAmountEditText() {
-        EditTextPreference usersAmount = (EditTextPreference) findPreference("orders_amount");
-        setPackChangeListener(usersAmount, minPack);
-    }
-
-    @SuppressWarnings("deprecation")
-    private void setupUsersAmountEditText() {
-        EditTextPreference usersAmount = (EditTextPreference) findPreference("users_amount");
-        setPackChangeListener(usersAmount, minPack);
-    }
-
-    @SuppressWarnings("deprecation")
-    private void setupReviewsAmountEditText() {
-        EditTextPreference reviewsAmount = (EditTextPreference) findPreference("reviews_amount");
-        setPackChangeListener(reviewsAmount, minPack);
-    }
-
-    @SuppressWarnings("deprecation")
-    private void setupProductsAmountEditText() {
-        EditTextPreference productsAmount = (EditTextPreference) findPreference("products_amount");
-        setPackChangeListener(productsAmount, minPack);
+    private void setupLimitEditText() {
+        EditTextPreference downloadLimit = (EditTextPreference) findPreference("download_limit");
+        setPackChangeListener(downloadLimit, minPack);
     }
 
     private void setPackChangeListener(EditTextPreference editText, final int minPackSize) {
@@ -80,8 +58,7 @@ public class Settings extends PreferenceActivity {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
                 if (newValue.equals("") || Integer.parseInt((String) newValue) < minPackSize) {
-                    Toast.makeText(getBaseContext(), getString(R.string.pack_error) + String.valueOf(minPack - 1),
-                            Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(), getString(R.string.pack_error) + String.valueOf(minPack - 1), Toast.LENGTH_LONG).show();
                     return false;
                 }
                 return true;
@@ -114,37 +91,23 @@ public class Settings extends PreferenceActivity {
         });
     }
 
-    private SharedPreferences getGcmPreferences() {
-        return getSharedPreferences("gcm preference", Context.MODE_PRIVATE);
-    }
-
     @SuppressWarnings("deprecation")
     private void setupLogoutButton() {
         Preference button = findPreference("logout");
         button.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference arg0) {
-                SharedPreferences authorizationData = getSharedPreferences("AuthorizationData", MODE_PRIVATE);
-                final SharedPreferences prefs = getGcmPreferences();
+                PreferenceManager preferenceManager = XCartApplication.getInstance().getPreferenceManager();
                 if (GcmManager.checkPlayServices(Settings.this)) {
                     GcmManager gcmManager = new GcmManager(Settings.this);
                     if (gcmSwitch.isEnabled()) {
                         gcmManager.unregisterInBackground();
                     }
                     if (gcmSwitch.isChecked()) {
-                        gcmManager.unregisterGCMInBackend(authorizationData.getString("shop_api", ""),
-                                authorizationData.getString("shop_key", ""), prefs.getString("registration_id", ""));
+                        gcmManager.unregisterGCMInBackend(preferenceManager.getShopUrl(), preferenceManager.getShopKey(), preferenceManager.getRegistrationId());
                     }
                 }
-                Editor editor = authorizationData.edit();
-                editor.remove("shop_logged");
-                editor.remove("shop_api");
-                editor.remove("shop_name");
-                editor.remove("shop_key");
-                editor.commit();
-                editor = prefs.edit();
-                editor.remove("registration_id");
-                editor.commit();
+                preferenceManager.logout();
                 Intent broadcastIntent = new Intent();
                 broadcastIntent.setAction("com.package.ACTION_LOGOUT");
                 sendBroadcast(broadcastIntent);
@@ -179,8 +142,7 @@ public class Settings extends PreferenceActivity {
 
     @Override
     protected void onResume() {
-        if (isPaused && !fromPin && !MyActivityManager.isAfterNotification()
-        || !MyActivityManager.isActivitiesFound() || Unlock.isLocked()) {
+        if (isPaused && !fromPin && !MyActivityManager.isAfterNotification() || !MyActivityManager.isActivitiesFound() || Unlock.isLocked()) {
             Intent intent = new Intent(this, Unlock.class);
             intent.putExtra("afterPause", 1);
             startActivityForResult(intent, 1);
@@ -209,9 +171,8 @@ public class Settings extends PreferenceActivity {
     }
 
     public static final int fromSettingCode = 3;
-    private final int minPack = 10;
+    private static final int minPack = 10;
     private boolean isPaused;
     private boolean fromPin;
     private CheckBoxPreference gcmSwitch;
-
 }

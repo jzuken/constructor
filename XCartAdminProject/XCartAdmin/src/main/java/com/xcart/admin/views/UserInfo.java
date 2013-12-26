@@ -1,10 +1,8 @@
 package com.xcart.admin.views;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AbsListView;
@@ -17,6 +15,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.xcart.admin.R;
+import com.xcart.admin.managers.XCartApplication;
 import com.xcart.admin.managers.network.HttpManager;
 import com.xcart.admin.managers.network.Requester;
 import com.xcart.admin.model.Order;
@@ -57,8 +56,7 @@ public class UserInfo extends PinSupportNetworkActivity {
 
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                if (visibleItemCount > 0 && firstVisibleItem + visibleItemCount == totalItemCount && !isDownloading
-                        && hasNext) {
+                if (visibleItemCount > 0 && firstVisibleItem + visibleItemCount == totalItemCount && !isDownloading && hasNext) {
                     updateOrdersList();
                 }
             }
@@ -86,13 +84,11 @@ public class UserInfo extends PinSupportNetworkActivity {
         id = getIntent().getStringExtra("userId");
         sendMessageButton = (Button) header.findViewById(R.id.send_message_button);
         callButton = (Button) header.findViewById(R.id.call_button);
-        settingsData = PreferenceManager.getDefaultSharedPreferences(this);
-
     }
 
     @Override
     protected void withoutPinAction() {
-        packAmount = Integer.parseInt(settingsData.getString("orders_amount", "10"));
+        packAmount = XCartApplication.getInstance().getPreferenceManager().getDownloadListLimit();
         if (isNeedDownload()) {
             clearData();
             clearList();
@@ -264,7 +260,6 @@ public class UserInfo extends PinSupportNetworkActivity {
     private String id;
     private Object lock = new Object();
     private int lastPositionClicked;
-    private SharedPreferences settingsData;
     private boolean isDownloading;
     private boolean hasNext;
     private int packAmount;
