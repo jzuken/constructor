@@ -18,6 +18,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TabWidget;
+import android.widget.TextView;
 
 import com.xcart.admin.R;
 import com.xcart.admin.managers.XCartApplication;
@@ -79,6 +80,11 @@ public class Products extends PinSupportNetworkActivity {
                     try {
                         JSONArray array = new JSONArray(result);
                         int length = array.length();
+                        if (length == 0 && currentAmount == 0) {
+                            progressBar.setVisibility(View.GONE);
+                            noProducts.setVisibility(View.VISIBLE);
+                            return;
+                        }
                         if (length == packAmount) {
                             hasNext = true;
                         }
@@ -119,8 +125,10 @@ public class Products extends PinSupportNetworkActivity {
         productsListView = (ListView) findViewById(R.id.products_list);
         LayoutInflater inflater = getLayoutInflater();
 
-        View listFooter = inflater.inflate(R.layout.on_demand_footer, null, false);
+        View listFooter = inflater.inflate(R.layout.on_demand_footer_with_message, null, false);
         progressBar = (ProgressBar) listFooter.findViewById(R.id.progress_bar);
+        noProducts = (TextView) listFooter.findViewById(R.id.no_content_message);
+        noProducts.setText(R.string.no_products);
         productsListView.addFooterView(listFooter, null, false);
 
         productsListView.setFooterDividersEnabled(false);
@@ -162,6 +170,7 @@ public class Products extends PinSupportNetworkActivity {
     private void clearList() {
         adapter.clear();
         currentAmount = 0;
+        noProducts.setVisibility(View.GONE);
     }
 
     private void setupSearchLine() {
@@ -227,4 +236,5 @@ public class Products extends PinSupportNetworkActivity {
     private Object lock = new Object();
     private EditText productsSearchLine;
     private Product lastClickedProduct;
+    private TextView noProducts;
 }

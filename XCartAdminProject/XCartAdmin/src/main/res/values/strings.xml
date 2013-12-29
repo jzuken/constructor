@@ -135,5 +135,7 @@
     <string name="usa_phone">1–800–657–7957</string>
     <string name="britan_phone">44–207–043–4988</string>
     <string name="universe_phone">7–842–279–4038</string>
+    <string name="no_reviews">No reviews</string>
+    <string name="no_products">No products</string>
 
 </resources>

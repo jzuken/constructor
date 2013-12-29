@@ -122,9 +122,10 @@ public class Orders extends PinSupportNetworkActivity {
         ordersListView = (ListView) findViewById(R.id.orders_list);
 
         LayoutInflater inflater = getLayoutInflater();
-        View listFooter = inflater.inflate(R.layout.orders_list_footer, null, false);
+        View listFooter = inflater.inflate(R.layout.on_demand_footer_with_message, null, false);
         progressBar = (ProgressBar) listFooter.findViewById(R.id.progress_bar);
-        noOrders = (TextView) listFooter.findViewById(R.id.no_orders_message);
+        noOrders = (TextView) listFooter.findViewById(R.id.no_content_message);
+        noOrders.setText(R.string.no_orders);
         ordersListView.addFooterView(listFooter, null, false);
 
         ordersListView.setFooterDividersEnabled(false);

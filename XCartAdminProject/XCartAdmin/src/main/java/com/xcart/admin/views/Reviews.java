@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.xcart.admin.R;
 import com.xcart.admin.managers.XCartApplication;
@@ -64,6 +65,11 @@ public class Reviews extends PinSupportNetworkActivity {
                     try {
                         JSONArray array = new JSONArray(result);
                         int length = array.length();
+                        if (length == 0 && currentAmount == 0) {
+                            progressBar.setVisibility(View.GONE);
+                            noReviews.setVisibility(View.VISIBLE);
+                            return;
+                        }
                         if (length == packAmount) {
                             hasNext = true;
                         }
@@ -101,8 +107,10 @@ public class Reviews extends PinSupportNetworkActivity {
         reviewsListView = (ListView) findViewById(R.id.reviews_list);
 
         LayoutInflater inflater = getLayoutInflater();
-        View listFooter = inflater.inflate(R.layout.on_demand_footer, null, false);
+        View listFooter = inflater.inflate(R.layout.on_demand_footer_with_message, null, false);
         progressBar = (ProgressBar) listFooter.findViewById(R.id.progress_bar);
+        noReviews = (TextView) listFooter.findViewById(R.id.no_content_message);
+        noReviews.setText(R.string.no_reviews);
         reviewsListView.addFooterView(listFooter, null, false);
 
         reviewsListView.setFooterDividersEnabled(false);
@@ -140,6 +148,7 @@ public class Reviews extends PinSupportNetworkActivity {
     private void clearList() {
         adapter.clear();
         currentAmount = 0;
+        noReviews.setVisibility(View.GONE);
     }
 
     private ProgressBar progressBar;
@@ -151,4 +160,5 @@ public class Reviews extends PinSupportNetworkActivity {
     private final int startItemCount = 3;
     private ListView reviewsListView;
     private Object lock = new Object();
+    private TextView noReviews;
 }

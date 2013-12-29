@@ -13,11 +13,10 @@
     </ProgressBar>
 
     <TextView
-        android:id="@+id/no_orders_message"
+        android:id="@+id/no_content_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="@string/no_orders"
         android:textSize="17sp"
         android:paddingTop="22dp"
         android:paddingBottom="22.5dp"
