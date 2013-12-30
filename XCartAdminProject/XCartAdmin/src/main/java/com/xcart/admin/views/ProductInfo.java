@@ -422,6 +422,6 @@ public class ProductInfo extends PinSupportNetworkActivity {
     private JSONArray variantsArray;
     private LinearLayout onlyAdminBackendLayout;
     private TextView onlyAdminBackendLink;
-    private static final String ADMIN_BACKEND_URL = "http://%s/admin/product_modify.php?productid=%s";
+    private static final String ADMIN_BACKEND_URL = "http://%s/xcart/admin/product_modify.php?productid=%s";
     private int currentVariant;
 }
