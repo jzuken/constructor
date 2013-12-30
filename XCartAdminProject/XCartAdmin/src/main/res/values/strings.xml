@@ -137,5 +137,9 @@
     <string name="universe_phone">7–842–279–4038</string>
     <string name="no_reviews">No reviews</string>
     <string name="no_products">No products</string>
+    <string name="close_application_question">Are you sure you want to close X-Cart Admin?</string>
+    <string name="closing_application">Closing application</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 
 </resources>

@@ -1,5 +1,7 @@
 package com.xcart.admin.views;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -235,6 +237,23 @@ public class DashboardActivity extends PinSupportNetworkActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle(R.string.closing_application)
+                .setMessage(R.string.close_application_question)
+                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        DashboardActivity.super.onBackPressed();
+                    }
+
+                })
+                .setNegativeButton(R.string.no, null)
+                .show();
     }
 
     private ProgressBar progressBar;
