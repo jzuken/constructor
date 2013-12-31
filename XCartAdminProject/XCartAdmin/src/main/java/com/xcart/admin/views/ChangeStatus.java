@@ -12,6 +12,7 @@ import com.xcart.admin.R;
 import com.xcart.admin.managers.LogManager;
 import com.xcart.admin.managers.network.HttpManager;
 import com.xcart.admin.managers.network.Requester;
+import com.xcart.admin.model.OrderStatus;
 
 public class ChangeStatus extends PinSupportNetworkActivity {
 
@@ -33,14 +34,10 @@ public class ChangeStatus extends PinSupportNetworkActivity {
         failed = (RadioButton) findViewById(R.id.failed_button);
         backordered = (RadioButton) findViewById(R.id.backordered_button);
         saveButton = (Button) findViewById(R.id.save_button);
-        activeButtonBySymbol(StatusSymbols.valueOf(getIntent().getStringExtra("status")));
+        activeButtonBySymbol(OrderStatus.valueOf(getIntent().getStringExtra("status")));
     }
 
-    private enum StatusSymbols {
-        I, Q, P, B, D, F, C
-    }
-
-    private void activeButtonBySymbol(StatusSymbols symbol) {
+    private void activeButtonBySymbol(OrderStatus symbol) {
         switch (symbol) {
             case I:
                 notFinished.setChecked(true);

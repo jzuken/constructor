@@ -27,6 +27,8 @@ public class StatusConverter {
                 return context.getString(R.string.failed);
             case C:
                 return context.getString(R.string.complete);
+            case A:
+                return context.getString(R.string.pre_authorized);
             default:
                 return "";
         }

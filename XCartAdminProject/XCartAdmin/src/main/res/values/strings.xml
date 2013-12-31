@@ -141,5 +141,6 @@
     <string name="closing_application">Closing application</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="pre_authorized">Pre-Authorized</string>
 
 </resources>
