@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>6FBC959A-61B6-43C7-B4A3-711BA6A95037</string>
+	<key>IDESourceControlProjectName</key>
+	<string>XCartAdmin</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>CE664A0D-8412-4497-9C2F-F3AA0D8FD68B</key>
+		<string>https://github.com/jzuken/constructor.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>iOS/XCartAdmin/XCartAdmin.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>CE664A0D-8412-4497-9C2F-F3AA0D8FD68B</key>
+		<string>../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/jzuken/constructor.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>CE664A0D-8412-4497-9C2F-F3AA0D8FD68B</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>CE664A0D-8412-4497-9C2F-F3AA0D8FD68B</string>
+			<key>IDESourceControlWCCName</key>
+			<string>XCartAdmin</string>
+		</dict>
+	</array>
+</dict>
+</plist>
