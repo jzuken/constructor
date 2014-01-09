@@ -224,7 +224,7 @@ public class DashboardActivity extends PinSupportNetworkActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.dashboard, menu);
+        //getMenuInflater().inflate(R.menu.dashboard, menu);
         return true;
     }
 
