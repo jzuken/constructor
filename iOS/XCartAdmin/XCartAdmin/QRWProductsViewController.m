@@ -8,19 +8,21 @@
 
 #import "QRWProductsViewController.h"
 #import "QRWProductCell.h"
+#import "QRWProductInfoViewController.h"
 
 @interface QRWProductsViewController ()
+{
+    BOOL _isLowStock;
+}
 
 @end
 
 @implementation QRWProductsViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+-(id)initAsLowStock:(BOOL)isLowStock
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-//        [self setEdgesForExtendedLayout:UIRectEdgeAll];
-    }
+    self = [self init];
+    _isLowStock = isLowStock;
     return self;
 }
 
@@ -30,11 +32,13 @@
     
     self.baseCell = [QRWProductCell new];
     [QRWDataManager sendProductsRequestWithSearchString:@""
-                                              fromPoint:0
+                                              fromPoint:self.dataArray.count
                                                 toPoint:10
-                                               lowStock:NO
+                                               lowStock:_isLowStock
                                                   block:^(NSArray *products, NSError *error) {
-                                                      self.dataArray = [NSArray arrayWithArray:products];
+                                                      NSMutableArray *oldDataArray = [NSMutableArray arrayWithArray: self.dataArray];
+                                                      [oldDataArray addObjectsFromArray:products];
+                                                      self.dataArray = oldDataArray;
                                                       [self.tableView reloadData];
                                                   }];
 }
@@ -44,6 +48,19 @@
     [super viewDidAppear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
+
+
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    __weak QRWProductsViewController *weakSelf = self;
+    [QRWDataManager sendProductInfoRequestWithID:[[(QRWProduct *)self.dataArray[indexPath.section] productid] integerValue]
+                                           block:^(QRWProductWithInfo *product, NSError *error) {
+                                               QRWProductInfoViewController *productInfoViewController = [[QRWProductInfoViewController alloc] initWithProduct:product];
+                                               [weakSelf.navigationController pushViewController:productInfoViewController animated:YES];
+                                           }];
+}
+
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

@@ -168,28 +168,23 @@
 }
 
 + (NSURLSessionDataTask *)sendProductInfoRequestWithID:(NSInteger)productID
-                                               block:(void (^)(NSArray *reviews, NSError *error))block
+                                               block:(void (^)(QRWProductWithInfo *product, NSError *error))block
 {
     NSString *getURL = [NSString stringWithFormat:url_productInfoURLappend, productID, [QRWSettingsClient getSecurityKey]];
     
     return [self sendRequestWithURL:getURL
                             success:^(NSURLSessionDataTask *__unused task, id JSON) {
-                                NSMutableArray *reviews = [NSMutableArray new];
-                                NSArray *reviewsArray = (NSArray *) JSON;
-                                for (NSDictionary *data in reviewsArray) {
-                                    DLog(@"Json is: %@", data);
-                                    //                                             QRWUser *user = [QRWUser new];
-                                    //                                             [user buildDataByJson:data];
-                                    //                                             [users addObject:user];
-                                }
+                                QRWProductWithInfo *product = [QRWProductWithInfo new];
+                                DLog(@"Json is: %@", JSON);
+                                [product buildDataByJson:JSON];
                                 if (block) {
-                                    block(reviews, nil);
+                                    block(product, nil);
                                 }
                             }
                             failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
                                 DLog(@"Error: %@", error);
                                 if (block) {
-                                    block([NSArray array], error);
+                                    block([QRWProductWithInfo new], error);
                                 }
                             }];
 }

@@ -15,4 +15,6 @@
 
 
 
+- (id)initAsLowStock: (BOOL)isLowStock;
+
 @end

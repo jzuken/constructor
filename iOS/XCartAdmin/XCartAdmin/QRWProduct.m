@@ -14,7 +14,10 @@
 - (void)buildDataByJson:(NSDictionary *)JSON
 {
     [super buildDataByJson:JSON];
-    self.available = [self.formatter numberFromString: (NSString *)[JSON objectForKey:@"avail"]];
+    
+    self.available = [self.formatter numberFromString:(NSString *)[JSON objectForKey:@"avail"]];
+    self.productid = [self.formatter numberFromString:(NSString *)[JSON objectForKey:@"productid"]];
+    
 }
 
 

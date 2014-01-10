@@ -12,6 +12,7 @@
 #import "QRWUser.h"
 #import "QRWProduct.h"
 #import "QRWOrder.h"
+#import "QRWProductWithInfo.h"
 
 
 
@@ -36,6 +37,9 @@
 
 + (NSURLSessionDataTask *)sendUserInfoRequestWithID: (NSInteger)userID
                                               block: (void (^)(NSArray *reviews, NSError *error))block;
+
++ (NSURLSessionDataTask *)sendProductInfoRequestWithID: (NSInteger)productID
+                                              block: (void (^)(QRWProductWithInfo *product, NSError *error))block;
 
 
 + (NSURLSessionDataTask *)sendProductsRequestWithSearchString: (NSString *)searchString

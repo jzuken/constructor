@@ -16,8 +16,6 @@
     
     self.productcode = [JSON objectForKey:@"productcode"];
     self.product = [JSON objectForKey:@"product"];
-    
-    self.productid = [self.formatter numberFromString: (NSString *)[JSON objectForKey:@"productid"]];
     self.price = [self.formatter numberFromString: (NSString *)[JSON objectForKey:@"price"]];
 }
 
