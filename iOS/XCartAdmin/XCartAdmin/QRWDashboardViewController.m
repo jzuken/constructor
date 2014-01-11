@@ -44,7 +44,17 @@
 {
     [super viewDidLoad];
     [QRWDataManager sendDashboardRequestWithBlock:^(QRWDashboardEntety *dashboardEntety, NSError *error) {
-        [self responseFromTheServer:dashboardEntety];
+        _reviewsTodayLabel.text = NSStringFromInt([[dashboardEntety reviewsToday] intValue]);
+        _lowStockProducts.text = NSStringFromInt([[dashboardEntety lowStock] intValue]);
+        _productsSoldTodayLabel.text = NSStringFromInt([[dashboardEntety todaySold] intValue]);
+        _visitorsToday.text = NSStringFromInt([[dashboardEntety todayVisitors] intValue]);
+        
+        _todaySalesLabel.text = NSStringFromFloat([[dashboardEntety todaySales] floatValue]);
+        
+        _numberOfOrdersLable.text = NSStringFromInt([[dashboardEntety todayOrdersCount] intValue]);
+        
+        self.dataArray= [dashboardEntety todayOrders];
+        [self.tableView reloadData];
     }];
 }
 
@@ -61,22 +71,6 @@
     [super didReceiveMemoryWarning];
 }
 
-
-
-- (void) responseFromTheServer:(QRWBaseEntety *) entety
-{
-    _reviewsTodayLabel.text = NSStringFromInt([[(QRWDashboardEntety *)entety reviewsToday] intValue]);
-    _lowStockProducts.text = NSStringFromInt([[(QRWDashboardEntety *)entety lowStock] intValue]);
-    _productsSoldTodayLabel.text = NSStringFromInt([[(QRWDashboardEntety *)entety todaySold] intValue]);
-    _visitorsToday.text = NSStringFromInt([[(QRWDashboardEntety *)entety todayVisitors] intValue]);
-    
-    _todaySalesLabel.text = NSStringFromFloat([[(QRWDashboardEntety *)entety todaySales] floatValue]);
-    
-    _numberOfOrdersLable.text = NSStringFromInt([[(QRWDashboardEntety *)entety todayOrdersCount] intValue]);
-    
-    self.dataArray= [(QRWDashboardEntety *)entety todayOrders];
-//    [self.tableView reloadData];
-}
 
 
 

@@ -26,13 +26,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
 }
 
-- (void)didReceiveMemoryWarning
+
+
+- (void)viewWillAppear:(BOOL)animated
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    [super viewDidAppear:animated];
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+    [self setNavigationBarColor:kRedColor title: QRWLoc(@"ORDERS")];
 }
 
 @end

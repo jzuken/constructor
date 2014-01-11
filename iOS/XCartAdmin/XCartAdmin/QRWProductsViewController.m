@@ -31,9 +31,13 @@
     [super viewDidLoad];
     
     self.baseCell = [QRWProductCell new];
+    
+    self.requestSearchBar.backgroundColor = kGreyColor;
+    
+    
     [QRWDataManager sendProductsRequestWithSearchString:@""
                                               fromPoint:self.dataArray.count
-                                                toPoint:10
+                                                toPoint:kNumberOfLoadedItems
                                                lowStock:_isLowStock
                                                   block:^(NSArray *products, NSError *error) {
                                                       NSMutableArray *oldDataArray = [NSMutableArray arrayWithArray: self.dataArray];
@@ -47,18 +51,21 @@
 {
     [super viewDidAppear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
+    [self setNavigationBarColor:kGreyColor title: QRWLoc(@"PRODUCTS")];
 }
 
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
     __weak QRWProductsViewController *weakSelf = self;
     [QRWDataManager sendProductInfoRequestWithID:[[(QRWProduct *)self.dataArray[indexPath.section] productid] integerValue]
                                            block:^(QRWProductWithInfo *product, NSError *error) {
                                                QRWProductInfoViewController *productInfoViewController = [[QRWProductInfoViewController alloc] initWithProduct:product];
                                                [weakSelf.navigationController pushViewController:productInfoViewController animated:YES];
                                            }];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 
@@ -75,18 +82,22 @@
     QRWProduct *product = [self.dataArray objectAtIndex:indexPath.section];
     [(QRWProductCell *)cell SKULabel].text = product.productcode;
     [(QRWProductCell *)cell inStockTypeLabel].text = NSStringFromInt([product.available intValue]);
-    [(QRWProductCell *)cell priceLabel].text = NSStringFromInt([product.price intValue]);
+    [(QRWProductCell *)cell priceLabel].text = NSMoneyString(@"$", NSStringFromInt([product.price intValue]));
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 30)];
-    headerView.backgroundColor = [UIColor blueColor];
+    headerView.backgroundColor = kGreyColor;
     
-    UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 5, 310, 20)];
+    UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(1, 2, 320, 27)];
     nameLabel.font = [UIFont systemFontOfSize:15];
     QRWProduct *product = [self.dataArray objectAtIndex:section];
     nameLabel.text = product.product;
+    nameLabel.textColor = kTextBlueColor;
+    nameLabel.adjustsFontSizeToFitWidth=YES;
+    nameLabel.minimumScaleFactor = 0.5;
+    nameLabel.backgroundColor = [UIColor whiteColor];
     
     [headerView addSubview:nameLabel];
     

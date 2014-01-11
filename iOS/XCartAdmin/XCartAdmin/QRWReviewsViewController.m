@@ -10,6 +10,7 @@
 
 @interface QRWReviewsViewController ()
 
+
 @end
 
 @implementation QRWReviewsViewController
@@ -18,11 +19,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    [QRWDataManager sendReviewsRequestFromPoint:0
-                                        toPoint:10
+
+    [QRWDataManager sendReviewsRequestFromPoint:self.dataArray.count
+                                        toPoint:kNumberOfLoadedItems
                                           block:^(NSArray *reviews, NSError *error) {
                                               self.dataArray = [NSArray arrayWithArray:reviews];
+                                              [self.tableView reloadData];
                                           }];
 }
 
@@ -31,6 +33,7 @@
 {
     [super viewDidAppear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
+    [self setNavigationBarColor:kYellowColor title: QRWLoc(@"REVIEWS")];
 }
 
 

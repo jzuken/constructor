@@ -8,7 +8,7 @@
 
 #import "QRWBaseViewController.h"
 
-@interface QRWProductInfoViewController : QRWBaseViewController
+@interface QRWProductInfoViewController : QRWBaseViewController<UIWebViewDelegate>
 
 @property (strong, nonatomic) IBOutlet UILabel *nameLabel;
 @property (strong, nonatomic) IBOutlet UIImageView *imageImageView;
@@ -21,7 +21,7 @@
 
 @property (strong, nonatomic) IBOutlet UISwitch *availiabilitySwitcher;
 
-
+@property (nonatomic, strong) IBOutlet UIScrollView *scrollView;
 
 - (id) initWithProduct:(QRWProductWithInfo *)product;
 

@@ -17,28 +17,16 @@
 
 
 
-@protocol QRWBaseViewControllerProtocol
 
-- (void) responseFromTheServer:(QRWBaseEntety *) entety;
-
-@end
-
-
-@interface QRWBaseViewController : UIViewController<QRWBaseViewControllerProtocol>
+@interface QRWBaseViewController : UIViewController
 
 
 - (void) startLoadingAnimation;
 - (void) stopLoadingAnimation;
 
-//- (void) showAfterDeletedAlertWithSuccessStatus: (BOOL) status;
-//- (void) showSureToDeleteItemAlertWithHandleCancel:(TLCompletionBlock)cancelBlock handleConfirm:(TLCompletionBlock)confirmBlock;
-
-
 - (id)initWithNibName:(NSString *)nibNameOrNil oldNibName:(NSString *)oldNibNameOrNil;
 
+- (void) setNavigationBarColor:(UIColor *)color title: (NSString *)title;
 
-
-
-- (void) QRWpushViewController: (QRWBaseViewController *) viewController;
 
 @end

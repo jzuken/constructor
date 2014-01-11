@@ -23,6 +23,9 @@
     [super viewDidLoad];
     
     self.baseCell = [QRWUserCell new];
+    
+    self.requestSearchBar.backgroundColor = kBlueColor;
+    
     [QRWDataManager sendUserRequestWithSearchString:@""
                                           fromPoint:0
                                             toPoint:10
@@ -41,6 +44,7 @@
 {
     [super viewDidAppear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
+    [self setNavigationBarColor:kBlueColor title: QRWLoc(@"USERS")];
 }
 
 
@@ -62,12 +66,17 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 30)];
-    headerView.backgroundColor = [UIColor blueColor];
+    headerView.backgroundColor = kBlueColor;
     
-    UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 5, 310, 20)];
+    UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(1, 2, 320, 27)];
     nameLabel.font = [UIFont systemFontOfSize:15];
     QRWUser *user = [self.dataArray objectAtIndex:section];
     nameLabel.text = [NSString stringWithFormat:@"%@ %@ %@", user.title, user.firstname, user.lastname];
+    
+    nameLabel.textColor = kTextBlueColor;
+    nameLabel.adjustsFontSizeToFitWidth=YES;
+    nameLabel.minimumScaleFactor = 0.5;
+    nameLabel.backgroundColor = [UIColor whiteColor];
     
     [headerView addSubview:nameLabel];
     

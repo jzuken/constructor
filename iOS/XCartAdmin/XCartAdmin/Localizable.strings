@@ -1,0 +1,19 @@
+/* 
+  Localizable.strings
+  XCartAdmin
+
+  Created by Иван Афанасьев on 11.01.14.
+  Copyright (c) 2014 Ivan Afanasiev. All rights reserved.
+*/
+
+// Titles
+"ORDERS" = "Orders";
+"PRODUCT_INFO" = "Product info";
+"PRODUCTS" = "Products";
+"REVIEWS" = "Reviews";
+"USERS" = "Users";
+
+
+// Buttons
+"SHOW_FULL" = "Show full";
+"SHOW_SHORT" = "Show short";

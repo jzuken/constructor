@@ -31,5 +31,23 @@ static NSString *const kUserDefaults_isLogInObject = @"Login=YES";
 static NSString *const kUserDefaults_isLogOutObject = @"Login=NO";
 
 
+static const NSInteger kNumberOfLoadedItems = 10;
+
+
 #define NSStringFromInt(int_val)  [NSString stringWithFormat: @"%d", int_val]
 #define NSStringFromFloat(float_val)  [NSString stringWithFormat: @"%.2f", float_val]
+
+#define RGB(r, g, b) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1]
+
+#define NSMoneyString(currency, value)  [NSString stringWithFormat: @"%@%@", currency, value]
+
+
+#define kYellowColor RGB(255, 175, 25)
+#define kGreyColor RGB(150, 155, 160)
+#define kBlueColor RGB(115, 155, 180)
+#define kRedColor RGB(245, 130, 25)
+
+#define kTextBlueColor RGB(20, 145, 255)
+
+
+#define QRWLoc(text) NSLocalizedString(text , nil)
