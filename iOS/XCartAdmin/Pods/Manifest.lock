@@ -1,0 +1,16 @@
+PODS:
+  - REFormattedNumberField (1.1.1)
+  - RETableViewManager (1.5.7):
+    - REFormattedNumberField (~> 1.1.1)
+    - REValidation (~> 0.1.4)
+  - REValidation (0.1.4)
+
+DEPENDENCIES:
+  - RETableViewManager (~> 1.5.7)
+
+SPEC CHECKSUMS:
+  REFormattedNumberField: 53db6b5097b02f608999b7c95ec8ccda95be93be
+  RETableViewManager: 1a416f4d862934c8d998827c221158d596da243c
+  REValidation: 02160035110a63af1bf6ad1b8791837b3fa13584
+
+COCOAPODS: 0.29.0
