@@ -26,13 +26,7 @@
     
     self.requestSearchBar.backgroundColor = kBlueColor;
     
-    [QRWDataManager sendUserRequestWithSearchString:@""
-                                          fromPoint:0
-                                            toPoint:10
-                                              block:^(NSArray *users, NSError *error) {
-                                                  self.dataArray = [NSArray arrayWithArray:users];
-                                                  [self.tableView reloadData];
-                                              }];
+    [self loadObjectsWithSearchString:@"" asEmptyArray:YES];
 }
 
 - (void)didReceiveMemoryWarning
@@ -46,6 +40,25 @@
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     [self setNavigationBarColor:kBlueColor title: QRWLoc(@"USERS")];
 }
+
+
+- (void)loadObjectsWithSearchString:(NSString *)searchString asEmptyArray:(BOOL)asEmpty
+{
+    [self startLoadingAnimation];
+    [QRWDataManager sendUserRequestWithSearchString:searchString
+                                          fromPoint:asEmpty? 0 : self.dataArray.count
+                                            toPoint:kNumberOfLoadedItems
+                                              block:^(NSArray *users, NSError *error) {
+                                                  NSMutableArray *oldDataArray = [NSMutableArray arrayWithArray: self.dataArray];
+                                                  [oldDataArray addObjectsFromArray:users];
+                                                  self.dataArray = asEmpty ? users: oldDataArray;
+                                                  [self.tableView reloadData];
+                                                  [self stopAllAnimations];
+                                              }];
+}
+
+
+#pragma mark - TableView methods
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

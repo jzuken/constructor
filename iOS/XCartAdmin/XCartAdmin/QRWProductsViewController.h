@@ -17,4 +17,6 @@
 
 - (id)initAsLowStock: (BOOL)isLowStock;
 
+- (void)setIsLowStock: (BOOL)isLowStock;
+
 @end

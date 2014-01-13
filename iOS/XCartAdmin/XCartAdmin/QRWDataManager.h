@@ -23,7 +23,21 @@
                                                 andPassowrd: (NSString *)password
                                                       block: (void (^)(BOOL isAuth, NSString *description, NSError *error))block;
 
+
+//  ----------------- DASHBOARD --------------------------
+
 + (NSURLSessionDataTask *)sendDashboardRequestWithBlock: (void (^)(QRWDashboardEntety *dashboardEntety, NSError *error))block;
+
+
+
+//  ----------------- REVIEWS --------------------------
+
++ (NSURLSessionDataTask *)sendReviewsRequestFromPoint: (NSInteger)startPoint
+                                              toPoint: (NSInteger)finishPoint
+                                                block: (void (^)(NSArray *reviews, NSError *error))block;
+
+
+//  ----------------- USERS --------------------------
 
 + (NSURLSessionDataTask *)sendUserRequestWithSearchString: (NSString *)searchString
                                                 fromPoint: (NSInteger)startPoint
@@ -31,12 +45,21 @@
                                                     block: (void (^)(NSArray *users, NSError *error))block;
 
 
-+ (NSURLSessionDataTask *)sendReviewsRequestFromPoint: (NSInteger)startPoint
-                                              toPoint: (NSInteger)finishPoint
-                                                block: (void (^)(NSArray *reviews, NSError *error))block;
-
 + (NSURLSessionDataTask *)sendUserInfoRequestWithID: (NSInteger)userID
                                               block: (void (^)(NSArray *reviews, NSError *error))block;
+
+
+//  ----------------- PRODUCTS --------------------------
+
+
++ (NSURLSessionDataTask *)sendProductChangePriceRequestWithID: (NSInteger)productID
+                                                     newPrice: (CGFloat) newPrice
+                                                        block: (void (^)(BOOL isSuccess, NSError *error))block;
+
+
++ (NSURLSessionDataTask *)sendProductChangeAvaliabilityRequestWithID: (NSInteger)productID
+                                                               block: (void (^)(BOOL isSuccess, NSError *error))block;
+
 
 + (NSURLSessionDataTask *)sendProductInfoRequestWithID: (NSInteger)productID
                                               block: (void (^)(QRWProductWithInfo *product, NSError *error))block;
@@ -47,6 +70,10 @@
                                                       toPoint: (NSInteger)finishPoint
                                                      lowStock: (BOOL) isLowStock
                                                         block: (void (^)(NSArray *products, NSError *error))block;
+
+
+
+//  ----------------- ORDERS --------------------------
 
 + (NSURLSessionDataTask *)sendLastOrderRequestWithSearchString: (NSString *)searchString
                                                      fromPoint: (NSInteger)startPoint

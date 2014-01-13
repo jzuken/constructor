@@ -18,7 +18,7 @@
     self.description = [JSON objectForKey:@"descr"];
     self.fullDescription = [JSON objectForKey:@"fulldescr"];
     self.imageURL = [JSON objectForKey:@"image_url"];
-    self.productid = [NSNumber numberWithLong:(long )[JSON objectForKey:@"productid"]];
+    self.productid = [JSON objectForKey:@"productid"];//[NSNumber numberWithLong:(long )[JSON objectForKey:@"productid"]];
     self.available = [self.formatter numberFromString:(NSString *)[JSON objectForKey:@"avail"]];
 }
 

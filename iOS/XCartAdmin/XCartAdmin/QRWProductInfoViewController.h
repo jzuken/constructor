@@ -7,8 +7,9 @@
 //
 
 #import "QRWBaseViewController.h"
+#import "QRWEditPriceView.h"
 
-@interface QRWProductInfoViewController : QRWBaseViewController<UIWebViewDelegate>
+@interface QRWProductInfoViewController : QRWBaseViewController<UIWebViewDelegate, QRWEditPriceViewDelegate>
 
 @property (strong, nonatomic) IBOutlet UILabel *nameLabel;
 @property (strong, nonatomic) IBOutlet UIImageView *imageImageView;

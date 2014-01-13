@@ -7,7 +7,6 @@
 //
 
 #import "QRWBaseViewControllerWithTableView.h"
-#import "QRWToolView.h"
 
 @interface QRWDashboardViewController : QRWBaseViewControllerWithTableView
 

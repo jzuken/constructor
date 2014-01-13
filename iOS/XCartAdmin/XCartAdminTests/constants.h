@@ -10,10 +10,8 @@
 
 
 //CONSTANTS
-static const NSInteger kTopYCoordinateLoginBoxFor4 = 55;
-static const NSInteger kTopYCoordinateLoginBoxFor3_5 = 47;
-static const NSInteger kBottomYCoordinateLoginBoxFor4 = 164;
-static const NSInteger kBottomYCoordinateLoginBoxFor3_5 = 120;
+static const NSInteger kKeyboardHeight = 216;
+static const NSInteger kLoginViewUpHeight = 200;
 
 static const NSInteger kHeightOfListRows = 70;
 
@@ -24,6 +22,7 @@ static NSString *const kTestPassword = @"FQMTED8L";
 //static NSString *const kTestPassword = @"hgD4pH0";
 
 static const NSInteger kSideOfToolView = 140;
+static const NSInteger kheightOfEditPriceView = 36;
 
 
 static NSString *const kUserDefaults_isLogInKey = @"isLoginIn";

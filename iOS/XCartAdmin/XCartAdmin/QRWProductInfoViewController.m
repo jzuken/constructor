@@ -15,7 +15,10 @@
     BOOL _isFullDescription;
 }
 
+@property (nonatomic, strong) QRWEditPriceView *editPriceView;
+
 @property (nonatomic, strong) QRWProductWithInfo *product;
+
 
 @end
 
@@ -32,18 +35,21 @@
 {
     [super viewDidLoad];
     
+    [self addEditPriceView];
+    
     _isFullDescription = NO;
     
     _nameLabel.text = _product.product;
     _availiabilitySwitcher.selected = YES;
     _inStock.text = NSStringFromInt([_product.available intValue]);
     [self setDescription];
-    _priceButton.titleLabel.text = NSStringFromFloat([_product.price floatValue]);
+    [_priceButton setTitle:NSStringFromFloat([_product.price floatValue]) forState:UIControlStateNormal];
     
-    [_imageImageView setImageWithURL:[NSURL URLWithString:_product.imageURL] placeholderImage:[UIImage imageNamed:@"button_dashboard4.png"]];
+    [_imageImageView setImageWithURL:[NSURL URLWithString:_product.imageURL] placeholderImage:[UIImage imageNamed:@"loading.gif"]];
     
     
     [_showFull addTarget:self action:@selector(showDescription) forControlEvents:UIControlEventTouchUpInside];
+    [_priceButton addTarget:self action:@selector(changePrice) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)didReceiveMemoryWarning
@@ -59,6 +65,14 @@
 }
 
 
+- (void) addEditPriceView
+{
+    _editPriceView = [[QRWEditPriceView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, kheightOfEditPriceView)];
+    _editPriceView.delegate = self;
+    [self.view addSubview:_editPriceView];
+}
+
+#pragma mark - Description
 
 - (void) setDescription
 {
@@ -77,6 +91,15 @@
     }
 }
 
+- (void)showDescription
+{
+    [_showFull setTitle: _isFullDescription ? QRWLoc(@"SHOW_FULL") : QRWLoc(@"SHOW_SHORT") forState:UIControlStateNormal];
+    _isFullDescription = !_isFullDescription;
+    [self setDescription];
+}
+
+#pragma mark - WebView
+
 -(void)webViewDidFinishLoad:(UIWebView *)webView
 {
     CGRect frame = webView.frame;
@@ -90,15 +113,55 @@
 }
 
 
+#pragma mark - QRWEditTextView
 
-
-- (void)showDescription
+- (void) changePrice
 {
-    [_showFull setTitle: _isFullDescription ? QRWLoc(@"SHOW_FULL") : QRWLoc(@"SHOW_SHORT") forState:UIControlStateNormal];
-    _isFullDescription = !_isFullDescription;
-    [self setDescription];
+    [_editPriceView.priceTextField becomeFirstResponder];
+    [self moveEditPriceViewToHeight:_scrollView.frame.size.height - kheightOfEditPriceView];
+    [_editPriceView.priceTextField setText:[NSString stringWithFormat:@"%.2f", [_product.price floatValue]]];
 }
 
 
+- (void)saveButtonPressedWithPrice:(CGFloat)newPrice
+{
+    [self startLoadingAnimation];
+    [QRWDataManager sendProductChangePriceRequestWithID:[_product.productid intValue] newPrice:newPrice block:^(BOOL isSuccess, NSError *error) {
+        [self stopLoadingAnimation];
+        [_editPriceView.priceTextField resignFirstResponder];
+        [self moveEditPriceViewToHeight: _scrollView.frame.size.height];
+        if (isSuccess){
+            _product.price = [NSNumber numberWithFloat:newPrice];
+            [_priceButton setTitle:NSStringFromFloat([_product.price floatValue]) forState:UIControlStateNormal];
+            [self showSuccesView];
+        } else {
+            [self showErrorView];
+        }
+    }];
+}
+
+
+- (void) moveEditPriceViewToHeight:(CGFloat) height
+{
+    [UIView animateWithDuration:0.3 animations:^{
+        CGRect frame = _editPriceView.frame;
+        frame.origin.y = height;
+        _editPriceView.frame = frame;
+    }];
+}
+
+#pragma mark - Keyboard appears/disappear methods
+
+
+- (void) changeTheTableViewHeight: (CGFloat) heightChange
+{
+    [UIView animateWithDuration:0.2 animations:^{
+        CGRect frame = self.scrollView.frame;
+        frame.size.height += heightChange;
+        self.scrollView.frame = frame;
+    }];
+    
+    [_scrollView scrollRectToVisible:_priceButton.frame animated:YES];
+}
 
 @end

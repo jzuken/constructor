@@ -45,6 +45,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.baseCell = [UITableViewCell new];
+    
+    [self startLoadingAnimation];
     [QRWDataManager sendDashboardRequestWithBlock:^(QRWDashboardEntety *dashboardEntety, NSError *error) {
         _reviewsTodayLabel.text = NSStringFromInt([[dashboardEntety reviewsToday] intValue]);
         _lowStockProducts.text = NSStringFromInt([[dashboardEntety lowStock] intValue]);
@@ -57,7 +61,12 @@
         
         self.dataArray= [dashboardEntety todayOrders];
         [self.tableView reloadData];
+        
+        [self stopLoadingAnimation];
     }];
+    
+    self.tableView.showsInfiniteScrolling = NO;
+    self.tableView.showsPullToRefresh = NO;
 }
 
 
@@ -78,6 +87,29 @@
 
 
 #pragma mark - TableView methods
+
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 60;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 0;
+}
+
+
+- (void)configureProductCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
+{
+    QRWOrder *order = [self.dataArray objectAtIndex:indexPath.section];
+    
+    [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+    
+    cell.textLabel.text = [NSString stringWithFormat:@"%@ %@ (#%d)", order.firstname, order.lastname, [order.orderid intValue]];
+    cell.detailTextLabel.text = NSMoneyString(@"$", NSStringFromInt([order.total intValue]));
+
+}
 
 
 
@@ -106,6 +138,7 @@
     if (!_productsViewController) {
         _productsViewController = [[QRWProductsViewController alloc] init];
     }
+    [_productsViewController setIsLowStock:NO];
     [self.navigationController pushViewController:_productsViewController animated:YES];
 }
 
@@ -122,6 +155,7 @@
     if (!_productsViewController) {
     _productsViewController = [[QRWProductsViewController alloc] init];
     }
+    [_productsViewController setIsLowStock:YES];
     [self.navigationController pushViewController:_productsViewController animated:YES];
 }
 @end

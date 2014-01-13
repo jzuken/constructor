@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		72E90A0FD5A24E7983C0F0F6 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43D05E16E2D64500ABFC66D8 /* libPods.a */; };
+		7F8173AB1884471400894E16 /* QRWDashboardViewControllerOld.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F8173AA1884471400894E16 /* QRWDashboardViewControllerOld.xib */; };
+		7F8173AD1884488C00894E16 /* QRWProductsViewControllerOld.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F8173AC1884488C00894E16 /* QRWProductsViewControllerOld.xib */; };
+		7F8173AF188448F300894E16 /* QRWOrdersViewControllerOld.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F8173AE188448F300894E16 /* QRWOrdersViewControllerOld.xib */; };
+		7F8173B11884499500894E16 /* QRWProductInfoViewControllerOld.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F8173B01884499500894E16 /* QRWProductInfoViewControllerOld.xib */; };
+		7F8173B318844B4500894E16 /* QRWUsersViewControllerOld.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F8173B218844B4500894E16 /* QRWUsersViewControllerOld.xib */; };
+		7F8173B518844C0F00894E16 /* QRWReviewsViewControllerOld.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F8173B418844C0F00894E16 /* QRWReviewsViewControllerOld.xib */; };
 		7F9F99F31815604500AB3EF5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F9F99F21815604500AB3EF5 /* Foundation.framework */; };
 		7F9F99F51815604500AB3EF5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F9F99F41815604500AB3EF5 /* CoreGraphics.framework */; };
 		7F9F99F71815604600AB3EF5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F9F99F61815604600AB3EF5 /* UIKit.framework */; };
@@ -36,14 +42,11 @@
 		7F9F9A591815662100AB3EF5 /* QRWLoginScrinViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F9F9A571815662100AB3EF5 /* QRWLoginScrinViewController.xib */; };
 		7F9F9A5A1815662100AB3EF5 /* QRWLoginScrinViewControllerOld.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F9F9A581815662100AB3EF5 /* QRWLoginScrinViewControllerOld.xib */; };
 		7F9F9A5D18156CC400AB3EF5 /* QRWBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F9F9A5C18156CC400AB3EF5 /* QRWBaseViewController.m */; };
-		7F9F9A6118156CF200AB3EF5 /* SVPullToRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F9F9A5F18156CF200AB3EF5 /* SVPullToRefresh.m */; };
 		7F9F9A6918156D0C00AB3EF5 /* UIButton+Block.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F9F9A6418156D0B00AB3EF5 /* UIButton+Block.m */; };
 		7F9F9A6A18156D0C00AB3EF5 /* UIDevice+Resolutions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F9F9A6618156D0B00AB3EF5 /* UIDevice+Resolutions.m */; };
 		7F9F9A6B18156D0C00AB3EF5 /* UIColor+hex.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F9F9A6818156D0C00AB3EF5 /* UIColor+hex.m */; };
-		7F9F9A6E18156DFF00AB3EF5 /* TLAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F9F9A6D18156DFF00AB3EF5 /* TLAlertView.m */; };
 		7F9F9A7318156F2E00AB3EF5 /* QRWDashboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F9F9A7118156F2E00AB3EF5 /* QRWDashboardViewController.m */; };
 		7F9F9A7418156F2E00AB3EF5 /* QRWDashboardViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F9F9A7218156F2E00AB3EF5 /* QRWDashboardViewController.xib */; };
-		7F9F9A78181572F800AB3EF5 /* QRWToolView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F9F9A77181572F800AB3EF5 /* QRWToolView.m */; };
 		7FBCF2C8187EA19D00594CCD /* QRWBaseProduct.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FBCF2C7187EA19D00594CCD /* QRWBaseProduct.m */; };
 		7FBCF2CD187EA44800594CCD /* QRWProductsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FBCF2CB187EA44800594CCD /* QRWProductsViewController.m */; };
 		7FBCF2CE187EA44800594CCD /* QRWProductsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FBCF2CC187EA44800594CCD /* QRWProductsViewController.xib */; };
@@ -56,23 +59,10 @@
 		7FBCF2E81880001100594CCD /* QRWProductInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FBCF2E61880001100594CCD /* QRWProductInfoViewController.m */; };
 		7FBCF2E91880001100594CCD /* QRWProductInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FBCF2E71880001100594CCD /* QRWProductInfoViewController.xib */; };
 		7FBCF2ED188014DE00594CCD /* QRWProductWithInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FBCF2EC188014DE00594CCD /* QRWProductWithInfo.m */; };
+		7FBCF2EF1883ECD500594CCD /* loading.gif in Resources */ = {isa = PBXBuildFile; fileRef = 7FBCF2EE1883ECD500594CCD /* loading.gif */; };
+		7FBCF2F3188414F800594CCD /* QRWEditPriceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FBCF2F2188414F800594CCD /* QRWEditPriceView.m */; };
+		7FBCF2F51884150C00594CCD /* QRWEditPriceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FBCF2F41884150C00594CCD /* QRWEditPriceView.xib */; };
 		7FCFD2C91869877200F44547 /* QRWHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FCFD2C51869877200F44547 /* QRWHTTPClient.m */; };
-		7FCFD2DF186987B300F44547 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FCFD2CD186987B300F44547 /* AFHTTPRequestOperation.m */; };
-		7FCFD2E0186987B300F44547 /* AFHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FCFD2CF186987B300F44547 /* AFHTTPRequestOperationManager.m */; };
-		7FCFD2E1186987B300F44547 /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FCFD2D1186987B300F44547 /* AFHTTPSessionManager.m */; };
-		7FCFD2E2186987B300F44547 /* AFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FCFD2D4186987B300F44547 /* AFNetworkReachabilityManager.m */; };
-		7FCFD2E3186987B300F44547 /* AFSecurityPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FCFD2D6186987B300F44547 /* AFSecurityPolicy.m */; };
-		7FCFD2E4186987B300F44547 /* AFURLConnectionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FCFD2D8186987B300F44547 /* AFURLConnectionOperation.m */; };
-		7FCFD2E5186987B300F44547 /* AFURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FCFD2DA186987B300F44547 /* AFURLRequestSerialization.m */; };
-		7FCFD2E6186987B300F44547 /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FCFD2DC186987B300F44547 /* AFURLResponseSerialization.m */; };
-		7FCFD2E7186987B300F44547 /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FCFD2DE186987B300F44547 /* AFURLSessionManager.m */; };
-		7FCFD2F8186987C600F44547 /* AFNetworkActivityIndicatorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FCFD2EA186987C600F44547 /* AFNetworkActivityIndicatorManager.m */; };
-		7FCFD2F9186987C600F44547 /* UIActivityIndicatorView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FCFD2EC186987C600F44547 /* UIActivityIndicatorView+AFNetworking.m */; };
-		7FCFD2FA186987C600F44547 /* UIAlertView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FCFD2EE186987C600F44547 /* UIAlertView+AFNetworking.m */; };
-		7FCFD2FB186987C600F44547 /* UIButton+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FCFD2F0186987C600F44547 /* UIButton+AFNetworking.m */; };
-		7FCFD2FC186987C600F44547 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FCFD2F2186987C600F44547 /* UIImageView+AFNetworking.m */; };
-		7FCFD2FD186987C600F44547 /* UIProgressView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FCFD2F5186987C600F44547 /* UIProgressView+AFNetworking.m */; };
-		7FCFD2FE186987C600F44547 /* UIWebView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FCFD2F7186987C600F44547 /* UIWebView+AFNetworking.m */; };
 		7FCFD30118698F1800F44547 /* QRWSettingsClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FCFD30018698F1800F44547 /* QRWSettingsClient.m */; };
 		7FCFD3051869B8AD00F44547 /* QRWUserCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FCFD3041869B8AD00F44547 /* QRWUserCell.xib */; };
 		7FCFD3081869BA4000F44547 /* QRWUserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FCFD3071869BA4000F44547 /* QRWUserCell.m */; };
@@ -114,6 +104,12 @@
 
 /* Begin PBXFileReference section */
 		43D05E16E2D64500ABFC66D8 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		7F8173AA1884471400894E16 /* QRWDashboardViewControllerOld.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRWDashboardViewControllerOld.xib; sourceTree = "<group>"; };
+		7F8173AC1884488C00894E16 /* QRWProductsViewControllerOld.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRWProductsViewControllerOld.xib; sourceTree = "<group>"; };
+		7F8173AE188448F300894E16 /* QRWOrdersViewControllerOld.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRWOrdersViewControllerOld.xib; sourceTree = "<group>"; };
+		7F8173B01884499500894E16 /* QRWProductInfoViewControllerOld.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRWProductInfoViewControllerOld.xib; sourceTree = "<group>"; };
+		7F8173B218844B4500894E16 /* QRWUsersViewControllerOld.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRWUsersViewControllerOld.xib; sourceTree = "<group>"; };
+		7F8173B418844C0F00894E16 /* QRWReviewsViewControllerOld.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRWReviewsViewControllerOld.xib; sourceTree = "<group>"; };
 		7F9F99EF1815604500AB3EF5 /* XCartAdmin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XCartAdmin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F9F99F21815604500AB3EF5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		7F9F99F41815604500AB3EF5 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -162,21 +158,15 @@
 		7F9F9A581815662100AB3EF5 /* QRWLoginScrinViewControllerOld.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRWLoginScrinViewControllerOld.xib; sourceTree = "<group>"; };
 		7F9F9A5B18156CC400AB3EF5 /* QRWBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRWBaseViewController.h; sourceTree = "<group>"; };
 		7F9F9A5C18156CC400AB3EF5 /* QRWBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRWBaseViewController.m; sourceTree = "<group>"; };
-		7F9F9A5F18156CF200AB3EF5 /* SVPullToRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPullToRefresh.m; sourceTree = "<group>"; };
-		7F9F9A6018156CF200AB3EF5 /* SVPullToRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPullToRefresh.h; sourceTree = "<group>"; };
 		7F9F9A6318156D0B00AB3EF5 /* UIButton+Block.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+Block.h"; sourceTree = "<group>"; };
 		7F9F9A6418156D0B00AB3EF5 /* UIButton+Block.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+Block.m"; sourceTree = "<group>"; };
 		7F9F9A6518156D0B00AB3EF5 /* UIDevice+Resolutions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice+Resolutions.h"; sourceTree = "<group>"; };
 		7F9F9A6618156D0B00AB3EF5 /* UIDevice+Resolutions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+Resolutions.m"; sourceTree = "<group>"; };
 		7F9F9A6718156D0C00AB3EF5 /* UIColor+hex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+hex.h"; sourceTree = "<group>"; };
 		7F9F9A6818156D0C00AB3EF5 /* UIColor+hex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+hex.m"; sourceTree = "<group>"; };
-		7F9F9A6C18156DFF00AB3EF5 /* TLAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLAlertView.h; sourceTree = "<group>"; };
-		7F9F9A6D18156DFF00AB3EF5 /* TLAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TLAlertView.m; sourceTree = "<group>"; };
 		7F9F9A7018156F2E00AB3EF5 /* QRWDashboardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRWDashboardViewController.h; sourceTree = "<group>"; };
 		7F9F9A7118156F2E00AB3EF5 /* QRWDashboardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRWDashboardViewController.m; sourceTree = "<group>"; };
 		7F9F9A7218156F2E00AB3EF5 /* QRWDashboardViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRWDashboardViewController.xib; sourceTree = "<group>"; };
-		7F9F9A76181572F800AB3EF5 /* QRWToolView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRWToolView.h; sourceTree = "<group>"; };
-		7F9F9A77181572F800AB3EF5 /* QRWToolView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRWToolView.m; sourceTree = "<group>"; };
 		7FBCF2C6187EA19D00594CCD /* QRWBaseProduct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRWBaseProduct.h; sourceTree = "<group>"; };
 		7FBCF2C7187EA19D00594CCD /* QRWBaseProduct.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRWBaseProduct.m; sourceTree = "<group>"; };
 		7FBCF2CA187EA44800594CCD /* QRWProductsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRWProductsViewController.h; sourceTree = "<group>"; };
@@ -196,42 +186,12 @@
 		7FBCF2E71880001100594CCD /* QRWProductInfoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRWProductInfoViewController.xib; sourceTree = "<group>"; };
 		7FBCF2EB188014DE00594CCD /* QRWProductWithInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRWProductWithInfo.h; sourceTree = "<group>"; };
 		7FBCF2EC188014DE00594CCD /* QRWProductWithInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRWProductWithInfo.m; sourceTree = "<group>"; };
+		7FBCF2EE1883ECD500594CCD /* loading.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = loading.gif; sourceTree = "<group>"; };
+		7FBCF2F1188414F800594CCD /* QRWEditPriceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRWEditPriceView.h; sourceTree = "<group>"; };
+		7FBCF2F2188414F800594CCD /* QRWEditPriceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRWEditPriceView.m; sourceTree = "<group>"; };
+		7FBCF2F41884150C00594CCD /* QRWEditPriceView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRWEditPriceView.xib; sourceTree = "<group>"; };
 		7FCFD2C51869877200F44547 /* QRWHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRWHTTPClient.m; sourceTree = "<group>"; };
 		7FCFD2C81869877200F44547 /* QRWHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRWHTTPClient.h; sourceTree = "<group>"; };
-		7FCFD2CC186987B300F44547 /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
-		7FCFD2CD186987B300F44547 /* AFHTTPRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPRequestOperation.m; sourceTree = "<group>"; };
-		7FCFD2CE186987B300F44547 /* AFHTTPRequestOperationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperationManager.h; sourceTree = "<group>"; };
-		7FCFD2CF186987B300F44547 /* AFHTTPRequestOperationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPRequestOperationManager.m; sourceTree = "<group>"; };
-		7FCFD2D0186987B300F44547 /* AFHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPSessionManager.h; sourceTree = "<group>"; };
-		7FCFD2D1186987B300F44547 /* AFHTTPSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPSessionManager.m; sourceTree = "<group>"; };
-		7FCFD2D2186987B300F44547 /* AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworking.h; sourceTree = "<group>"; };
-		7FCFD2D3186987B300F44547 /* AFNetworkReachabilityManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworkReachabilityManager.h; sourceTree = "<group>"; };
-		7FCFD2D4186987B300F44547 /* AFNetworkReachabilityManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFNetworkReachabilityManager.m; sourceTree = "<group>"; };
-		7FCFD2D5186987B300F44547 /* AFSecurityPolicy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFSecurityPolicy.h; sourceTree = "<group>"; };
-		7FCFD2D6186987B300F44547 /* AFSecurityPolicy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFSecurityPolicy.m; sourceTree = "<group>"; };
-		7FCFD2D7186987B300F44547 /* AFURLConnectionOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLConnectionOperation.h; sourceTree = "<group>"; };
-		7FCFD2D8186987B300F44547 /* AFURLConnectionOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLConnectionOperation.m; sourceTree = "<group>"; };
-		7FCFD2D9186987B300F44547 /* AFURLRequestSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLRequestSerialization.h; sourceTree = "<group>"; };
-		7FCFD2DA186987B300F44547 /* AFURLRequestSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLRequestSerialization.m; sourceTree = "<group>"; };
-		7FCFD2DB186987B300F44547 /* AFURLResponseSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLResponseSerialization.h; sourceTree = "<group>"; };
-		7FCFD2DC186987B300F44547 /* AFURLResponseSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLResponseSerialization.m; sourceTree = "<group>"; };
-		7FCFD2DD186987B300F44547 /* AFURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLSessionManager.h; sourceTree = "<group>"; };
-		7FCFD2DE186987B300F44547 /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
-		7FCFD2E9186987C600F44547 /* AFNetworkActivityIndicatorManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworkActivityIndicatorManager.h; sourceTree = "<group>"; };
-		7FCFD2EA186987C600F44547 /* AFNetworkActivityIndicatorManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFNetworkActivityIndicatorManager.m; sourceTree = "<group>"; };
-		7FCFD2EB186987C600F44547 /* UIActivityIndicatorView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIActivityIndicatorView+AFNetworking.h"; sourceTree = "<group>"; };
-		7FCFD2EC186987C600F44547 /* UIActivityIndicatorView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIActivityIndicatorView+AFNetworking.m"; sourceTree = "<group>"; };
-		7FCFD2ED186987C600F44547 /* UIAlertView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertView+AFNetworking.h"; sourceTree = "<group>"; };
-		7FCFD2EE186987C600F44547 /* UIAlertView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertView+AFNetworking.m"; sourceTree = "<group>"; };
-		7FCFD2EF186987C600F44547 /* UIButton+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+AFNetworking.h"; sourceTree = "<group>"; };
-		7FCFD2F0186987C600F44547 /* UIButton+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+AFNetworking.m"; sourceTree = "<group>"; };
-		7FCFD2F1186987C600F44547 /* UIImageView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+AFNetworking.h"; sourceTree = "<group>"; };
-		7FCFD2F2186987C600F44547 /* UIImageView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+AFNetworking.m"; sourceTree = "<group>"; };
-		7FCFD2F3186987C600F44547 /* UIKit+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIKit+AFNetworking.h"; sourceTree = "<group>"; };
-		7FCFD2F4186987C600F44547 /* UIProgressView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIProgressView+AFNetworking.h"; sourceTree = "<group>"; };
-		7FCFD2F5186987C600F44547 /* UIProgressView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIProgressView+AFNetworking.m"; sourceTree = "<group>"; };
-		7FCFD2F6186987C600F44547 /* UIWebView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWebView+AFNetworking.h"; sourceTree = "<group>"; };
-		7FCFD2F7186987C600F44547 /* UIWebView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWebView+AFNetworking.m"; sourceTree = "<group>"; };
 		7FCFD2FF18698F1800F44547 /* QRWSettingsClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRWSettingsClient.h; sourceTree = "<group>"; };
 		7FCFD30018698F1800F44547 /* QRWSettingsClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRWSettingsClient.m; sourceTree = "<group>"; };
 		7FCFD3041869B8AD00F44547 /* QRWUserCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRWUserCell.xib; sourceTree = "<group>"; };
@@ -451,6 +411,7 @@
 		7F9F9A4F1815638500AB3EF5 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				7FBCF2F0188414CC00594CCD /* EditPrice */,
 				9624FBBC1880D06D007A641D /* UserInfo */,
 				7FBCF2EA1880001F00594CCD /* ProductInfo */,
 				7FBCF2E3187FFBAE00594CCD /* Unlock */,
@@ -486,12 +447,6 @@
 		7F9F9A5E18156CD500AB3EF5 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				7FCFD2E8186987C600F44547 /* UIKit+AFNetworking */,
-				7FCFD2CB186987B300F44547 /* AFNetworking */,
-				7F9F9A6C18156DFF00AB3EF5 /* TLAlertView.h */,
-				7F9F9A6D18156DFF00AB3EF5 /* TLAlertView.m */,
-				7F9F9A5F18156CF200AB3EF5 /* SVPullToRefresh.m */,
-				7F9F9A6018156CF200AB3EF5 /* SVPullToRefresh.h */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -512,8 +467,6 @@
 		7F9F9A6F18156EEE00AB3EF5 /* Dashboard */ = {
 			isa = PBXGroup;
 			children = (
-				7F9F9A76181572F800AB3EF5 /* QRWToolView.h */,
-				7F9F9A77181572F800AB3EF5 /* QRWToolView.m */,
 				7F9F9A7018156F2E00AB3EF5 /* QRWDashboardViewController.h */,
 				7F9F9A7118156F2E00AB3EF5 /* QRWDashboardViewController.m */,
 			);
@@ -524,6 +477,7 @@
 			isa = PBXGroup;
 			children = (
 				7F9F9A7218156F2E00AB3EF5 /* QRWDashboardViewController.xib */,
+				7F8173AA1884471400894E16 /* QRWDashboardViewControllerOld.xib */,
 			);
 			name = Dashboard;
 			sourceTree = "<group>";
@@ -541,6 +495,7 @@
 			isa = PBXGroup;
 			children = (
 				7FBCF2CC187EA44800594CCD /* QRWProductsViewController.xib */,
+				7F8173AC1884488C00894E16 /* QRWProductsViewControllerOld.xib */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -568,6 +523,7 @@
 			isa = PBXGroup;
 			children = (
 				7FBCF2D9187EC99000594CCD /* QRWOrdersViewController.xib */,
+				7F8173AE188448F300894E16 /* QRWOrdersViewControllerOld.xib */,
 			);
 			name = Orders;
 			sourceTree = "<group>";
@@ -602,56 +558,19 @@
 			isa = PBXGroup;
 			children = (
 				7FBCF2E71880001100594CCD /* QRWProductInfoViewController.xib */,
+				7F8173B01884499500894E16 /* QRWProductInfoViewControllerOld.xib */,
 			);
 			name = ProductInfo;
 			sourceTree = "<group>";
 		};
-		7FCFD2CB186987B300F44547 /* AFNetworking */ = {
+		7FBCF2F0188414CC00594CCD /* EditPrice */ = {
 			isa = PBXGroup;
 			children = (
-				7FCFD2D2186987B300F44547 /* AFNetworking.h */,
-				7FCFD2CC186987B300F44547 /* AFHTTPRequestOperation.h */,
-				7FCFD2CD186987B300F44547 /* AFHTTPRequestOperation.m */,
-				7FCFD2CE186987B300F44547 /* AFHTTPRequestOperationManager.h */,
-				7FCFD2CF186987B300F44547 /* AFHTTPRequestOperationManager.m */,
-				7FCFD2D0186987B300F44547 /* AFHTTPSessionManager.h */,
-				7FCFD2D1186987B300F44547 /* AFHTTPSessionManager.m */,
-				7FCFD2D3186987B300F44547 /* AFNetworkReachabilityManager.h */,
-				7FCFD2D4186987B300F44547 /* AFNetworkReachabilityManager.m */,
-				7FCFD2D5186987B300F44547 /* AFSecurityPolicy.h */,
-				7FCFD2D6186987B300F44547 /* AFSecurityPolicy.m */,
-				7FCFD2D7186987B300F44547 /* AFURLConnectionOperation.h */,
-				7FCFD2D8186987B300F44547 /* AFURLConnectionOperation.m */,
-				7FCFD2D9186987B300F44547 /* AFURLRequestSerialization.h */,
-				7FCFD2DA186987B300F44547 /* AFURLRequestSerialization.m */,
-				7FCFD2DB186987B300F44547 /* AFURLResponseSerialization.h */,
-				7FCFD2DC186987B300F44547 /* AFURLResponseSerialization.m */,
-				7FCFD2DD186987B300F44547 /* AFURLSessionManager.h */,
-				7FCFD2DE186987B300F44547 /* AFURLSessionManager.m */,
+				7FBCF2F1188414F800594CCD /* QRWEditPriceView.h */,
+				7FBCF2F2188414F800594CCD /* QRWEditPriceView.m */,
+				7FBCF2F41884150C00594CCD /* QRWEditPriceView.xib */,
 			);
-			path = AFNetworking;
-			sourceTree = "<group>";
-		};
-		7FCFD2E8186987C600F44547 /* UIKit+AFNetworking */ = {
-			isa = PBXGroup;
-			children = (
-				7FCFD2F3186987C600F44547 /* UIKit+AFNetworking.h */,
-				7FCFD2E9186987C600F44547 /* AFNetworkActivityIndicatorManager.h */,
-				7FCFD2EA186987C600F44547 /* AFNetworkActivityIndicatorManager.m */,
-				7FCFD2EB186987C600F44547 /* UIActivityIndicatorView+AFNetworking.h */,
-				7FCFD2EC186987C600F44547 /* UIActivityIndicatorView+AFNetworking.m */,
-				7FCFD2ED186987C600F44547 /* UIAlertView+AFNetworking.h */,
-				7FCFD2EE186987C600F44547 /* UIAlertView+AFNetworking.m */,
-				7FCFD2EF186987C600F44547 /* UIButton+AFNetworking.h */,
-				7FCFD2F0186987C600F44547 /* UIButton+AFNetworking.m */,
-				7FCFD2F1186987C600F44547 /* UIImageView+AFNetworking.h */,
-				7FCFD2F2186987C600F44547 /* UIImageView+AFNetworking.m */,
-				7FCFD2F4186987C600F44547 /* UIProgressView+AFNetworking.h */,
-				7FCFD2F5186987C600F44547 /* UIProgressView+AFNetworking.m */,
-				7FCFD2F6186987C600F44547 /* UIWebView+AFNetworking.h */,
-				7FCFD2F7186987C600F44547 /* UIWebView+AFNetworking.m */,
-			);
-			path = "UIKit+AFNetworking";
+			name = EditPrice;
 			sourceTree = "<group>";
 		};
 		7FCFD3021869B84000F44547 /* Cells */ = {
@@ -709,6 +628,7 @@
 			isa = PBXGroup;
 			children = (
 				7FCFD3131869D1D300F44547 /* QRWUsersViewController.xib */,
+				7F8173B218844B4500894E16 /* QRWUsersViewControllerOld.xib */,
 			);
 			name = Users;
 			sourceTree = "<group>";
@@ -726,6 +646,7 @@
 			isa = PBXGroup;
 			children = (
 				7FCFD32C187D679000F44547 /* QRWReviewsViewController.xib */,
+				7F8173B418844C0F00894E16 /* QRWReviewsViewControllerOld.xib */,
 			);
 			name = Reviews;
 			sourceTree = "<group>";
@@ -770,6 +691,7 @@
 		969409D6182C502400B0B343 /* imgs */ = {
 			isa = PBXGroup;
 			children = (
+				7FBCF2EE1883ECD500594CCD /* loading.gif */,
 				9624FBCE1883492E007A641D /* button_login.png */,
 				9624FBCC1883490A007A641D /* logo.png */,
 				969409E1182C581900B0B343 /* active_button_dashboard1.png */,
@@ -861,6 +783,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7FBCF2DB187EC99000594CCD /* QRWOrdersViewController.xib in Resources */,
+				7F8173B11884499500894E16 /* QRWProductInfoViewControllerOld.xib in Resources */,
 				9624FBCF1883492E007A641D /* button_login.png in Resources */,
 				7F9F9A7418156F2E00AB3EF5 /* QRWDashboardViewController.xib in Resources */,
 				7FBCF2E91880001100594CCD /* QRWProductInfoViewController.xib in Resources */,
@@ -868,21 +791,28 @@
 				7F9F99FD1815604600AB3EF5 /* InfoPlist.strings in Resources */,
 				7F9F9A051815604600AB3EF5 /* Images.xcassets in Resources */,
 				7F9F9A591815662100AB3EF5 /* QRWLoginScrinViewController.xib in Resources */,
+				7F8173AD1884488C00894E16 /* QRWProductsViewControllerOld.xib in Resources */,
 				7FCFD32E187D679000F44547 /* QRWReviewsViewController.xib in Resources */,
 				969409D8182C503600B0B343 /* button_dashboard1.png in Resources */,
 				969409DA182C504100B0B343 /* button_dashboard2.png in Resources */,
 				9624FBBB1880CF6B007A641D /* Podfile in Resources */,
+				7F8173AB1884471400894E16 /* QRWDashboardViewControllerOld.xib in Resources */,
 				9624FBC81880D3C5007A641D /* QRWOrdersCell.xib in Resources */,
 				9624FBB91880A1EA007A641D /* Localizable.strings in Resources */,
+				7F8173B518844C0F00894E16 /* QRWReviewsViewControllerOld.xib in Resources */,
 				7FBCF2D2187EA73900594CCD /* QRWProductCell.xib in Resources */,
+				7FBCF2EF1883ECD500594CCD /* loading.gif in Resources */,
 				7FBCF2E2187FFBA200594CCD /* QRWUnlockViewController.xib in Resources */,
 				969409E2182C581900B0B343 /* active_button_dashboard1.png in Resources */,
 				9624FBC21880D0A9007A641D /* QRWUserInfoViewController.xib in Resources */,
+				7FBCF2F51884150C00594CCD /* QRWEditPriceView.xib in Resources */,
+				7F8173AF188448F300894E16 /* QRWOrdersViewControllerOld.xib in Resources */,
 				7FCFD3151869D1D300F44547 /* QRWUsersViewController.xib in Resources */,
 				969409DC182C504B00B0B343 /* button_dashboard3.png in Resources */,
 				7FBCF2CE187EA44800594CCD /* QRWProductsViewController.xib in Resources */,
 				969409DE182C505800B0B343 /* button_dashboard4.png in Resources */,
 				9624FBCD1883490A007A641D /* logo.png in Resources */,
+				7F8173B318844B4500894E16 /* QRWUsersViewControllerOld.xib in Resources */,
 				7FCFD334187D684F00F44547 /* QRWReviewCell.xib in Resources */,
 				7F9F9A5A1815662100AB3EF5 /* QRWLoginScrinViewControllerOld.xib in Resources */,
 				969409E0182C50C700B0B343 /* title_dashboard.png in Resources */,
@@ -938,59 +868,41 @@
 			buildActionMask = 2147483647;
 			files = (
 				7F9F9A6A18156D0C00AB3EF5 /* UIDevice+Resolutions.m in Sources */,
-				7FCFD2E2186987B300F44547 /* AFNetworkReachabilityManager.m in Sources */,
 				7F9F99FF1815604600AB3EF5 /* main.m in Sources */,
 				9624FBCB18814DC0007A641D /* QRWUserInfo.m in Sources */,
 				7F9F9A49181562F200AB3EF5 /* QRWUsers.m in Sources */,
 				7F9F9A6B18156D0C00AB3EF5 /* UIColor+hex.m in Sources */,
-				7F9F9A6E18156DFF00AB3EF5 /* TLAlertView.m in Sources */,
-				7FCFD2FE186987C600F44547 /* UIWebView+AFNetworking.m in Sources */,
 				7FBCF2C8187EA19D00594CCD /* QRWBaseProduct.m in Sources */,
-				7FCFD2FB186987C600F44547 /* UIButton+AFNetworking.m in Sources */,
 				7F9F9A4D181562F200AB3EF5 /* QRWProductOld.m in Sources */,
 				9624FBC11880D0A9007A641D /* QRWUserInfoViewController.m in Sources */,
-				7FCFD2F9186987C600F44547 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				7F9F9A4C181562F200AB3EF5 /* QRWUploadResponse.m in Sources */,
-				7FCFD2E7186987B300F44547 /* AFURLSessionManager.m in Sources */,
-				7F9F9A78181572F800AB3EF5 /* QRWToolView.m in Sources */,
 				7F9F9A45181562F200AB3EF5 /* QRWProduct.m in Sources */,
 				7F9F9A24181562B200AB3EF5 /* QRWDataManager.m in Sources */,
 				7F9F9A4B181562F200AB3EF5 /* QRWReview.m in Sources */,
 				7FBCF2E1187FFBA200594CCD /* QRWUnlockViewController.m in Sources */,
-				7FCFD2FA186987C600F44547 /* UIAlertView+AFNetworking.m in Sources */,
 				7F9F9A44181562F200AB3EF5 /* QRWTopCategories.m in Sources */,
 				7FCFD3191869D31A00F44547 /* QRWBaseViewControllerWithTableView.m in Sources */,
-				7F9F9A6118156CF200AB3EF5 /* SVPullToRefresh.m in Sources */,
 				7F9F9A4A181562F200AB3EF5 /* QRWDiscount.m in Sources */,
 				7F9F9A031815604600AB3EF5 /* QRWAppDelegate.m in Sources */,
 				7FCFD30C1869BF1300F44547 /* QRWBaseEntety.m in Sources */,
 				7F9F9A6918156D0C00AB3EF5 /* UIButton+Block.m in Sources */,
+				7FBCF2F3188414F800594CCD /* QRWEditPriceView.m in Sources */,
 				7FCFD2C91869877200F44547 /* QRWHTTPClient.m in Sources */,
-				7FCFD2E6186987B300F44547 /* AFURLResponseSerialization.m in Sources */,
 				7FBCF2CD187EA44800594CCD /* QRWProductsViewController.m in Sources */,
 				7F9F9A42181562F200AB3EF5 /* QRWOrder.m in Sources */,
 				7FCFD30F1869C1E600F44547 /* QRWDashboardEntety.m in Sources */,
 				7FCFD3141869D1D300F44547 /* QRWUsersViewController.m in Sources */,
 				7F9F9A7318156F2E00AB3EF5 /* QRWDashboardViewController.m in Sources */,
 				7FBCF2D5187EA76100594CCD /* QRWProductCell.m in Sources */,
-				7FCFD2FC186987C600F44547 /* UIImageView+AFNetworking.m in Sources */,
-				7FCFD2DF186987B300F44547 /* AFHTTPRequestOperation.m in Sources */,
 				7FCFD332187D682F00F44547 /* QRWReviewCell.m in Sources */,
 				7FBCF2DA187EC99000594CCD /* QRWOrdersViewController.m in Sources */,
 				9624FBC61880D3AD007A641D /* QRWOrdersCell.m in Sources */,
-				7FCFD2FD186987C600F44547 /* UIProgressView+AFNetworking.m in Sources */,
 				7FBCF2E81880001100594CCD /* QRWProductInfoViewController.m in Sources */,
-				7FCFD2E4186987B300F44547 /* AFURLConnectionOperation.m in Sources */,
-				7FCFD2E0186987B300F44547 /* AFHTTPRequestOperationManager.m in Sources */,
 				7F9F9A28181562D000AB3EF5 /* QRWDownloader.m in Sources */,
 				7F9F9A48181562F200AB3EF5 /* QRWUser.m in Sources */,
 				7F9F9A55181565E200AB3EF5 /* QRWLoginScrinViewController.m in Sources */,
-				7FCFD2E5186987B300F44547 /* AFURLRequestSerialization.m in Sources */,
 				7FCFD3081869BA4000F44547 /* QRWUserCell.m in Sources */,
-				7FCFD2E3186987B300F44547 /* AFSecurityPolicy.m in Sources */,
-				7FCFD2F8186987C600F44547 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				7FCFD30118698F1800F44547 /* QRWSettingsClient.m in Sources */,
-				7FCFD2E1186987B300F44547 /* AFHTTPSessionManager.m in Sources */,
 				7FBCF2ED188014DE00594CCD /* QRWProductWithInfo.m in Sources */,
 				7FCFD32D187D679000F44547 /* QRWReviewsViewController.m in Sources */,
 				7F9F9A5D18156CC400AB3EF5 /* QRWBaseViewController.m in Sources */,

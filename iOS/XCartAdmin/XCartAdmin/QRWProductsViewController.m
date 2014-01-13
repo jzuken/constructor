@@ -31,20 +31,9 @@
     [super viewDidLoad];
     
     self.baseCell = [QRWProductCell new];
-    
+    [_productsTypeSegmentedControl addTarget:self action:@selector(segmentedControlTaped) forControlEvents:UIControlEventValueChanged];
+
     self.requestSearchBar.backgroundColor = kGreyColor;
-    
-    
-    [QRWDataManager sendProductsRequestWithSearchString:@""
-                                              fromPoint:self.dataArray.count
-                                                toPoint:kNumberOfLoadedItems
-                                               lowStock:_isLowStock
-                                                  block:^(NSArray *products, NSError *error) {
-                                                      NSMutableArray *oldDataArray = [NSMutableArray arrayWithArray: self.dataArray];
-                                                      [oldDataArray addObjectsFromArray:products];
-                                                      self.dataArray = oldDataArray;
-                                                      [self.tableView reloadData];
-                                                  }];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -55,15 +44,50 @@
 }
 
 
+- (void)loadObjectsWithSearchString:(NSString *)searchString asEmptyArray:(BOOL)asEmpty
+{
+    [self startLoadingAnimation];
+    [QRWDataManager sendProductsRequestWithSearchString:searchString
+                                              fromPoint:asEmpty? 0 : self.dataArray.count
+                                                toPoint:kNumberOfLoadedItems
+                                               lowStock:_isLowStock
+                                                  block:^(NSArray *products, NSError *error) {
+                                                      NSMutableArray *oldDataArray = [NSMutableArray arrayWithArray: self.dataArray];
+                                                      [oldDataArray addObjectsFromArray:products];
+                                                      self.dataArray = asEmpty ? products: oldDataArray;
+                                                      [self.tableView reloadData];
+                                                      [self stopAllAnimations];
+                                                  }];
+}
+
+- (void) setIsLowStock: (BOOL)isLowStock
+{
+    _isLowStock = isLowStock;
+    
+    [_productsTypeSegmentedControl setSelectedSegmentIndex:_isLowStock ? 0: 1];
+    
+    [self loadObjectsWithSearchString:@"" asEmptyArray:YES];
+}
+
+
+- (void) segmentedControlTaped
+{
+    _isLowStock = _productsTypeSegmentedControl.selectedSegmentIndex == 0;
+    [self loadObjectsWithSearchString:self.requestSearchBar.text asEmptyArray:YES];
+}
+
+
+#pragma mark - TableView methods
+
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    __weak QRWProductsViewController *weakSelf = self;
+    [self startLoadingAnimation];
     [QRWDataManager sendProductInfoRequestWithID:[[(QRWProduct *)self.dataArray[indexPath.section] productid] integerValue]
                                            block:^(QRWProductWithInfo *product, NSError *error) {
+                                               [self stopLoadingAnimation];
                                                QRWProductInfoViewController *productInfoViewController = [[QRWProductInfoViewController alloc] initWithProduct:product];
-                                               [weakSelf.navigationController pushViewController:productInfoViewController animated:YES];
+                                               [self.navigationController pushViewController:productInfoViewController animated:YES];
                                            }];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
@@ -79,10 +103,12 @@
 
 - (void)configureProductCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
+    [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+    
     QRWProduct *product = [self.dataArray objectAtIndex:indexPath.section];
     [(QRWProductCell *)cell SKULabel].text = product.productcode;
     [(QRWProductCell *)cell inStockTypeLabel].text = NSStringFromInt([product.available intValue]);
-    [(QRWProductCell *)cell priceLabel].text = NSMoneyString(@"$", NSStringFromInt([product.price intValue]));
+    [(QRWProductCell *)cell priceLabel].text = NSMoneyString(@"$", NSStringFromFloat([product.price floatValue]));
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section

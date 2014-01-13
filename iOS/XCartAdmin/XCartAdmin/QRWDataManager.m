@@ -137,6 +137,29 @@
 
 #pragma mark - Products
 
+
++ (NSURLSessionDataTask *)sendProductChangePriceRequestWithID: (NSInteger)productID
+                                                     newPrice:(CGFloat)newPrice
+                                                        block:(void (^)(BOOL, NSError *))block
+{
+    NSString *getURL = [NSString stringWithFormat:url_productChangePriceURLappend, productID, newPrice, [QRWSettingsClient getSecurityKey]];
+    
+    return [self sendRequestWithURL:getURL
+                            success:^(NSURLSessionDataTask *__unused task, id JSON) {
+                                DLog(@"Json is: %@", JSON);
+                                if (block) {
+                                    block(YES, nil);
+                                }
+                            }
+                            failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
+                                DLog(@"Error: %@", error);
+                                if (block) {
+                                    block(NO, error);
+                                }
+                            }];
+}
+
+
 + (NSURLSessionDataTask *)sendProductsRequestWithSearchString:(NSString *)searchString
                                                     fromPoint:(NSInteger)startPoint
                                                       toPoint:(NSInteger)finishPoint
@@ -281,6 +304,10 @@
                             }];
 }
 
+
+
+
+#pragma mark - private methods
 
 + (NSURLSessionDataTask *)sendRequestWithURL:(NSString *)requestURL
                                      success:(void (^)(NSURLSessionDataTask *task, id responseObject))success

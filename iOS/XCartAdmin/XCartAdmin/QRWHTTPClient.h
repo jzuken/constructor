@@ -6,7 +6,7 @@
 
 
 #import <Foundation/Foundation.h>
-#import "AFHTTPSessionManager.h"
+#import <AFNetworking/AFNetworking.h>
 
 @interface QRWHTTPClient : AFHTTPSessionManager
 

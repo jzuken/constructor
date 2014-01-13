@@ -31,3 +31,10 @@
 "F" = "Failed";
 "C" = "Comlete";
 "A" = "Pre authorized";
+
+
+//ProgressHud
+
+"LOADING" = "Loading...";
+"SUCCESS" = "Succes!";
+"ERROR" = "Error!";

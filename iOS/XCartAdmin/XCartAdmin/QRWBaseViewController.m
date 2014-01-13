@@ -7,8 +7,7 @@
 //
 
 #import "QRWBaseViewController.h"
-
-#import "TLAlertView.h"
+#import <ProgressHUD/ProgressHUD.h>
 
 
 @interface QRWBaseViewController ()
@@ -32,9 +31,20 @@
     return [self initWithNibName:NSStringFromClass([self class]) oldNibName:[NSString stringWithFormat:@"%@Old", NSStringFromClass([self class])]];
 }
 
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardDidAppear:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:self.view.window];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardDidDisappear:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:self.view.window];
 }
 
 
@@ -43,33 +53,23 @@
 
 - (void)startLoadingAnimation
 {
-    _backgroundLoadingView = [[UIView alloc] initWithFrame:self.view.frame];
-    _backgroundLoadingView.backgroundColor = [UIColor blackColor];
-    _backgroundLoadingView.alpha = 0;
-    
-    _loadingActivityIndicator = [[UIActivityIndicatorView alloc] initWithFrame:
-                                                         CGRectMake((self.view.frame.size.width - 30)/2, (self.view.frame.size.height - 30)/2, 30, 30)];
-    
-    [_backgroundLoadingView addSubview:_loadingActivityIndicator];
-    
-    [self.view addSubview:_backgroundLoadingView];
- 
-    [UIView animateWithDuration:0.6 animations:^{
-        _backgroundLoadingView.alpha = 0.5;
-    } completion:^(BOOL finished) {
-        [_loadingActivityIndicator startAnimating];
-    }];
+    [ProgressHUD show:QRWLoc(@"LOADING")];
+}
+
+- (void)showSuccesView
+{
+    [ProgressHUD showSuccess:QRWLoc(@"SUCCESS")];
+}
+
+- (void)showErrorView
+{
+    [ProgressHUD showSuccess:QRWLoc(@"ERROR")];
 }
 
 
 - (void)stopLoadingAnimation
 {
-    [UIView animateWithDuration:0.6 animations:^{
-        _backgroundLoadingView.alpha = 0;
-    } completion:^(BOOL finished) {
-        [_loadingActivityIndicator stopAnimating];
-        [_backgroundLoadingView removeFromSuperview];
-    }];
+    [ProgressHUD dismiss];
 }
 
 
@@ -93,7 +93,23 @@
     
     self.navigationItem.title = title;
 }
+#pragma mark - Keyboard appears/disappear methods
 
+- (void) keyboardDidDisappear:(NSNotification *)notification
+{
+    [self changeTheTableViewHeight:[[[notification userInfo] objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size.height];
+}
+
+- (void) keyboardDidAppear:(NSNotification *)notification
+{
+    [self changeTheTableViewHeight:-[[[notification userInfo] objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size.height];
+}
+
+
+- (void) changeTheTableViewHeight: (CGFloat) heightChange
+{
+    
+}
 
 
 @end

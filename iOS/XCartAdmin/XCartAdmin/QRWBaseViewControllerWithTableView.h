@@ -7,8 +7,10 @@
 //
 
 #import "QRWBaseViewController.h"
+#import <SVPullToRefresh/SVPullToRefresh.h>
 
-@interface QRWBaseViewControllerWithTableView : QRWBaseViewController<UITableViewDataSource, UITableViewDelegate>
+
+@interface QRWBaseViewControllerWithTableView : QRWBaseViewController<UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate>
 
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
 
@@ -18,6 +20,12 @@
 
 @property (nonatomic, strong) UITableViewCell *baseCell;
 
+
+
 - (void)configureProductCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
+
+- (void)loadObjectsWithSearchString:(NSString *)searchString asEmptyArray:(BOOL)asEmpty;
+
+- (void)stopAllAnimations;
 
 @end

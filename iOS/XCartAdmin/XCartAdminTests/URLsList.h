@@ -26,6 +26,8 @@ static NSString *const url_reviewsURLappend = @"xcart/mobile_admin_api.php?reque
 static NSString *const url_productsLowStockURLappend = @"xcart/mobile_admin_api.php?request=products&from=%d&size=%d&low_stock=1&key=%@&search=%@";
 static NSString *const url_productsURLappend = @"xcart/mobile_admin_api.php?request=products&from=%d&size=%d&key=%@&search=%@";
 static NSString *const url_productInfoURLappend = @"xcart/mobile_admin_api.php?request=product_info&id=%d&key=%@";
+static NSString *const url_productChangePriceURLappend = @"xcart/mobile_admin_api.php?request=update_product_price&id=%d&price=%.2f&key=%@";
+static NSString *const url_productChangeAvaliabilityURLappend = @"xcart/mobile_admin_api.php?request=change_available&key=%@product_id=%d&available";
 
 
 static NSString *const url_lastOrdersURLappend = @"xcart/mobile_admin_api.php?request=last_orders&from=%d&size=%d&status=%@&date=%@&key=%@&search=%@";

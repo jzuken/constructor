@@ -20,11 +20,23 @@
 {
     [super viewDidLoad];
 
-    [QRWDataManager sendReviewsRequestFromPoint:self.dataArray.count
+    [self loadObjectsWithSearchString:@"" asEmptyArray:YES];
+    
+    self.requestSearchBar.backgroundColor = kYellowColor;
+}
+
+
+- (void)loadObjectsWithSearchString:(NSString *)searchString asEmptyArray:(BOOL)asEmpty
+{
+    [self startLoadingAnimation];
+    [QRWDataManager sendReviewsRequestFromPoint:asEmpty? 0 : self.dataArray.count
                                         toPoint:kNumberOfLoadedItems
                                           block:^(NSArray *reviews, NSError *error) {
-                                              self.dataArray = [NSArray arrayWithArray:reviews];
+                                              NSMutableArray *oldDataArray = [NSMutableArray arrayWithArray: self.dataArray];
+                                              [oldDataArray addObjectsFromArray:reviews];
+                                              self.dataArray = asEmpty ? reviews: oldDataArray;
                                               [self.tableView reloadData];
+                                              [self stopAllAnimations];
                                           }];
 }
 

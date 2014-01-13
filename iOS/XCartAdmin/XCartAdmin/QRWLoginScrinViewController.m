@@ -12,6 +12,9 @@
 #import <QuartzCore/QuartzCore.h>
 
 @interface QRWLoginScrinViewController ()
+{
+    BOOL _isKeyboardBeHide;
+}
 
 @end
 
@@ -28,8 +31,10 @@
     [super viewDidLoad];
     
     UITapGestureRecognizer *tapRecog = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(userTapOnScreen:)];
-    [self.signInBoxView addGestureRecognizer:tapRecog];
+    [self.view addGestureRecognizer:tapRecog];
     tapRecog.delegate = self;
+    
+    _isKeyboardBeHide = NO;
     
     [_passwordTextField addTarget:self action:@selector(textDidChangeText:) forControlEvents:UIControlEventEditingChanged];
     [_loginTextField addTarget:self action:@selector(textDidChangeText:) forControlEvents:UIControlEventEditingChanged];
@@ -59,30 +64,34 @@
         [self respondsForAuthRequest:isAuth];
     }];
     
-    QRWDashboardViewController *dashboardViewController = [[QRWDashboardViewController alloc] init];
-    [self.navigationController pushViewController:dashboardViewController animated:YES];
+//    QRWDashboardViewController *dashboardViewController = [[QRWDashboardViewController alloc] init];
+//    [self.navigationController pushViewController:dashboardViewController animated:YES];
     
 }
 
 -(void)userTapOnScreen:(UIGestureRecognizer *)sender
 {
-    [_loginTextField resignFirstResponder];
-    [_passwordTextField resignFirstResponder];
-    
-    [UIView animateWithDuration:0.5 animations:^{
-        CGRect frame = self.view.frame;
+    if (_isKeyboardBeHide) {
+        [_loginTextField resignFirstResponder];
+        [_passwordTextField resignFirstResponder];
+
+        [UIView animateWithDuration:0.5 animations:^{
+            CGRect frame = self.signInBoxView.frame;
+            
+            frame.origin.y += kLoginViewUpHeight;
+            
+            self.signInBoxView.frame = frame;
+        }];
         
-        frame.origin.y += (([[UIDevice currentDevice] resolution] == UIDeviceResolution_iPhoneRetina5)) ? kBottomYCoordinateLoginBoxFor4: kBottomYCoordinateLoginBoxFor3_5;
-        
-        self.view.frame = frame;
-    }];
+        _isKeyboardBeHide = NO;
+    }
 }
 
 #pragma mark - dataManager delegate
 
 - (void)respondsForAuthRequest:(BOOL)isAccepted
 {
-//    [self stopLoadingAnimation];
+    [self stopLoadingAnimation];
 //    if (isAccepted) {
 //        [_loginTextField resignFirstResponder];
 //        [_passwordTextField resignFirstResponder];
@@ -107,12 +116,14 @@
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
     [UIView animateWithDuration:0.5 animations:^{
-        CGRect frame = self.view.frame;
+        CGRect frame = self.signInBoxView.frame;
         
-        frame.origin.y -= (([[UIDevice currentDevice] resolution] == UIDeviceResolution_iPhoneRetina5)) ? kTopYCoordinateLoginBoxFor4: kTopYCoordinateLoginBoxFor3_5;
+        frame.origin.y -= kLoginViewUpHeight;
         
-        self.view.frame = frame;
+        self.signInBoxView.frame = frame;
     }];
+    
+    _isKeyboardBeHide = YES;
 }
 
 -(void)textDidChangeText:(id)sender
@@ -128,13 +139,15 @@
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [UIView animateWithDuration:0.5 animations:^{
-        CGRect frame = self.view.frame;
+        CGRect frame = self.signInBoxView.frame;
 
-        frame.origin.y += (([[UIDevice currentDevice] resolution] == UIDeviceResolution_iPhoneRetina5)) ? kBottomYCoordinateLoginBoxFor4: kBottomYCoordinateLoginBoxFor3_5;
+        frame.origin.y += kLoginViewUpHeight;
         
-        self.view.frame = frame;
+        self.signInBoxView.frame = frame;
     }];
     [textField resignFirstResponder];
+    _isKeyboardBeHide = NO;
+    
     return YES;
 }
 

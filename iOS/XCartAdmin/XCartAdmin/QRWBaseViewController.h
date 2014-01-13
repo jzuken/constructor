@@ -12,7 +12,6 @@
 #import "QRWBaseEntety.h"
 
 #import "constants.h"
-#import "SVPullToRefresh.h"
 #import "UIDevice+Resolutions.h"
 
 
@@ -21,12 +20,16 @@
 @interface QRWBaseViewController : UIViewController
 
 
+
 - (void) startLoadingAnimation;
 - (void) stopLoadingAnimation;
+- (void) showSuccesView;
+- (void) showErrorView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil oldNibName:(NSString *)oldNibNameOrNil;
 
 - (void) setNavigationBarColor:(UIColor *)color title: (NSString *)title;
 
+- (void) changeTheTableViewHeight: (CGFloat) heightChange;
 
 @end

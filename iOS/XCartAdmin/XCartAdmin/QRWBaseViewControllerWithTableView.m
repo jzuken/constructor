@@ -12,9 +12,43 @@
 
 @end
 
+
+
 @implementation QRWBaseViewControllerWithTableView
 
 
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    
+    __weak typeof(self) weakSelf = self;
+    
+    [self.tableView addPullToRefreshWithActionHandler:^{
+        [weakSelf loadObjectsWithSearchString:weakSelf.requestSearchBar.text asEmptyArray:YES];
+    }];
+    [self.tableView addInfiniteScrollingWithActionHandler:^{
+        [weakSelf loadObjectsWithSearchString:weakSelf.requestSearchBar.text asEmptyArray:NO];
+    }];
+
+    self.requestSearchBar.delegate = self;
+}
+
+
+
+- (void)loadObjectsWithSearchString:(NSString *)searchString asEmptyArray: (BOOL)asEmpty
+{
+    
+}
+
+- (void)stopAllAnimations
+{
+    [self stopLoadingAnimation];
+    [self.tableView.pullToRefreshView stopAnimating];
+    [self.tableView.infiniteScrollingView stopAnimating];
+}
+
+#pragma mark - TableView methods
 
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -49,6 +83,46 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     return 30;
+}
+
+
+
+#pragma mark - Keyboard appears/disappear methods
+
+
+- (void) changeTheTableViewHeight: (CGFloat) heightChange
+{
+    [UIView animateWithDuration:0.2 animations:^{
+        CGRect frame = self.tableView.frame;
+        frame.size.height += heightChange;
+        self.tableView.frame = frame;
+    }];
+}
+
+
+#pragma mark Search bar methods
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar;
+{
+    [self loadObjectsWithSearchString:searchBar.text asEmptyArray:YES];
+}
+
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
+{
+    searchBar.showsCancelButton = YES;
+    self.tableView.scrollEnabled = NO;
+}
+
+
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *) searchBar
+{
+    self.tableView.scrollEnabled = YES;
+    if ([searchBar.text isEqualToString:@""]) {
+        [self loadObjectsWithSearchString:searchBar.text asEmptyArray:NO];
+    }
+    [searchBar resignFirstResponder];
+    searchBar.showsCancelButton = NO;
 }
 
 @end

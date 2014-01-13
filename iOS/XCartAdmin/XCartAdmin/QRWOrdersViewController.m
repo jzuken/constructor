@@ -49,16 +49,7 @@
     
     self.tableView.separatorColor = kRedColor;
     
-    [QRWDataManager sendLastOrderRequestWithSearchString:@""
-                                               fromPoint:self.dataArray.count
-                                                 toPoint:kNumberOfLoadedItems
-                                                  status:@""
-                                                    date:@"all" block:^(NSArray *orders, NSError *error) {
-                                                        NSMutableArray *oldDataArray = [NSMutableArray arrayWithArray: self.dataArray];
-                                                        [oldDataArray addObjectsFromArray:orders];
-                                                        self.dataArray = oldDataArray;
-                                                        [self.tableView reloadData];
-                                                    }];
+    [self loadObjectsWithSearchString:@"" asEmptyArray:YES];
 }
 
 
@@ -71,6 +62,22 @@
 }
 
 
+
+- (void)loadObjectsWithSearchString:(NSString *)searchString asEmptyArray:(BOOL)asEmpty
+{
+    [self startLoadingAnimation];
+    [QRWDataManager sendLastOrderRequestWithSearchString:searchString
+                                               fromPoint:asEmpty? 0 : self.dataArray.count
+                                                 toPoint:kNumberOfLoadedItems
+                                                  status:@""
+                                                    date:@"all" block:^(NSArray *orders, NSError *error) {
+                                                        NSMutableArray *oldDataArray = [NSMutableArray arrayWithArray: self.dataArray];
+                                                        [oldDataArray addObjectsFromArray:orders];
+                                                        self.dataArray = asEmpty ? orders: oldDataArray;
+                                                        [self.tableView reloadData];
+                                                        [self stopAllAnimations];
+                                                    }];
+}
 
 
 #pragma mark - TableView
