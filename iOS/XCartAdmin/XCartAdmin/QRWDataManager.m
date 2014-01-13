@@ -81,16 +81,16 @@
                                                        toPoint: (NSInteger)finishPoint
                                                         status: (NSString *)status
                                                           date: (NSString *)date
-                                                         block: (void (^)(NSArray *products, NSError *error))block
+                                                         block: (void (^)(NSArray *orders, NSError *error))block
 {
     NSString *getURL = [NSString stringWithFormat:url_lastOrdersURLappend, startPoint, finishPoint, status, date, [QRWSettingsClient getSecurityKey], searchString];
     
     return [self sendRequestWithURL:getURL
                             success:^(NSURLSessionDataTask *__unused task, id JSON) {
+                                DLog(@"Json is: %@", JSON);
                                 NSMutableArray *orders = [NSMutableArray new];
                                 NSArray *ordersArray = (NSArray *) JSON;
                                 for (NSDictionary *data in ordersArray) {
-                                    DLog(@"Json is: %@", data);
                                     QRWOrder *order = [QRWOrder new];
                                     [order buildDataByJson:data];
                                     [orders addObject:order];

@@ -28,7 +28,7 @@ static NSString *const url_productsURLappend = @"xcart/mobile_admin_api.php?requ
 static NSString *const url_productInfoURLappend = @"xcart/mobile_admin_api.php?request=product_info&id=%d&key=%@";
 
 
-static NSString *const url_lastOrdersURLappend = @"xcart/mobile_admin_api.php?request=last_order&from=%d&size=%d&status=%@&date=%@&key=%@&search=%@";
+static NSString *const url_lastOrdersURLappend = @"xcart/mobile_admin_api.php?request=last_orders&from=%d&size=%d&status=%@&date=%@&key=%@&search=%@";
 static NSString *const url_orderInfoURLappend = @"xcart/mobile_admin_api.php?request=order_info&id=%d&key=%@";
 
 

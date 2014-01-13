@@ -54,10 +54,10 @@
 
 - (IBAction)signInClick:(id)sender
 {
-//    [self startLoadingAnimation];
-//    [QRWDataManager sendAuthorizationRequestWithLogin:_loginTextField.text andPassowrd:_passwordTextField.text block:^(BOOL isAuth, NSString *description, NSError *error) {
-//        [self respondsForAuthRequest:isAuth];
-//    }];
+    [self startLoadingAnimation];
+    [QRWDataManager sendAuthorizationRequestWithLogin:_loginTextField.text andPassowrd:_passwordTextField.text block:^(BOOL isAuth, NSString *description, NSError *error) {
+        [self respondsForAuthRequest:isAuth];
+    }];
     
     QRWDashboardViewController *dashboardViewController = [[QRWDashboardViewController alloc] init];
     [self.navigationController pushViewController:dashboardViewController animated:YES];
@@ -72,7 +72,7 @@
     [UIView animateWithDuration:0.5 animations:^{
         CGRect frame = self.view.frame;
         
-        frame.origin.y = (([[UIDevice currentDevice] resolution] == UIDeviceResolution_iPhoneRetina5)) ? kBottomYCoordinateLoginBoxFor4: kBottomYCoordinateLoginBoxFor3_5;
+        frame.origin.y += (([[UIDevice currentDevice] resolution] == UIDeviceResolution_iPhoneRetina5)) ? kBottomYCoordinateLoginBoxFor4: kBottomYCoordinateLoginBoxFor3_5;
         
         self.view.frame = frame;
     }];
@@ -82,25 +82,24 @@
 
 - (void)respondsForAuthRequest:(BOOL)isAccepted
 {
-    [self stopLoadingAnimation];
-    if (isAccepted) {
-        [_loginTextField resignFirstResponder];
-        [_passwordTextField resignFirstResponder];
-        
-        [[NSUserDefaults standardUserDefaults] setObject:kUserDefaults_isLogInObject forKey:kUserDefaults_isLogInKey];
-        
-        QRWDashboardViewController *dashboardViewController = [[QRWDashboardViewController alloc] init];
-        [self.navigationController pushViewController:dashboardViewController animated:YES];
-    } else {
-        [_passwordTextField setText:@""];
-        [_loginTextField setText:@""];
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"RELOGIN_ALERT_TITLE", nil)
-                                                        message:NSLocalizedString(@"RELOGIN_ALERT_MESSAGE", nil)
-                                                       delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil)
-                                              otherButtonTitles:nil, nil];
-        [alert show];
-    }
-
+//    [self stopLoadingAnimation];
+//    if (isAccepted) {
+//        [_loginTextField resignFirstResponder];
+//        [_passwordTextField resignFirstResponder];
+//        
+//        QRWDashboardViewController *dashboardViewController = [[QRWDashboardViewController alloc] init];
+//        [self.navigationController pushViewController:dashboardViewController animated:YES];
+//    } else {
+//        [_passwordTextField setText:@""];
+//        [_loginTextField setText:@""];
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"RELOGIN_ALERT_TITLE", nil)
+//                                                        message:NSLocalizedString(@"RELOGIN_ALERT_MESSAGE", nil)
+//                                                       delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil)
+//                                              otherButtonTitles:nil, nil];
+//        [alert show];
+//    }
+    QRWDashboardViewController *dashboardViewController = [[QRWDashboardViewController alloc] init];
+    [self.navigationController pushViewController:dashboardViewController animated:YES];
 }
 
 #pragma mark - Text Field
@@ -110,7 +109,7 @@
     [UIView animateWithDuration:0.5 animations:^{
         CGRect frame = self.view.frame;
         
-        frame.origin.y = (([[UIDevice currentDevice] resolution] == UIDeviceResolution_iPhoneRetina5)) ? kTopYCoordinateLoginBoxFor4: kTopYCoordinateLoginBoxFor3_5;
+        frame.origin.y -= (([[UIDevice currentDevice] resolution] == UIDeviceResolution_iPhoneRetina5)) ? kTopYCoordinateLoginBoxFor4: kTopYCoordinateLoginBoxFor3_5;
         
         self.view.frame = frame;
     }];
@@ -131,7 +130,7 @@
     [UIView animateWithDuration:0.5 animations:^{
         CGRect frame = self.view.frame;
 
-        frame.origin.y = (([[UIDevice currentDevice] resolution] == UIDeviceResolution_iPhoneRetina5)) ? kBottomYCoordinateLoginBoxFor4: kBottomYCoordinateLoginBoxFor3_5;
+        frame.origin.y += (([[UIDevice currentDevice] resolution] == UIDeviceResolution_iPhoneRetina5)) ? kBottomYCoordinateLoginBoxFor4: kBottomYCoordinateLoginBoxFor3_5;
         
         self.view.frame = frame;
     }];

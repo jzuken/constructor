@@ -12,8 +12,22 @@
 "PRODUCTS" = "Products";
 "REVIEWS" = "Reviews";
 "USERS" = "Users";
+"USERS_INFO" = "User info";
 
+"ORDERS_LIST" = "Orders list";
 
 // Buttons
 "SHOW_FULL" = "Show full";
 "SHOW_SHORT" = "Show short";
+
+
+//OrdersStatistic
+
+"I" = "Not finished";
+"Q" = "Queued";
+"P" = "Processed";
+"X" = "Backordered";
+"D" = "Declined";
+"F" = "Failed";
+"C" = "Comlete";
+"A" = "Pre authorized";

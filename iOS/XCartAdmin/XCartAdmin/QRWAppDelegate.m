@@ -12,23 +12,6 @@
 @implementation QRWAppDelegate
 
 
--(void)setCustomAppearance
-{
-    UINavigationBar *navbarAppearance = [UINavigationBar appearance];
-    UIImage *navbarBackground = [[UIImage imageNamed:@"topBarBackground.png"] resizableImageWithCapInsets:UIEdgeInsetsZero];
-    UIColor *tintColor = [UIColor colorWithRed:63.0/255.0 green:63.0/255.0 blue:63.0/255.0 alpha:1.0];
-    //    [navbarAppearance setTintColor:tintColor];
-    [navbarAppearance setBackgroundImage:navbarBackground forBarMetrics:UIBarMetricsDefault];
-    
-    
-    UIBarButtonItem *barButtonItemAppearance = [UIBarButtonItem appearance];
-    [barButtonItemAppearance setTintColor:tintColor];
-    UISearchBar *searchBarAppearance = [UISearchBar appearance];
-    [searchBarAppearance setTintColor:tintColor];
-    
-    //    UITableView *tableViewAppereance = [UITableView appearance];
-    //    [tableViewAppereance setBackgroundColor:tintColor];
-}
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -39,9 +22,6 @@
     
     _firstEnterViewController = [[QRWLoginScrinViewController alloc] init];
     _appNavigationController = [[UINavigationController alloc] initWithRootViewController:_firstEnterViewController];
-    
-    
-    [self setCustomAppearance];
     
     [self.window setRootViewController:_appNavigationController];
     _appNavigationController.navigationBarHidden = YES;

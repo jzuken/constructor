@@ -53,7 +53,7 @@
                                                        toPoint: (NSInteger)finishPoint
                                                         status: (NSString *)status
                                                           date: (NSString *)date
-                                                         block: (void (^)(NSArray *products, NSError *error))block;
+                                                         block: (void (^)(NSArray *orders, NSError *error))block;
 
 
 

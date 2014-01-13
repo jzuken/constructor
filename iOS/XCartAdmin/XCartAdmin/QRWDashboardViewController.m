@@ -11,6 +11,7 @@
 #import "QRWUsersViewController.h"
 #import "QRWReviewsViewController.h"
 #import "QRWProductsViewController.h"
+#import "QRWOrdersViewController.h"
 
 @interface QRWDashboardViewController ()
 
@@ -20,6 +21,7 @@
 @property (nonatomic, strong) QRWUsersViewController *usersViewController;
 @property (nonatomic, strong) QRWReviewsViewController *reviewsViewController;
 @property (nonatomic, strong) QRWProductsViewController *productsViewController;
+@property (nonatomic, strong) QRWOrdersViewController *ordersViewController;
 
 @end
 
@@ -85,7 +87,10 @@
 
 - (IBAction)todaySalesClicked:(id)sender
 {
-    
+    if (!_ordersViewController) {
+        _ordersViewController = [[QRWOrdersViewController alloc] init];
+    }
+    [self.navigationController pushViewController:_ordersViewController animated:YES];
 }
 
 - (IBAction)visitorsTodayClicked:(id)sender
