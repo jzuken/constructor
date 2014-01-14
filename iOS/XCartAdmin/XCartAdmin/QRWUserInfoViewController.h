@@ -7,7 +7,14 @@
 //
 
 #import "QRWBaseViewControllerWithTableView.h"
+#import <MessageUI/MFMailComposeViewController.h>
 
-@interface QRWUserInfoViewController : QRWBaseViewControllerWithTableView
+@interface QRWUserInfoViewController : QRWBaseViewControllerWithTableView<MFMailComposeViewControllerDelegate>
+
+- (id)initWithUserInfo: (QRWUserInfo *)userInfo;
+
+- (IBAction)emailButtonClicked:(id)sender;
+- (IBAction)callButtonClicked:(id)sender;
+
 
 @end

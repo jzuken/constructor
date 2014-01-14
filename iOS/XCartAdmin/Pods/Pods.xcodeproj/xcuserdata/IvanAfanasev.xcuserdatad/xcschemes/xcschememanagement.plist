@@ -4,6 +4,16 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Pods-AFNetworking.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-ProgressHUD.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-REFormattedNumberField.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -19,6 +29,16 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-SVPullToRefresh.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-ZBarSDK.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -27,22 +47,42 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>3E9882C2275F431885A5D85F</key>
+		<key>039214547C1748F687B234E4</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>B75A45543244415EA9634996</key>
+		<key>116B3B755054492C8A151499</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>DE31E59E251942A8BB76D77E</key>
+		<key>1FA41D1448894E918AA45928</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>FD4C95587B134FE9A454285F</key>
+		<key>69EC33EB2F0D4815B97634C1</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>6C74EACB3D4C473F9D5E44F4</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>806E894BC65845A58AA29C25</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B2BD497E5FA14CE3A3FCD2C0</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C2FAD5C5909E4015B8EAEE89</key>
 		<dict>
 			<key>primary</key>
 			<true/>

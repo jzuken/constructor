@@ -24,12 +24,14 @@ PODS:
     - REValidation (~> 0.1.4)
   - REValidation (0.1.4)
   - SVPullToRefresh (0.4.1)
+  - ZBarSDK (1.3.1)
 
 DEPENDENCIES:
   - AFNetworking (~> 2.0)
   - ProgressHUD
   - RETableViewManager (~> 1.5.7)
   - SVPullToRefresh
+  - ZBarSDK (~> 1.3.1)
 
 SPEC CHECKSUMS:
   AFNetworking: e499052cbf3d743e9bb727bb37adb9dc2547ba15
@@ -38,5 +40,6 @@ SPEC CHECKSUMS:
   RETableViewManager: 1a416f4d862934c8d998827c221158d596da243c
   REValidation: 02160035110a63af1bf6ad1b8791837b3fa13584
   SVPullToRefresh: 61a0e4bd12bd6f8e3465909810b0fbeb1a28d5f2
+  ZBarSDK: 6ae54d2077fea894d6a24bd1d7035192c0a7471e
 
-COCOAPODS: 0.28.0
+COCOAPODS: 0.29.0

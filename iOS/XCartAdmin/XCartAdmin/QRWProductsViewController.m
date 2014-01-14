@@ -52,11 +52,7 @@
                                                 toPoint:kNumberOfLoadedItems
                                                lowStock:_isLowStock
                                                   block:^(NSArray *products, NSError *error) {
-                                                      NSMutableArray *oldDataArray = [NSMutableArray arrayWithArray: self.dataArray];
-                                                      [oldDataArray addObjectsFromArray:products];
-                                                      self.dataArray = asEmpty ? products: oldDataArray;
-                                                      [self.tableView reloadData];
-                                                      [self stopAllAnimations];
+                                                      [self smartAddObjectToDataArrayAsNew:asEmpty withLoaddedArray:products];
                                                   }];
 }
 

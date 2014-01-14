@@ -21,6 +21,15 @@
 {
     [super viewDidLoad];
     
+    _statusColorsDictionary = @{@"I": [UIColor redColor],
+                                @"D": [UIColor redColor],
+                                @"F": [UIColor redColor],
+                                @"Q": [UIColor blueColor],
+                                @"B": [UIColor blueColor],
+                                @"P": kTextBlueColor,
+                                @"C": [UIColor greenColor],
+                                @"A": [UIColor blueColor],
+                                };
     
     __weak typeof(self) weakSelf = self;
     
@@ -39,6 +48,17 @@
 - (void)loadObjectsWithSearchString:(NSString *)searchString asEmptyArray: (BOOL)asEmpty
 {
     
+}
+
+
+- (void) smartAddObjectToDataArrayAsNew:(BOOL) asNew withLoaddedArray:(NSArray *)array
+{
+    NSMutableArray *oldDataArray = [NSMutableArray arrayWithArray: self.dataArray];
+    [oldDataArray addObjectsFromArray:array];
+    self.dataArray = asNew ? array: oldDataArray;
+    [self.tableView reloadData];
+    [self stopAllAnimations];
+    self.tableView.showsInfiniteScrolling = (array.count == kNumberOfLoadedItems);
 }
 
 - (void)stopAllAnimations
@@ -67,8 +87,12 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:NSStringFromClass([_baseCell class]) owner:self options:nil];
-    UITableViewCell *cell = [topLevelObjects objectAtIndex:0];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([_baseCell class])];
+    if (cell == nil) {
+        cell = [[[_baseCell class] alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:NSStringFromClass([_baseCell class])];
+        NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:NSStringFromClass([_baseCell class]) owner:self options:nil];
+        cell = [topLevelObjects objectAtIndex:0];
+    }
     
     [self configureProductCell:cell atIndexPath:indexPath];
     

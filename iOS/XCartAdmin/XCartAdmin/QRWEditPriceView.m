@@ -7,6 +7,7 @@
 //
 
 #import "QRWEditPriceView.h"
+#import <QuartzCore/QuartzCore.h>
 #import "constants.h"
 
 @implementation QRWEditPriceView
@@ -20,6 +21,10 @@
         self.view.backgroundColor = kGreyColor;
         _priceTextField.keyboardType = UIKeyboardTypeDecimalPad;
         _priceTextField.delegate = self;
+        
+        [_saveButton.layer setBorderWidth:1.0f];
+        [_saveButton.layer setCornerRadius:4.0];
+        [_saveButton.layer setBorderColor:[[UIColor whiteColor] CGColor]];
     }
     return self;
 }

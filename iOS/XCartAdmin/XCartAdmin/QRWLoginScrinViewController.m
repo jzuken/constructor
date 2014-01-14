@@ -63,11 +63,43 @@
     [QRWDataManager sendAuthorizationRequestWithLogin:_loginTextField.text andPassowrd:_passwordTextField.text block:^(BOOL isAuth, NSString *description, NSError *error) {
         [self respondsForAuthRequest:isAuth];
     }];
-    
-//    QRWDashboardViewController *dashboardViewController = [[QRWDashboardViewController alloc] init];
-//    [self.navigationController pushViewController:dashboardViewController animated:YES];
-    
 }
+
+
+- (IBAction)scanQRInClick:(id)sender
+{
+    DLog(@"Scanning..");
+//    _loginTextField.text = @"Scanning..";
+    
+    ZBarReaderViewController *codeReader = [ZBarReaderViewController new];
+    codeReader.readerDelegate=self;
+    codeReader.supportedOrientationsMask = ZBarOrientationMaskAll;
+    
+    ZBarImageScanner *scanner = codeReader.scanner;
+    [scanner setSymbology: ZBAR_I25 config: ZBAR_CFG_ENABLE to: 0];
+    
+    [self presentViewController:codeReader animated:YES completion:nil];
+}
+
+- (void) imagePickerController: (UIImagePickerController*) reader didFinishPickingMediaWithInfo: (NSDictionary*) info
+{
+    //  get the decode results
+    id<NSFastEnumeration> results = [info objectForKey: ZBarReaderControllerResults];
+    
+    ZBarSymbol *symbol = nil;
+    for(symbol in results)
+        // just grab the first barcode
+        break;
+    
+    // showing the result on textview
+//    _loginTextField.text = symbol.data;
+    
+//    resultImageView.image = [info objectForKey: UIImagePickerControllerOriginalImage];
+    
+    // dismiss the controller
+    [reader dismissViewControllerAnimated:YES completion:nil];
+}
+
 
 -(void)userTapOnScreen:(UIGestureRecognizer *)sender
 {
@@ -155,7 +187,7 @@
 
 -(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
 {
-    if (touch.view == _signInButton) {
+    if (touch.view == _loginTextField  || touch.view == _passwordTextField || touch.view == _signInButton) {
         return NO;
     }
     return YES;

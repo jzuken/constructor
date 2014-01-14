@@ -84,6 +84,16 @@
 		9624FBCB18814DC0007A641D /* QRWUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 9624FBCA18814DC0007A641D /* QRWUserInfo.m */; };
 		9624FBCD1883490A007A641D /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 9624FBCC1883490A007A641D /* logo.png */; };
 		9624FBCF1883492E007A641D /* button_login.png in Resources */ = {isa = PBXBuildFile; fileRef = 9624FBCE1883492E007A641D /* button_login.png */; };
+		9624FBD1188481F2007A641D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9624FBD0188481F2007A641D /* QuartzCore.framework */; };
+		9624FBD318849D57007A641D /* QRWUserInfoViewControllerOld.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9624FBD218849D57007A641D /* QRWUserInfoViewControllerOld.xib */; };
+		9624FBD618849F24007A641D /* QRWUserFormCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9624FBD518849F24007A641D /* QRWUserFormCell.xib */; };
+		9624FBD918849F45007A641D /* QRWUserFormCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9624FBD818849F45007A641D /* QRWUserFormCell.m */; };
+		9624FBDB1884A7F8007A641D /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9624FBDA1884A7F8007A641D /* MessageUI.framework */; };
+		9624FBDD1884BD7F007A641D /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9624FBDC1884BD7F007A641D /* AVFoundation.framework */; };
+		9624FBDF1884BD96007A641D /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9624FBDE1884BD96007A641D /* CoreMedia.framework */; };
+		9624FBE11884BD9D007A641D /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9624FBE01884BD9D007A641D /* CoreVideo.framework */; };
+		9624FBE31884BDC1007A641D /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9624FBE21884BDC1007A641D /* libiconv.dylib */; };
+		9624FBE51884C14A007A641D /* QRWUnlockViewControllerOld.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9624FBE41884C14A007A641D /* QRWUnlockViewControllerOld.xib */; };
 		969409D8182C503600B0B343 /* button_dashboard1.png in Resources */ = {isa = PBXBuildFile; fileRef = 969409D7182C503600B0B343 /* button_dashboard1.png */; };
 		969409DA182C504100B0B343 /* button_dashboard2.png in Resources */ = {isa = PBXBuildFile; fileRef = 969409D9182C504100B0B343 /* button_dashboard2.png */; };
 		969409DC182C504B00B0B343 /* button_dashboard3.png in Resources */ = {isa = PBXBuildFile; fileRef = 969409DB182C504B00B0B343 /* button_dashboard3.png */; };
@@ -224,6 +234,20 @@
 		9624FBCA18814DC0007A641D /* QRWUserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRWUserInfo.m; sourceTree = "<group>"; };
 		9624FBCC1883490A007A641D /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 		9624FBCE1883492E007A641D /* button_login.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_login.png; sourceTree = "<group>"; };
+		9624FBD0188481F2007A641D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		9624FBD218849D57007A641D /* QRWUserInfoViewControllerOld.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRWUserInfoViewControllerOld.xib; sourceTree = "<group>"; };
+		9624FBD518849F24007A641D /* QRWUserFormCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRWUserFormCell.xib; sourceTree = "<group>"; };
+		9624FBD718849F45007A641D /* QRWUserFormCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRWUserFormCell.h; sourceTree = "<group>"; };
+		9624FBD818849F45007A641D /* QRWUserFormCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRWUserFormCell.m; sourceTree = "<group>"; };
+		9624FBDA1884A7F8007A641D /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		9624FBDC1884BD7F007A641D /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		9624FBDE1884BD96007A641D /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		9624FBE01884BD9D007A641D /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		9624FBE21884BDC1007A641D /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
+		9624FBE41884C14A007A641D /* QRWUnlockViewControllerOld.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRWUnlockViewControllerOld.xib; sourceTree = "<group>"; };
+		9624FBE61884C985007A641D /* icon57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon57.png; sourceTree = "<group>"; };
+		9624FBE71884C995007A641D /* icon114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon114.png; sourceTree = "<group>"; };
+		9624FBE81884C9A7007A641D /* icon120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon120.png; sourceTree = "<group>"; };
 		969409D7182C503600B0B343 /* button_dashboard1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_dashboard1.png; sourceTree = "<group>"; };
 		969409D9182C504100B0B343 /* button_dashboard2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_dashboard2.png; sourceTree = "<group>"; };
 		969409DB182C504B00B0B343 /* button_dashboard3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_dashboard3.png; sourceTree = "<group>"; };
@@ -238,6 +262,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9624FBE31884BDC1007A641D /* libiconv.dylib in Frameworks */,
+				9624FBE11884BD9D007A641D /* CoreVideo.framework in Frameworks */,
+				9624FBDF1884BD96007A641D /* CoreMedia.framework in Frameworks */,
+				9624FBDD1884BD7F007A641D /* AVFoundation.framework in Frameworks */,
+				9624FBDB1884A7F8007A641D /* MessageUI.framework in Frameworks */,
+				9624FBD1188481F2007A641D /* QuartzCore.framework in Frameworks */,
 				7F9F99F51815604500AB3EF5 /* CoreGraphics.framework in Frameworks */,
 				7F9F99F71815604600AB3EF5 /* UIKit.framework in Frameworks */,
 				7F9F99F31815604500AB3EF5 /* Foundation.framework in Frameworks */,
@@ -261,6 +291,9 @@
 		7F9F99E61815604500AB3EF5 = {
 			isa = PBXGroup;
 			children = (
+				9624FBE81884C9A7007A641D /* icon120.png */,
+				9624FBE71884C995007A641D /* icon114.png */,
+				9624FBE61884C985007A641D /* icon57.png */,
 				9624FBBA1880CF6B007A641D /* Podfile */,
 				7F9F99F81815604600AB3EF5 /* XCartAdmin */,
 				7F9F9A111815604600AB3EF5 /* XCartAdminTests */,
@@ -282,6 +315,12 @@
 		7F9F99F11815604500AB3EF5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9624FBE21884BDC1007A641D /* libiconv.dylib */,
+				9624FBE01884BD9D007A641D /* CoreVideo.framework */,
+				9624FBDE1884BD96007A641D /* CoreMedia.framework */,
+				9624FBDC1884BD7F007A641D /* AVFoundation.framework */,
+				9624FBDA1884A7F8007A641D /* MessageUI.framework */,
+				9624FBD0188481F2007A641D /* QuartzCore.framework */,
 				7F9F99F21815604500AB3EF5 /* Foundation.framework */,
 				7F9F99F41815604500AB3EF5 /* CoreGraphics.framework */,
 				7F9F99F61815604600AB3EF5 /* UIKit.framework */,
@@ -541,6 +580,7 @@
 			isa = PBXGroup;
 			children = (
 				7FBCF2E0187FFBA100594CCD /* QRWUnlockViewController.xib */,
+				9624FBE41884C14A007A641D /* QRWUnlockViewControllerOld.xib */,
 			);
 			name = Unlock;
 			sourceTree = "<group>";
@@ -576,6 +616,7 @@
 		7FCFD3021869B84000F44547 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				9624FBD418849EFA007A641D /* QRWUserFormCell */,
 				9624FBC31880D37F007A641D /* Orders */,
 				7FBCF2D0187EA71A00594CCD /* Products */,
 				7FCFD32F187D67F800F44547 /* Review */,
@@ -665,6 +706,7 @@
 			isa = PBXGroup;
 			children = (
 				9624FBC01880D0A9007A641D /* QRWUserInfoViewController.xib */,
+				9624FBD218849D57007A641D /* QRWUserInfoViewControllerOld.xib */,
 			);
 			name = UserInfo;
 			sourceTree = "<group>";
@@ -686,6 +728,16 @@
 				9624FBC71880D3C5007A641D /* QRWOrdersCell.xib */,
 			);
 			name = Orders;
+			sourceTree = "<group>";
+		};
+		9624FBD418849EFA007A641D /* QRWUserFormCell */ = {
+			isa = PBXGroup;
+			children = (
+				9624FBD518849F24007A641D /* QRWUserFormCell.xib */,
+				9624FBD718849F45007A641D /* QRWUserFormCell.h */,
+				9624FBD818849F45007A641D /* QRWUserFormCell.m */,
+			);
+			name = QRWUserFormCell;
 			sourceTree = "<group>";
 		};
 		969409D6182C502400B0B343 /* imgs */ = {
@@ -783,6 +835,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7FBCF2DB187EC99000594CCD /* QRWOrdersViewController.xib in Resources */,
+				9624FBD318849D57007A641D /* QRWUserInfoViewControllerOld.xib in Resources */,
 				7F8173B11884499500894E16 /* QRWProductInfoViewControllerOld.xib in Resources */,
 				9624FBCF1883492E007A641D /* button_login.png in Resources */,
 				7F9F9A7418156F2E00AB3EF5 /* QRWDashboardViewController.xib in Resources */,
@@ -805,11 +858,13 @@
 				7FBCF2E2187FFBA200594CCD /* QRWUnlockViewController.xib in Resources */,
 				969409E2182C581900B0B343 /* active_button_dashboard1.png in Resources */,
 				9624FBC21880D0A9007A641D /* QRWUserInfoViewController.xib in Resources */,
+				9624FBE51884C14A007A641D /* QRWUnlockViewControllerOld.xib in Resources */,
 				7FBCF2F51884150C00594CCD /* QRWEditPriceView.xib in Resources */,
 				7F8173AF188448F300894E16 /* QRWOrdersViewControllerOld.xib in Resources */,
 				7FCFD3151869D1D300F44547 /* QRWUsersViewController.xib in Resources */,
 				969409DC182C504B00B0B343 /* button_dashboard3.png in Resources */,
 				7FBCF2CE187EA44800594CCD /* QRWProductsViewController.xib in Resources */,
+				9624FBD618849F24007A641D /* QRWUserFormCell.xib in Resources */,
 				969409DE182C505800B0B343 /* button_dashboard4.png in Resources */,
 				9624FBCD1883490A007A641D /* logo.png in Resources */,
 				7F8173B318844B4500894E16 /* QRWUsersViewControllerOld.xib in Resources */,
@@ -896,6 +951,7 @@
 				7FBCF2D5187EA76100594CCD /* QRWProductCell.m in Sources */,
 				7FCFD332187D682F00F44547 /* QRWReviewCell.m in Sources */,
 				7FBCF2DA187EC99000594CCD /* QRWOrdersViewController.m in Sources */,
+				9624FBD918849F45007A641D /* QRWUserFormCell.m in Sources */,
 				9624FBC61880D3AD007A641D /* QRWOrdersCell.m in Sources */,
 				7FBCF2E81880001100594CCD /* QRWProductInfoViewController.m in Sources */,
 				7F9F9A28181562D000AB3EF5 /* QRWDownloader.m in Sources */,
@@ -965,7 +1021,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Mobtekh OOO (2J3UD2G26R)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Mobtekh OOO (2J3UD2G26R)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1004,7 +1061,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Mobtekh OOO (2J3UD2G26R)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Mobtekh OOO (2J3UD2G26R)";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1024,11 +1082,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E0041376838B4A02BAD72606 /* Pods.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Mobtekh OOO (2J3UD2G26R)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "XCartAdmin/XCartAdmin-Prefix.pch";
 				INFOPLIST_FILE = "XCartAdmin/XCartAdmin-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1038,11 +1097,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E0041376838B4A02BAD72606 /* Pods.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Mobtekh OOO (2J3UD2G26R)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "XCartAdmin/XCartAdmin-Prefix.pch";
 				INFOPLIST_FILE = "XCartAdmin/XCartAdmin-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

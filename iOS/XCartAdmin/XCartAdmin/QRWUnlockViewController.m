@@ -18,14 +18,29 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self setPickerStartPosition];
 }
 
 
 - (IBAction)enterButton:(id)sender
 {
-    
+    [UIView animateWithDuration:0.5 animations:^{
+        CGRect frame = self.view.frame;
+        frame.origin.y = frame.size.height;
+        self.view.frame = frame;
+    } completion:^(BOOL finished) {
+        [self.view removeFromSuperview];
+    }];
 }
 
+
+
+-(void) setPickerStartPosition
+{
+    for (int i = 0; i < _unlockPicker.numberOfComponents; i++) {
+        [_unlockPicker selectRow:50250 inComponent:i animated:NO];
+    }
+}
 
 #pragma mark - PickerView
 
@@ -36,13 +51,13 @@
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
-    return 10;
+    return 100500;
 }
 
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    return NSStringFromInt(component);
+    return NSStringFromInt(row % 10);
 }
 
 @end

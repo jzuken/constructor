@@ -40,16 +40,26 @@
     _isFullDescription = NO;
     
     _nameLabel.text = _product.product;
-    _availiabilitySwitcher.selected = YES;
+    [_availiabilitySwitcher addTarget: self action: @selector(changeAvaliability) forControlEvents: UIControlEventValueChanged];
+    _availiabilitySwitcher.on = [@"Y" isEqual:_product.forSale];
     _inStock.text = NSStringFromInt([_product.available intValue]);
+    
     [self setDescription];
-    [_priceButton setTitle:NSStringFromFloat([_product.price floatValue]) forState:UIControlStateNormal];
+    
+    [_priceButton setTitle:NSMoneyString(@"$", NSStringFromFloat([_product.price floatValue])) forState:UIControlStateNormal];
+    [[_priceButton layer] setBorderWidth:1.0f];
+    [_priceButton.layer setCornerRadius:4.0];
+    [_priceButton.layer setBorderColor:[kTextBlueColor CGColor]];
     
     [_imageImageView setImageWithURL:[NSURL URLWithString:_product.imageURL] placeholderImage:[UIImage imageNamed:@"loading.gif"]];
     
     
     [_showFull addTarget:self action:@selector(showDescription) forControlEvents:UIControlEventTouchUpInside];
     [_priceButton addTarget:self action:@selector(changePrice) forControlEvents:UIControlEventTouchUpInside];
+    
+    UITapGestureRecognizer *tapRecog = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(userTapOnScreen:)];
+    [self.view addGestureRecognizer:tapRecog];
+    tapRecog.delegate = self;
 }
 
 - (void)didReceiveMemoryWarning
@@ -91,12 +101,39 @@
     }
 }
 
+#pragma mark - actions
+
 - (void)showDescription
 {
     [_showFull setTitle: _isFullDescription ? QRWLoc(@"SHOW_FULL") : QRWLoc(@"SHOW_SHORT") forState:UIControlStateNormal];
     _isFullDescription = !_isFullDescription;
     [self setDescription];
 }
+
+- (void) changeAvaliability
+{
+    [self startLoadingAnimation];
+    [QRWDataManager sendProductChangeAvaliabilityRequestWithID:[_product.productid integerValue]
+                                                   isAvaliable:_availiabilitySwitcher.on
+                                                         block:^(BOOL isSuccess, NSError *error) {
+                                                             [self stopLoadingAnimation];
+                                                             if (isSuccess) {
+                                                                 [self showSuccesView];
+                                                             } else {
+                                                                 [self showErrorView];
+                                                             }
+                                                         }];
+}
+
+
+
+- (void) changePrice
+{
+    [_editPriceView.priceTextField becomeFirstResponder];
+    [self moveEditPriceViewToHeight:_scrollView.frame.size.height - kheightOfEditPriceView];
+    [_editPriceView.priceTextField setText:[NSString stringWithFormat:@"%.2f", [_product.price floatValue]]];
+}
+
 
 #pragma mark - WebView
 
@@ -115,12 +152,6 @@
 
 #pragma mark - QRWEditTextView
 
-- (void) changePrice
-{
-    [_editPriceView.priceTextField becomeFirstResponder];
-    [self moveEditPriceViewToHeight:_scrollView.frame.size.height - kheightOfEditPriceView];
-    [_editPriceView.priceTextField setText:[NSString stringWithFormat:@"%.2f", [_product.price floatValue]]];
-}
 
 
 - (void)saveButtonPressedWithPrice:(CGFloat)newPrice
@@ -132,7 +163,7 @@
         [self moveEditPriceViewToHeight: _scrollView.frame.size.height];
         if (isSuccess){
             _product.price = [NSNumber numberWithFloat:newPrice];
-            [_priceButton setTitle:NSStringFromFloat([_product.price floatValue]) forState:UIControlStateNormal];
+            [_priceButton setTitle:NSMoneyString(@"$", NSStringFromFloat([_product.price floatValue])) forState:UIControlStateNormal];
             [self showSuccesView];
         } else {
             [self showErrorView];
@@ -162,6 +193,22 @@
     }];
     
     [_scrollView scrollRectToVisible:_priceButton.frame animated:YES];
+}
+
+#pragma mark - GestureRecognizer 
+
+-(void)userTapOnScreen:(UIGestureRecognizer *)sender
+{
+    [_editPriceView.priceTextField resignFirstResponder];
+    [self moveEditPriceViewToHeight: _scrollView.frame.size.height];
+}
+
+-(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
+{
+    if (touch.view == _editPriceView  || touch.view == _priceButton) {
+        return NO;
+    }
+    return YES;
 }
 
 @end

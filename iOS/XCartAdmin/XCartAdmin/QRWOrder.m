@@ -22,10 +22,10 @@
     self.month = [JSON objectForKey:@"month"];
     self.status = [JSON objectForKey:@"status"];
     
-    self.total = [self.formatter numberFromString: (NSString *)[JSON objectForKey:@"total"]];
-    self.orderid = [self.formatter numberFromString: (NSString *)[JSON objectForKey:@"orderid"]];
-    self.items = [self.formatter numberFromString: (NSString *)[JSON objectForKey:@"items"]];
-    self.date = [self.formatter numberFromString: (NSString *)[JSON objectForKey:@"date"]];
+    self.total = [JSON objectForKey:@"total"];
+    self.orderid = [JSON objectForKey:@"orderid"];
+    self.items = [JSON objectForKey:@"items"];
+    self.date = [JSON objectForKey:@"date"];
 }
 
 

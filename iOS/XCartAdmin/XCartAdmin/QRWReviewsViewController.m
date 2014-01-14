@@ -32,11 +32,7 @@
     [QRWDataManager sendReviewsRequestFromPoint:asEmpty? 0 : self.dataArray.count
                                         toPoint:kNumberOfLoadedItems
                                           block:^(NSArray *reviews, NSError *error) {
-                                              NSMutableArray *oldDataArray = [NSMutableArray arrayWithArray: self.dataArray];
-                                              [oldDataArray addObjectsFromArray:reviews];
-                                              self.dataArray = asEmpty ? reviews: oldDataArray;
-                                              [self.tableView reloadData];
-                                              [self stopAllAnimations];
+                                              [self smartAddObjectToDataArrayAsNew:asEmpty withLoaddedArray:reviews];
                                           }];
 }
 

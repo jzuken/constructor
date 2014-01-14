@@ -15,5 +15,6 @@
 @property (nonatomic, strong) NSString *fullDescription;
 @property (nonatomic, strong) NSString *imageURL;
 @property (nonatomic, strong) NSNumber *available;
+@property (nonatomic, strong) NSString *forSale;
 
 @end

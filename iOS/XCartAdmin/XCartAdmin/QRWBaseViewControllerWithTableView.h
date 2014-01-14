@@ -11,6 +11,10 @@
 
 
 @interface QRWBaseViewControllerWithTableView : QRWBaseViewController<UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate>
+{
+   NSDictionary *_statusColorsDictionary;
+}
+
 
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
 
@@ -25,6 +29,7 @@
 - (void)configureProductCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 
 - (void)loadObjectsWithSearchString:(NSString *)searchString asEmptyArray:(BOOL)asEmpty;
+- (void)smartAddObjectToDataArrayAsNew:(BOOL)asNew withLoaddedArray:(NSArray *)array;
 
 - (void)stopAllAnimations;
 

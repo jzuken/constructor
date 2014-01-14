@@ -8,6 +8,7 @@
 
 #import "QRWAppDelegate.h"
 #import "QRWLoginScrinViewController.h"
+#import "QRWUnlockViewController.h"
 
 @implementation QRWAppDelegate
 
@@ -45,7 +46,19 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
-    // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+
+    _unlockViewController = [[QRWUnlockViewController alloc] init];
+    CGRect frame = _unlockViewController.view.frame;
+    frame.origin.y = frame.size.height;
+    _unlockViewController.view.frame = frame;
+    
+    [self.window addSubview:_unlockViewController.view];
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        CGRect frame = _unlockViewController.view.frame;
+        frame.origin.y -= frame.size.height;
+        _unlockViewController.view.frame = frame;
+    }];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application

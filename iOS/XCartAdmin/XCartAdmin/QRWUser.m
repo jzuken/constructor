@@ -26,7 +26,7 @@
     self.phone = [JSON objectForKey:@"phone"];
     self.ordersCount = [JSON objectForKey:@"total_orders"];
     
-    self.userID = [self.formatter numberFromString: (NSString *)[JSON objectForKey:@"id"]];
+    self.userID = [JSON objectForKey:@"id"];
 }
 
 

@@ -7,7 +7,7 @@
 //
 
 #import "QRWUsersViewController.h"
-
+#import "QRWUserInfoViewController.h"
 #import "QRWUserCell.h"
 
 @interface QRWUsersViewController ()
@@ -49,16 +49,28 @@
                                           fromPoint:asEmpty? 0 : self.dataArray.count
                                             toPoint:kNumberOfLoadedItems
                                               block:^(NSArray *users, NSError *error) {
-                                                  NSMutableArray *oldDataArray = [NSMutableArray arrayWithArray: self.dataArray];
-                                                  [oldDataArray addObjectsFromArray:users];
-                                                  self.dataArray = asEmpty ? users: oldDataArray;
-                                                  [self.tableView reloadData];
-                                                  [self stopAllAnimations];
+                                                  [self smartAddObjectToDataArrayAsNew:asEmpty withLoaddedArray:users];
                                               }];
 }
 
 
 #pragma mark - TableView methods
+
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [self startLoadingAnimation];
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    QRWUser *user = [self.dataArray objectAtIndex:indexPath.section];
+    
+    [QRWDataManager sendUserInfoRequestWithID:[user.userID intValue]
+                                        block:^(QRWUserInfo *userInfo, NSError *error) {
+                                            [self stopLoadingAnimation];
+                                            QRWUserInfoViewController *userInfoViewController = [[QRWUserInfoViewController alloc] initWithUserInfo:userInfo];
+                                            [self.navigationController pushViewController:userInfoViewController animated:YES];
+                                        }];
+}
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

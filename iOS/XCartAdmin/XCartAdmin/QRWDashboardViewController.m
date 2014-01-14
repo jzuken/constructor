@@ -57,7 +57,7 @@
         
         _todaySalesLabel.text = NSStringFromFloat([[dashboardEntety todaySales] floatValue]);
         
-        _numberOfOrdersLable.text = NSStringFromInt([[dashboardEntety todayOrdersCount] intValue]);
+        _numberOfOrdersLable.text = [NSString stringWithFormat:@"(%d)", [[dashboardEntety todayOrdersCount] intValue]];
         
         self.dataArray= [dashboardEntety todayOrders];
         [self.tableView reloadData];

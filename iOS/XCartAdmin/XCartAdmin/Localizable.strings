@@ -12,7 +12,7 @@
 "PRODUCTS" = "Products";
 "REVIEWS" = "Reviews";
 "USERS" = "Users";
-"USERS_INFO" = "User info";
+"USER_INFO" = "User info";
 
 "ORDERS_LIST" = "Orders list";
 
@@ -38,3 +38,12 @@
 "LOADING" = "Loading...";
 "SUCCESS" = "Succes!";
 "ERROR" = "Error!";
+
+
+// User info
+"FIRST_NAME" = "First name";
+"LAST_NAME" = "Last name";
+"EMAIL" = "Email";
+"ADDRESS" = "Address";
+"PHONE" = "Phone";
+"FAX" = "Fax";

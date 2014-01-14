@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <QuartzCore/QuartzCore.h>
+
 #import "QRWDataManager.h"
 
 #import "QRWBaseEntety.h"

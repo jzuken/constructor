@@ -118,9 +118,7 @@
                                 NSArray *reviewsArray = (NSArray *) JSON;
                                 for (NSDictionary *data in reviewsArray) {
                                     DLog(@"Json is: %@", data);
-                                    //                                             QRWUser *user = [QRWUser new];
-                                    //                                             [user buildDataByJson:data];
-                                    //                                             [users addObject:user];
+
                                 }
                                 if (block) {
                                     block(reviews, nil);
@@ -137,6 +135,27 @@
 
 #pragma mark - Products
 
+
++ (NSURLSessionDataTask *)sendProductChangeAvaliabilityRequestWithID: (NSInteger)productID
+                                                         isAvaliable: (BOOL) isAvaliable
+                                                               block: (void (^)(BOOL isSuccess, NSError *error))block
+{
+    NSString *getURL = [NSString stringWithFormat:url_productChangeAvaliabilityURLappend, productID, isAvaliable ? 1: 2, [QRWSettingsClient getSecurityKey]];
+    
+    return [self sendRequestWithURL:getURL
+                            success:^(NSURLSessionDataTask *__unused task, id JSON) {
+                                DLog(@"Json is: %@", JSON);
+                                if (block) {
+                                    block(YES, nil);
+                                }
+                            }
+                            failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
+                                DLog(@"Error: %@", error);
+                                if (block) {
+                                    block(NO, error);
+                                }
+                            }];
+}
 
 + (NSURLSessionDataTask *)sendProductChangePriceRequestWithID: (NSInteger)productID
                                                      newPrice:(CGFloat)newPrice
@@ -247,22 +266,48 @@
 
 
 + (NSURLSessionDataTask *)sendUserInfoRequestWithID:(NSInteger)userID
-                                              block:(void (^)(NSArray *reviews, NSError *error))block
+                                              block: (void (^)(QRWUserInfo *userInfo, NSError *error))block;
 {
     NSString *getURL = [NSString stringWithFormat:url_userInfoURLappend, userID, [QRWSettingsClient getSecurityKey]];
 
     return [self sendRequestWithURL:getURL
                             success:^(NSURLSessionDataTask *__unused task, id JSON) {
-                                NSMutableArray *reviews = [NSMutableArray new];
-                                NSArray *reviewsArray = (NSArray *) JSON;
-                                for (NSDictionary *data in reviewsArray) {
-                                    DLog(@"Json is: %@", data);
-                                    //                                             QRWUser *user = [QRWUser new];
-                                    //                                             [user buildDataByJson:data];
-                                    //                                             [users addObject:user];
+                                DLog(@"Json is: %@", JSON);
+                                QRWUserInfo *userInfo = [QRWUserInfo new];
+                                [userInfo buildDataByJson:JSON];
+                                if (block) {
+                                    block(userInfo, nil);
+                                }
+                            }
+                            failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
+                                DLog(@"Error: %@", error);
+                                if (block) {
+                                    block([QRWUserInfo new], error);
+                                }
+                            }];
+}
+
+
+
++ (NSURLSessionDataTask *)sendUserOrderRequestWithUserID: (NSInteger )userID
+                                               fromPoint: (NSInteger)startPoint
+                                                 toPoint: (NSInteger)finishPoint
+                                                   block: (void (^)(NSArray *orders, NSError *error))block
+{
+    NSString *getURL = [NSString stringWithFormat:url_userOrdersURLappend, userID , startPoint, finishPoint, [QRWSettingsClient getSecurityKey]];
+    
+    return [self sendRequestWithURL:getURL
+                            success:^(NSURLSessionDataTask *__unused task, id JSON) {
+                                DLog(@"Json is: %@", JSON);
+                                NSMutableArray *orders = [NSMutableArray new];
+                                NSArray *ordersArray = (NSArray *) JSON;
+                                for (NSDictionary *data in ordersArray) {
+                                    QRWOrder *order = [QRWOrder new];
+                                    [order buildDataByJson:data];
+                                    [orders addObject:order];
                                 }
                                 if (block) {
-                                    block(reviews, nil);
+                                    block(orders, nil);
                                 }
                             }
                             failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
@@ -308,6 +353,7 @@
 
 
 #pragma mark - private methods
+
 
 + (NSURLSessionDataTask *)sendRequestWithURL:(NSString *)requestURL
                                      success:(void (^)(NSURLSessionDataTask *task, id responseObject))success

@@ -15,8 +15,8 @@
 {
     [super buildDataByJson:JSON];
     
-    self.available = [self.formatter numberFromString:(NSString *)[JSON objectForKey:@"avail"]];
-    self.productid = [self.formatter numberFromString:(NSString *)[JSON objectForKey:@"productid"]];
+    self.available = [JSON objectForKey:@"avail"];
+    self.productid = [JSON objectForKey:@"productid"];
     
 }
 

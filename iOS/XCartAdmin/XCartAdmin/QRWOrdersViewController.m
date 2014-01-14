@@ -10,33 +10,11 @@
 #import "QRWOrdersCell.h"
 
 @interface QRWOrdersViewController ()
-{
-    NSDictionary *_statusColorsDictionary;
-}
 
 @end
 
 @implementation QRWOrdersViewController
 
-
-
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        _statusColorsDictionary = @{@"I": [UIColor redColor],
-                                    @"D": [UIColor redColor],
-                                    @"F": [UIColor redColor],
-                                    @"Q": [UIColor blueColor],
-                                    @"B": [UIColor blueColor],
-                                    @"P": kTextBlueColor,
-                                    @"C": [UIColor greenColor],
-                                    @"A": [UIColor blueColor],
-                                    };
-    }
-    return self;
-}
 
 - (void)viewDidLoad
 {
@@ -71,11 +49,7 @@
                                                  toPoint:kNumberOfLoadedItems
                                                   status:@""
                                                     date:@"all" block:^(NSArray *orders, NSError *error) {
-                                                        NSMutableArray *oldDataArray = [NSMutableArray arrayWithArray: self.dataArray];
-                                                        [oldDataArray addObjectsFromArray:orders];
-                                                        self.dataArray = asEmpty ? orders: oldDataArray;
-                                                        [self.tableView reloadData];
-                                                        [self stopAllAnimations];
+                                                        [self smartAddObjectToDataArrayAsNew:asEmpty withLoaddedArray:orders];
                                                     }];
 }
 

@@ -8,9 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "QRWBaseViewController.h"
+#import <ZBarSDK/ZBarSDK.h>
 
 
-@interface QRWLoginScrinViewController : QRWBaseViewController<UITextFieldDelegate, UIGestureRecognizerDelegate>
+@interface QRWLoginScrinViewController : QRWBaseViewController<UITextFieldDelegate, UIGestureRecognizerDelegate, ZBarReaderDelegate>
 
 @property (strong, nonatomic) IBOutlet UITextField *loginTextField;
 @property (strong, nonatomic) IBOutlet UITextField *passwordTextField;
@@ -20,5 +21,6 @@
 @property (strong, nonatomic) IBOutlet UIView *signInBoxView;
 
 - (IBAction)signInClick:(id)sender;
+- (IBAction)scanQRInClick:(id)sender;
 
 @end
