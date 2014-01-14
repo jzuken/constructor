@@ -54,24 +54,6 @@
 #define COCOAPODS_VERSION_MINOR_ProgressHUD 0
 #define COCOAPODS_VERSION_PATCH_ProgressHUD 1
 
-// REFormattedNumberField
-#define COCOAPODS_POD_AVAILABLE_REFormattedNumberField
-#define COCOAPODS_VERSION_MAJOR_REFormattedNumberField 1
-#define COCOAPODS_VERSION_MINOR_REFormattedNumberField 1
-#define COCOAPODS_VERSION_PATCH_REFormattedNumberField 1
-
-// RETableViewManager
-#define COCOAPODS_POD_AVAILABLE_RETableViewManager
-#define COCOAPODS_VERSION_MAJOR_RETableViewManager 1
-#define COCOAPODS_VERSION_MINOR_RETableViewManager 5
-#define COCOAPODS_VERSION_PATCH_RETableViewManager 7
-
-// REValidation
-#define COCOAPODS_POD_AVAILABLE_REValidation
-#define COCOAPODS_VERSION_MAJOR_REValidation 0
-#define COCOAPODS_VERSION_MINOR_REValidation 1
-#define COCOAPODS_VERSION_PATCH_REValidation 4
-
 // SVPullToRefresh
 #define COCOAPODS_POD_AVAILABLE_SVPullToRefresh
 #define COCOAPODS_VERSION_MAJOR_SVPullToRefresh 0

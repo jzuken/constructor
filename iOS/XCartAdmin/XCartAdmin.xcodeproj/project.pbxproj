@@ -14,6 +14,8 @@
 		7F8173B11884499500894E16 /* QRWProductInfoViewControllerOld.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F8173B01884499500894E16 /* QRWProductInfoViewControllerOld.xib */; };
 		7F8173B318844B4500894E16 /* QRWUsersViewControllerOld.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F8173B218844B4500894E16 /* QRWUsersViewControllerOld.xib */; };
 		7F8173B518844C0F00894E16 /* QRWReviewsViewControllerOld.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F8173B418844C0F00894E16 /* QRWReviewsViewControllerOld.xib */; };
+		7F8173BB188565E700894E16 /* QRWOrderInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F8173B9188565E700894E16 /* QRWOrderInfoViewController.m */; };
+		7F8173BC188565E700894E16 /* QRWOrderInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F8173BA188565E700894E16 /* QRWOrderInfoViewController.xib */; };
 		7F9F99F31815604500AB3EF5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F9F99F21815604500AB3EF5 /* Foundation.framework */; };
 		7F9F99F51815604500AB3EF5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F9F99F41815604500AB3EF5 /* CoreGraphics.framework */; };
 		7F9F99F71815604600AB3EF5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F9F99F61815604600AB3EF5 /* UIKit.framework */; };
@@ -120,6 +122,9 @@
 		7F8173B01884499500894E16 /* QRWProductInfoViewControllerOld.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRWProductInfoViewControllerOld.xib; sourceTree = "<group>"; };
 		7F8173B218844B4500894E16 /* QRWUsersViewControllerOld.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRWUsersViewControllerOld.xib; sourceTree = "<group>"; };
 		7F8173B418844C0F00894E16 /* QRWReviewsViewControllerOld.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRWReviewsViewControllerOld.xib; sourceTree = "<group>"; };
+		7F8173B8188565E700894E16 /* QRWOrderInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRWOrderInfoViewController.h; sourceTree = "<group>"; };
+		7F8173B9188565E700894E16 /* QRWOrderInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRWOrderInfoViewController.m; sourceTree = "<group>"; };
+		7F8173BA188565E700894E16 /* QRWOrderInfoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRWOrderInfoViewController.xib; sourceTree = "<group>"; };
 		7F9F99EF1815604500AB3EF5 /* XCartAdmin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XCartAdmin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F9F99F21815604500AB3EF5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		7F9F99F41815604500AB3EF5 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -288,6 +293,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7F8173B61885659C00894E16 /* OrederInfo */ = {
+			isa = PBXGroup;
+			children = (
+				7F8173BD188565F000894E16 /* FormControl */,
+				7F8173B8188565E700894E16 /* QRWOrderInfoViewController.h */,
+				7F8173B9188565E700894E16 /* QRWOrderInfoViewController.m */,
+				7F8173BA188565E700894E16 /* QRWOrderInfoViewController.xib */,
+			);
+			name = OrederInfo;
+			sourceTree = "<group>";
+		};
+		7F8173BD188565F000894E16 /* FormControl */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = FormControl;
+			sourceTree = "<group>";
+		};
 		7F9F99E61815604500AB3EF5 = {
 			isa = PBXGroup;
 			children = (
@@ -430,6 +453,7 @@
 		7F9F9A4E1815636C00AB3EF5 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				7F8173B61885659C00894E16 /* OrederInfo */,
 				9624FBBD1880D07D007A641D /* UserInfo */,
 				7FBCF2E4187FFFE700594CCD /* ProductInfo */,
 				7FBCF2DD187FFB7D00594CCD /* Unlock */,
@@ -846,6 +870,7 @@
 				7F9F9A591815662100AB3EF5 /* QRWLoginScrinViewController.xib in Resources */,
 				7F8173AD1884488C00894E16 /* QRWProductsViewControllerOld.xib in Resources */,
 				7FCFD32E187D679000F44547 /* QRWReviewsViewController.xib in Resources */,
+				7F8173BC188565E700894E16 /* QRWOrderInfoViewController.xib in Resources */,
 				969409D8182C503600B0B343 /* button_dashboard1.png in Resources */,
 				969409DA182C504100B0B343 /* button_dashboard2.png in Resources */,
 				9624FBBB1880CF6B007A641D /* Podfile in Resources */,
@@ -960,6 +985,7 @@
 				7FCFD3081869BA4000F44547 /* QRWUserCell.m in Sources */,
 				7FCFD30118698F1800F44547 /* QRWSettingsClient.m in Sources */,
 				7FBCF2ED188014DE00594CCD /* QRWProductWithInfo.m in Sources */,
+				7F8173BB188565E700894E16 /* QRWOrderInfoViewController.m in Sources */,
 				7FCFD32D187D679000F44547 /* QRWReviewsViewController.m in Sources */,
 				7F9F9A5D18156CC400AB3EF5 /* QRWBaseViewController.m in Sources */,
 				7F9F9A46181562F200AB3EF5 /* QRWCategoryInTop.m in Sources */,
@@ -1083,7 +1109,7 @@
 			baseConfigurationReference = E0041376838B4A02BAD72606 /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Mobtekh OOO (2J3UD2G26R)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "XCartAdmin/XCartAdmin-Prefix.pch";
 				INFOPLIST_FILE = "XCartAdmin/XCartAdmin-Info.plist";
@@ -1098,7 +1124,7 @@
 			baseConfigurationReference = E0041376838B4A02BAD72606 /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Mobtekh OOO (2J3UD2G26R)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "XCartAdmin/XCartAdmin-Prefix.pch";
 				INFOPLIST_FILE = "XCartAdmin/XCartAdmin-Info.plist";

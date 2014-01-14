@@ -14,22 +14,12 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Pods-REFormattedNumberField.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Pods-RETableViewManager.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Pods-REValidation.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>Pods-SVPullToRefresh.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-ZBarSDK.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -42,37 +32,27 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>0089A79CADF046499F954140</key>
+		<key>18E9EFB15F2F4BB387F53223</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>1C154AF9B4644A158835918E</key>
+		<key>2B78A4F3BA1B4A54890A9A64</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>20339B47AD4143559A1E171C</key>
+		<key>2D123C74EE384AFCA0B01C54</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>36CB6C5C20E846CAB17C1F19</key>
+		<key>9807D03291E24B43838B800F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>655DC082A4A84B008ECE69F8</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>969F84FAEBF5443FA7873674</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>DD91C3E3245244E2B26D268B</key>
+		<key>CA4B93299F5C4E87AD52332F</key>
 		<dict>
 			<key>primary</key>
 			<true/>

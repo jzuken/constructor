@@ -8,6 +8,7 @@
 
 #import "QRWOrdersViewController.h"
 #import "QRWOrdersCell.h"
+#import "QRWOrderInfoViewController.h"
 
 @interface QRWOrdersViewController ()
 
@@ -55,6 +56,14 @@
 
 
 #pragma mark - TableView
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    QRWOrderInfoViewController *orderInfoViewController = [[QRWOrderInfoViewController alloc] init];
+    [self.navigationController pushViewController:orderInfoViewController animated:YES];
+}
+
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {

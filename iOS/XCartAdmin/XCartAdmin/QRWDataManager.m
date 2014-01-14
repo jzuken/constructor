@@ -331,11 +331,9 @@
                             success:^(NSURLSessionDataTask *__unused task, id JSON) {
                                 NSMutableArray *reviews = [NSMutableArray new];
                                 NSArray *reviewsArray = (NSArray *) JSON;
+                                DLog(@"Json is: %@", JSON);
                                 for (NSDictionary *data in reviewsArray) {
-                                    DLog(@"Json is: %@", data);
-//                                             QRWUser *user = [QRWUser new];
-//                                             [user buildDataByJson:data];
-//                                             [users addObject:user];
+                                    
                                 }
                                 if (block) {
                                     block(reviews, nil);
