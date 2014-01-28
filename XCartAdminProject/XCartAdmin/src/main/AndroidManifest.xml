@@ -92,10 +92,6 @@
         <activity
             android:name="com.xcart.admin.views.UserInfo"
             android:screenOrientation="portrait" />
-        <activity
-            android:name="com.xcart.admin.views.AboutActivity"
-            android:theme="@style/Theme.AppCompat.Light"
-            android:label="@string/title_activity_about" />
 
         <receiver
             android:name="com.xcart.admin.managers.gcm.GcmBroadcastReceiver"
