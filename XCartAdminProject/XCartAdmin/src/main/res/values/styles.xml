@@ -5,4 +5,15 @@
         <item name="switchStyle">@style/Widget.Holo.CompoundButton.Switch</item>
     </style>
 
+    <style name="AboutDialogText" parent="android:TextAppearance">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="AboutDialogPhoneText" parent="AboutDialogText">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:drawablePadding">10dp</item>
+        <item name="android:autoLink">phone</item>
+    </style>
 </resources>

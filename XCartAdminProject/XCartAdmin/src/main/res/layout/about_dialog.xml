@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dip">
+
+        <TextView
+            android:id="@+id/xcart_mobile_admin"
+            android:text="@string/xcart_mobile_admin"
+            android:clickable="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/AboutDialogText"/>
+
+        <TextView
+            android:id="@+id/xcart_help"
+            android:text="@string/xcart_help"
+            android:clickable="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textAppearance="@style/AboutDialogText"/>
+
+        <TextView
+            android:text="@string/contact_as"
+            android:clickable="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textAppearance="@style/AboutDialogText"/>
+
+        <TextView
+            android:text="@string/usa_phone"
+            android:clickable="true"
+
+            android:drawableLeft="@drawable/ic_phone_usa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            style="@style/AboutDialogPhoneText"/>
+
+        <TextView
+            android:text="@string/britan_phone"
+            android:clickable="true"
+
+            android:drawableLeft="@drawable/ic_phone_gb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            style="@style/AboutDialogPhoneText"/>
+
+        <TextView
+            android:text="@string/universe_phone"
+            android:clickable="true"
+
+            android:drawableLeft="@drawable/ic_phone_universe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            style="@style/AboutDialogPhoneText"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/ivFacebook"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_facebook"
+                android:contentDescription="@string/facebook" />
+
+            <ImageView
+                android:id="@+id/ivTwitter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_twitter"
+                android:layout_marginLeft="50dp"
+                android:contentDescription="@string/twitter" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+</ScrollView>

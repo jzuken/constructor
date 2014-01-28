@@ -33,7 +33,7 @@
         android:text="@string/usa_phone"
         android:clickable="true"
         android:autoLink="phone"
-        android:drawableLeft="@drawable/image02"
+        android:drawableLeft="@drawable/ic_phone_usa"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
@@ -41,7 +41,7 @@
         android:text="@string/britan_phone"
         android:clickable="true"
         android:autoLink="phone"
-        android:drawableLeft="@drawable/image04"
+        android:drawableLeft="@drawable/ic_phone_gb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
@@ -49,7 +49,7 @@
         android:text="@string/universe_phone"
         android:clickable="true"
         android:autoLink="phone"
-        android:drawableLeft="@drawable/image03"
+        android:drawableLeft="@drawable/ic_phone_universe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
@@ -60,13 +60,13 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/image00"
+            android:src="@drawable/ic_facebook"
             android:layout_marginLeft="20dp"/>
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/image01"
+            android:src="@drawable/ic_twitter"
             android:layout_marginLeft="20dp"/>
     </LinearLayout>
 

@@ -224,7 +224,7 @@ public class DashboardActivity extends PinSupportNetworkActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        //getMenuInflater().inflate(R.menu.dashboard, menu);
+        getMenuInflater().inflate(R.menu.dashboard, menu);
         return true;
     }
 
@@ -232,8 +232,9 @@ public class DashboardActivity extends PinSupportNetworkActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_about) {
-            Intent intent = new Intent(this, AboutActivity.class);
-            startActivity(intent);
+//            Intent intent = new Intent(this, AboutActivity.class);
+//            startActivity(intent);
+            dialogManager.showAboutDialog();
             return true;
         }
         return super.onOptionsItemSelected(item);

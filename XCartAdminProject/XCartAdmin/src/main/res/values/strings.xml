@@ -132,9 +132,9 @@
     <string name="xcart_help">Help</string>
     <string name="xcart_help_link">http://help.x-cart.com/index.php?title=X-Cart_Mobile_Admin</string>
     <string name="contact_as">Contact US</string>
-    <string name="usa_phone">1–800–657–7957</string>
-    <string name="britan_phone">44–207–043–4988</string>
-    <string name="universe_phone">7–842–279–4038</string>
+    <string name="usa_phone">1-800-657-7957</string>
+    <string name="britan_phone">44-207-0434-988</string>
+    <string name="universe_phone">7-842-279-4038</string>
     <string name="no_reviews">No reviews</string>
     <string name="no_products">No products</string>
     <string name="close_application_question">Are you sure you want to close X-Cart Admin?</string>
@@ -142,5 +142,9 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="pre_authorized">Pre-Authorized</string>
+    <string name="about_application_version">X-Cart\nверсия %1$s</string>
+    <string name="about_exit_button_text">Close</string>
+    <string name="twitter">Twitter</string>
+    <string name="facebook">Facebook</string>
 
 </resources>
