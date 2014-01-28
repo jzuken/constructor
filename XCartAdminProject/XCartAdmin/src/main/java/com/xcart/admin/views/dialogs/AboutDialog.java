@@ -44,6 +44,18 @@ public class AboutDialog extends AlertDialog {
         helpTv.setMovementMethod(LinkMovementMethod.getInstance());
         helpTv.setText(Html.fromHtml(String.format(LINK_PATTERN, getContext().getString(R.string.xcart_help_link), getContext().getString(R.string.xcart_help))));
 
+        TextView emailTv = ((TextView) aboutContentView.findViewById(R.id.about_email));
+        emailTv.setMovementMethod(LinkMovementMethod.getInstance());
+        emailTv.setText(Html.fromHtml(String.format(LINK_PATTERN, getContext().getString(R.string.xcart_email_link), getContext().getString(R.string.about_email_text))));
+
+        TextView tvFacebook = ((TextView) aboutContentView.findViewById(R.id.fb));
+        tvFacebook.setMovementMethod(LinkMovementMethod.getInstance());
+        tvFacebook.setText(Html.fromHtml(String.format(LINK_PATTERN, getContext().getString(R.string.fb_link), getContext().getString(R.string.facebook))));
+
+        TextView tvTwitter = ((TextView) aboutContentView.findViewById(R.id.tw));
+        tvTwitter.setMovementMethod(LinkMovementMethod.getInstance());
+        tvTwitter.setText(Html.fromHtml(String.format(LINK_PATTERN, getContext().getString(R.string.tw_link), getContext().getString(R.string.twitter))));
+
         setButton(BUTTON_NEUTRAL, getContext().getString(R.string.about_exit_button_text),
                 new OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {

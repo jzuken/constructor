@@ -131,6 +131,7 @@
     <string name="xcart_mobile_admin_link">http://www.x-cart.com/mobile-ecommerce-solution.html</string>
     <string name="xcart_help">Help</string>
     <string name="xcart_help_link">http://help.x-cart.com/index.php?title=X-Cart_Mobile_Admin</string>
+    <string name="xcart_email_link">http://www.x-cart.com/contact-us.html</string>
     <string name="contact_as">Contact US</string>
     <string name="usa_phone">1-800-657-7957</string>
     <string name="britan_phone">44-207-0434-988</string>
@@ -144,7 +145,10 @@
     <string name="pre_authorized">Pre-Authorized</string>
     <string name="about_application_version">X-Cart\nверсия %1$s</string>
     <string name="about_exit_button_text">Close</string>
-    <string name="twitter">Twitter</string>
-    <string name="facebook">Facebook</string>
+    <string name="twitter">twitter.com/x_cart</string>
+    <string name="facebook">facebook.com/xcart</string>
+    <string name="about_email_text">Email us</string>
+    <string name="fb_link">http://www.facebook.com/xcart</string>
+    <string name="tw_link">http://www.twitter.com/x_cart</string>
 
 </resources>

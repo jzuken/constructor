@@ -33,7 +33,7 @@
             android:clickable="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:textAppearance="@style/AboutDialogText"/>
 
         <TextView
@@ -66,27 +66,33 @@
             android:layout_marginTop="5dp"
             style="@style/AboutDialogPhoneText"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/fb"
+            android:text="@string/facebook"
+            android:drawableLeft="@drawable/ic_facebook"
+            android:layout_marginTop="20dip"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:gravity="center">
+            android:drawablePadding="10dp"
+            android:textAppearance="@style/AboutDialogText"/>
 
-            <ImageView
-                android:id="@+id/ivFacebook"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_facebook"
-                android:contentDescription="@string/facebook" />
+        <TextView
+            android:id="@+id/tw"
+            android:text="@string/twitter"
+            android:drawableLeft="@drawable/ic_twitter"
+            android:layout_marginTop="5dip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="10dp"
+            android:textAppearance="@style/AboutDialogText"/>
 
-            <ImageView
-                android:id="@+id/ivTwitter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_twitter"
-                android:layout_marginLeft="50dp"
-                android:contentDescription="@string/twitter" />
-        </LinearLayout>
+        <TextView
+            android:id="@+id/about_email"
+            android:text="@string/about_email_text"
+            android:layout_marginTop="20dip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/AboutDialogText"/>
     </LinearLayout>
 
 
