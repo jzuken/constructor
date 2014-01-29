@@ -1,1 +1,1 @@
-include ':libraries:android-switch-backport', ':libraries:wheel', ':XCartAdmin'
+include ':libraries:android-switch-backport', ':libraries:wheel', ':libraries:facebook', ':XCartAdmin'
