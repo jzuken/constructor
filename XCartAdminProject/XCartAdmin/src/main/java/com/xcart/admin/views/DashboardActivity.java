@@ -5,15 +5,17 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.xcart.admin.R;
+import com.xcart.admin.managers.LogManager;
 import com.xcart.admin.managers.network.HttpManager;
 import com.xcart.admin.managers.network.Requester;
 
@@ -23,11 +25,14 @@ import org.json.JSONObject;
 
 public class DashboardActivity extends PinSupportNetworkActivity {
 
+    private static final LogManager LOG = new LogManager(DashboardActivity.class.getSimpleName());
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.dashboard);
-        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
         initTodaySales();
         initLowStock();
         initVisitorsToday();
@@ -37,13 +42,33 @@ public class DashboardActivity extends PinSupportNetworkActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
     protected void withoutPinAction() {
         updateData();
         super.withoutPinAction();
     }
 
     private void updateData() {
-        progressBar.setVisibility(View.VISIBLE);
+        setProgressBarIndeterminateVisibility(Boolean.TRUE);
         requester = new Requester() {
 
             @Override
@@ -86,7 +111,7 @@ public class DashboardActivity extends PinSupportNetworkActivity {
                 } else {
                     showConnectionErrorMessage();
                 }
-                progressBar.setVisibility(View.GONE);
+                setProgressBarIndeterminateVisibility(Boolean.FALSE);
             }
         };
 
@@ -224,18 +249,38 @@ public class DashboardActivity extends PinSupportNetworkActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.dashboard, menu);
-        return true;
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.dashboard, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_about) {
-//            Intent intent = new Intent(this, AboutActivity.class);
-//            startActivity(intent);
-            dialogManager.showAboutDialog();
-            return true;
+        switch (id) {
+            case R.id.action_about:
+                dialogManager.showAboutDialog();
+                return true;
+            case R.id.share:
+                //create the send intent
+                Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
+
+                //set the type
+                shareIntent.setType("text/plain");
+
+                //add a subject
+                shareIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Insert Subject Here");
+
+                //build the body of the message to be shared
+                String shareMessage = "Insert message body here.";
+
+                //add the message
+                shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareMessage);
+
+                //start the chooser for sharing
+                startActivity(Intent.createChooser(shareIntent,
+                        "Insert share chooser title here"));
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -257,7 +302,6 @@ public class DashboardActivity extends PinSupportNetworkActivity {
                 .show();
     }
 
-    private ProgressBar progressBar;
     private LinearLayout todaySalesLayout;
     private TextView todaySales;
     private LinearLayout lowStockLayout;

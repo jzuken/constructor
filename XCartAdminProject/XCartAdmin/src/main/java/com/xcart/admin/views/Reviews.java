@@ -3,6 +3,8 @@ package com.xcart.admin.views;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
@@ -16,7 +18,6 @@ import com.xcart.admin.R;
 import com.xcart.admin.managers.XCartApplication;
 import com.xcart.admin.managers.network.HttpManager;
 import com.xcart.admin.managers.network.Requester;
-import com.xcart.admin.model.Review;
 import com.xcart.admin.views.adapters.ReviewsListAdapter;
 
 import org.json.JSONArray;
@@ -32,6 +33,13 @@ public class Reviews extends PinSupportNetworkActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.reviews);
         setupListViewAdapter();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.reviews, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -99,11 +107,11 @@ public class Reviews extends PinSupportNetworkActivity {
     }
 
     private void addReviewToList(final String id, final String email, final String product, final String message) {
-        adapter.add(new Review(id, email, product, message));
+        adapter.add(new com.xcart.admin.model.Review(id, email, product, message));
     }
 
     private void setupListViewAdapter() {
-        adapter = new ReviewsListAdapter(this, R.layout.review_item, new ArrayList<Review>());
+        adapter = new ReviewsListAdapter(this, R.layout.review_item, new ArrayList<com.xcart.admin.model.Review>());
         reviewsListView = (ListView) findViewById(R.id.reviews_list);
 
         LayoutInflater inflater = getLayoutInflater();
@@ -133,8 +141,8 @@ public class Reviews extends PinSupportNetworkActivity {
         reviewsListView.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 setNeedDownloadValue(false);
-                Review review = ((ReviewsListAdapter.ReviewHolder) view.getTag()).getReview();
-                Intent intent = new Intent(getBaseContext(), FullMessage.class);
+                com.xcart.admin.model.Review review = ((ReviewsListAdapter.ReviewHolder) view.getTag()).getReview();
+                Intent intent = new Intent(getBaseContext(), Review.class);
                 intent.putExtra("email", review.getEmail());
                 intent.putExtra("product", review.getProduct());
                 intent.putExtra("message", review.getMessage());

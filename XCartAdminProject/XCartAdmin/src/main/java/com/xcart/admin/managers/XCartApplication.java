@@ -41,4 +41,17 @@ public class XCartApplication extends Application {
         }
         return versionName;
     }
+
+
+
+    //
+    private String productsSortOrder;
+
+    public String getProductsSortOrder() {
+        return productsSortOrder;
+    }
+
+    public void setProductsSortOrder(String productsSortOrder) {
+        this.productsSortOrder = productsSortOrder;
+    }
 }

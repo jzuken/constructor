@@ -1,9 +1,57 @@
 <resources>
 
-    <!-- Application theme. -->
-    <style name="AppTheme" parent="android:Theme.Light.NoTitleBar">
-        <item name="switchStyle">@style/Widget.Holo.CompoundButton.Switch</item>
+    <style name="Theme.XCartAppTheme.NoActionBar" parent="android:Theme.Black.NoTitleBar">
     </style>
+
+    <style name="Theme.XCartAppTheme" parent="@style/Theme.AppCompat.Light.DarkActionBar">
+         <item name="switchStyle">@style/Widget.Holo.CompoundButton.Switch</item>
+    </style>
+
+    <style name="ActionBar.XCartAppTheme" parent="@style/Widget.AppCompat.Light.ActionBar.Solid">
+        <item name="titleTextStyle">@style/DashboardTextStyle</item>
+    </style>
+
+    <style name="Theme.XCartAppTheme.Dashboard" parent="@style/Theme.XCartAppTheme">
+        <item name="actionBarStyle">@style/ActionBar.Dashboard.XCartAppTheme</item>
+    </style>
+
+    <style name="ActionBar.Dashboard.XCartAppTheme" parent="@style/ActionBar.XCartAppTheme">
+        <item name="background">@drawable/gray_title</item>
+    </style>
+
+    <style name="Theme.XCartAppTheme.Orders" parent="@style/Theme.XCartAppTheme">
+        <item name="actionBarStyle">@style/ActionBar.Orders.XCartAppTheme</item>
+    </style>
+
+    <style name="ActionBar.Orders.XCartAppTheme" parent="@style/ActionBar.XCartAppTheme">
+        <item name="background">@drawable/orange_title</item>
+    </style>
+
+    <style name="Theme.XCartAppTheme.Users" parent="@style/Theme.XCartAppTheme">
+        <item name="actionBarStyle">@style/ActionBar.Users.XCartAppTheme</item>
+    </style>
+
+    <style name="ActionBar.Users.XCartAppTheme" parent="@style/ActionBar.XCartAppTheme">
+        <item name="android:background">@drawable/blue_title</item>
+    </style>
+
+    <style name="Theme.XCartAppTheme.Reviews" parent="@style/Theme.XCartAppTheme">
+        <item name="actionBarStyle">@style/ActionBar.Reviews.XCartAppTheme</item>
+    </style>
+
+    <style name="ActionBar.Reviews.XCartAppTheme" parent="@style/ActionBar.XCartAppTheme">
+        <item name="background">@drawable/light_orange_title</item>
+    </style>
+
+    <style name="Theme.XCartAppTheme.Products" parent="@style/Theme.XCartAppTheme">
+        <item name="actionBarStyle">@style/ActionBar.Products.XCartAppTheme</item>
+    </style>
+
+    <style name="ActionBar.Products.XCartAppTheme" parent="@style/ActionBar.XCartAppTheme">
+        <item name="background">@drawable/light_gray_title</item>
+    </style>
+
+
 
     <style name="AboutDialogText" parent="android:TextAppearance">
         <item name="android:textSize">16sp</item>
@@ -17,4 +65,11 @@
         <item name="android:drawablePadding">10dp</item>
         <item name="android:autoLink">phone</item>
     </style>
+
+    <style name="DashboardTextStyle" parent="android:TextAppearance">
+        <item name="android:textSize">25sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+    
 </resources>

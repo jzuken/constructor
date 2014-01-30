@@ -6,12 +6,15 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBarActivity;
+import android.view.MenuItem;
 import android.view.View;
 
+import com.xcart.admin.R;
 import com.xcart.admin.managers.MyActivityManager;
 import com.xcart.admin.managers.gcm.GcmIntentService;
 
-public class PinSupportActivity extends FragmentActivity {
+public class PinSupportActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,6 +113,19 @@ public class PinSupportActivity extends FragmentActivity {
         fromPin = savedInstanceState.getBoolean("fromPin");
         needDownload = true;
         super.onRestoreInstanceState(savedInstanceState);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.settings:
+                setNeedDownloadValue(false);
+                Intent intent = new Intent(this, Settings.class);
+                startActivityForResult(intent, 1);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public void onBackButtonClicked(View v) {

@@ -1,0 +1,52 @@
+<resources>
+
+     <style name="Theme.XCartAppTheme" parent="@style/Theme.AppCompat.Light.DarkActionBar">
+        <item name="switchStyle">@style/Widget.Holo.Light.CompoundButton.Switch</item>
+    </style>
+
+    <style name="ActionBar.XCartAppTheme" parent="@style/Widget.AppCompat.Light.ActionBar.Solid">
+        <item name="android:titleTextStyle">@style/DashboardTextStyle</item>
+    </style>
+
+    <style name="Theme.XCartAppTheme.Dashboard" parent="@style/Theme.XCartAppTheme">
+        <item name="android:actionBarStyle">@style/ActionBar.Dashboard.XCartAppTheme</item>
+
+    </style>
+
+    <style name="ActionBar.Dashboard.XCartAppTheme" parent="@style/ActionBar.XCartAppTheme">
+        <item name="android:background">@drawable/gray_title</item>
+    </style>
+
+    <style name="Theme.XCartAppTheme.Orders" parent="@style/Theme.XCartAppTheme">
+        <item name="android:actionBarStyle">@style/ActionBar.Orders.XCartAppTheme</item>
+    </style>
+
+    <style name="ActionBar.Orders.XCartAppTheme" parent="@style/ActionBar.XCartAppTheme">
+        <item name="android:background">@drawable/orange_title</item>
+    </style>
+
+    <style name="Theme.XCartAppTheme.Users" parent="@style/Theme.XCartAppTheme">
+        <item name="android:actionBarStyle">@style/ActionBar.Users.XCartAppTheme</item>
+    </style>
+
+    <style name="ActionBar.Users.XCartAppTheme" parent="@style/ActionBar.XCartAppTheme">
+        <item name="android:background">@drawable/blue_title</item>
+    </style>
+
+    <style name="Theme.XCartAppTheme.Reviews" parent="@style/Theme.XCartAppTheme">
+        <item name="android:actionBarStyle">@style/ActionBar.Reviews.XCartAppTheme</item>
+    </style>
+
+    <style name="ActionBar.Reviews.XCartAppTheme" parent="@style/ActionBar.XCartAppTheme">
+        <item name="android:background">@drawable/light_orange_title</item>
+    </style>
+
+    <style name="Theme.XCartAppTheme.Products" parent="@style/Theme.XCartAppTheme">
+        <item name="android:actionBarStyle">@style/ActionBar.Products.XCartAppTheme</item>
+    </style>
+
+    <style name="ActionBar.Products.XCartAppTheme" parent="@style/ActionBar.XCartAppTheme">
+        <item name="android:background">@drawable/light_gray_title</item>
+    </style>
+
+</resources>

@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.View.OnKeyListener;
 import android.view.inputmethod.InputMethodManager;
@@ -34,12 +36,14 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class Products extends PinSupportNetworkActivity {
+
+    String sortOption;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.products);
         setupListViewAdapter();
-        String sortOption = getIntent().getStringExtra("sortOption");
+        sortOption = getIntent().getStringExtra("sortOption");
         if (sortOption.equals("lowStock")) {
             option = "1";
         } else {
@@ -47,6 +51,25 @@ public class Products extends PinSupportNetworkActivity {
         }
         setupTabs(sortOption);
         setupSearchLine();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.products, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("sortOption", sortOption);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        sortOption = savedInstanceState.getString("sortOption");
     }
 
     @Override

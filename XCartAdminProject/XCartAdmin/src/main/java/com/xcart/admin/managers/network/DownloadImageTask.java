@@ -15,9 +15,10 @@ import org.apache.http.client.methods.HttpGet;
 import java.io.InputStream;
 
 public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-    public DownloadImageTask(ImageView image, ProgressBar progressBar) {
+
+    public DownloadImageTask(ImageView image, Callback callback) {
         this.image = image;
-        this.progressBar = progressBar;
+        this.callback = callback;
     }
 
     protected Bitmap doInBackground(String... urls) {
@@ -50,9 +51,13 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
 
     protected void onPostExecute(Bitmap bitmap) {
         image.setImageBitmap(bitmap);
-        progressBar.setVisibility(View.GONE);
+        callback.done();
     }
 
     private ImageView image;
-    private ProgressBar progressBar;
+    private Callback callback;
+
+    public interface Callback{
+        public void done();
+    }
 }

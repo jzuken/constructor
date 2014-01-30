@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -41,14 +42,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProductInfo extends PinSupportNetworkActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.product_full_info);
-        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
+        setTitle(getIntent().getStringExtra("name"));
         productId = getIntent().getStringExtra("id");
-        name = (TextView) findViewById(R.id.product_name);
-        name.setText(getIntent().getStringExtra("name"));
         productImage = (ImageView) findViewById(R.id.product_image);
         description = (WebView) findViewById(R.id.description);
         initDescriptionWebView(description);
@@ -80,7 +81,7 @@ public class ProductInfo extends PinSupportNetworkActivity {
     }
 
     private void updateData() {
-        progressBar.setVisibility(View.VISIBLE);
+        setProgressBarIndeterminateVisibility(Boolean.TRUE);
 
         requester = new Requester() {
             @Override
@@ -109,10 +110,15 @@ public class ProductInfo extends PinSupportNetworkActivity {
                         availabilitySwitch.setClickable(true);
                         String imageUrl = obj.getString("image_url");
                         if (!imageUrl.equals(NO_IMAGE_URL)) {
-                            new DownloadImageTask(productImage, progressBar).execute(imageUrl);
+                            new DownloadImageTask(productImage, new DownloadImageTask.Callback() {
+                                @Override
+                                public void done() {
+                                    setProgressBarIndeterminateVisibility(Boolean.FALSE);
+                                }
+                            }).execute(imageUrl);
                         } else {
                             productImage.setImageDrawable(getResources().getDrawable(R.drawable.no_image));
-                            progressBar.setVisibility(View.GONE);
+                            setProgressBarIndeterminateVisibility(Boolean.FALSE);
                         }
                         if (!obj.get("variants").equals(null)) {
                             variantsArray = obj.getJSONArray("variants");
@@ -133,11 +139,11 @@ public class ProductInfo extends PinSupportNetworkActivity {
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
-                        progressBar.setVisibility(View.GONE);
+                        setProgressBarIndeterminateVisibility(Boolean.FALSE);
                     }
                 } else {
                     showConnectionErrorMessage();
-                    progressBar.setVisibility(View.GONE);
+                    setProgressBarIndeterminateVisibility(Boolean.FALSE);
                 }
             }
         };
@@ -396,9 +402,7 @@ public class ProductInfo extends PinSupportNetworkActivity {
         }
     }
 
-    private ProgressBar progressBar;
     private String productId = "";
-    private TextView name;
     private ImageView productImage;
     private WebView description;
     private WebView fullDescription;

@@ -28,7 +28,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:19.+'
     compile project (':libraries:android-switch-backport')
     compile project (':libraries:wheel')
-    compile project(':libraries:facebook')
 }
 
 

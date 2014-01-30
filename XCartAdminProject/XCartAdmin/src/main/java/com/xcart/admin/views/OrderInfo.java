@@ -7,8 +7,11 @@ import android.os.Bundle;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.Spanned;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,14 +33,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class OrderInfo extends PinSupportNetworkActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.order_info);
         orderIdValue = getIntent().getStringExtra("orderId");
-        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
-        orderId = (TextView) findViewById(R.id.order_title);
-        orderId.setText(getResources().getString(R.string.order_id_number) + getIntent().getStringExtra("orderId"));
+        setTitle(getResources().getString(R.string.order_id_number) + getIntent().getStringExtra("orderId"));
         paymentMethod = (TextView) findViewById(R.id.payment_method);
         deliveryMethod = (TextView) findViewById(R.id.delivery_method);
         billingInfo = (TextView) findViewById(R.id.billing_info);
@@ -60,6 +63,13 @@ public class OrderInfo extends PinSupportNetworkActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.order_info, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
     protected void withoutPinAction() {
         if (isNeedDownload()) {
             clearData();
@@ -69,7 +79,7 @@ public class OrderInfo extends PinSupportNetworkActivity {
     }
 
     private void updateData() {
-        progressBar.setVisibility(View.VISIBLE);
+        setProgressBarIndeterminateVisibility(Boolean.TRUE);
         final String orderId = getIntent().getStringExtra("orderId");
         requester = new Requester() {
 
@@ -164,7 +174,7 @@ public class OrderInfo extends PinSupportNetworkActivity {
                 } else {
                     showConnectionErrorMessage();
                 }
-                progressBar.setVisibility(View.GONE);
+                setProgressBarIndeterminateVisibility(Boolean.FALSE);
             }
         };
 
@@ -363,8 +373,6 @@ public class OrderInfo extends PinSupportNetworkActivity {
     }
 
     private String orderIdValue = "";
-    private ProgressBar progressBar;
-    private TextView orderId;
     private TextView status;
     private TextView trackingNumber;
     private TextView paymentMethod;

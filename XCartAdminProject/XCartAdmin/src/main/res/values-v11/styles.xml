@@ -1,8 +1,10 @@
 <resources>
 
-    <!-- Application theme. -->
-    <style name="AppTheme" parent="android:Theme.Holo.Light.NoActionBar">
-        <item name="switchStyle">@style/Widget.Holo.Light.CompoundButton.Switch</item>
-    </style>
+    <!--&lt;!&ndash; Application theme. &ndash;&gt;-->
+    <!--<style name="ActionBar.Solid.XCartAppTheme" parent="@style/Widget.AppCompat.Light.ActionBar.Solid">-->
+        <!--<item name="background">@drawable/gray_title</item>-->
+        <!--<item name="titleTextStyle">@style/DashboardTextStyle</item>-->
+        <!--<item name="switchStyle">@style/Widget.Holo.Light.CompoundButton.Switch</item>-->
+    <!--</style>-->
 
 </resources>

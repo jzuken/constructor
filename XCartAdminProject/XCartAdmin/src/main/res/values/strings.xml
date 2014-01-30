@@ -150,5 +150,8 @@
     <string name="about_email_text">Email us</string>
     <string name="fb_link">http://www.facebook.com/xcart</string>
     <string name="tw_link">http://www.twitter.com/x_cart</string>
+    <string name="app_id">709247889105649</string>
+    <string name="action_share">Share</string>
+    <string name="review">Review</string>
 
 </resources>
