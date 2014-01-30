@@ -6,6 +6,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -21,7 +24,6 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -69,6 +71,32 @@ public class ProductInfo extends PinSupportNetworkActivity {
         onlyAdminBackendLayout = (LinearLayout) findViewById(R.id.only_admin_backend_layout);
         onlyAdminBackendLink = (TextView) findViewById(R.id.only_admin_backend_link);
         onlyAdminBackendLink.setMovementMethod(LinkMovementMethod.getInstance());
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.product_info, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.action_about:
+                dialogManager.showAboutDialog();
+                return true;
+            case R.id.action_share:
+                Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
+                shareIntent.setType("text/plain");
+                shareIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Insert Subject Here");
+                String shareMessage = "Insert message body here.";
+                shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareMessage);
+                startActivity(Intent.createChooser(shareIntent, "Insert share chooser title here"));
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

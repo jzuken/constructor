@@ -58,7 +58,8 @@
         <activity
             android:name=".views.Settings"
             android:label="@string/action_settings"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.XCartAppTheme.Settings"/>
         <activity
             android:name=".views.Products"
             android:screenOrientation="portrait"

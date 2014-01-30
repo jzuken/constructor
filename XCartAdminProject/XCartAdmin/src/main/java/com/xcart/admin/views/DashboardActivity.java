@@ -261,7 +261,7 @@ public class DashboardActivity extends PinSupportNetworkActivity {
             case R.id.action_about:
                 dialogManager.showAboutDialog();
                 return true;
-            case R.id.share:
+            case R.id.action_share:
                 //create the send intent
                 Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
 
