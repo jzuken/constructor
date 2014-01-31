@@ -4,7 +4,10 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
+import android.view.Window;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
@@ -32,8 +35,8 @@ public class UserInfo extends PinSupportNetworkActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.user_info);
-        progressBar = (ProgressBar) findViewById(R.id.user_info_progress_bar);
         adapter = new OrdersListAdapter(this, R.layout.order_item, new ArrayList<Order>());
         ordersListView = (ListView) findViewById(R.id.orders_list);
         LayoutInflater inflater = LayoutInflater.from(this);
@@ -73,8 +76,7 @@ public class UserInfo extends PinSupportNetworkActivity {
         });
 
         ordersListView.setAdapter(adapter);
-        userName = (TextView) findViewById(R.id.user_title);
-        userName.setText(getIntent().getStringExtra("userName"));
+        setTitle(getIntent().getStringExtra("userName"));
         firstName = (TextView) header.findViewById(R.id.first_name);
         lastName = (TextView) header.findViewById(R.id.last_name);
         email = (TextView) header.findViewById(R.id.email);
@@ -84,6 +86,13 @@ public class UserInfo extends PinSupportNetworkActivity {
         id = getIntent().getStringExtra("userId");
         sendMessageButton = (Button) header.findViewById(R.id.send_message_button);
         callButton = (Button) header.findViewById(R.id.call_button);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.review, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -112,7 +121,7 @@ public class UserInfo extends PinSupportNetworkActivity {
     }
 
     private void updateData() {
-        progressBar.setVisibility(View.VISIBLE);
+        setProgressBarIndeterminateVisibility(Boolean.TRUE);
 
         requester = new Requester() {
             @Override
@@ -150,7 +159,7 @@ public class UserInfo extends PinSupportNetworkActivity {
                 } else {
                     showConnectionErrorMessage();
                 }
-                progressBar.setVisibility(View.INVISIBLE);
+                setProgressBarIndeterminateVisibility(Boolean.FALSE);
             }
         };
 
@@ -245,7 +254,6 @@ public class UserInfo extends PinSupportNetworkActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    private ProgressBar progressBar;
     private ProgressBar ordersProgressBar;
     private TextView userName;
     private TextView firstName;

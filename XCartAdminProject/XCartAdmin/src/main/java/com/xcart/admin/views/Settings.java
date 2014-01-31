@@ -142,7 +142,8 @@ public class Settings extends PreferenceActivity {
 
     @Override
     protected void onResume() {
-        if (isPaused && !fromPin && !MyActivityManager.isAfterNotification() || !MyActivityManager.isActivitiesFound() || Unlock.isLocked()) {
+        boolean passProtectionEnabled = XCartApplication.getInstance().getPreferenceManager().isPasswordProtectionEnabled();
+        if (passProtectionEnabled && (isPaused && !fromPin && !MyActivityManager.isAfterNotification() || !MyActivityManager.isActivitiesFound() || Unlock.isLocked())) {
             Intent intent = new Intent(this, Unlock.class);
             intent.putExtra("afterPause", 1);
             startActivityForResult(intent, 1);
