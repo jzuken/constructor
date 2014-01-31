@@ -153,5 +153,10 @@
     <string name="app_id">709247889105649</string>
     <string name="action_share">Share</string>
     <string name="review">Review</string>
+    <string name="push_notifications">Push notifications</string>
+    <string name="log_out">Log out</string>
+    <string name="security">Security</string>
+    <string name="security_switch_desc">Enable or disable additional password protection</string>
+    <string name="pass_protection">Password protection</string>
 
 </resources>

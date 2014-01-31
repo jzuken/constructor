@@ -45,17 +45,17 @@ public class PreferenceManager {
         return authorizationData.getString("shop_name", "");
     }
 
-    public void savePassword(String pass){
+    public void savePassword(String pass) {
         SharedPreferences.Editor editor = settingsData.edit();
         editor.putString("password", pass);
         editor.commit();
     }
 
-    public String getPassword(){
-        return  settingsData.getString("password", "0000");
+    public String getPassword() {
+        return settingsData.getString("password", "0000");
     }
 
-    public Boolean isShopLogged(){
+    public Boolean isShopLogged() {
         return authorizationData.getBoolean("shop_logged", false);
     }
 
@@ -78,7 +78,7 @@ public class PreferenceManager {
     }
 
     //TODO: set one limit for all lists
-    public int getDownloadListLimit(){
+    public int getDownloadListLimit() {
         return Integer.parseInt(settingsData.getString("download_limit", "10"));
     }
 
@@ -102,5 +102,9 @@ public class PreferenceManager {
         editor = gcmPreferences.edit();
         editor.remove("registration_id");
         editor.commit();
+    }
+
+    public boolean isPasswordProtectionEnabled() {
+        return authorizationData.getBoolean("security_switch", false);
     }
 }

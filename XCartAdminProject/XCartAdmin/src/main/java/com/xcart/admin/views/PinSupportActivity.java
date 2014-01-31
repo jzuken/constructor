@@ -12,6 +12,7 @@ import android.view.View;
 
 import com.xcart.admin.R;
 import com.xcart.admin.managers.MyActivityManager;
+import com.xcart.admin.managers.XCartApplication;
 import com.xcart.admin.managers.gcm.GcmIntentService;
 
 public class PinSupportActivity extends ActionBarActivity {
@@ -61,8 +62,9 @@ public class PinSupportActivity extends ActionBarActivity {
 
     @Override
     protected void onResume() {
-        if ((isPaused && !fromOtherPage && !fromPin && !MyActivityManager.isAfterNotification())
-                || !MyActivityManager.isActivitiesFound() || Unlock.isLocked()) {
+        boolean passProtectionEnabled = XCartApplication.getInstance().getPreferenceManager().isPasswordProtectionEnabled();
+        if (passProtectionEnabled && ((isPaused && !fromOtherPage && !fromPin && !MyActivityManager.isAfterNotification())
+                || !MyActivityManager.isActivitiesFound() || Unlock.isLocked())) {
             Intent intent = new Intent(this, Unlock.class);
             intent.putExtra("afterPause", 1);
             startActivityForResult(intent, pinPageCode);

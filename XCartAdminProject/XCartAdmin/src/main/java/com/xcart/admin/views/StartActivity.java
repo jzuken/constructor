@@ -33,7 +33,10 @@ public class StartActivity extends Activity {
 //			intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
 //			startActivity(intent);
 //		}
-        else {
+        else if(XCartApplication.getInstance().getPreferenceManager().isPasswordProtectionEnabled()){
+            Intent intent = new Intent(this, DashboardActivity.class);
+            startActivity(intent);
+        }else {
             Intent intent = new Intent(this, Unlock.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(intent);

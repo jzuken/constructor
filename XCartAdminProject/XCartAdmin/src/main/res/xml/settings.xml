@@ -1,24 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <CheckBoxPreference
-        android:key="gcm_switch"
-        android:title="Push notifications" />
+    <PreferenceCategory
+        android:title="@string/security"
+        android:key="pref_key_storage_settings">
+        <CheckBoxPreference
+            android:key="security_switch"
+            android:title="@string/pass_protection"
+            android:summary="@string/security_switch_desc"
+            android:defaultValue="false" />
 
-    <EditTextPreference
-        android:defaultValue="10"
-        android:inputType="number"
-        android:key="download_limit"
-        android:title="@string/download_limit" />
+        <EditTextPreference
+            android:defaultValue="0000"
+            android:inputType="number"
+            android:key="password"
+            android:title="@string/password" />
+    </PreferenceCategory>
 
-    <EditTextPreference
-        android:defaultValue="0000"
-        android:inputType="number"
-        android:key="password"
-        android:title="Password" />
+    <PreferenceCategory
+        android:title="@string/other"
+        android:key="pref_key_storage_settings">
 
-    <Preference
-        android:key="logout"
-        android:title="Log out" />
+        <CheckBoxPreference
+            android:key="gcm_switch"
+            android:title="@string/push_notifications" />
+
+        <EditTextPreference
+            android:defaultValue="10"
+            android:inputType="number"
+            android:key="download_limit"
+            android:title="@string/download_limit" />
+
+        <Preference
+            android:key="logout"
+            android:title="@string/log_out" />
+
+    </PreferenceCategory>
 
 </PreferenceScreen>

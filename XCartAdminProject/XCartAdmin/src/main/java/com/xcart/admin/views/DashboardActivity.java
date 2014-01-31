@@ -261,26 +261,6 @@ public class DashboardActivity extends PinSupportNetworkActivity {
             case R.id.action_about:
                 dialogManager.showAboutDialog();
                 return true;
-            case R.id.action_share:
-                //create the send intent
-                Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
-
-                //set the type
-                shareIntent.setType("text/plain");
-
-                //add a subject
-                shareIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Insert Subject Here");
-
-                //build the body of the message to be shared
-                String shareMessage = "Insert message body here.";
-
-                //add the message
-                shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareMessage);
-
-                //start the chooser for sharing
-                startActivity(Intent.createChooser(shareIntent,
-                        "Insert share chooser title here"));
-                return true;
         }
         return super.onOptionsItemSelected(item);
     }

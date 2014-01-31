@@ -61,18 +61,6 @@ public class Products extends PinSupportNetworkActivity {
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putString("sortOption", sortOption);
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        sortOption = savedInstanceState.getString("sortOption");
-    }
-
-    @Override
     protected void withoutPinAction() {
         packAmount = XCartApplication.getInstance().getPreferenceManager().getDownloadListLimit();
         if (isNeedDownload()) {
