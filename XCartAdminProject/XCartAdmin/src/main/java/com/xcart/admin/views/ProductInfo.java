@@ -35,6 +35,7 @@ import com.xcart.admin.managers.network.HttpManager;
 import com.xcart.admin.managers.network.Requester;
 import com.xcart.admin.views.dialogs.CustomDialog;
 
+import org.apache.http.protocol.HTTP;
 import org.jraf.android.backport.switchwidget.Switch;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -50,7 +51,8 @@ public class ProductInfo extends PinSupportNetworkActivity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.product_full_info);
-        setTitle(getIntent().getStringExtra("name"));
+        productName = getIntent().getStringExtra("name");
+        setTitle(productName);
         productId = getIntent().getStringExtra("id");
         productImage = (ImageView) findViewById(R.id.product_image);
         description = (WebView) findViewById(R.id.description);
@@ -90,8 +92,8 @@ public class ProductInfo extends PinSupportNetworkActivity {
             case R.id.action_share:
                 Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
                 shareIntent.setType("text/plain");
-                shareIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Insert Subject Here");
-                String shareMessage = "Insert message body here.";
+                shareIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, productName);
+                String shareMessage = String.format("%s: %s", productName, new HttpManager(this).getProductUrl(productId));
                 shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareMessage);
                 startActivity(Intent.createChooser(shareIntent, "Insert share chooser title here"));
                 return true;
@@ -431,6 +433,7 @@ public class ProductInfo extends PinSupportNetworkActivity {
     }
 
     private String productId = "";
+    private String productName = "";
     private ImageView productImage;
     private WebView description;
     private WebView fullDescription;

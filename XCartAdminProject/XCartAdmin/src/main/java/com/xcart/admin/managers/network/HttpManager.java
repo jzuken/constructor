@@ -19,6 +19,7 @@ import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URI;
 import java.util.List;
 
 /**
@@ -300,6 +301,11 @@ public class HttpManager {
                 .appendQueryParameter(KEY, apiKey)
                 .build();
         return get(uri);
+    }
+
+    public String getProductUrl(String productId) {
+        URI uri = URI.create(serverUrl);
+        return String.format("%s://%s/xcart/product.php?productid=%s", uri.getScheme(), uri.getHost(), productId);
     }
 
     private String get(Uri uri) {
