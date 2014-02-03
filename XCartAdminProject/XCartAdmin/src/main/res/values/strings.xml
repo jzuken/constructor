@@ -158,5 +158,6 @@
     <string name="security">Security</string>
     <string name="security_switch_desc">Enable or disable additional password protection</string>
     <string name="pass_protection">Password protection</string>
+    <string name="action_edit">Edit in backend</string>
 
 </resources>

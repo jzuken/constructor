@@ -308,6 +308,11 @@ public class HttpManager {
         return String.format("%s://%s/xcart/product.php?productid=%s", uri.getScheme(), uri.getHost(), productId);
     }
 
+    public String getProductEditUrl(String productId) {
+        URI uri = URI.create(serverUrl);
+        return String.format("%s://%s/xcart/admin/product_modify.php?productid=%s", uri.getScheme(), uri.getHost(), productId);
+    }
+
     private String get(Uri uri) {
         String url = uri.toString();
         LOG.d("get url " + url);

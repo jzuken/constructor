@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.view.Menu;
@@ -70,9 +71,6 @@ public class ProductInfo extends PinSupportNetworkActivity {
         variantsDivider = findViewById(R.id.variants_divider);
         options = (TextView) findViewById(R.id.options);
         variantsArray = new JSONArray();
-        onlyAdminBackendLayout = (LinearLayout) findViewById(R.id.only_admin_backend_layout);
-        onlyAdminBackendLink = (TextView) findViewById(R.id.only_admin_backend_link);
-        onlyAdminBackendLink.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     @Override
@@ -96,6 +94,10 @@ public class ProductInfo extends PinSupportNetworkActivity {
                 String shareMessage = String.format("%s: %s", productName, new HttpManager(this).getProductUrl(productId));
                 shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareMessage);
                 startActivity(Intent.createChooser(shareIntent, "Insert share chooser title here"));
+                return true;
+            case R.id.action_edit:
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(new HttpManager(this).getProductEditUrl(productId)));
+                startActivity(browserIntent);
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -160,10 +162,6 @@ public class ProductInfo extends PinSupportNetworkActivity {
                             variantsSpinner.setSelection(currentVariant, true);
                             showVariants();
                             priceItem.setClickable(false);
-
-                            String shopName = XCartApplication.getInstance().getPreferenceManager().getShopName();
-                            onlyAdminBackendLink.setText(String.format(ADMIN_BACKEND_URL, shopName, productId));
-                            onlyAdminBackendLayout.setVisibility(View.VISIBLE);
                         } else {
                             priceArrow.setVisibility(View.VISIBLE);
                         }
@@ -197,8 +195,6 @@ public class ProductInfo extends PinSupportNetworkActivity {
         availabilitySwitch.setChecked(false);
         priceItem.setClickable(false);
         availabilitySwitch.setClickable(false);
-        onlyAdminBackendLink.setText("");
-        onlyAdminBackendLayout.setVisibility(View.GONE);
     }
 
     private void initFullDescrLable() {
@@ -455,8 +451,5 @@ public class ProductInfo extends PinSupportNetworkActivity {
     private TextView options;
     public static final int changePriceResultCode = 200;
     private JSONArray variantsArray;
-    private LinearLayout onlyAdminBackendLayout;
-    private TextView onlyAdminBackendLink;
-    private static final String ADMIN_BACKEND_URL = "http://%s/xcart/admin/product_modify.php?productid=%s";
     private int currentVariant;
 }
