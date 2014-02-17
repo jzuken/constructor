@@ -59,19 +59,26 @@ namespace ApplicationServerListener.Controllers
                 bool parsed = DateTime.TryParse(expirationDate, out expiring);
                 if (parsed)
                 {
-                    if (DateTime.Compare(todate, expiring) > 0)
+                    if (DateTime.Compare(todate, expiring) <= 0)
                     {
-                        return new HttpResponseMessage() { Content = new StringContent("{\"subscribed\": \"expired\"}") };
-                    }
-                    else
-                    {
-                        return new HttpResponseMessage() { Content = new StringContent("{\"subscribed\": \"active\"}") };
+                        return new HttpResponseMessage() { Content = new StringContent("{\"subscribed\": \"active\", \"startDate\": \"" + project.subscribtionStartDate + "\", \"endDate\": \"" + project.ExpirationDate + "\"}") };
                     }
                 }
                 else
                 {
-                    return new HttpResponseMessage() { Content = new StringContent("{\"subscribed\": \"none\"}") };
+                    DateTime trialEnd;
+                    string trialEndDate = project.trialEndDate;
+                    bool trialParsed = DateTime.TryParse(trialEndDate, out trialEnd);
+                    if (trialParsed)
+                    {
+                        if (DateTime.Compare(todate, trialEnd) <= 0)
+                        {
+                            return new HttpResponseMessage() { Content = new StringContent("{\"subscribed\": \"trial\", \"endDate\": \"" + project.trialEndDate + "\"}") };
+                        }
+                    }
                 }
+                return new HttpResponseMessage() { Content = new StringContent("{\"subscribed\": \"expired\"}") };
+
             }
         }
 
