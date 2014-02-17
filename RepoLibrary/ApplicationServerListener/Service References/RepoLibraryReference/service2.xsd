@@ -8,6 +8,8 @@
       <xs:element minOccurs="0" name="apiUrl" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="firstExpiredLogin" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="keyHash" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="subscribtionStartDate" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="trialEndDate" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Project" nillable="true" type="tns:Project" />
