@@ -108,6 +108,17 @@ namespace ApplicationServerListener.Controllers
                         {
                             if (DateTime.Compare(todate, expiring) > 0)
                             {
+                                DateTime trialEnd;
+                                string trialEndDate = project.trialEndDate;
+                                bool trialParsed = DateTime.TryParse(trialEndDate, out trialEnd);
+                                if (trialParsed)
+                                {
+                                    if (DateTime.Compare(todate, trialEnd) <= 0)
+                                    {
+                                        int daysTrialLeft = 10 - (todate - trialEnd).Days;
+                                        return new HttpResponseMessage() { Content = new StringContent("{\"api\": \"trial\", \"remains\": \"" + daysTrialLeft.ToString() + "\",  \"url\": \"" + project.apiUrl + "\" }") };
+                                    }
+                                }
                                 if (project.firstExpiredLogin == "Never")
                                 {
                                     project.firstExpiredLogin = todate.ToString();
@@ -133,7 +144,18 @@ namespace ApplicationServerListener.Controllers
                         }
                         else
                         {
-                            return new HttpResponseMessage() { Content = new StringContent("{\"api\": \"notSubscribed\"}") };
+                            DateTime trialEnd;
+                            string trialEndDate = project.trialEndDate;
+                            bool trialParsed = DateTime.TryParse(trialEndDate, out trialEnd);
+                            if (trialParsed)
+                            {
+                                if (DateTime.Compare(todate, trialEnd) <= 0)
+                                {
+                                    int daysTrialLeft = 10 - (todate - trialEnd).Days;
+                                    return new HttpResponseMessage() { Content = new StringContent("{\"api\": \"trial\", \"remains\": \"" + daysTrialLeft.ToString() + "\",  \"url\": \"" + project.apiUrl + "\" }") };
+                                }
+                            }
+                            return new HttpResponseMessage() { Content = new StringContent("{\"api\": \"expired\"}") };
                         }
                     }
                     else
