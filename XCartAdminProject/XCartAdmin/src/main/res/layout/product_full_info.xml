@@ -167,7 +167,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="10dp"
                     android:contentDescription="@string/arrow_description"
-                    android:src="@drawable/arrow" />
+                    android:src="@drawable/ic_action_edit_blue" />
 
                 <TextView
                     android:id="@+id/price"

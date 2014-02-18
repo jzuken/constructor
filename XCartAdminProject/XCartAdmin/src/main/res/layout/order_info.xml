@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/light_gray"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -12,19 +12,19 @@
         android:layout_marginLeft="7dp"
         android:layout_marginRight="7dp"
         android:layout_marginTop="4dp"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="6dp"
                 android:background="@drawable/rounded_shape"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -43,7 +43,7 @@
                     android:paddingBottom="10dp"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
-                    android:paddingTop="10dp" >
+                    android:paddingTop="10dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -59,7 +59,8 @@
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:contentDescription="@string/arrow_description"
-                        android:src="@drawable/arrow" />
+                        android:src="@drawable/ic_action_edit_blue"
+                        android:scaleType="centerInside" />
 
                     <TextView
                         android:id="@+id/status"
@@ -84,7 +85,7 @@
                     android:paddingBottom="10dp"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
-                    android:paddingTop="10dp" >
+                    android:paddingTop="10dp">
 
                     <TextView
                         android:id="@+id/tracking_number_label"
@@ -101,7 +102,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:contentDescription="@string/arrow_description"
-                        android:src="@drawable/arrow" />
+                        android:src="@drawable/ic_action_edit_blue" />
 
                     <TextView
                         android:id="@+id/tracking_number"
@@ -126,7 +127,7 @@
                     android:paddingBottom="10dp"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
-                    android:paddingTop="10dp" >
+                    android:paddingTop="10dp">
 
                     <TextView
                         android:id="@+id/payment_method_label"
@@ -159,7 +160,7 @@
                     android:paddingBottom="10dp"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
-                    android:paddingTop="10dp" >
+                    android:paddingTop="10dp">
 
                     <TextView
                         android:id="@+id/delivery_method_label"
@@ -195,7 +196,7 @@
                     android:paddingBottom="10dp"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
-                    android:paddingTop="10dp" >
+                    android:paddingTop="10dp">
 
                     <TextView
                         android:id="@+id/customer_label"
@@ -237,7 +238,7 @@
                     android:paddingBottom="10dp"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
-                    android:paddingTop="10dp" >
+                    android:paddingTop="10dp">
 
                     <TextView
                         android:id="@+id/billing_info_title"
@@ -263,7 +264,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="10dp"
-                    android:paddingRight="10dp" >
+                    android:paddingRight="10dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -285,7 +286,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
                     android:paddingLeft="10dp"
-                    android:paddingRight="10dp" >
+                    android:paddingRight="10dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -312,7 +313,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:paddingLeft="10dp"
-                    android:paddingRight="10dp" >
+                    android:paddingRight="10dp">
 
                     <TextView
                         android:id="@+id/shipping_info_title"
@@ -338,7 +339,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="10dp"
-                    android:paddingRight="10dp" >
+                    android:paddingRight="10dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -360,7 +361,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
                     android:paddingLeft="10dp"
-                    android:paddingRight="10dp" >
+                    android:paddingRight="10dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -383,7 +384,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="6dp"
                 android:background="@drawable/rounded_shape"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -397,8 +398,7 @@
                     android:id="@+id/items_list"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical" >
-                </com.xcart.admin.views.OrderProductsList>
+                    android:orientation="vertical"></com.xcart.admin.views.OrderProductsList>
             </LinearLayout>
 
             <LinearLayout
@@ -406,7 +406,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="6dp"
                 android:background="@drawable/rounded_shape"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -430,7 +430,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/rounded_shape"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -446,7 +446,7 @@
                     android:layout_marginBottom="10dp"
                     android:layout_marginTop="10dp"
                     android:paddingLeft="10dp"
-                    android:paddingRight="10dp" >
+                    android:paddingRight="10dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -475,7 +475,7 @@
                     android:layout_marginBottom="10dp"
                     android:layout_marginTop="10dp"
                     android:paddingLeft="10dp"
-                    android:paddingRight="10dp" >
+                    android:paddingRight="10dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -504,7 +504,7 @@
                     android:layout_marginBottom="10dp"
                     android:layout_marginTop="10dp"
                     android:paddingLeft="10dp"
-                    android:paddingRight="10dp" >
+                    android:paddingRight="10dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -533,7 +533,7 @@
                     android:layout_marginBottom="10dp"
                     android:layout_marginTop="10dp"
                     android:paddingLeft="10dp"
-                    android:paddingRight="10dp" >
+                    android:paddingRight="10dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -562,7 +562,7 @@
                     android:layout_marginBottom="10dp"
                     android:layout_marginTop="10dp"
                     android:paddingLeft="10dp"
-                    android:paddingRight="10dp" >
+                    android:paddingRight="10dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -586,7 +586,7 @@
                     android:layout_marginBottom="0.5dp"
                     android:layout_marginLeft="0.5dp"
                     android:layout_marginRight="0.5dp"
-                    android:background="@drawable/total_field_background" >
+                    android:background="@drawable/total_field_background">
 
                     <TextView
                         android:layout_width="wrap_content"
