@@ -3,6 +3,7 @@ package com.xcart.admin.views;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.view.animation.AnticipateOvershootInterpolator;
 import android.widget.Button;
@@ -22,7 +23,7 @@ import kankan.wheel.widget.OnWheelScrollListener;
 import kankan.wheel.widget.WheelView;
 import kankan.wheel.widget.adapters.NumericWheelAdapter;
 
-public class Unlock extends FragmentActivity implements SubscriptionCallback {
+public class Unlock extends ActionBarActivity implements SubscriptionCallback {
 
     private static final String PROGRESS_DIALOG = "Unlock_progress";
     private Button okButton;

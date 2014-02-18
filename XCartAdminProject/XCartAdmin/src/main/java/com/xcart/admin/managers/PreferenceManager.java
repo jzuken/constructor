@@ -77,7 +77,6 @@ public class PreferenceManager {
         editor.commit();
     }
 
-    //TODO: set one limit for all lists
     public int getDownloadListLimit() {
         return Integer.parseInt(settingsData.getString("download_limit", "10"));
     }
@@ -105,6 +104,6 @@ public class PreferenceManager {
     }
 
     public boolean isPasswordProtectionEnabled() {
-        return authorizationData.getBoolean("security_switch", false);
+        return settingsData.getBoolean("security_switch", false);
     }
 }
