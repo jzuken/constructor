@@ -5,6 +5,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 
 import com.xcart.admin.views.dialogs.AboutDialogFragment;
+import com.xcart.admin.views.dialogs.ChangeStatusDialog;
 import com.xcart.admin.views.dialogs.ErrorDialog;
 import com.xcart.admin.views.dialogs.NetworkErrorDialog;
 import com.xcart.admin.views.dialogs.ProgressDialog;
@@ -50,5 +51,10 @@ public class DialogManager {
     public void showAboutDialog() {
         DialogFragment dialog = new AboutDialogFragment();
         dialog.show(fragmentManager, "about");
+    }
+
+    public void showStatusDialog() {
+        DialogFragment dialog = new ChangeStatusDialog();
+        dialog.show(fragmentManager, "change status");
     }
 }

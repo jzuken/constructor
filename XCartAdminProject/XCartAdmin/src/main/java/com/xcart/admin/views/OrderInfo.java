@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.Spanned;
@@ -22,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.xcart.admin.R;
+import com.xcart.admin.managers.DialogManager;
 import com.xcart.admin.managers.StatusConverter;
 import com.xcart.admin.managers.network.HttpManager;
 import com.xcart.admin.managers.network.Requester;
@@ -236,10 +238,11 @@ public class OrderInfo extends PinSupportNetworkActivity {
             @Override
             public void onClick(View v) {
                 setNeedDownloadValue(false);
-                Intent intent = new Intent(getBaseContext(), ChangeStatus.class);
-                intent.putExtra("status", statusSymbol);
-                intent.putExtra("orderId", orderIdValue);
-                startActivityForResult(intent, 1);
+//                Intent intent = new Intent(getBaseContext(), ChangeStatus.class);
+//                intent.putExtra("status", statusSymbol);
+//                intent.putExtra("orderId", orderIdValue);
+//                startActivityForResult(intent, 1);
+                new DialogManager(OrderInfo.this.getSupportFragmentManager()).showStatusDialog();
             }
         });
     }

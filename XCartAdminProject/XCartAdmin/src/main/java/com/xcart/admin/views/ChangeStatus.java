@@ -100,8 +100,7 @@ public class ChangeStatus extends PinSupportNetworkActivity {
             new Requester() {
                 @Override
                 protected String doInBackground(Void... params) {
-                    return new HttpManager(getBaseContext()).changeStatus(getIntent().getStringExtra("orderId"),
-                            statusSymbol);
+                    return new HttpManager(getBaseContext()).changeStatus(getIntent().getStringExtra("orderId"), statusSymbol);
                 }
 
                 @Override

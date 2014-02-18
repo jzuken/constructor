@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="statuses_array">
+        <item>@string/not_finished</item>
+        <item>@string/queued</item>
+        <item>@string/processed</item>
+        <item>@string/complete</item>
+        <item>@string/declined</item>
+        <item>@string/failed</item>
+        <item>@string/backordered</item>
+    </string-array>
+</resources>
