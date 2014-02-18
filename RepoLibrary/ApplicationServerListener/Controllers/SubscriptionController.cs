@@ -18,6 +18,7 @@ namespace ApplicationServerListener.Controllers
             WebClient client = new WebClient();
             string returnCode = client.DownloadString("https://secure.x-cart.com/service.php?target=recurring_plans&password=pmh6_2lGTENNqewuhd&url=" + url);
             string expDate = "";
+            string startDate = "";
             XmlDocument xml = new XmlDocument();
             xml.LoadXml(returnCode);
             XmlNodeList plans = xml.GetElementsByTagName("plan");
@@ -43,6 +44,10 @@ namespace ApplicationServerListener.Controllers
                         {
                             expDate = child.InnerText;
                         }
+                        if (child.Name == "renewal_start")
+                        {
+                            startDate = child.InnerText;
+                        }
                     }
                 }
             }
@@ -50,6 +55,7 @@ namespace ApplicationServerListener.Controllers
             if (project != null)
             {
                 project.ExpirationDate = expDate;
+                project.subscribtionStartDate = startDate;
                 wcfClient.SaveProject(project);
             }
         }

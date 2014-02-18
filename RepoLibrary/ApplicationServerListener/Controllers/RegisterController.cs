@@ -44,6 +44,8 @@ namespace ApplicationServerListener.Controllers
             string defaultSettgins = "{}";
             string shopKeyHash = this.CreateMD5Hash(shopKey);
             string shopExpirationDate = "";
+            DateTime today = DateTime.Now;
+            DateTime trialExpirationDate = today.AddDays(10);
             RepoLibraryReference.Project project = wcfClient.GetProject(shopUrl);
             if (project == null)
             {
@@ -54,10 +56,12 @@ namespace ApplicationServerListener.Controllers
             project.apiUrl = shopApiUrl;
             project.keyHash = shopKeyHash;
             project.ExpirationDate = shopExpirationDate;
+            project.trialEndDate = trialExpirationDate.ToString();
             project.firstExpiredLogin = "Never";
             WebClient client = new WebClient();
             string returnCode = client.DownloadString("https://secure.x-cart.com/service.php?target=recurring_plans&password=pmh6_2lGTENNqewuhd&url=" + shopUrl);
             string expDate = "";
+            string startDate = "";
             XmlDocument xml = new XmlDocument();
             xml.LoadXml(returnCode);
             XmlNodeList plans = xml.GetElementsByTagName("plan");
@@ -83,10 +87,15 @@ namespace ApplicationServerListener.Controllers
                         {
                             expDate = child.InnerText;
                         }
+                        if (child.Name == "renewal_start")
+                        {
+                            startDate = child.InnerText;
+                        }
                     }
                 }
             }
             project.ExpirationDate = expDate;
+            project.subscribtionStartDate = startDate;
             wcfClient.SaveProject(project);
             project = wcfClient.GetProject(shopUrl);
             if (project != null)

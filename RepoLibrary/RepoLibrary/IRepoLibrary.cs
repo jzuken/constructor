@@ -36,5 +36,11 @@ namespace RepoLibrary
 
         [DataMember]
         public string firstExpiredLogin { get; set; }
+
+        [DataMember]
+        public string trialEndDate { get; set; }
+
+        [DataMember]
+        public string subscribtionStartDate { get; set; }
     }
 }
