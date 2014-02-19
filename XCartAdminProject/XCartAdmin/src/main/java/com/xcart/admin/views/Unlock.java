@@ -2,7 +2,6 @@ package com.xcart.admin.views;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.view.animation.AnticipateOvershootInterpolator;
@@ -23,7 +22,7 @@ import kankan.wheel.widget.OnWheelScrollListener;
 import kankan.wheel.widget.WheelView;
 import kankan.wheel.widget.adapters.NumericWheelAdapter;
 
-public class Unlock extends ActionBarActivity implements SubscriptionCallback {
+public class Unlock extends ActionBarActivity {
 
     private static final String PROGRESS_DIALOG = "Unlock_progress";
     private Button okButton;
@@ -61,7 +60,16 @@ public class Unlock extends ActionBarActivity implements SubscriptionCallback {
         if (!isScrolling) {
             okButton.setEnabled(false);
             if (getPassword().equals(XCartApplication.getInstance().getPreferenceManager().getPassword())) {
-                checkSubscription();
+                isLockedState = false;
+                MyActivityManager.setIsActivitiesFoundState(true);
+                Intent intent = getIntent();
+                if (intent.getIntExtra("afterPause", 0) == 0) {
+                    Intent newIntent = new Intent(this, DashboardActivity.class);
+                    startActivity(newIntent);
+                } else {
+                    setResult(pinPageCode);
+                    finish();
+                }
             } else {
                 dialogManager.showErrorDialog(R.string.incorrect_password);
                 okButton.setEnabled(true);
@@ -119,13 +127,12 @@ public class Unlock extends ActionBarActivity implements SubscriptionCallback {
     @Override
     protected void onStart() {
         super.onStart();
-        DevServerApiManager.getInstance().addSubscriptionCallback(this);
+
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        DevServerApiManager.getInstance().removeSubscriptionCallback(this);
     }
 
     @Override
@@ -140,34 +147,4 @@ public class Unlock extends ActionBarActivity implements SubscriptionCallback {
     private WheelView pin4;
     private boolean isScrolling;
     private final int pinPageCode = 2;
-
-    @Override
-    public void onSubscriptionChecked(SubscriptionStatus status) {
-        dialogManager.dismissDialog(PROGRESS_DIALOG);
-
-        switch (status) {
-            case Active:
-                isLockedState = false;
-                MyActivityManager.setIsActivitiesFoundState(true);
-                Intent intent = getIntent();
-                if (intent.getIntExtra("afterPause", 0) == 0) {
-                    Intent newIntent = new Intent(this, DashboardActivity.class);
-                    startActivity(newIntent);
-                } else {
-                    setResult(pinPageCode);
-                    finish();
-                }
-                break;
-            case Expired:
-                new ErrorDialog(R.string.subscription_expired, null).show(getSupportFragmentManager(), "subscribed");
-                break;
-            case None:
-                new ErrorDialog(R.string.no_subscription, null).show(getSupportFragmentManager(), "subscribed");
-                break;
-            case NetworkError:
-                new ConnectionErrorDialog().show(getSupportFragmentManager(), "subscription");
-                break;
-        }
-        okButton.setEnabled(true);
-    }
 }

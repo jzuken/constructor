@@ -16,6 +16,8 @@ import android.widget.TextView;
 
 import com.xcart.admin.R;
 import com.xcart.admin.managers.LogManager;
+import com.xcart.admin.managers.XCartApplication;
+import com.xcart.admin.managers.network.DevServerApiManager;
 import com.xcart.admin.managers.network.HttpManager;
 import com.xcart.admin.managers.network.Requester;
 
@@ -24,8 +26,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class DashboardActivity extends PinSupportNetworkActivity {
-
-    private static final LogManager LOG = new LogManager(DashboardActivity.class.getSimpleName());
 
 
     @Override
@@ -39,6 +39,12 @@ public class DashboardActivity extends PinSupportNetworkActivity {
         initProductsSold();
         initReviewsToday();
         initLastOrders();
+        checkSubscription();
+    }
+
+    private void checkSubscription() {
+        String shopName = XCartApplication.getInstance().getPreferenceManager().getShopName();
+        DevServerApiManager.getInstance().checkSubscription(shopName);
     }
 
     @Override
@@ -123,9 +129,9 @@ public class DashboardActivity extends PinSupportNetworkActivity {
         if (todaySalesDouble >= 1000) {
             if (todaySalesDouble >= 100000) {
                 todaySalesDouble /= 1000;
-                return todaySalesValue = String.valueOf(Math.round(todaySalesDouble)) + "K";
+                return String.valueOf(Math.round(todaySalesDouble)) + "K";
             }
-            return todaySalesValue = String.valueOf(Math.round(todaySalesDouble));
+            return String.valueOf(Math.round(todaySalesDouble));
         }
 
         return todaySalesValue;

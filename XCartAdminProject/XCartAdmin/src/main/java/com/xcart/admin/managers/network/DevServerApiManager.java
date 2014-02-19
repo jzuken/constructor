@@ -67,24 +67,24 @@ public class DevServerApiManager {
         try {
             JSONObject obj = new JSONObject(response);
             if (!obj.has("subscribed")) {
-                notifySubscriptionListeners(SubscriptionStatus.None);
+                notifySubscriptionListeners(SubscriptionStatus.Trial);
                 return;
             }
 
             String subscription = obj.getString("subscribed");
-            if (subscription.equals("none")) {
-                notifySubscriptionListeners(SubscriptionStatus.None);
+            if (subscription.equals("trial")) {
+                notifySubscriptionListeners(SubscriptionStatus.Trial);
             } else if (subscription.equals("expired")) {
                 notifySubscriptionListeners(SubscriptionStatus.Expired);
             } else if (subscription.equals("active")) {
                 notifySubscriptionListeners(SubscriptionStatus.Active);
             } else {
-                notifySubscriptionListeners(SubscriptionStatus.None);
+                notifySubscriptionListeners(SubscriptionStatus.Trial);
             }
 
         } catch (JSONException e) {
             LOG.e("JSONException", e);
-            notifySubscriptionListeners(SubscriptionStatus.None);
+            notifySubscriptionListeners(SubscriptionStatus.Trial);
         }
     }
 }

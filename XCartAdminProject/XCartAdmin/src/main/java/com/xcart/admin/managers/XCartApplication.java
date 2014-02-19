@@ -3,10 +3,17 @@ package com.xcart.admin.managers;
 import android.app.Application;
 import android.content.pm.PackageManager;
 
+import com.xcart.admin.R;
+import com.xcart.admin.managers.network.DevServerApiManager;
+import com.xcart.admin.managers.network.SubscriptionCallback;
+import com.xcart.admin.managers.network.SubscriptionStatus;
+import com.xcart.admin.views.dialogs.ConnectionErrorDialog;
+import com.xcart.admin.views.dialogs.ErrorDialog;
+
 /**
  * Created by Nikita on 12/24/13.
  */
-public class XCartApplication extends Application {
+public class XCartApplication extends Application  {
 
     private static final LogManager LOG = new LogManager(XCartApplication.class.getSimpleName());
 
@@ -18,6 +25,11 @@ public class XCartApplication extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
+    }
+
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
     }
 
     public static XCartApplication getInstance(){

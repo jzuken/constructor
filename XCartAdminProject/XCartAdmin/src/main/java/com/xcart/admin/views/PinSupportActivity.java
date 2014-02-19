@@ -2,6 +2,7 @@ package com.xcart.admin.views;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
@@ -11,11 +12,19 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.xcart.admin.R;
+import com.xcart.admin.managers.LogManager;
 import com.xcart.admin.managers.MyActivityManager;
 import com.xcart.admin.managers.XCartApplication;
 import com.xcart.admin.managers.gcm.GcmIntentService;
+import com.xcart.admin.managers.network.DevServerApiManager;
+import com.xcart.admin.managers.network.SubscriptionCallback;
+import com.xcart.admin.managers.network.SubscriptionStatus;
+import com.xcart.admin.views.dialogs.ConnectionErrorDialog;
+import com.xcart.admin.views.dialogs.ErrorDialog;
 
-public class PinSupportActivity extends ActionBarActivity {
+public class PinSupportActivity extends ActionBarActivity implements SubscriptionCallback {
+
+    private static final LogManager LOG = new LogManager(PinSupportActivity.class.getSimpleName());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,6 +155,45 @@ public class PinSupportActivity extends ActionBarActivity {
     protected void onDestroy() {
         unregisterReceiver(receiver);
         super.onDestroy();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        DevServerApiManager.getInstance().addSubscriptionCallback(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        DevServerApiManager.getInstance().removeSubscriptionCallback(this);
+    }
+
+    @Override
+    public void onSubscriptionChecked(SubscriptionStatus status) {
+        switch (status) {
+            case Trial:
+                //Now Trial behavior like Active
+                //new ErrorDialog(R.string.no_subscription, null).show(getSupportFragmentManager(), "subscribed");
+                LOG.d("Subscription Trial");
+            case Active:
+                LOG.d("Subscription Active");
+                break;
+            case Expired:
+                LOG.d("Subscription Expired");
+                new ErrorDialog(R.string.subscription_expired, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        PinSupportActivity.this.finish();
+                        android.os.Process.killProcess(android.os.Process.myPid());
+                    }
+                }).show(getSupportFragmentManager(), "subscribed");
+                break;
+            case NetworkError:
+                LOG.d("Subscription NetworkError");
+                new ConnectionErrorDialog().show(getSupportFragmentManager(), "subscription");
+                break;
+        }
     }
 
     private boolean needDownload;
