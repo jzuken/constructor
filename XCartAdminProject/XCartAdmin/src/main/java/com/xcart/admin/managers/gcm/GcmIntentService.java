@@ -64,7 +64,7 @@ public class GcmIntentService extends IntentService {
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0, screenIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
-        builder.setSmallIcon(R.drawable.gcm_icon);
+        builder.setSmallIcon(R.drawable.ic_gcm_notification);
         builder.setContentTitle("Notification");
         builder.setStyle(
                 new NotificationCompat
