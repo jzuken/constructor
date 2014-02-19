@@ -245,7 +245,7 @@ public class UserInfo extends PinSupportNetworkActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == ChangeStatus.changeStatusResultCode) {
+        if (resultCode == OrderInfo.CHANGE_STATUS_RESULT_CODE) {
             OrdersListAdapter.OrderHolder orderHolder = ((OrdersListAdapter.OrderHolder) ordersListView.getChildAt(
                     lastPositionClicked).getTag());
             orderHolder.getOrder().setStatus(data.getStringExtra("status"));

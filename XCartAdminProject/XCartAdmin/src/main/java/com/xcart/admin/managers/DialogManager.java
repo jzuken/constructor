@@ -53,8 +53,8 @@ public class DialogManager {
         dialog.show(fragmentManager, "about");
     }
 
-    public void showStatusDialog() {
-        DialogFragment dialog = new ChangeStatusDialog();
+    public void showStatusDialog(ChangeStatusDialog.Callback callback, String status) {
+        DialogFragment dialog = new ChangeStatusDialog(callback, status);
         dialog.show(fragmentManager, "change status");
     }
 }

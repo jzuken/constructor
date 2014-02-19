@@ -124,15 +124,6 @@
                 android:value=".views.Products" />
         </activity>
         <activity
-            android:name=".views.ChangeStatus"
-            android:label="@string/change_status"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.XCartAppTheme.Dashboard">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".views.OrderInfo" />
-        </activity>
-        <activity
             android:name=".views.OrderInfo"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.XCartAppTheme.Orders">

@@ -24,10 +24,12 @@ import android.widget.Toast;
 
 import com.xcart.admin.R;
 import com.xcart.admin.managers.DialogManager;
+import com.xcart.admin.managers.LogManager;
 import com.xcart.admin.managers.StatusConverter;
 import com.xcart.admin.managers.network.HttpManager;
 import com.xcart.admin.managers.network.Requester;
 import com.xcart.admin.model.OrderStatus;
+import com.xcart.admin.views.dialogs.ChangeStatusDialog;
 import com.xcart.admin.views.dialogs.CustomDialog;
 
 import org.json.JSONArray;
@@ -35,6 +37,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class OrderInfo extends PinSupportNetworkActivity {
+
+    public static final int CHANGE_STATUS_RESULT_CODE = 100;
+    private static final LogManager LOG = new LogManager(OrderInfo.class.getName());
+    private static final String PROGRESS_DIALOG = "progress";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -238,11 +244,12 @@ public class OrderInfo extends PinSupportNetworkActivity {
             @Override
             public void onClick(View v) {
                 setNeedDownloadValue(false);
-//                Intent intent = new Intent(getBaseContext(), ChangeStatus.class);
-//                intent.putExtra("status", statusSymbol);
-//                intent.putExtra("orderId", orderIdValue);
-//                startActivityForResult(intent, 1);
-                new DialogManager(OrderInfo.this.getSupportFragmentManager()).showStatusDialog();
+                new DialogManager(OrderInfo.this.getSupportFragmentManager()).showStatusDialog(new ChangeStatusDialog.Callback() {
+                    @Override
+                    public void save(String selectedStatus) {
+                        setNewStatus(selectedStatus);
+                    }
+                }, statusSymbol);
             }
         });
     }
@@ -311,6 +318,7 @@ public class OrderInfo extends PinSupportNetworkActivity {
     }
 
     private void setNewTrackingNumber(final String newNumber) {
+        dialogManager.showProgressDialog(R.string.updating_tracking_number, PROGRESS_DIALOG);
         try {
             new Requester() {
                 @Override
@@ -321,7 +329,7 @@ public class OrderInfo extends PinSupportNetworkActivity {
                 @Override
                 protected void onPostExecute(String response) {
                     super.onPostExecute(response);
-
+                    dialogManager.dismissDialog(PROGRESS_DIALOG);
                     if (response != null) {
                         Toast.makeText(getBaseContext(), "Success", Toast.LENGTH_SHORT).show();
                         trackingNumber.setText(newNumber);
@@ -331,6 +339,41 @@ public class OrderInfo extends PinSupportNetworkActivity {
                 }
             }.execute();
         } catch (Exception e) {
+            dialogManager.dismissDialog(PROGRESS_DIALOG);
+            showConnectionErrorMessage();
+        }
+    }
+
+    public void setNewStatus(final String selectedStatus) {
+        dialogManager.showProgressDialog(R.string.updating_status, PROGRESS_DIALOG);
+        try {
+            new Requester() {
+                @Override
+                protected String doInBackground(Void... params) {
+                    return new HttpManager(getBaseContext()).changeStatus(getIntent().getStringExtra("orderId"), selectedStatus);
+                }
+
+                @Override
+                protected void onPostExecute(String response) {
+                    super.onPostExecute(response);
+
+                    dialogManager.dismissDialog(PROGRESS_DIALOG);
+
+                    if (response != null) {
+                        Toast.makeText(getBaseContext(), getString(R.string.success), Toast.LENGTH_SHORT).show();
+                        status.setText(StatusConverter.getStatusBySymbol(OrderInfo.this, OrderStatus.valueOf(selectedStatus)));
+                        status.setTextColor(StatusConverter.getColorResourceBySymbol(getBaseContext(), OrderStatus.valueOf(selectedStatus)));
+                        Intent resultIntent = new Intent();
+                        resultIntent.putExtra("status", selectedStatus);
+                        setResult(CHANGE_STATUS_RESULT_CODE, resultIntent);
+                        statusSymbol = selectedStatus;
+                    } else {
+                        showConnectionErrorMessage();
+                    }
+                }
+            }.execute();
+        } catch (Exception e) {
+            dialogManager.dismissDialog(PROGRESS_DIALOG);
             showConnectionErrorMessage();
         }
     }
@@ -359,20 +402,6 @@ public class OrderInfo extends PinSupportNetworkActivity {
                 startActivityForResult(intent, 1);
             }
         });
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == ChangeStatus.changeStatusResultCode) {
-            statusSymbol = data.getStringExtra("status");
-            status.setText(StatusConverter.getStatusBySymbol(getBaseContext(), OrderStatus.valueOf(statusSymbol)));
-            status.setTextColor(StatusConverter.getColorResourceBySymbol(getBaseContext(),
-                    OrderStatus.valueOf(statusSymbol)));
-            Intent resultIntent = new Intent();
-            resultIntent.putExtra("status", statusSymbol);
-            setResult(ChangeStatus.changeStatusResultCode, resultIntent);
-        }
-        super.onActivityResult(requestCode, resultCode, data);
     }
 
     private String orderIdValue = "";
