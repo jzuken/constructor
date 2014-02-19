@@ -3,6 +3,7 @@ package com.xcart.admin.managers;
 import android.content.DialogInterface;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 
 import com.xcart.admin.views.dialogs.AboutDialogFragment;
 import com.xcart.admin.views.dialogs.ChangeStatusDialog;
@@ -23,7 +24,9 @@ public class DialogManager {
 
     public void showNetworkErrorDialog() {
         DialogFragment dialog = new NetworkErrorDialog();
-        dialog.show(fragmentManager, "network_error");
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.add(dialog, "network_error");
+        transaction.commitAllowingStateLoss();
     }
 
     public void showProgressDialog(int messageId, String dialogTag) {
