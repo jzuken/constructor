@@ -52,10 +52,14 @@ public class DevServerApiManager {
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
 
-                if (s == null) {
-                    notifySubscriptionListeners(SubscriptionStatus.NetworkError);
+                if (subscriptionCallbacks.size() > 0) {
+                    if (s == null) {
+                        notifySubscriptionListeners(SubscriptionStatus.NetworkError);
+                    } else {
+                        parseSubscriptionResponse(s);
+                    }
                 } else {
-                    parseSubscriptionResponse(s);
+                    android.os.Process.killProcess(android.os.Process.myPid());
                 }
             }
         }.execute();

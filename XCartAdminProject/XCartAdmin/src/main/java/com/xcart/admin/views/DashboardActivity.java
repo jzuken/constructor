@@ -39,6 +39,11 @@ public class DashboardActivity extends PinSupportNetworkActivity {
         initProductsSold();
         initReviewsToday();
         initLastOrders();
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
         checkSubscription();
     }
 

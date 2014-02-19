@@ -160,12 +160,14 @@ public class PinSupportActivity extends ActionBarActivity implements Subscriptio
     @Override
     protected void onStart() {
         super.onStart();
+        LOG.d("onStart");
         DevServerApiManager.getInstance().addSubscriptionCallback(this);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
+        LOG.d("onStop");
         DevServerApiManager.getInstance().removeSubscriptionCallback(this);
     }
 
