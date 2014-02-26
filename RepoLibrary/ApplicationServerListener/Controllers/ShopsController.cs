@@ -139,7 +139,7 @@ namespace ApplicationServerListener.Controllers
                             {
                                 project.firstExpiredLogin = "Never";
                                 wcfClient.SaveProject(project);
-                                return new HttpResponseMessage() { Content = new StringContent("{\"api\": \"" + project.apiUrl + "\"}") };
+                                return new HttpResponseMessage() { Content = new StringContent("{\"api\": \"ok\", \"url\": \"" + project.apiUrl + "\"}") };
                             }
                         }
                         else
