@@ -2,6 +2,7 @@ package com.xcart.admin.views;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
@@ -20,8 +21,8 @@ import com.xcart.admin.managers.MyActivityManager;
 import com.xcart.admin.managers.XCartApplication;
 import com.xcart.admin.managers.gcm.GcmManager;
 import com.xcart.admin.managers.network.HttpManager;
-import com.xcart.admin.managers.network.Requester;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 
@@ -54,7 +55,7 @@ public class ShopAuthorization extends FragmentActivity {
         super.onStart();
         LOG.d("onStart");
         dialogManager = new DialogManager(getSupportFragmentManager());
-        if(autoLogin){
+        if (autoLogin) {
             okButtonClick(null);
             autoLogin = false;
         }
@@ -75,11 +76,26 @@ public class ShopAuthorization extends FragmentActivity {
         XCartApplication.getInstance().getPreferenceManager().saveAuth(authorizationKey.getText().toString(), shopUrl.getText().toString());
 
         dialogManager.showProgressDialog(R.string.checking, PROGRESS_DIALOG);
-        new Requester() {
+        new AsyncTask<Void, Void, String>() {
             @Override
             protected String doInBackground(Void... params) {
-                return new HttpManager()
-                        .shopAuthorization(authorizationKey.getText().toString(), shopUrl.getText().toString());
+                HttpManager httpManager = new HttpManager();
+                String response = httpManager.shopAuthorization(authorizationKey.getText().toString(), shopUrl.getText().toString());
+
+                try {
+                    JSONObject obj = new JSONObject(response);
+                    String result = obj.getString("url");
+                    String currency = httpManager.getCurrencyType(result);
+                    if (currency != null) {
+                        JSONObject currencyObj = new JSONObject(currency);
+                        XCartApplication.getInstance().getPreferenceManager().saveCurrencyType(currencyObj.getString("General:currency_symbol"), currencyObj.getString("General:currency_format"));
+                        LOG.d("currency " + currency);
+                    }
+                } catch (JSONException e) {
+                    LOG.e(e.getMessage(), e);
+                }
+
+                return response;
             }
 
             @Override
@@ -96,13 +112,16 @@ public class ShopAuthorization extends FragmentActivity {
                             Toast.makeText(ShopAuthorization.this, "Incorrect key", Toast.LENGTH_SHORT).show();
                         } else if (result.equals("expired")) {
                             Toast.makeText(ShopAuthorization.this, "Subscription has expired", Toast.LENGTH_SHORT).show();
-                        } else if (result.equals("notSubscribed")) {
-                            Toast.makeText(ShopAuthorization.this, "Not subscribed", Toast.LENGTH_SHORT).show();
                         } else if (result.equals("noShop")) {
                             Toast.makeText(ShopAuthorization.this, "Incorrect shop url", Toast.LENGTH_SHORT).show();
-                        } else {
+                        } else if (result.equals("expiring") || result.equals("trial") || result.equals("ok")) {
+                            if (result.equals("expiring")) {
+                                Toast.makeText(ShopAuthorization.this, String.format(getString(R.string.subscription_expiring), obj.getString("remains")), Toast.LENGTH_SHORT).show();
+                            } else if (result.equals("trial")) {
+                                Toast.makeText(ShopAuthorization.this, String.format(getString(R.string.subscription_trial), obj.getString("remains")), Toast.LENGTH_SHORT).show();
+                            }
                             MyActivityManager.setIsActivitiesFoundState(true);
-                            XCartApplication.getInstance().getPreferenceManager().saveShopUrl(result);
+                            XCartApplication.getInstance().getPreferenceManager().saveShopUrl(obj.getString("url"));
 
                             Toast.makeText(ShopAuthorization.this, "Success", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(ShopAuthorization.this, DashboardActivity.class);

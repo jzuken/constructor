@@ -13,7 +13,7 @@
     <color name="light_blue">#ffc8d3e3</color>
     <color name="light_gray">#ffe5e5e5</color>
     <color name="frame_color">#ffc3c3c3</color>
-    <color name="subtitle_color">#ffc8d3e3 </color>
+    <color name="subtitle_color">#ffc8d3e3</color>
     <color name="green_status">#ff5ac53d</color>
     <color name="red_status">#ffbc1e1e</color>
     <color name="light_blue_status">#ff2276ac</color>

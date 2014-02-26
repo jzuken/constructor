@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/light_gray"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <ListView
         android:id="@+id/orders_list"
@@ -16,7 +16,6 @@
         android:background="@drawable/bottom_rounded_shape"
         android:cacheColorHint="@android:color/transparent"
         android:fadingEdgeLength="0dp"
-        tools:listitem="@layout/order_item" >
-    </ListView>
+        tools:listitem="@layout/order_item"></ListView>
 
 </LinearLayout>

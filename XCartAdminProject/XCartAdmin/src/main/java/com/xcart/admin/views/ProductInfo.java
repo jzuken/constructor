@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.method.LinkMovementMethod;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -36,7 +35,6 @@ import com.xcart.admin.managers.network.HttpManager;
 import com.xcart.admin.managers.network.Requester;
 import com.xcart.admin.views.dialogs.CustomDialog;
 
-import org.apache.http.protocol.HTTP;
 import org.jraf.android.backport.switchwidget.Switch;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -132,7 +130,8 @@ public class ProductInfo extends PinSupportNetworkActivity {
                             fullDescription.loadDataWithBaseURL("", fullDescriptionText, "text/html", "UTF-8", "");
                             fullDescrLabel.setVisibility(View.VISIBLE);
                         }
-                        price.setText("$" + obj.getString("price"));
+                        String format = XCartApplication.getInstance().getPreferenceManager().getCurrencyFormat();
+                        price.setText(String.format(format, obj.getString("price")));
                         priceItem.setClickable(true);
                         inStock.setText(obj.getString("avail"));
                         if (obj.getString("forsale").equals("Y")) {
@@ -308,7 +307,8 @@ public class ProductInfo extends PinSupportNetworkActivity {
             public void onItemSelected(AdapterView<?> arg0, View view, int position, long id) {
                 try {
                     JSONObject variant = variantsArray.getJSONObject(position);
-                    price.setText("$" + variant.getString("price"));
+                    String format = XCartApplication.getInstance().getPreferenceManager().getCurrencyFormat();
+                    price.setText(String.format(format, variant.getString("price")));
                     inStock.setText(variant.getString("avail"));
                     options.setText(getOptions(variant));
                     currentVariant = position;
@@ -366,7 +366,8 @@ public class ProductInfo extends PinSupportNetworkActivity {
                     super.onPostExecute(response);
                     if (response != null) {
                         Toast.makeText(getBaseContext(), "Success", Toast.LENGTH_SHORT).show();
-                        price.setText("$" + newPrice);
+                        String format = XCartApplication.getInstance().getPreferenceManager().getCurrencyFormat();
+                        price.setText(String.format(format, newPrice));
                         Intent resultIntent = new Intent();
                         resultIntent.putExtra("price", newPrice);
                         setResult(changePriceResultCode, resultIntent);

@@ -12,10 +12,6 @@ import com.xcart.admin.managers.DialogManager;
 import com.xcart.admin.managers.MyActivityManager;
 import com.xcart.admin.managers.XCartApplication;
 import com.xcart.admin.managers.network.DevServerApiManager;
-import com.xcart.admin.managers.network.SubscriptionCallback;
-import com.xcart.admin.managers.network.SubscriptionStatus;
-import com.xcart.admin.views.dialogs.ConnectionErrorDialog;
-import com.xcart.admin.views.dialogs.ErrorDialog;
 
 import kankan.wheel.widget.OnWheelChangedListener;
 import kankan.wheel.widget.OnWheelScrollListener;

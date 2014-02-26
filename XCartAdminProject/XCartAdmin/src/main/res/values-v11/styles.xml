@@ -2,9 +2,9 @@
 
     <!--&lt;!&ndash; Application theme. &ndash;&gt;-->
     <!--<style name="ActionBar.Solid.XCartAppTheme" parent="@style/Widget.AppCompat.Light.ActionBar.Solid">-->
-        <!--<item name="background">@drawable/gray_title</item>-->
-        <!--<item name="titleTextStyle">@style/DashboardTextStyle</item>-->
-        <!--<item name="switchStyle">@style/Widget.Holo.Light.CompoundButton.Switch</item>-->
+    <!--<item name="background">@drawable/gray_title</item>-->
+    <!--<item name="titleTextStyle">@style/DashboardTextStyle</item>-->
+    <!--<item name="switchStyle">@style/Widget.Holo.Light.CompoundButton.Switch</item>-->
     <!--</style>-->
 
 </resources>

@@ -6,14 +6,18 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.xcart.admin.R;
+import com.xcart.admin.managers.XCartApplication;
 import com.xcart.admin.model.Product;
 
 import java.util.List;
 
 public class ProductsListAdapter extends BaseArrayAdapter<Product> {
 
+    private String format;
+
     public ProductsListAdapter(Context context, int resource, List<Product> items) {
         super(context, resource, items);
+        this.format = XCartApplication.getInstance().getPreferenceManager().getCurrencyFormat();
     }
 
     @Override
@@ -41,7 +45,7 @@ public class ProductsListAdapter extends BaseArrayAdapter<Product> {
         holder.name.setText(holder.product.getName());
         holder.sku.setText(holder.product.getSku());
         holder.inStock.setText(holder.product.getInStock());
-        holder.price.setText("$" + holder.product.getPrice());
+        holder.price.setText(String.format(format, holder.product.getPrice()));
     }
 
     public static class ProductHolder {

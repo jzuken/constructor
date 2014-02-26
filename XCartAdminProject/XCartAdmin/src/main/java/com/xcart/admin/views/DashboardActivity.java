@@ -15,7 +15,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.xcart.admin.R;
-import com.xcart.admin.managers.LogManager;
 import com.xcart.admin.managers.XCartApplication;
 import com.xcart.admin.managers.network.DevServerApiManager;
 import com.xcart.admin.managers.network.HttpManager;
@@ -109,7 +108,8 @@ public class DashboardActivity extends PinSupportNetworkActivity {
                             }
                             String name = title + order.getString("firstname") + " " + order.getString("lastname");
                             customers[i].setText(name);
-                            customersPaid[i].setText("$" + order.getString("total"));
+                            String format = XCartApplication.getInstance().getPreferenceManager().getCurrencyFormat();
+                            customersPaid[i].setText(String.format(format, order.getString("total")));
                         }
 
                         for (int j = ordersLength; j < 3; j++) {
@@ -156,6 +156,9 @@ public class DashboardActivity extends PinSupportNetworkActivity {
     }
 
     private void initTodaySales() {
+        TextView todaySalesLabel = (TextView) findViewById(R.id.today_sales_label);
+        todaySalesLabel.setText(String.format(getString(R.string.today_sales), XCartApplication.getInstance().getPreferenceManager().getCurrencySymbol()));
+
         todaySalesLayout = (LinearLayout) findViewById(R.id.today_sales_layout);
         todaySales = (TextView) findViewById(R.id.today_sales);
 

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/light_gray"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <com.xcart.admin.views.CustomTabHost
         android:id="@android:id/tabhost"
@@ -12,30 +12,28 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="9dp"
         android:layout_marginRight="9dp"
-        android:layout_marginTop="7dp" >
+        android:layout_marginTop="7dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <TabWidget
                 android:id="@android:id/tabs"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
-            </TabWidget>
+                android:layout_height="wrap_content"></TabWidget>
 
             <FrameLayout
                 android:id="@android:id/tabcontent"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" >
+                android:layout_height="match_parent">
 
                 <LinearLayout
                     android:id="@+id/emptyContent"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical" >
-                </LinearLayout>
+                    android:orientation="vertical"></LinearLayout>
             </FrameLayout>
         </LinearLayout>
     </com.xcart.admin.views.CustomTabHost>
@@ -65,7 +63,6 @@
         android:layout_marginRight="7dp"
         android:background="@drawable/rounded_shape"
         android:cacheColorHint="@android:color/transparent"
-        tools:listitem="@layout/order_item" >
-    </ListView>
+        tools:listitem="@layout/order_item"></ListView>
 
 </LinearLayout>

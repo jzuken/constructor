@@ -1,10 +1,7 @@
 package com.xcart.admin.views;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
 
-import com.xcart.admin.R;
 import com.xcart.admin.managers.DialogManager;
 import com.xcart.admin.managers.network.Requester;
 

@@ -57,6 +57,7 @@ public class HttpManager {
     private static final String USER_ORDERS = "user_orders";
     private static final String REGISTER_GCM = "register_gcm";
     private static final String UNREGISTER_GCM = "unregister_gcm";
+    private static final String GET_CONFIG = "get_config";
 
     // parameters
     private static final String REQUEST = "request";
@@ -82,11 +83,14 @@ public class HttpManager {
     private static final String ANDROID_VERSION = "android_version";
     private static final String IMEI = "imei";
     private static final String IMSI = "imsi";
+    private static final String CFGS_ARRAY = "cfgs_array";
 
     // Dev server
     private static final String DEV_SERVER_URL = "http://vm-constructor.cloudapp.net";
     private static final String CHECK_SUBSCRIPTION = "/AppServerListener/api/shops/%s/checksubscribtion";
     private static final String SHOP_AUTHORIZATION = "/AppServerListener/api/shops/%s/ApiURL";
+
+    //https://mobileadmin.x-cart.com/xcart/mobile_admin_api.php?request=get_config&key=FQMTED8L&cfgs_array=a%3A2%3A%7Bi%3A0%3Bs%3A23%3A%22General%3Acurrency_symbol%22%3Bi%3A1%3Bs%3A23%3A%22General%3Acurrency_format%22%3B%7D
 
     private HttpClient client;
 
@@ -313,6 +317,15 @@ public class HttpManager {
         return String.format("%s://%s/xcart/admin/product_modify.php?productid=%s", uri.getScheme(), uri.getHost(), productId);
     }
 
+    public String getCurrencyType(String url) {
+        Uri uri = Uri.parse(url).buildUpon()
+                .appendQueryParameter(REQUEST, GET_CONFIG)
+                .appendQueryParameter(CFGS_ARRAY, "a%3A2%3A%7Bi%3A0%3Bs%3A23%3A%22General%3Acurrency_symbol%22%3Bi%3A1%3Bs%3A23%3A%22General%3Acurrency_format%22%3B%7D")
+                .appendQueryParameter(KEY, key)
+                .build();
+        return get(uri);
+    }
+
     private String get(Uri uri) {
         String url = uri.toString();
         LOG.d("get url " + url);
@@ -330,6 +343,8 @@ public class HttpManager {
         } catch (ClientProtocolException e) {
             LOG.e(e.getMessage(), e);
         } catch (IOException e) {
+            LOG.e(e.getMessage(), e);
+        } catch (IllegalStateException e) {
             LOG.e(e.getMessage(), e);
         }
         return null;

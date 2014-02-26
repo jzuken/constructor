@@ -38,6 +38,7 @@ import java.util.ArrayList;
 public class Products extends PinSupportNetworkActivity {
 
     String sortOption;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

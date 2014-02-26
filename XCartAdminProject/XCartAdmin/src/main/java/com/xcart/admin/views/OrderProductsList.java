@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.xcart.admin.R;
+import com.xcart.admin.managers.XCartApplication;
 
 public class OrderProductsList extends LinearLayout {
 
@@ -48,7 +49,8 @@ public class OrderProductsList extends LinearLayout {
         TextView productPrice = (TextView) item.findViewById(R.id.product_price);
         TextView productAmount = (TextView) item.findViewById(R.id.product_amount);
         productName.setText(name);
-        productPrice.setText("$" + price);
+        String format = XCartApplication.getInstance().getPreferenceManager().getCurrencyFormat();
+        productPrice.setText(String.format(format, price));
         productAmount.setText(amount);
         productLayout.setOnClickListener(new OnClickListener() {
 

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/light_gray"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <EditText
         android:id="@+id/search_line"
@@ -31,7 +31,6 @@
         android:layout_marginRight="7dp"
         android:background="@drawable/rounded_shape"
         android:cacheColorHint="@android:color/transparent"
-        tools:listitem="@layout/user_item" >
-    </ListView>
+        tools:listitem="@layout/user_item"></ListView>
 
 </LinearLayout>

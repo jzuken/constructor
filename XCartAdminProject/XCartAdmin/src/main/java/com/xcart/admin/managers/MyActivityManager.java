@@ -1,10 +1,7 @@
 package com.xcart.admin.managers;
 
 import android.app.ActivityManager;
-import android.app.Service;
 import android.content.Context;
-import android.content.Intent;
-import android.os.IBinder;
 
 import java.util.List;
 
@@ -17,7 +14,7 @@ public class MyActivityManager {
     private static boolean isAfterNotification;
 
     public static boolean isAfterNotification() {
-        return  isAfterNotification;
+        return isAfterNotification;
     }
 
     public static void setIsAfterNotificationValue(boolean value) {

@@ -8,7 +8,7 @@
     <string name="welcome">Welcome to X-Cart</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
-    <string name="today_sales">Today\nsales($)</string>
+    <string name="today_sales">Today\nsales(%s)</string>
     <string name="low_stock">Low stock\nproducts</string>
     <string name="visitors_today">Visitors\ntoday</string>
     <string name="products_sold_today">Products\nsold today</string>
@@ -160,5 +160,7 @@
     <string name="pass_protection">Password protection</string>
     <string name="action_edit">Edit in backend</string>
     <string name="updating_tracking_number">Updating tracking number…</string>
+    <string name="subscription_expiring">Subscriptions expiring in the next %s days</string><string name="subscription_trial">Trial version.
+Subscriptions expiring in the next %s days</string>
 
 </resources>

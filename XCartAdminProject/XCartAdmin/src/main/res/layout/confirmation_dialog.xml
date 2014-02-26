@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/message_box"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/confirm_question"
@@ -23,7 +23,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="40dp"
         android:orientation="horizontal"
-        android:paddingBottom="20dp" >
+        android:paddingBottom="20dp">
 
         <ImageButton
             android:id="@+id/dialog_yes_button"

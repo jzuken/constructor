@@ -3,9 +3,7 @@ package com.xcart.admin.managers.network;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-import android.view.View;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -57,7 +55,7 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
     private ImageView image;
     private Callback callback;
 
-    public interface Callback{
+    public interface Callback {
         public void done();
     }
 }

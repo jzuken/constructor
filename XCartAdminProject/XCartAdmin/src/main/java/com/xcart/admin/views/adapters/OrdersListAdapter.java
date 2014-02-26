@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.xcart.admin.R;
 import com.xcart.admin.managers.StatusConverter;
+import com.xcart.admin.managers.XCartApplication;
 import com.xcart.admin.model.Order;
 import com.xcart.admin.model.OrderStatus;
 
@@ -14,8 +15,11 @@ import java.util.List;
 
 public class OrdersListAdapter extends BaseArrayAdapter<Order> {
 
+    private String format;
+
     public OrdersListAdapter(Context context, int resource, List<Order> items) {
         super(context, resource, items);
+        this.format = XCartApplication.getInstance().getPreferenceManager().getCurrencyFormat();
     }
 
     @Override
@@ -41,7 +45,7 @@ public class OrdersListAdapter extends BaseArrayAdapter<Order> {
 
     private void setupItem(OrderHolder holder) {
         holder.userName.setText(holder.order.getUserName() + " (#" + holder.order.getId() + ")");
-        holder.paid.setText("$" + holder.order.getPaid());
+        holder.paid.setText(String.format(format, holder.order.getPaid()));
         OrderStatus statusSymbol = OrderStatus.valueOf(holder.order.getStatus());
         holder.status.setText(StatusConverter.getStatusBySymbol(context, statusSymbol));
         holder.status.setTextColor(StatusConverter.getColorResourceBySymbol(context, statusSymbol));

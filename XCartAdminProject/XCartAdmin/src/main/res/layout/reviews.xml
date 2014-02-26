@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/light_gray"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <ListView
         android:id="@+id/reviews_list"
@@ -16,7 +16,6 @@
         android:layout_marginTop="4dp"
         android:background="@drawable/rounded_shape"
         android:cacheColorHint="@android:color/transparent"
-        tools:listitem="@layout/review_item" >
-    </ListView>
+        tools:listitem="@layout/review_item"></ListView>
 
 </LinearLayout>

@@ -3,12 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/light_gray"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -16,7 +16,7 @@
             android:layout_marginBottom="0.5dp"
             android:layout_weight="0.25"
             android:baselineAligned="false"
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
 
             <LinearLayout
                 android:id="@+id/today_sales_layout"
@@ -27,7 +27,7 @@
                 android:background="@drawable/orange_dashboard"
                 android:baselineAligned="false"
                 android:gravity="center"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/today_sales"
@@ -39,6 +39,7 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/today_sales_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -54,7 +55,7 @@
                 android:layout_weight="0.5"
                 android:background="@drawable/blue_dashboard"
                 android:gravity="center"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/visitors_today"
@@ -80,7 +81,7 @@
             android:layout_marginBottom="0.5dp"
             android:layout_weight="0.25"
             android:baselineAligned="false"
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
 
             <LinearLayout
                 android:id="@+id/products_sold_today_layout"
@@ -90,7 +91,7 @@
                 android:layout_weight="0.33"
                 android:background="@drawable/gray_dashboard"
                 android:gravity="center"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/products_sold_today"
@@ -118,7 +119,7 @@
                 android:layout_weight="0.34"
                 android:background="@drawable/light_orange_dashboard"
                 android:gravity="center"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/reviews_today"
@@ -145,7 +146,7 @@
                 android:layout_weight="0.33"
                 android:background="@drawable/gray_dashboard"
                 android:gravity="center"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/low_stock"
@@ -172,7 +173,7 @@
             android:layout_marginTop="0.5dp"
             android:layout_weight="0.50"
             android:background="@drawable/white_dashboard"
-            android:baselineAligned="false" >
+            android:baselineAligned="false">
 
             <LinearLayout
                 android:id="@+id/last_orders_title"
@@ -180,7 +181,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="horizontal"
-                android:paddingTop="5dp" >
+                android:paddingTop="5dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -206,11 +207,11 @@
                 android:layout_marginRight="5dp"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:paddingTop="15dp" >
+                android:paddingTop="15dp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" >
+                    android:layout_height="wrap_content">
 
                     <TextView
                         android:id="@+id/first_customer"
@@ -234,7 +235,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="3dp" >
+                    android:layout_marginTop="3dp">
 
                     <TextView
                         android:id="@+id/second_customer"
@@ -258,7 +259,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="3dp" >
+                    android:layout_marginTop="3dp">
 
                     <TextView
                         android:id="@+id/third_customer"

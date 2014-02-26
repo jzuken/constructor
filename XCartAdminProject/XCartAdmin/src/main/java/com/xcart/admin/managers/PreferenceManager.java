@@ -106,4 +106,20 @@ public class PreferenceManager {
     public boolean isPasswordProtectionEnabled() {
         return settingsData.getBoolean("security_switch", false);
     }
+
+    public void saveCurrencyType(String symbol, String format) {
+        SharedPreferences.Editor editor = settingsData.edit();
+        editor.putString("symbol", symbol);
+        editor.putString("format", format.replace("x", "%s"));
+        editor.commit();
+    }
+
+    public String getCurrencySymbol() {
+        return settingsData.getString("symbol", "$");
+    }
+
+    public String getCurrencyFormat() {
+        return settingsData.getString("format", "$%s");
+    }
+
 }
