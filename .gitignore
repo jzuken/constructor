@@ -18,3 +18,5 @@ obj
 /XCartAdminProject/XCartAdmin/*.iml
 
 *.iml
+
+/XCartAdminProject/XCartAdmin/mobtech.keystore
