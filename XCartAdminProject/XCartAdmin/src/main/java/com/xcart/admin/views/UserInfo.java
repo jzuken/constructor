@@ -91,7 +91,7 @@ public class UserInfo extends PinSupportNetworkActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.review, menu);
+        inflater.inflate(R.menu.user_info, menu);
         return super.onCreateOptionsMenu(menu);
     }
 

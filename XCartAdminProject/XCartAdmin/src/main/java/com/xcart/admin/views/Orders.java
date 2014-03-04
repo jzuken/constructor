@@ -50,7 +50,7 @@ public class Orders extends PinSupportNetworkActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.users, menu);
+        inflater.inflate(R.menu.orders, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
