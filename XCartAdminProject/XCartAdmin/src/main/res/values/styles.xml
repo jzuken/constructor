@@ -1,6 +1,6 @@
 <resources>
 
-    <style name="Theme.XCartAppTheme.NoActionBar" parent="android:Theme.Black.NoTitleBar"></style>
+    <style name="Theme.XCartAppTheme.NoActionBar" parent="android:Theme.Black.NoTitleBar"/>
 
     <style name="Theme.XCartAppTheme" parent="@style/Theme.AppCompat.Light.DarkActionBar">
         <item name="switchStyle">@style/Widget.Holo.CompoundButton.Switch</item>
@@ -50,7 +50,7 @@
         <item name="background">@drawable/light_gray_title</item>
     </style>
 
-    <style name="Theme.XCartAppTheme.Settings" parent="android:Theme.Black"></style>
+    <style name="Theme.XCartAppTheme.Settings" parent="android:Theme.Black"/>
 
 
     <style name="AboutDialogText" parent="android:TextAppearance">

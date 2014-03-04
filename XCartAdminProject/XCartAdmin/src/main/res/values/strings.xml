@@ -21,6 +21,7 @@
     <string name="users">Users</string>
     <string name="email_colon">Email:</string>
     <string name="product">Product:</string>
+    <string name="product_title">Product</string>
     <string name="message_colon">Message:</string>
     <string name="settings_description">image for settings button</string>
     <string name="back_description">image for back button</string>

@@ -51,8 +51,9 @@ public class ProductInfo extends PinSupportNetworkActivity {
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.product_full_info);
         productName = getIntent().getStringExtra("name");
-        setTitle(productName);
         productId = getIntent().getStringExtra("id");
+        name = (TextView) findViewById(R.id.product_name);
+        name.setText(productName);
         productImage = (ImageView) findViewById(R.id.product_image);
         description = (WebView) findViewById(R.id.description);
         initDescriptionWebView(description);
@@ -431,6 +432,7 @@ public class ProductInfo extends PinSupportNetworkActivity {
 
     private String productId = "";
     private String productName = "";
+    private TextView name;
     private ImageView productImage;
     private WebView description;
     private WebView fullDescription;

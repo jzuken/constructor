@@ -21,9 +21,30 @@ android {
         targetSdkVersion 19
     }
 
+    lintOptions {
+        abortOnError false
+    }
+
     signingConfigs {
         debug {
             storeFile file("debug.keystore")
+        }
+
+        release {
+
+            storeFile file('mobtech.keystore')
+            storePassword "dpf687t7"
+            keyAlias "xcart"
+            keyPassword "dpf687t7"
+        }
+    }
+
+    buildTypes {
+
+        release {
+            runProguard true
+            proguardFile 'proguard-android.txt'
+            signingConfig signingConfigs.release
         }
     }
 }

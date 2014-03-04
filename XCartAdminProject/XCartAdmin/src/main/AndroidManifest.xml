@@ -118,6 +118,7 @@
         <activity
             android:name=".views.ProductInfo"
             android:screenOrientation="portrait"
+            android:label="@string/product_title"
             android:theme="@style/Theme.XCartAppTheme.Products">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
