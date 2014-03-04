@@ -93,10 +93,10 @@ public class DashboardActivity extends PinSupportNetworkActivity {
                         JSONObject obj = new JSONObject(result);
                         String todaySalesValue = roundTodaySales(obj.getString("today_sales"));
                         todaySales.setText(todaySalesValue);
-                        lowStock.setText(obj.getString("low_stock"));
-                        visitorsToday.setText(obj.getString("today_visitors"));
-                        reviewsToday.setText(obj.getString("reviews_today"));
-                        productsSold.setText(obj.getString("today_sold"));
+                        lowStock.setText(obj.getString("low_stock").replace("false", "0"));
+                        visitorsToday.setText(obj.getString("today_visitors").replace("false", "0"));
+                        reviewsToday.setText(obj.getString("reviews_today").replace("false", "0"));
+                        productsSold.setText(obj.getString("today_sold").replace("false", "0"));
                         lastOrdersCount.setText("(" + obj.getString("today_orders_count") + ")");
                         JSONArray orders = obj.getJSONArray("today_orders");
                         int ordersLength = orders.length();
