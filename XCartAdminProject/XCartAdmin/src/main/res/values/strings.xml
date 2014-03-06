@@ -144,7 +144,7 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="pre_authorized">Pre-Authorized</string>
-    <string name="about_application_version">X-Cart\nверсия %1$s</string>
+    <string name="about_application_version">X-Cart\nversion %1$s</string>
     <string name="about_exit_button_text">Close</string>
     <string name="twitter">twitter.com/x_cart</string>
     <string name="facebook">facebook.com/xcart</string>
