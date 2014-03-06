@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -281,15 +280,10 @@ public class DashboardActivity extends PinSupportNetworkActivity {
     }
 
 
-
     @Override
     public void onBackPressed() {
-        int iconId = android.R.drawable.ic_dialog_alert;
-        if (android.os.Build.VERSION.SDK_INT >= 11) {
-            iconId = android.R.attr.alertDialogIcon;
-        }
-        new AlertDialog.Builder(this)
-                .setIcon(iconId)
+        AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                .setIcon(android.R.drawable.ic_dialog_alert)
                 .setTitle(R.string.closing_application)
                 .setMessage(R.string.close_application_question)
                 .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
@@ -299,8 +293,11 @@ public class DashboardActivity extends PinSupportNetworkActivity {
                     }
 
                 })
-                .setNegativeButton(R.string.no, null)
-                .show();
+                .setNegativeButton(R.string.no, null);
+        if (android.os.Build.VERSION.SDK_INT >= 11) {
+            builder.setIconAttribute(android.R.attr.alertDialogIcon);
+        }
+        builder.show();
     }
 
     private LinearLayout todaySalesLayout;
