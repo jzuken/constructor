@@ -16,6 +16,6 @@
         android:layout_marginTop="4dp"
         android:background="@drawable/rounded_shape"
         android:cacheColorHint="@android:color/transparent"
-        tools:listitem="@layout/review_item"></ListView>
+        tools:listitem="@layout/review_item"/>
 
 </LinearLayout>

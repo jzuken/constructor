@@ -31,6 +31,6 @@
         android:layout_marginRight="7dp"
         android:background="@drawable/rounded_shape"
         android:cacheColorHint="@android:color/transparent"
-        tools:listitem="@layout/user_item"></ListView>
+        tools:listitem="@layout/user_item"/>
 
 </LinearLayout>

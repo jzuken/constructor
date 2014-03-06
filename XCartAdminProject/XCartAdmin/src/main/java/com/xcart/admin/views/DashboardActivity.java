@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -279,10 +280,16 @@ public class DashboardActivity extends PinSupportNetworkActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
+
     @Override
     public void onBackPressed() {
+        int iconId = android.R.drawable.ic_dialog_alert;
+        if (android.os.Build.VERSION.SDK_INT >= 11) {
+            iconId = android.R.attr.alertDialogIcon;
+        }
         new AlertDialog.Builder(this)
-                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setIcon(iconId)
                 .setTitle(R.string.closing_application)
                 .setMessage(R.string.close_application_question)
                 .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {

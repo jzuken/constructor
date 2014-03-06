@@ -141,7 +141,7 @@ public class GcmManager {
 
     private static final LogManager LOG = new LogManager(GcmManager.class.getSimpleName());
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
-    private static final String SENDER_ID = "443902181577";
+    private static final String SENDER_ID = "175432225698";
     private GoogleCloudMessaging gcm;
     private Activity context;
 }

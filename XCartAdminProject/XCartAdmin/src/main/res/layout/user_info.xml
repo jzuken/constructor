@@ -16,6 +16,6 @@
         android:background="@drawable/bottom_rounded_shape"
         android:cacheColorHint="@android:color/transparent"
         android:fadingEdgeLength="0dp"
-        tools:listitem="@layout/order_item"></ListView>
+        tools:listitem="@layout/order_item"/>
 
 </LinearLayout>
