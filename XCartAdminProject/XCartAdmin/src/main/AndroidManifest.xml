@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.xcart.admin"
-    android:versionCode="3"
-    android:versionName="1.0.3">
+    android:versionCode="4"
+    android:versionName="1.0.4">
 
     <uses-sdk
         android:minSdkVersion="9"
@@ -103,9 +103,6 @@
             android:screenOrientation="portrait"
             android:label="@string/orders"
             android:theme="@style/Theme.XCartAppTheme.Orders">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".views.DashboardActivity" />
         </activity>
         <activity
             android:name=".views.Review"
@@ -129,17 +126,11 @@
             android:name=".views.OrderInfo"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.XCartAppTheme.Orders">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".views.Orders" />
         </activity>
         <activity
             android:name=".views.UserInfo"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.XCartAppTheme.Users">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".views.Users" />
         </activity>
 
         <receiver

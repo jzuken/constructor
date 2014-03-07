@@ -41,12 +41,12 @@ public class ShopAuthorization extends FragmentActivity {
         loginButton = (Button) findViewById(R.id.shop_login_button);
         gcmManager = new GcmManager(this);
         //TODO: stub
-        shopUrl.setText("54.213.38.9");
-        authorizationKey.setText("MobileAdminApiKey");
+        //shopUrl.setText("54.213.38.9");
+        //authorizationKey.setText("MobileAdminApiKey");
         //shopUrl.setText("ec2-54-213-169-59.us-west-2.compute.amazonaws.com");
         //authorizationKey.setText("testKey");
-//        shopUrl.setText("mobileadmin.x-cart.com");
-//        authorizationKey.setText("FQMTED8L");
+        shopUrl.setText("mobileadmin.x-cart.com");
+        authorizationKey.setText("FQMTED8L");
         LOG.d("onCreate");
     }
 

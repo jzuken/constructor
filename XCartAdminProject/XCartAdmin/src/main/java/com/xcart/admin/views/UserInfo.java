@@ -3,9 +3,11 @@ package com.xcart.admin.views;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.AbsListView;
@@ -36,6 +38,7 @@ public class UserInfo extends PinSupportNetworkActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.user_info);
         adapter = new OrdersListAdapter(this, R.layout.order_item, new ArrayList<Order>());
         ordersListView = (ListView) findViewById(R.id.orders_list);
@@ -83,7 +86,7 @@ public class UserInfo extends PinSupportNetworkActivity {
         address = (TextView) header.findViewById(R.id.address);
         phone = (TextView) header.findViewById(R.id.phone);
         fax = (TextView) header.findViewById(R.id.fax);
-        id = getIntent().getStringExtra("userId");
+        user_id = getIntent().getStringExtra("userId");
         sendMessageButton = (Button) header.findViewById(R.id.send_message_button);
         callButton = (Button) header.findViewById(R.id.call_button);
     }
@@ -93,6 +96,17 @@ public class UserInfo extends PinSupportNetworkActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.user_info, menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -121,12 +135,30 @@ public class UserInfo extends PinSupportNetworkActivity {
     }
 
     private void updateData() {
+        if(user_id.equals("0")){
+            Intent intent = getIntent();
+            firstName.setText(intent.getStringExtra("firstname"));
+            lastName.setText(intent.getStringExtra("lastname"));
+            email.setText(intent.getStringExtra("email"));
+            address.setText(intent.getStringExtra("b_address") + "\n" + intent.getStringExtra("b_city") + ", "
+                    + intent.getStringExtra("b_state") + " " + intent.getStringExtra("b_zipcode") + "\n"
+                    + intent.getStringExtra("b_country"));
+            String phoneValue = intent.getStringExtra("b_phone");
+            if (!isEmpty(phoneValue)) {
+                callButton.setClickable(true);
+                callButton.setBackgroundResource(R.drawable.right_rounded_green_button);
+                phone.setText(phoneValue);
+            }
+            fax.setText(intent.getStringExtra("b_fax"));
+            setProgressBarIndeterminateVisibility(Boolean.FALSE);
+            return;
+        }
         setProgressBarIndeterminateVisibility(Boolean.TRUE);
 
         requester = new Requester() {
             @Override
             protected String doInBackground(Void... params) {
-                return new HttpManager(getBaseContext()).getUserInfo(id);
+                return new HttpManager(getBaseContext()).getUserInfo(user_id);
             }
 
             @Override
@@ -167,6 +199,10 @@ public class UserInfo extends PinSupportNetworkActivity {
     }
 
     private void updateOrdersList() {
+        if(user_id.equals("0")){
+            findViewById(R.id.order_list_header).setVisibility(View.GONE);
+            return;
+        }
         ordersProgressBar.setVisibility(View.VISIBLE);
         synchronized (lock) {
             isDownloading = true;
@@ -176,7 +212,7 @@ public class UserInfo extends PinSupportNetworkActivity {
         requester = new Requester() {
             @Override
             protected String doInBackground(Void... params) {
-                return new HttpManager(getBaseContext()).getUserOrders(from, String.valueOf(packAmount), id);
+                return new HttpManager(getBaseContext()).getUserOrders(from, String.valueOf(packAmount), user_id);
             }
 
             @Override
@@ -265,7 +301,7 @@ public class UserInfo extends PinSupportNetworkActivity {
     private Button sendMessageButton;
     private Button callButton;
     private OrdersListAdapter adapter;
-    private String id;
+    private String user_id;
     private Object lock = new Object();
     private int lastPositionClicked;
     private boolean isDownloading;

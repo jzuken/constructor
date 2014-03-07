@@ -9,6 +9,7 @@ import android.text.InputType;
 import android.text.Spanned;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -43,8 +44,9 @@ public class OrderInfo extends PinSupportNetworkActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+        super.onCreate(savedInstanceState);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.order_info);
         orderIdValue = getIntent().getStringExtra("orderId");
         setTitle(getResources().getString(R.string.order_id_number) + getIntent().getStringExtra("orderId"));
@@ -77,6 +79,17 @@ public class OrderInfo extends PinSupportNetworkActivity {
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     protected void withoutPinAction() {
         if (isNeedDownload()) {
             clearData();
@@ -84,6 +97,8 @@ public class OrderInfo extends PinSupportNetworkActivity {
         }
         super.withoutPinAction();
     }
+
+    private JSONObject obj = null;
 
     private void updateData() {
         setProgressBarIndeterminateVisibility(Boolean.TRUE);
@@ -99,7 +114,7 @@ public class OrderInfo extends PinSupportNetworkActivity {
             protected void onPostExecute(String result) {
                 if (result != null) {
                     try {
-                        JSONObject obj = new JSONObject(result);
+                        obj = new JSONObject(result);
 
                         statusSymbol = obj.getString("status");
                         status.setText(StatusConverter.getStatusBySymbol(getBaseContext(),
@@ -399,6 +414,23 @@ public class OrderInfo extends PinSupportNetworkActivity {
                 Intent intent = new Intent(getBaseContext(), UserInfo.class);
                 intent.putExtra("userId", userId);
                 intent.putExtra("userName", userName);
+                if(userId.equals("0")){
+                    try {
+                        intent.putExtra("firstname", obj.getString("firstname"));
+                        intent.putExtra("lastname", obj.getString("lastname"));
+                        intent.putExtra("email", obj.getString("email"));
+                        intent.putExtra("b_address", obj.getString("b_address"));
+                        intent.putExtra("b_city", obj.getString("b_city"));
+                        intent.putExtra("b_state", obj.getString("b_state"));
+                        intent.putExtra("b_zipcode", obj.getString("b_zipcode"));
+                        intent.putExtra("b_country", obj.getString("b_country"));
+                        intent.putExtra("b_phone", obj.getString("b_phone"));
+                        intent.putExtra("b_fax", obj.getString("b_fax"));
+
+                    } catch (JSONException e) {
+                        LOG.e(e.getMessage(), e);
+                    }
+                }
                 startActivityForResult(intent, 1);
             }
         });
