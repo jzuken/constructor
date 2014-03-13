@@ -45,7 +45,7 @@ namespace ApplicationServerListener.Controllers
             string shopKeyHash = this.CreateMD5Hash(shopKey);
             string shopExpirationDate = "";
             DateTime today = DateTime.Now;
-            DateTime trialExpirationDate = today.AddDays(10);
+            DateTime trialExpirationDate = today.AddDays(14);
             RepoLibraryReference.Project project = wcfClient.GetProject(shopUrl);
             if (project == null)
             {

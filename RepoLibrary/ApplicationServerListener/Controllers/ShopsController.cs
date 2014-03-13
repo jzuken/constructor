@@ -43,6 +43,12 @@ namespace ApplicationServerListener.Controllers
             }
         }
 
+        [ActionName("CheckSubscription")]
+        public HttpResponseMessage GetCheckSubscription(string name)
+        {
+            return this.GetCheckSubscribtion(name);
+        }
+
         [ActionName("CheckSubscribtion")]
         public HttpResponseMessage GetCheckSubscribtion(string name)
         {
@@ -115,7 +121,7 @@ namespace ApplicationServerListener.Controllers
                                 {
                                     if (DateTime.Compare(todate, trialEnd) <= 0)
                                     {
-                                        int daysTrialLeft = 10 - (todate - trialEnd).Days;
+                                        int daysTrialLeft = (trialEnd - todate).Days;
                                         return new HttpResponseMessage() { Content = new StringContent("{\"api\": \"trial\", \"remains\": \"" + daysTrialLeft.ToString() + "\",  \"url\": \"" + project.apiUrl + "\" }") };
                                     }
                                 }
@@ -151,7 +157,7 @@ namespace ApplicationServerListener.Controllers
                             {
                                 if (DateTime.Compare(todate, trialEnd) <= 0)
                                 {
-                                    int daysTrialLeft = 10 - (todate - trialEnd).Days;
+                                    int daysTrialLeft = (trialEnd - todate).Days;
                                     return new HttpResponseMessage() { Content = new StringContent("{\"api\": \"trial\", \"remains\": \"" + daysTrialLeft.ToString() + "\",  \"url\": \"" + project.apiUrl + "\" }") };
                                 }
                             }
