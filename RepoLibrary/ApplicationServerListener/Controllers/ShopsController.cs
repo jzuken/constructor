@@ -43,6 +43,12 @@ namespace ApplicationServerListener.Controllers
             }
         }
 
+        [ActionName("CheckSubscription")]
+        public HttpResponseMessage GetCheckSubscription(string name)
+        {
+            return this.GetCheckSubscribtion(name);
+        }
+
         [ActionName("CheckSubscribtion")]
         public HttpResponseMessage GetCheckSubscribtion(string name)
         {
