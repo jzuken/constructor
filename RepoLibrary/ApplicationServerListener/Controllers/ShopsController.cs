@@ -121,7 +121,7 @@ namespace ApplicationServerListener.Controllers
                                 {
                                     if (DateTime.Compare(todate, trialEnd) <= 0)
                                     {
-                                        int daysTrialLeft = 10 - (trialEnd - todate).Days;
+                                        int daysTrialLeft = (trialEnd - todate).Days;
                                         return new HttpResponseMessage() { Content = new StringContent("{\"api\": \"trial\", \"remains\": \"" + daysTrialLeft.ToString() + "\",  \"url\": \"" + project.apiUrl + "\" }") };
                                     }
                                 }
@@ -157,7 +157,7 @@ namespace ApplicationServerListener.Controllers
                             {
                                 if (DateTime.Compare(todate, trialEnd) <= 0)
                                 {
-                                    int daysTrialLeft = 10 - (trialEnd - todate).Days;
+                                    int daysTrialLeft = (trialEnd - todate).Days;
                                     return new HttpResponseMessage() { Content = new StringContent("{\"api\": \"trial\", \"remains\": \"" + daysTrialLeft.ToString() + "\",  \"url\": \"" + project.apiUrl + "\" }") };
                                 }
                             }
