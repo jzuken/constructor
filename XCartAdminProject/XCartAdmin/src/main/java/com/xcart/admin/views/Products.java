@@ -23,6 +23,7 @@ import android.widget.TabWidget;
 import android.widget.TextView;
 
 import com.xcart.admin.R;
+import com.xcart.admin.managers.LogManager;
 import com.xcart.admin.managers.XCartApplication;
 import com.xcart.admin.managers.network.HttpManager;
 import com.xcart.admin.managers.network.Requester;
@@ -37,7 +38,8 @@ import java.util.ArrayList;
 
 public class Products extends PinSupportNetworkActivity {
 
-    String sortOption;
+    private String sortOption;
+    private static final LogManager LOG = new LogManager(Products.class.getSimpleName());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,10 +107,9 @@ public class Products extends PinSupportNetworkActivity {
                             String id = obj.getString("productid");
                             String name = obj.getString("product");
                             String productCode = obj.getString("productcode");
-                            String sku = productCode.substring(3, productCode.length());
                             String inStock = obj.getString("avail");
                             String price = obj.getString("price");
-                            addProductToList(id, name, sku, inStock, price);
+                            addProductToList(id, name, productCode, inStock, price);
                         }
                         currentAmount += packAmount;
                     } catch (JSONException e) {
