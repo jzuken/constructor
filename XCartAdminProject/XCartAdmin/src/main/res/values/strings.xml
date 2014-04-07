@@ -163,5 +163,7 @@
     <string name="updating_tracking_number">Updating tracking number…</string>
     <string name="subscription_expiring">Subscriptions expiring in the next %s days</string><string name="subscription_trial">Trial version.
 Subscriptions expiring in the next %s days</string>
+    <string name="incorrect_key">Incorrect key</string>
+    <string name="incorrect_shop_url">Incorrect shop url</string>
 
 </resources>

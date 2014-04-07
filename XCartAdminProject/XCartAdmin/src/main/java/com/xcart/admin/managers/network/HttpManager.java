@@ -309,7 +309,12 @@ public class HttpManager {
 
     public String getProductUrl(String productId) {
         URI uri = URI.create(serverUrl);
-        return String.format("%s://%s/xcart/product.php?productid=%s", uri.getScheme(), uri.getHost(), productId);
+        //TODO: remove hack
+        if(serverUrl.contains("/xcart/")){
+            return String.format("%s://%s/xcart/product.php?productid=%s", uri.getScheme(), uri.getHost(), productId);
+        }else {
+            return String.format("%s://%s/product.php?productid=%s", uri.getScheme(), uri.getHost(), productId);
+        }
     }
 
     public String getProductEditUrl(String productId) {

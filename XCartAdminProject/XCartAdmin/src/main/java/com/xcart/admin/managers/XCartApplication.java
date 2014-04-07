@@ -14,6 +14,16 @@ public class XCartApplication extends Application {
 
     private PreferenceManager preferenceManager;
 
+    public boolean isExpired() {
+        return expired;
+    }
+
+    public void setExpired(boolean expired) {
+        this.expired = expired;
+    }
+
+    private boolean expired = false;
+
     @Override
     public void onCreate() {
         super.onCreate();

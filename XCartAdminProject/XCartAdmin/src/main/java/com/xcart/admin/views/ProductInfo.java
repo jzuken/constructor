@@ -1,6 +1,7 @@
 package com.xcart.admin.views;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -251,6 +252,18 @@ public class ProductInfo extends PinSupportNetworkActivity {
 
             @Override
             public void onClick(View v) {
+                if(XCartApplication.getInstance().isExpired()){
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(ProductInfo.this);
+                    builder .setMessage(R.string.subscription_expired)
+                            .setCancelable(false);
+                    AlertDialog alert = builder.create();
+                    alert.show();
+
+                    XCartApplication.getInstance().setExpired(true);
+                    return;
+                }
+
                 priceItem.setClickable(false);
                 LinearLayout view = (LinearLayout) getLayoutInflater().inflate(R.layout.change_value_dialog, null);
                 ((TextView) view.findViewById(R.id.label)).setText(R.string.set_price);
