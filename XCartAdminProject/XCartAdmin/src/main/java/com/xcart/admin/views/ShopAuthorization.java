@@ -41,12 +41,12 @@ public class ShopAuthorization extends FragmentActivity {
         loginButton = (Button) findViewById(R.id.shop_login_button);
         gcmManager = new GcmManager(this);
         //TODO: stub
-        shopUrl.setText("54.213.38.9");
-        authorizationKey.setText("MobileAdminApiKey");
+        //shopUrl.setText("54.213.38.9");
+        //authorizationKey.setText("MobileAdminApiKey");
         //shopUrl.setText("ec2-54-213-169-59.us-west-2.compute.amazonaws.com");
         //authorizationKey.setText("testKey");
-        //shopUrl.setText("mobileadmin.x-cart.com");
-        //authorizationKey.setText("FQMTED8L");
+        shopUrl.setText("mobileadmin.x-cart.com");
+        authorizationKey.setText("FQMTED8L");
         LOG.d("onCreate");
     }
 
@@ -114,11 +114,9 @@ public class ShopAuthorization extends FragmentActivity {
                             Toast.makeText(ShopAuthorization.this, R.string.incorrect_key, Toast.LENGTH_SHORT).show();
                         } else if (result.equals("noShop")) {
                             Toast.makeText(ShopAuthorization.this, R.string.incorrect_shop_url, Toast.LENGTH_SHORT).show();
-                        } else if (result.equals("expired")) {
-                            Toast.makeText(ShopAuthorization.this, R.string.subscription_expired, Toast.LENGTH_SHORT).show();
-                        } else if (result.equals("expiring") || result.equals("trial") || result.equals("ok") || result.equals("expired")) {
-                            if (result.equals("expiring")) {
-                                Toast.makeText(ShopAuthorization.this, String.format(getString(R.string.subscription_expiring), obj.getString("remains")), Toast.LENGTH_SHORT).show();
+                        } else if (result.equals("ok") || result.equals("trial") || result.equals("expired")) {
+                            if (result.equals("expired")) {
+                                Toast.makeText(ShopAuthorization.this, R.string.subscription_expired, Toast.LENGTH_SHORT).show();
                                 XCartApplication.getInstance().setExpired(true);
                             } else if (result.equals("trial")) {
                                 Toast.makeText(ShopAuthorization.this, String.format(getString(R.string.subscription_trial), obj.getString("remains")), Toast.LENGTH_SHORT).show();

@@ -258,6 +258,11 @@ public class OrderInfo extends PinSupportNetworkActivity {
 
             @Override
             public void onClick(View v) {
+                if (XCartApplication.getInstance().isExpired()) {
+                    DialogManager dm = new DialogManager(OrderInfo.this.getSupportFragmentManager());
+                    dm.showErrorDialog(R.string.subscription_expired);
+                    return;
+                }
                 setNeedDownloadValue(false);
                 new DialogManager(OrderInfo.this.getSupportFragmentManager()).showStatusDialog(new ChangeStatusDialog.Callback() {
                     @Override
@@ -277,6 +282,11 @@ public class OrderInfo extends PinSupportNetworkActivity {
 
             @Override
             public void onClick(View v) {
+                if (XCartApplication.getInstance().isExpired()) {
+                    DialogManager dm = new DialogManager(OrderInfo.this.getSupportFragmentManager());
+                    dm.showErrorDialog(R.string.subscription_expired);
+                    return;
+                }
                 trackingNumberItem.setClickable(false);
                 LinearLayout view = (LinearLayout) getLayoutInflater().inflate(R.layout.change_value_dialog, null);
                 ((TextView) view.findViewById(R.id.label)).setText(R.string.change_tracking_number);

@@ -1,7 +1,6 @@
 package com.xcart.admin.views;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -30,6 +29,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.xcart.admin.R;
+import com.xcart.admin.managers.DialogManager;
 import com.xcart.admin.managers.XCartApplication;
 import com.xcart.admin.managers.network.DownloadImageTask;
 import com.xcart.admin.managers.network.HttpManager;
@@ -140,7 +140,7 @@ public class ProductInfo extends PinSupportNetworkActivity {
                             availabilitySwitch.setChecked(true);
                         }
                         isNeedAvailabilityChange = true;
-                        availabilitySwitch.setClickable(true);
+                        availabilitySwitch.setClickable(!XCartApplication.getInstance().isExpired());
                         String imageUrl = obj.getString("image_url");
                         if (!imageUrl.equals(NO_IMAGE_URL)) {
                             new DownloadImageTask(productImage, new DownloadImageTask.Callback() {
@@ -252,15 +252,9 @@ public class ProductInfo extends PinSupportNetworkActivity {
 
             @Override
             public void onClick(View v) {
-                if(XCartApplication.getInstance().isExpired()){
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(ProductInfo.this);
-                    builder .setMessage(R.string.subscription_expired)
-                            .setCancelable(false);
-                    AlertDialog alert = builder.create();
-                    alert.show();
-
-                    XCartApplication.getInstance().setExpired(true);
+                if (XCartApplication.getInstance().isExpired()) {
+                    DialogManager dm = new DialogManager(ProductInfo.this.getSupportFragmentManager());
+                    dm.showErrorDialog(R.string.subscription_expired);
                     return;
                 }
 
@@ -408,7 +402,6 @@ public class ProductInfo extends PinSupportNetworkActivity {
     private void setupAvailabilitySwitch() {
         availabilitySwitch = (Switch) findViewById(R.id.availability_switch);
         availabilitySwitch.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isNeedAvailabilityChange) {

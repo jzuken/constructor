@@ -176,18 +176,21 @@ public class PinSupportActivity extends ActionBarActivity implements Subscriptio
                 //Now Trial behavior like Active
                 //new ErrorDialog(R.string.no_subscription, null).show(getSupportFragmentManager(), "subscribed");
                 LOG.d("Subscription Trial");
+                XCartApplication.getInstance().setExpired(false);
             case Active:
                 LOG.d("Subscription Active");
+                XCartApplication.getInstance().setExpired(false);
                 break;
             case Expired:
                 LOG.d("Subscription Expired");
-                new ErrorDialog(R.string.subscription_expired, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        PinSupportActivity.this.finish();
-                        android.os.Process.killProcess(android.os.Process.myPid());
-                    }
-                }).show(getSupportFragmentManager(), "subscribed");
+                XCartApplication.getInstance().setExpired(true);
+//                new ErrorDialog(R.string.subscription_expired, new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        PinSupportActivity.this.finish();
+//                        android.os.Process.killProcess(android.os.Process.myPid());
+//                    }
+//                }).show(getSupportFragmentManager(), "subscribed");
                 break;
             case NetworkError:
                 LOG.d("Subscription NetworkError");
