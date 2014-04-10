@@ -125,26 +125,10 @@ namespace ApplicationServerListener.Controllers
                                         return new HttpResponseMessage() { Content = new StringContent("{\"api\": \"trial\", \"remains\": \"" + daysTrialLeft.ToString() + "\",  \"url\": \"" + project.apiUrl + "\" }") };
                                     }
                                 }
-                                if (project.firstExpiredLogin == "Never")
-                                {
-                                    project.firstExpiredLogin = todate.ToString();
-                                    wcfClient.SaveProject(project);
-                                }
-                                DateTime expiredLogin = DateTime.Parse(project.firstExpiredLogin);
-                                int daysLeft = 5 - (todate - expiredLogin).Days;
-                                if (daysLeft > 0)
-                                {
-                                    return new HttpResponseMessage() { Content = new StringContent("{\"api\": \"expiring\", \"remains\": \"" + daysLeft.ToString() + "\",  \"url\": \"" + project.apiUrl + "\" }") };
-                                }
-                                else
-                                {
-                                    return new HttpResponseMessage() { Content = new StringContent("{\"api\": \"expired\"}") };
-                                }
+                                return new HttpResponseMessage() { Content = new StringContent("{\"api\": \"expired\",  \"url\": \"" + project.apiUrl + "\" }") };
                             }
                             else
                             {
-                                project.firstExpiredLogin = "Never";
-                                wcfClient.SaveProject(project);
                                 return new HttpResponseMessage() { Content = new StringContent("{\"api\": \"ok\", \"url\": \"" + project.apiUrl + "\"}") };
                             }
                         }
@@ -161,7 +145,7 @@ namespace ApplicationServerListener.Controllers
                                     return new HttpResponseMessage() { Content = new StringContent("{\"api\": \"trial\", \"remains\": \"" + daysTrialLeft.ToString() + "\",  \"url\": \"" + project.apiUrl + "\" }") };
                                 }
                             }
-                            return new HttpResponseMessage() { Content = new StringContent("{\"api\": \"expired\"}") };
+                            return new HttpResponseMessage() { Content = new StringContent("{\"api\": \"expired\",  \"url\": \"" + project.apiUrl + "\" }") };
                         }
                     }
                     else
