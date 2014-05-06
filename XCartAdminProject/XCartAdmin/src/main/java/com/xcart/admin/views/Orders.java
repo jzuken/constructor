@@ -114,9 +114,10 @@ public class Orders extends PinSupportNetworkActivity {
                             }
                             String name = title + obj.getString("firstname") + " " + obj.getString("lastname");
                             String status = obj.getString("status");
+                            String fulfilmentStatus = obj.getString("status");
                             String date = obj.getString("month") + "\n" + obj.getString("day");
                             String paid = obj.getString("total");
-                            addOrderToList(id, name, paid, status, date);
+                            addOrderToList(id, name, paid, status, fulfilmentStatus, date);
                         }
                         currentAmount += packAmount;
                     } catch (JSONException e) {
@@ -135,9 +136,8 @@ public class Orders extends PinSupportNetworkActivity {
         requester.execute();
     }
 
-    private void addOrderToList(final String id, final String userName, final String paid, final String status,
-                                final String date) {
-        adapter.add(new Order(id, userName, paid, status, date));
+    private void addOrderToList(final String id, final String userName, final String paid, final String status, String fulfilmentStatus, final String date) {
+        adapter.add(new Order(id, userName, paid, status, fulfilmentStatus, date));
     }
 
     private void setupListViewAdapter() {
@@ -171,7 +171,7 @@ public class Orders extends PinSupportNetworkActivity {
         ordersListView.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 setNeedDownloadValue(false);
-                lastClickedOrder = ((OrdersListAdapter.OrderHolder) view.getTag()).getOrder();
+                lastClickedOrder = (Order) parent.getItemAtPosition(position);
                 Intent intent = new Intent(getBaseContext(), OrderInfo.class);
                 intent.putExtra("orderId", lastClickedOrder.getId());
                 startActivityForResult(intent, 1);

@@ -28,28 +28,24 @@ public class OrdersListAdapter extends BaseArrayAdapter<Order> {
 
         if (row == null) {
             row = inflater.inflate(layoutResourceId, parent, false);
-            OrderHolder holder = new OrderHolder();
+            OrderHolder holder = new OrderHolder((TextView) row.findViewById(R.id.user_name), (TextView) row.findViewById(R.id.paid), (TextView) row.findViewById(R.id.order_status), (TextView) row.findViewById(R.id.order_fulfilment_status), (TextView) row.findViewById(R.id.order_date));
             row.setTag(holder);
         }
 
         OrderHolder holder = (OrderHolder) row.getTag();
         holder.order = items.get(position);
-
-        holder.userName = (TextView) row.findViewById(R.id.user_name);
-        holder.paid = (TextView) row.findViewById(R.id.paid);
-        holder.status = (TextView) row.findViewById(R.id.order_status);
-        holder.date = (TextView) row.findViewById(R.id.order_date);
-        setupItem(holder);
+        setupItem(holder, holder.order);
         return row;
     }
 
-    private void setupItem(OrderHolder holder) {
-        holder.userName.setText(holder.order.getUserName() + " (#" + holder.order.getId() + ")");
-        holder.paid.setText(String.format(format, holder.order.getPaid()));
-        OrderStatus statusSymbol = OrderStatus.valueOf(holder.order.getStatus());
+    private void setupItem(OrderHolder holder, Order order) {
+        holder.userName.setText(order.getUserName() + " (#" + order.getId() + ")");
+        holder.paid.setText(String.format(format, order.getPaid()));
+        OrderStatus statusSymbol = OrderStatus.valueOf(order.getStatus());
         holder.status.setText(StatusConverter.getStatusBySymbol(context, statusSymbol));
         holder.status.setTextColor(StatusConverter.getColorResourceBySymbol(context, statusSymbol));
-        holder.date.setText(holder.order.getDate());
+        holder.fulfilmentStatus.setText(order.getFulfilmentStatus());
+        holder.date.setText(order.getDate());
     }
 
 
@@ -58,10 +54,19 @@ public class OrdersListAdapter extends BaseArrayAdapter<Order> {
         TextView userName;
         TextView paid;
         TextView status;
+        TextView fulfilmentStatus;
         TextView date;
 
         public Order getOrder() {
             return order;
+        }
+
+        public OrderHolder(TextView userName, TextView paid, TextView status, TextView fulfilmentStatus, TextView date) {
+            this.userName = userName;
+            this.paid = paid;
+            this.status = status;
+            this.fulfilmentStatus = fulfilmentStatus;
+            this.date = date;
         }
     }
 }

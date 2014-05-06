@@ -28,6 +28,8 @@
         android:paddingLeft="7dp"
         android:textSize="16sp" />
 
+
+
     <TextView
         android:id="@+id/order_status"
         android:layout_width="wrap_content"
@@ -36,6 +38,23 @@
         android:layout_toRightOf="@id/order_date"
         android:paddingLeft="7dp"
         android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/coma"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/user_name"
+        android:layout_toRightOf="@id/order_status"
+        android:textSize="16sp"
+        android:text=","/>
+
+    <TextView
+        android:id="@+id/order_fulfilment_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/user_name"
+        android:layout_toRightOf="@id/coma"
+        android:textSize="16sp"/>
 
     <TextView
         android:id="@+id/paid"

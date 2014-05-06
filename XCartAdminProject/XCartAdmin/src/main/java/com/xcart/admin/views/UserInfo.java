@@ -3,7 +3,6 @@ package com.xcart.admin.views;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -135,7 +134,7 @@ public class UserInfo extends PinSupportNetworkActivity {
     }
 
     private void updateData() {
-        if(user_id.equals("0")){
+        if (user_id.equals("0")) {
             Intent intent = getIntent();
             firstName.setText(intent.getStringExtra("firstname"));
             lastName.setText(intent.getStringExtra("lastname"));
@@ -199,7 +198,7 @@ public class UserInfo extends PinSupportNetworkActivity {
     }
 
     private void updateOrdersList() {
-        if(user_id.equals("0")){
+        if (user_id.equals("0")) {
             findViewById(R.id.order_list_header).setVisibility(View.GONE);
             return;
         }
@@ -233,9 +232,10 @@ public class UserInfo extends PinSupportNetworkActivity {
                             }
                             String name = title + obj.getString("firstname") + " " + obj.getString("lastname");
                             String status = obj.getString("status");
+                            String fulfilmentStatus = obj.getString("status");
                             String date = obj.getString("month") + "\n" + obj.getString("day");
                             String paid = obj.getString("total");
-                            addOrderToList(id, name, paid, status, date);
+                            addOrderToList(id, name, paid, status, fulfilmentStatus, date);
                         }
                         currentAmount += packAmount;
                     } catch (JSONException e) {
@@ -254,9 +254,8 @@ public class UserInfo extends PinSupportNetworkActivity {
         requester.execute();
     }
 
-    private void addOrderToList(final String id, final String userName, final String paid, final String status,
-                                final String date) {
-        adapter.add(new Order(id, userName, paid, status, date));
+    private void addOrderToList(final String id, final String userName, final String paid, final String status, final String fulfilmentStatus, final String date) {
+        adapter.add(new Order(id, userName, paid, status, fulfilmentStatus, date));
     }
 
     private void clearData() {
@@ -282,8 +281,7 @@ public class UserInfo extends PinSupportNetworkActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == OrderInfo.CHANGE_STATUS_RESULT_CODE) {
-            OrdersListAdapter.OrderHolder orderHolder = ((OrdersListAdapter.OrderHolder) ordersListView.getChildAt(
-                    lastPositionClicked).getTag());
+            OrdersListAdapter.OrderHolder orderHolder = ((OrdersListAdapter.OrderHolder) ordersListView.getChildAt(lastPositionClicked).getTag());
             orderHolder.getOrder().setStatus(data.getStringExtra("status"));
             adapter.notifyDataSetChanged();
         }
