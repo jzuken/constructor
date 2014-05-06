@@ -55,7 +55,6 @@ public class OrderInfo extends PinSupportNetworkActivity {
         billingInfo = (TextView) findViewById(R.id.billing_info);
         shippingInfo = (TextView) findViewById(R.id.shipping_info);
         bPhone = (TextView) findViewById(R.id.b_phone);
-        bFax = (TextView) findViewById(R.id.b_fax);
         sPhone = (TextView) findViewById(R.id.s_phone);
         sFax = (TextView) findViewById(R.id.s_fax);
         itemsList = (OrderProductsList) findViewById(R.id.items_list);
@@ -117,9 +116,9 @@ public class OrderInfo extends PinSupportNetworkActivity {
                         obj = new JSONObject(result);
 
                         statusSymbol = obj.getString("status");
-                        status.setText(StatusConverter.getStatusBySymbol(getBaseContext(),
+                        paymentStatus.setText(StatusConverter.getStatusBySymbol(getBaseContext(),
                                 OrderStatus.valueOf(statusSymbol)));
-                        status.setTextColor(StatusConverter.getColorResourceBySymbol(getBaseContext(),
+                        paymentStatus.setTextColor(StatusConverter.getColorResourceBySymbol(getBaseContext(),
                                 OrderStatus.valueOf(statusSymbol)));
                         trackingNumber.setText(obj.getString("tracking"));
                         paymentMethod.setText(obj.getString("payment_method"));
@@ -145,7 +144,6 @@ public class OrderInfo extends PinSupportNetworkActivity {
                                 + obj.getString("b_state") + " " + obj.getString("b_zipcode") + "\n"
                                 + obj.getString("b_country"));
                         bPhone.setText(obj.getString("b_phone"));
-                        bFax.setText(obj.getString("b_fax"));
 
                         String sTitle = obj.getString("s_title");
                         if (!sTitle.equals("false")) {
@@ -205,14 +203,13 @@ public class OrderInfo extends PinSupportNetworkActivity {
     }
 
     private void clearData() {
-        status.setText("");
+        paymentStatus.setText("");
         trackingNumber.setText("");
         paymentMethod.setText("");
         deliveryMethod.setText("");
         customer.setText("");
         billingInfo.setText("");
         bPhone.setText("");
-        bFax.setText("");
         shippingInfo.setText("");
         sPhone.setText("");
         sFax.setText("");
@@ -252,7 +249,7 @@ public class OrderInfo extends PinSupportNetworkActivity {
     }
 
     private void setupStatusItem() {
-        status = (TextView) findViewById(R.id.status);
+        paymentStatus = (TextView) findViewById(R.id.paymentStatus);
         statusItem = (RelativeLayout) findViewById(R.id.status_item);
         statusItem.setOnClickListener(new OnClickListener() {
 
@@ -386,8 +383,8 @@ public class OrderInfo extends PinSupportNetworkActivity {
 
                     if (response != null) {
                         Toast.makeText(getBaseContext(), getString(R.string.success), Toast.LENGTH_SHORT).show();
-                        status.setText(StatusConverter.getStatusBySymbol(OrderInfo.this, OrderStatus.valueOf(selectedStatus)));
-                        status.setTextColor(StatusConverter.getColorResourceBySymbol(getBaseContext(), OrderStatus.valueOf(selectedStatus)));
+                        paymentStatus.setText(StatusConverter.getStatusBySymbol(OrderInfo.this, OrderStatus.valueOf(selectedStatus)));
+                        paymentStatus.setTextColor(StatusConverter.getColorResourceBySymbol(getBaseContext(), OrderStatus.valueOf(selectedStatus)));
                         Intent resultIntent = new Intent();
                         resultIntent.putExtra("status", selectedStatus);
                         setResult(CHANGE_STATUS_RESULT_CODE, resultIntent);
@@ -447,7 +444,7 @@ public class OrderInfo extends PinSupportNetworkActivity {
     }
 
     private String orderIdValue = "";
-    private TextView status;
+    private TextView paymentStatus;
     private TextView trackingNumber;
     private TextView paymentMethod;
     private TextView deliveryMethod;
@@ -455,7 +452,6 @@ public class OrderInfo extends PinSupportNetworkActivity {
     private TextView shippingInfo;
     private TextView billingInfo;
     private TextView bPhone;
-    private TextView bFax;
     private TextView sPhone;
     private TextView sFax;
     private OrderProductsList itemsList;

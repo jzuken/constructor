@@ -50,7 +50,7 @@
     <string name="date_colon">Date:</string>
     <string name="items_colon">Items:</string>
     <string name="show">Show</string>
-    <string name="change_status">Change status</string>
+    <string name="change_status">Change paymentStatus</string>
     <string name="not_finished">Not finished</string>
     <string name="queued">Queued</string>
     <string name="processed">Processed</string>
@@ -61,7 +61,7 @@
     <string name="save">Save</string>
     <string name="ok">OK</string>
     <string name="order_info">Order info</string>
-    <string name="status">Status</string>
+    <string name="paymentStatus">Status</string>
     <string name="tracking_number">Tracking number</string>
     <string name="payment_method">Payment method</string>
     <string name="delivery_method">Delivery method</string>
@@ -99,7 +99,7 @@
     <string name="connection_error">Sorry, unable to connect to server. Please check your internet connection</string>
     <string name="login_error">Incorrect email or password</string>
     <string name="logging_in">Logging in…</string>
-    <string name="updating_status">Updating status…</string>
+    <string name="updating_status">Updating paymentStatus…</string>
     <string name="change_tracking_number">Change tracking number</string>
     <string name="shop_url">Shop url</string>
     <string name="authorization_key">Authorization key</string>

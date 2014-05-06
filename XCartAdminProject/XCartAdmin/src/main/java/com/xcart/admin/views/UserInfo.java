@@ -282,7 +282,7 @@ public class UserInfo extends PinSupportNetworkActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == OrderInfo.CHANGE_STATUS_RESULT_CODE) {
             OrdersListAdapter.OrderHolder orderHolder = ((OrdersListAdapter.OrderHolder) ordersListView.getChildAt(lastPositionClicked).getTag());
-            orderHolder.getOrder().setStatus(data.getStringExtra("status"));
+            orderHolder.getOrder().setPaymentStatus(data.getStringExtra("status"));
             adapter.notifyDataSetChanged();
         }
         super.onActivityResult(requestCode, resultCode, data);

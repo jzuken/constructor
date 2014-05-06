@@ -1,11 +1,11 @@
 package com.xcart.admin.model;
 
 public class Order {
-    public Order(String id, String userName, String paid, String status, String fulfilmentStatus, String date) {
+    public Order(String id, String userName, String paid, String paymentStatus, String fulfilmentStatus, String date) {
         this.id = id;
         this.userName = userName;
         this.paid = paid;
-        this.status = status;
+        this.paymentStatus = paymentStatus;
         this.fulfilmentStatus = fulfilmentStatus;
         this.date = date;
     }
@@ -22,16 +22,16 @@ public class Order {
         return paid;
     }
 
-    public String getStatus() {
-        return status;
+    public String getPaymentStatus() {
+        return paymentStatus;
     }
 
     public String getDate() {
         return date;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setPaymentStatus(String paymentStatus) {
+        this.paymentStatus = paymentStatus;
     }
 
     public String getFulfilmentStatus() {
@@ -45,7 +45,7 @@ public class Order {
     private String id;
     private String userName;
     private String paid;
-    private String status;
+    private String paymentStatus;
     private String fulfilmentStatus;
     private String date;
 }

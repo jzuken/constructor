@@ -28,7 +28,7 @@ public class OrdersListAdapter extends BaseArrayAdapter<Order> {
 
         if (row == null) {
             row = inflater.inflate(layoutResourceId, parent, false);
-            OrderHolder holder = new OrderHolder((TextView) row.findViewById(R.id.user_name), (TextView) row.findViewById(R.id.paid), (TextView) row.findViewById(R.id.order_status), (TextView) row.findViewById(R.id.order_fulfilment_status), (TextView) row.findViewById(R.id.order_date));
+            OrderHolder holder = new OrderHolder((TextView) row.findViewById(R.id.user_name), (TextView) row.findViewById(R.id.paid), (TextView) row.findViewById(R.id.order_payment_status), (TextView) row.findViewById(R.id.order_fulfilment_status), (TextView) row.findViewById(R.id.order_date));
             row.setTag(holder);
         }
 
@@ -41,7 +41,7 @@ public class OrdersListAdapter extends BaseArrayAdapter<Order> {
     private void setupItem(OrderHolder holder, Order order) {
         holder.userName.setText(order.getUserName() + " (#" + order.getId() + ")");
         holder.paid.setText(String.format(format, order.getPaid()));
-        OrderStatus statusSymbol = OrderStatus.valueOf(order.getStatus());
+        OrderStatus statusSymbol = OrderStatus.valueOf(order.getPaymentStatus());
         holder.status.setText(StatusConverter.getStatusBySymbol(context, statusSymbol));
         holder.status.setTextColor(StatusConverter.getColorResourceBySymbol(context, statusSymbol));
         holder.fulfilmentStatus.setText(order.getFulfilmentStatus());

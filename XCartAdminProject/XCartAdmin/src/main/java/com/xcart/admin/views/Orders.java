@@ -240,7 +240,7 @@ public class Orders extends PinSupportNetworkActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == OrderInfo.CHANGE_STATUS_RESULT_CODE) {
-            lastClickedOrder.setStatus(data.getStringExtra("status"));
+            lastClickedOrder.setPaymentStatus(data.getStringExtra("status"));
             adapter.notifyDataSetChanged();
         }
         super.onActivityResult(requestCode, resultCode, data);
