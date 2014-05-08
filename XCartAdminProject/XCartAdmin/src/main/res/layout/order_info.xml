@@ -9,9 +9,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:layout_marginTop="4dp"
         android:layout_marginLeft="7dp"
         android:layout_marginRight="7dp"
+        android:layout_marginTop="4dp"
         android:orientation="vertical">
 
         <LinearLayout
@@ -35,41 +35,46 @@
                     android:textSize="16sp" />
 
                 <RelativeLayout
-                android:id="@+id/status_item"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/clickable_selector"
-                android:clickable="true"
-                android:paddingBottom="10dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:paddingTop="10dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/status_item"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:text="@string/paymentStatus"
-                    android:textStyle="bold" />
+                    android:background="@drawable/clickable_selector"
+                    android:clickable="true"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="10dp">
 
-                <ImageView
-                    android:id="@+id/status_arrow"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:contentDescription="@string/arrow_description"
-                    android:src="@drawable/ic_action_edit_blue"
-                    android:scaleType="centerInside" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:text="@string/paymentStatus"
+                        android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/paymentStatus"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
-                    android:layout_toLeftOf="@id/status_arrow"
-                    android:textColor="@color/blue" />
-            </RelativeLayout>
+                    <ImageView
+                        android:id="@+id/status_arrow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:contentDescription="@string/arrow_description"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/ic_action_edit_blue" />
+
+                    <TextView
+                        android:id="@+id/paymentStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:layout_toLeftOf="@id/status_arrow"
+                        android:textColor="@color/blue" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/frame_color" />
 
                 <RelativeLayout
                     android:id="@+id/fulfilment_status_item"
@@ -96,8 +101,8 @@
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:contentDescription="@string/arrow_description"
-                        android:src="@drawable/ic_action_edit_blue"
-                        android:scaleType="centerInside" />
+                        android:scaleType="centerInside"
+                        android:src="@drawable/ic_action_edit_blue" />
 
                     <TextView
                         android:id="@+id/fulfilmentStatus"
@@ -370,6 +375,32 @@
                         android:paddingRight="17dp"
                         android:textColor="@color/blue" />
                 </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/frame_color" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:text="@string/ip"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/ip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:paddingRight="17dp"/>
+                </RelativeLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -413,10 +444,10 @@
                     android:id="@+id/customer_notes"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="5dp"
                     android:paddingBottom="5dp"
                     android:paddingLeft="10dp"
-                    android:paddingRight="10dp" />
+                    android:paddingRight="10dp"
+                    android:paddingTop="5dp" />
             </LinearLayout>
 
             <LinearLayout

@@ -166,5 +166,6 @@
 Subscriptions expiring in the next %s days</string>
     <string name="incorrect_key">Incorrect key</string>
     <string name="incorrect_shop_url">Incorrect shop url</string>
+    <string name="ip">Ip</string>
 
 </resources>
