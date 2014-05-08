@@ -35,7 +35,44 @@
                     android:textSize="16sp" />
 
                 <RelativeLayout
-                    android:id="@+id/status_item"
+                android:id="@+id/status_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/clickable_selector"
+                android:clickable="true"
+                android:paddingBottom="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:text="@string/paymentStatus"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/status_arrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:contentDescription="@string/arrow_description"
+                    android:src="@drawable/ic_action_edit_blue"
+                    android:scaleType="centerInside" />
+
+                <TextView
+                    android:id="@+id/paymentStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:layout_toLeftOf="@id/status_arrow"
+                    android:textColor="@color/blue" />
+            </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/fulfilment_status_item"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/clickable_selector"
@@ -49,11 +86,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
-                        android:text="@string/paymentStatus"
+                        android:text="@string/fulfilmentStatus"
                         android:textStyle="bold" />
 
                     <ImageView
-                        android:id="@+id/status_arrow"
+                        android:id="@+id/fulfilment_status_arrow"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -63,11 +100,11 @@
                         android:scaleType="centerInside" />
 
                     <TextView
-                        android:id="@+id/paymentStatus"
+                        android:id="@+id/fulfilmentStatus"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="10dp"
-                        android:layout_toLeftOf="@id/status_arrow"
+                        android:layout_toLeftOf="@id/fulfilment_status_arrow"
                         android:textColor="@color/blue" />
                 </RelativeLayout>
 
@@ -327,28 +364,6 @@
 
                     <TextView
                         android:id="@+id/s_phone"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:paddingRight="17dp"
-                        android:textColor="@color/blue" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:text="@string/fax" />
-
-                    <TextView
-                        android:id="@+id/s_fax"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"

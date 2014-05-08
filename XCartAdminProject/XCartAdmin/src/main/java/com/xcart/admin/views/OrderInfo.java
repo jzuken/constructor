@@ -56,7 +56,6 @@ public class OrderInfo extends PinSupportNetworkActivity {
         shippingInfo = (TextView) findViewById(R.id.shipping_info);
         bPhone = (TextView) findViewById(R.id.b_phone);
         sPhone = (TextView) findViewById(R.id.s_phone);
-        sFax = (TextView) findViewById(R.id.s_fax);
         itemsList = (OrderProductsList) findViewById(R.id.items_list);
         customerNotes = (TextView) findViewById(R.id.customer_notes);
         subtotal = (TextView) findViewById(R.id.subtotal);
@@ -67,6 +66,7 @@ public class OrderInfo extends PinSupportNetworkActivity {
         total = (TextView) findViewById(R.id.total);
         setupCustomerItem();
         setupStatusItem();
+        setupFulfilmentStatusItem();
         setupTrackingNumberItem();
     }
 
@@ -120,6 +120,14 @@ public class OrderInfo extends PinSupportNetworkActivity {
                                 OrderStatus.valueOf(statusSymbol)));
                         paymentStatus.setTextColor(StatusConverter.getColorResourceBySymbol(getBaseContext(),
                                 OrderStatus.valueOf(statusSymbol)));
+
+                        //TODO:
+                        fulfilmentSymbol = obj.getString("status");
+                        fulfilmentStatus.setText(StatusConverter.getStatusBySymbol(getBaseContext(),
+                                OrderStatus.valueOf(fulfilmentSymbol)));
+                        fulfilmentStatus.setTextColor(StatusConverter.getColorResourceBySymbol(getBaseContext(),
+                                OrderStatus.valueOf(fulfilmentSymbol)));
+
                         trackingNumber.setText(obj.getString("tracking"));
                         paymentMethod.setText(obj.getString("payment_method"));
                         deliveryMethod.setText(obj.getString("shipping"));
@@ -156,7 +164,6 @@ public class OrderInfo extends PinSupportNetworkActivity {
                                 + obj.getString("s_state") + " " + obj.getString("s_zipcode") + "\n"
                                 + obj.getString("s_country"));
                         sPhone.setText(obj.getString("s_phone"));
-                        sFax.setText(obj.getString("s_fax"));
                         String customerNotesString = obj.getString("customer_notes");
                         if (customerNotesString.equals("")) {
                             customerNotes.setText(R.string.no_notes);
@@ -204,6 +211,7 @@ public class OrderInfo extends PinSupportNetworkActivity {
 
     private void clearData() {
         paymentStatus.setText("");
+        fulfilmentStatus.setText("");
         trackingNumber.setText("");
         paymentMethod.setText("");
         deliveryMethod.setText("");
@@ -212,7 +220,6 @@ public class OrderInfo extends PinSupportNetworkActivity {
         bPhone.setText("");
         shippingInfo.setText("");
         sPhone.setText("");
-        sFax.setText("");
         itemsList.clearList();
         customerNotes.setText("");
         subtotal.setText("");
@@ -267,6 +274,29 @@ public class OrderInfo extends PinSupportNetworkActivity {
                         setNewStatus(selectedStatus);
                     }
                 }, statusSymbol);
+            }
+        });
+    }
+
+   private void setupFulfilmentStatusItem() {
+       fulfilmentStatus = (TextView) findViewById(R.id.fulfilmentStatus);
+       fulfilmentStatusItem = (RelativeLayout) findViewById(R.id.fulfilment_status_item);
+       fulfilmentStatusItem.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                if (XCartApplication.getInstance().isExpired()) {
+                    DialogManager dm = new DialogManager(OrderInfo.this.getSupportFragmentManager());
+                    dm.showErrorDialog(R.string.subscription_expired);
+                    return;
+                }
+                setNeedDownloadValue(false);
+                new DialogManager(OrderInfo.this.getSupportFragmentManager()).showStatusDialog(new ChangeStatusDialog.Callback() {
+                    @Override
+                    public void save(String selectedStatus) {
+                        setNewFulfilmentStatus(selectedStatus);
+                    }
+                }, fulfilmentSymbol);
             }
         });
     }
@@ -400,6 +430,40 @@ public class OrderInfo extends PinSupportNetworkActivity {
         }
     }
 
+    public void setNewFulfilmentStatus(final String selectedStatus) {
+        dialogManager.showProgressDialog(R.string.updating_status, PROGRESS_DIALOG);
+        try {
+            new Requester() {
+                @Override
+                protected String doInBackground(Void... params) {
+                    return new HttpManager(getBaseContext()).changeStatus(getIntent().getStringExtra("orderId"), selectedStatus);
+                }
+
+                @Override
+                protected void onPostExecute(String response) {
+                    super.onPostExecute(response);
+
+                    dialogManager.dismissDialog(PROGRESS_DIALOG);
+
+                    if (response != null) {
+                        Toast.makeText(getBaseContext(), getString(R.string.success), Toast.LENGTH_SHORT).show();
+                        fulfilmentStatus.setText(StatusConverter.getStatusBySymbol(OrderInfo.this, OrderStatus.valueOf(selectedStatus)));
+                        fulfilmentStatus.setTextColor(StatusConverter.getColorResourceBySymbol(getBaseContext(), OrderStatus.valueOf(selectedStatus)));
+                        Intent resultIntent = new Intent();
+                        resultIntent.putExtra("status", selectedStatus);
+                        setResult(CHANGE_STATUS_RESULT_CODE, resultIntent);
+                        fulfilmentSymbol = selectedStatus;
+                    } else {
+                        showConnectionErrorMessage();
+                    }
+                }
+            }.execute();
+        } catch (Exception e) {
+            dialogManager.dismissDialog(PROGRESS_DIALOG);
+            showConnectionErrorMessage();
+        }
+    }
+
     private void hideKeyboard(EditText edit) {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(edit.getWindowToken(), 0);
@@ -445,6 +509,7 @@ public class OrderInfo extends PinSupportNetworkActivity {
 
     private String orderIdValue = "";
     private TextView paymentStatus;
+    private TextView fulfilmentStatus;
     private TextView trackingNumber;
     private TextView paymentMethod;
     private TextView deliveryMethod;
@@ -453,7 +518,6 @@ public class OrderInfo extends PinSupportNetworkActivity {
     private TextView billingInfo;
     private TextView bPhone;
     private TextView sPhone;
-    private TextView sFax;
     private OrderProductsList itemsList;
     private TextView customerNotes;
     private TextView subtotal;
@@ -463,9 +527,11 @@ public class OrderInfo extends PinSupportNetworkActivity {
     private TextView paymentMethodSurcharge;
     private TextView total;
     private RelativeLayout statusItem;
+    private RelativeLayout fulfilmentStatusItem;
     private RelativeLayout trackingNumberItem;
     private RelativeLayout customerItem;
     private String statusSymbol;
+    private String fulfilmentSymbol;
     private String userId;
     private String userName;
 }

@@ -61,7 +61,8 @@
     <string name="save">Save</string>
     <string name="ok">OK</string>
     <string name="order_info">Order info</string>
-    <string name="paymentStatus">Status</string>
+    <string name="paymentStatus">Payment status</string>
+    <string name="fulfilmentStatus">Fulfilment status</string>
     <string name="tracking_number">Tracking number</string>
     <string name="payment_method">Payment method</string>
     <string name="delivery_method">Delivery method</string>
