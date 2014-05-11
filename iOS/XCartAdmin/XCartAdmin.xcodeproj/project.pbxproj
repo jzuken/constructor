@@ -1109,7 +1109,7 @@
 			baseConfigurationReference = E0041376838B4A02BAD72606 /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Mobtekh OOO (2J3UD2G26R)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "XCartAdmin/XCartAdmin-Prefix.pch";
 				INFOPLIST_FILE = "XCartAdmin/XCartAdmin-Info.plist";
@@ -1124,7 +1124,7 @@
 			baseConfigurationReference = E0041376838B4A02BAD72606 /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Mobtekh OOO (2J3UD2G26R)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "XCartAdmin/XCartAdmin-Prefix.pch";
 				INFOPLIST_FILE = "XCartAdmin/XCartAdmin-Info.plist";

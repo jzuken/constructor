@@ -93,7 +93,7 @@
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 30)];
     headerView.backgroundColor = kBlueColor;
     
-    UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(1, 2, 320, 27)];
+    UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(1, 1, 320, 29)];
     nameLabel.font = [UIFont systemFontOfSize:15];
     QRWUser *user = [self.dataArray objectAtIndex:section];
     nameLabel.text = [NSString stringWithFormat:@"%@ %@ %@", user.title, user.firstname, user.lastname];
