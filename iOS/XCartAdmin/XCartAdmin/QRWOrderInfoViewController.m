@@ -11,7 +11,6 @@
 
 @interface QRWOrderInfoViewController ()
 
-//@property (nonatomic, strong) QRWOrderFormTableViewController *orderFormTableViewController;
 
 @end
 
@@ -29,8 +28,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-//    _orderFormTableViewController = [[QRWOrderFormTableViewController alloc] initWithStyle:UITableViewStyleGrouped];
-//    self.tableView = _orderFormTableViewController.tableView;
 }
 
 - (void)didReceiveMemoryWarning

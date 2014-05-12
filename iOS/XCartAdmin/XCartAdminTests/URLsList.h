@@ -10,19 +10,20 @@
 
 static NSString *const url_XCarApiURlappend = @"xcart/mobile_admin_api.php?";
 
-static NSString *const url_developmentBaseURL = @"https://mobileadmin.x-cart.com/";
+static NSString *const url_developmentBaseURL = @"https://vm-constructor.cloudapp.net/";
 
 static NSString *const url_developmentGetShopURLappend = @"/AppServerListener/api/shops/%@/ApiURL?key=%@";
 
 
 
-static NSString *const url_dashboardURLappend = @"xcart/mobile_admin_api.php?request=dashboard&key=%@";
+static NSString *const url_dashboardURLappend = @"request=dashboard&key=%@";
 
 static NSString *const url_usersURLappend = @"xcart/mobile_admin_api.php?request=users&from=%d&size=%d&key=%@&search=%@";
 static NSString *const url_userInfoURLappend = @"xcart/mobile_admin_api.php?request=user_info&id=%d&key=%@";
 static NSString *const url_userOrdersURLappend = @"xcart/mobile_admin_api.php?request=user_orders&user_id=%d&from=%d&size=%d&key=%@";
 
 static NSString *const url_reviewsURLappend = @"xcart/mobile_admin_api.php?request=reviews&from=%d&size=%d&key=%@";
+static NSString *const url_deleteReviewURLappend = @"xcart/mobile_admin_api.php?request=delete_review&id=%d&sid=%@";
 
 static NSString *const url_productsLowStockURLappend = @"xcart/mobile_admin_api.php?request=products&from=%d&size=%d&low_stock=1&key=%@&search=%@";
 static NSString *const url_productsURLappend = @"xcart/mobile_admin_api.php?request=products&from=%d&size=%d&key=%@&search=%@";

@@ -97,7 +97,7 @@
 
 
 
-- (void)configureProductCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
+- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
     [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
     
@@ -112,7 +112,7 @@
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 30)];
     headerView.backgroundColor = kGreyColor;
     
-    UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(1, 2, 320, 27)];
+    UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 1, 320, 29)];
     nameLabel.font = [UIFont systemFontOfSize:15];
     QRWProduct *product = [self.dataArray objectAtIndex:section];
     nameLabel.text = product.product;

@@ -14,6 +14,7 @@
 #import "QRWOrder.h"
 #import "QRWProductWithInfo.h"
 #import "QRWUserInfo.h"
+#import "QRWReview.h"
 
 
 
@@ -36,6 +37,9 @@
 + (NSURLSessionDataTask *)sendReviewsRequestFromPoint: (NSInteger)startPoint
                                               toPoint: (NSInteger)finishPoint
                                                 block: (void (^)(NSArray *reviews, NSError *error))block;
+
++ (NSURLSessionDataTask *)sendDeleteReviewRequestWithID:(NSInteger)reviewID
+                                                  block:(void (^)(BOOL isSuccess, NSError *))block;
 
 
 //  ----------------- USERS --------------------------
@@ -89,6 +93,9 @@
                                                         status: (NSString *)status
                                                           date: (NSString *)date
                                                          block: (void (^)(NSArray *orders, NSError *error))block;
+
++ (NSURLSessionDataTask *)sendOrderInfoRequestWithID:(NSInteger)orderID
+                                               block:(void (^)(id order, NSError *error))block;
 
 
 

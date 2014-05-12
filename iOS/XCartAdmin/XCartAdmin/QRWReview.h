@@ -6,12 +6,13 @@
 //  Copyright (c) 2013 Ivan Afanasiev. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import "QRWBaseEntety.h"
 
-@interface QRWReview : NSObject
+@interface QRWReview : QRWBaseEntety
 
 
-@property (nonatomic, strong) NSNumber *review_id;
+@property (nonatomic, strong) NSNumber *reviewID;
+@property (nonatomic, strong) NSNumber *productID;
 @property (nonatomic, strong) NSString *email;
 @property (nonatomic, strong) NSString *message;
 @property (nonatomic, strong) NSString *product;

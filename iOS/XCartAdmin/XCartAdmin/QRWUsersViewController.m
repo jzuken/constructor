@@ -80,7 +80,7 @@
 
 
 
-- (void)configureProductCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
+- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
     QRWUser *user = [self.dataArray objectAtIndex:indexPath.section];
     [(QRWUserCell *)cell emailLabel].text = user.email;
@@ -93,7 +93,7 @@
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 30)];
     headerView.backgroundColor = kBlueColor;
     
-    UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(1, 1, 320, 29)];
+    UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 1, 320, 29)];
     nameLabel.font = [UIFont systemFontOfSize:15];
     QRWUser *user = [self.dataArray objectAtIndex:section];
     nameLabel.text = [NSString stringWithFormat:@"%@ %@ %@", user.title, user.firstname, user.lastname];

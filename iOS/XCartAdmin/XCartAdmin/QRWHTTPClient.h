@@ -12,4 +12,6 @@
 
 + (instancetype)sharedClient;
 
++ (instancetype)sharedDevelopmentClient;
+
 @end

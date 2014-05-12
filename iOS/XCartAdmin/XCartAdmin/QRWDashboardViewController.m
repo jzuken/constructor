@@ -100,7 +100,7 @@
 }
 
 
-- (void)configureProductCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
+- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
     QRWOrder *order = [self.dataArray objectAtIndex:indexPath.section];
     

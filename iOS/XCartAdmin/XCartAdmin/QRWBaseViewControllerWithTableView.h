@@ -26,7 +26,7 @@
 
 
 
-- (void)configureProductCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
+- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 
 - (void)loadObjectsWithSearchString:(NSString *)searchString asEmptyArray:(BOOL)asEmpty;
 - (void)smartAddObjectToDataArrayAsNew:(BOOL)asNew withLoaddedArray:(NSArray *)array;

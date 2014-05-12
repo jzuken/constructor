@@ -30,21 +30,22 @@
 {
     NSString *getShop = [NSString stringWithFormat:url_developmentGetShopURLappend, login, password];
 
-    return [self sendRequestWithURL:getShop
-                            success:^(NSURLSessionDataTask *__unused task, id JSON) {
-                                NSError *localError = nil;
-                                NSDictionary *parsedObject = [NSJSONSerialization JSONObjectWithData:JSON options:0 error:&localError];
+    return [[QRWHTTPClient sharedDevelopmentClient] GET:getShop
+                                             parameters:nil
+                                                success:^(NSURLSessionDataTask *__unused task, id JSON) {
+                                                     NSError *localError = nil;
+                                                     NSDictionary *parsedObject = [NSJSONSerialization JSONObjectWithData:JSON options:0 error:&localError];
 
-                                if (block) {
-                                    [@"wrongKey" isEqual:[parsedObject objectForKey:@"api"]] ? block(NO, @"", nil) : block(YES, @"", nil);
-                                }
-                            }
-                            failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
-                                DLog(@"Error: %@", error);
-                                if (block) {
-                                    block(NO, @"", error);
-                                }
-                            }];
+                                                     if (block) {
+                                                         [@"wrongKey" isEqual:[parsedObject objectForKey:@"api"]] ? block(NO, @"", nil) : block(YES, @"", nil);
+                                                     }
+                                                 }
+                                                failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
+                                                     DLog(@"Error: %@", error);
+                                                     if (block) {
+                                                         block(NO, @"", error);
+                                                     }
+                                                 }];
 }
 
 
@@ -108,20 +109,16 @@
 }
 
 + (NSURLSessionDataTask *)sendOrderInfoRequestWithID:(NSInteger)orderID
-                                              block:(void (^)(NSArray *reviews, NSError *error))block
+                                               block:(void (^)(id order, NSError *error))block
 {
     NSString *getURL = [NSString stringWithFormat:url_orderInfoURLappend, orderID, [QRWSettingsClient getSecurityKey]];
     
     return [self sendRequestWithURL:getURL
                             success:^(NSURLSessionDataTask *__unused task, id JSON) {
-                                NSMutableArray *reviews = [NSMutableArray new];
-                                NSArray *reviewsArray = (NSArray *) JSON;
-                                for (NSDictionary *data in reviewsArray) {
-                                    DLog(@"Json is: %@", data);
+                                    DLog(@"Json is: %@", JSON);
 
-                                }
                                 if (block) {
-                                    block(reviews, nil);
+                                    block(nil, nil);
                                 }
                             }
                             failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
@@ -333,7 +330,9 @@
                                 NSArray *reviewsArray = (NSArray *) JSON;
                                 DLog(@"Json is: %@", JSON);
                                 for (NSDictionary *data in reviewsArray) {
-                                    
+                                    QRWReview *review = [QRWReview new];
+                                    [review buildDataByJson:data];
+                                    [reviews addObject:review];
                                 }
                                 if (block) {
                                     block(reviews, nil);
@@ -346,6 +345,27 @@
                                 }
                             }];
 }
+
++ (NSURLSessionDataTask *)sendDeleteReviewRequestWithID:(NSInteger)reviewID
+                                                  block:(void (^)(BOOL isSuccess, NSError *))block
+{
+    NSString *getURL = [NSString stringWithFormat:url_deleteReviewURLappend, reviewID, [QRWSettingsClient getSecurityKey]];
+    
+    return [self sendRequestWithURL:getURL
+                            success:^(NSURLSessionDataTask *__unused task, id JSON) {
+                                DLog(@"Json is: %@", JSON);
+                                if (block) {
+                                    block(YES, nil);
+                                }
+                            }
+                            failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
+                                DLog(@"Error: %@", error);
+                                if (block) {
+                                    block(NO, error);
+                                }
+                            }];
+}
+
 
 
 

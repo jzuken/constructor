@@ -1,5 +1,4 @@
-platform :ios, '7.0'
-pod 'AFNetworking', '~> 2.0'
+pod 'AFNetworking'
 pod 'SVPullToRefresh'
 pod 'ProgressHUD'
 pod 'ZBarSDK', '~>1.3.1'

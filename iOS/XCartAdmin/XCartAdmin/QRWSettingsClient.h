@@ -18,6 +18,7 @@
 
 + (NSURL *)getBaseUrl;
 
++ (NSURL *)getDevelopmentServerUrl;
 
 
 @end

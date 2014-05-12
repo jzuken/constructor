@@ -13,7 +13,7 @@
 @implementation QRWSettingsClient
 
 
-+ (void)saveSecurityKey: (NSString *)securityKey
++ (void)saveSecurityKey:(NSString *)securityKey
 {
     
 }
@@ -25,12 +25,13 @@
 
 + (void)saveBaseUrl: (NSURL *) baseUrl
 {
-    
+    [[NSUserDefaults standardUserDefaults] setObject:baseUrl forKey:@"QRW_baseUrl"];
 }
 
 + (NSURL *)getBaseUrl
 {
-    return [NSURL URLWithString:@"http://mobileadmin.x-cart.com/"];
+//    return [[NSUserDefaults standardUserDefaults] objectForKey:@"QRW_baseUrl"];
+    return [NSURL URLWithString:@"https://mobileadmin.x-cart.com/"];
 }
 
 

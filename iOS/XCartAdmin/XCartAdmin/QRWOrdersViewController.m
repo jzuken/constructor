@@ -12,6 +12,8 @@
 
 @interface QRWOrdersViewController ()
 
+@property(strong, nonatomic) NSArray *datesTypeArray;
+
 @end
 
 @implementation QRWOrdersViewController
@@ -21,10 +23,12 @@
 {
     [super viewDidLoad];
     self.baseCell = [QRWOrdersCell new];
+    self.datesTypeArray = @[@"today", @"week", @"month", @"all"];
     
     self.requestSearchBar.backgroundColor = kRedColor;
     self.ordersTypeSegmentedControl.tintColor = [UIColor blackColor];
     self.ordersTypeSegmentedControl.backgroundColor = kRedColor;
+    [self.ordersTypeSegmentedControl addTarget:self action:@selector(segmentedControlValueDidChange) forControlEvents:UIControlEventValueChanged];
     
     self.tableView.separatorColor = kRedColor;
     
@@ -55,13 +59,22 @@
 }
 
 
+
+- (void)segmentedControlValueDidChange
+{
+    
+}
+
+
 #pragma mark - TableView
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
-    QRWOrderInfoViewController *orderInfoViewController = [[QRWOrderInfoViewController alloc] init];
-    [self.navigationController pushViewController:orderInfoViewController animated:YES];
+    [QRWDataManager sendOrderInfoRequestWithID:[[(QRWOrder *)self.dataArray[indexPath.row] orderid] integerValue] block:^(id order, NSError *error) {
+        QRWOrderInfoViewController *orderInfoViewController = [[QRWOrderInfoViewController alloc] init];
+        [self.navigationController pushViewController:orderInfoViewController animated:YES];
+    }];
 }
 
 
@@ -76,7 +89,7 @@
 }
 
 
-- (void)configureProductCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
+- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
     QRWOrder *order = [self.dataArray objectAtIndex:indexPath.section];
     

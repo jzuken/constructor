@@ -94,12 +94,12 @@
         cell = [topLevelObjects objectAtIndex:0];
     }
     
-    [self configureProductCell:cell atIndexPath:indexPath];
+    [self configureCell:cell atIndexPath:indexPath];
     
     return cell;
 }
 
-- (void)configureProductCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
+- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
     
 }

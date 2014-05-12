@@ -105,7 +105,7 @@
     }
 }
 
-- (void)configureProductCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
+- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0) {
         NSString *userInfoFieldText;
@@ -176,7 +176,7 @@
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 30)];
     headerView.backgroundColor = kBlueColor;
     
-    UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(1, 2, 320, 27)];
+    UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 1, 320, 29)];
     nameLabel.text = section == 0 ? QRWLoc(@"USER_INFO"): QRWLoc(@"ORDERS_LIST");
     
     nameLabel.textColor = kTextBlueColor;

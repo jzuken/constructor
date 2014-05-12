@@ -36,6 +36,11 @@
 {
     [super viewDidLoad];
     
+    self.navigationItem.backBarButtonItem   = [[UIBarButtonItem alloc] initWithTitle:@""
+                                                                               style:UIBarButtonItemStylePlain
+                                                                              target:nil
+                                                                              action:nil];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardDidAppear:)
                                                  name:UIKeyboardWillShowNotification
