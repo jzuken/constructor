@@ -10,15 +10,20 @@
 
 @interface QRWSettingsClient : NSObject
 
-+ (void)saveSecurityKey: (NSString *)securityKey;
 
++ (void)saveSecurityKey: (NSString *)securityKey;
 + (NSString *)getSecurityKey;
 
-+ (void)saveBaseUrl: (NSURL *) baseUrl;
 
++ (void)saveBaseUrl: (NSURL *) baseUrl;
 + (NSURL *)getBaseUrl;
 
+
 + (NSURL *)getDevelopmentServerUrl;
+
+
++ (void)saveUnlockKey:(NSString *)unlockKey;
++ (NSString *)getUnlockKey;
 
 
 @end

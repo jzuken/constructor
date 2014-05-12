@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @class QRWLoginScrinViewController;
-@class QRWUnlockViewController;
 
 
 @interface QRWAppDelegate : UIResponder <UIApplicationDelegate>
@@ -17,7 +16,6 @@
 @property (strong, nonatomic) UIWindow *window;
 
 @property (strong, nonatomic) QRWLoginScrinViewController *firstEnterViewController;
-@property (strong, nonatomic) QRWUnlockViewController *unlockViewController;
 
 @property (strong, nonatomic) UINavigationController *appNavigationController;
 

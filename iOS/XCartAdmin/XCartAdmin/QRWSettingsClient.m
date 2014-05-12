@@ -13,6 +13,16 @@
 @implementation QRWSettingsClient
 
 
++ (void)saveUnlockKey:(NSString *)unlockKey
+{
+    [[NSUserDefaults standardUserDefaults] setObject:unlockKey forKey:@"QRW_unlockKey"];
+}
+
++ (NSString *)getUnlockKey
+{
+    return [[NSUserDefaults standardUserDefaults] objectForKey:@"QRW_unlockKey"];
+}
+
 + (void)saveSecurityKey:(NSString *)securityKey
 {
     

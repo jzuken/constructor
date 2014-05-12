@@ -7,12 +7,33 @@
 //
 
 #import "QRWUnlockViewController.h"
+#import "QRWSettingsClient.h"
 
 @interface QRWUnlockViewController ()
 
 @end
 
 @implementation QRWUnlockViewController
+
+
++(void)showUnlockView
+{
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"QRW_PINenabled"]) {
+        static QRWUnlockViewController *unlockViewController = nil;
+        unlockViewController = [[QRWUnlockViewController alloc] init];
+        CGRect frame = unlockViewController.view.frame;
+        frame.origin.y = frame.size.height;
+        unlockViewController.view.frame = frame;
+        
+        [[[UIApplication sharedApplication] keyWindow] addSubview:unlockViewController.view];
+        
+        [UIView animateWithDuration:0.5 animations:^{
+            CGRect frame = unlockViewController.view.frame;
+            frame.origin.y -= frame.size.height;
+            unlockViewController.view.frame = frame;
+        }];
+    }
+}
 
 
 - (void)viewDidLoad
@@ -24,6 +45,27 @@
 
 - (IBAction)enterButton:(id)sender
 {
+    NSMutableString *currentPIN = [NSMutableString new];
+    
+    for (int i = 0; i < _unlockPicker.numberOfComponents; i++) {
+        [currentPIN appendString:[self pickerView:_unlockPicker titleForRow:[_unlockPicker selectedRowInComponent:i] forComponent:i]];
+    }
+    
+    if ([[QRWSettingsClient getUnlockKey] isEqual:currentPIN]) {
+        [self dismissSelf];
+    } else {
+        [[[UIAlertView alloc] initWithTitle:QRWLoc(@"NOT_CORRECT_UNLOCK_KEY_TITLE")
+                                    message:QRWLoc(@"NOT_CORRECT_UNLOCK_KEY_MESSAGE")
+                                   delegate:nil
+                          cancelButtonTitle:QRWLoc(@"CANCEL")
+                          otherButtonTitles: nil]
+         show];
+    }
+}
+
+
+-(void)dismissSelf
+{
     [UIView animateWithDuration:0.5 animations:^{
         CGRect frame = self.view.frame;
         frame.origin.y = frame.size.height;
@@ -32,7 +74,6 @@
         [self.view removeFromSuperview];
     }];
 }
-
 
 
 -(void) setPickerStartPosition

@@ -46,19 +46,7 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
-
-    _unlockViewController = [[QRWUnlockViewController alloc] init];
-    CGRect frame = _unlockViewController.view.frame;
-    frame.origin.y = frame.size.height;
-    _unlockViewController.view.frame = frame;
-    
-    [self.window addSubview:_unlockViewController.view];
-    
-    [UIView animateWithDuration:0.5 animations:^{
-        CGRect frame = _unlockViewController.view.frame;
-        frame.origin.y -= frame.size.height;
-        _unlockViewController.view.frame = frame;
-    }];
+    [QRWUnlockViewController showUnlockView];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
