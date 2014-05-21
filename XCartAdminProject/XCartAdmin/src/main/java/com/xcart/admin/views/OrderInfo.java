@@ -1,8 +1,10 @@
 package com.xcart.admin.views;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.text.InputType;
@@ -191,6 +193,29 @@ public class OrderInfo extends PinSupportNetworkActivity {
                         statusItem.setClickable(true);
                         trackingNumberItem.setClickable(true);
                         customerItem.setClickable(true);
+
+
+                        // PayPalHere
+                        String paymentMethod = obj.getString("payment_method");
+                        String paymentStatus = "Queued";//obj.getString("payment_status");
+                        if (true || (paymentMethod != null && paymentMethod.equals("PayPalHere")) && (paymentStatus != null && paymentStatus.equals("Queued"))) {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(OrderInfo.this);
+                            builder.setMessage(R.string.dialog_process_by_paypal_here)
+                                    .setPositiveButton(R.string.process, new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            // FIRE ZE MISSILES!
+                                            boolean isInstaled = isPackageInstalled("com.paypal.here", OrderInfo.this);
+                                            Toast.makeText(OrderInfo.this, "is instaled " + isInstaled, Toast.LENGTH_LONG).show();
+                                        }
+                                    })
+                                    .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            // User cancelled the dialog
+                                        }
+                                    });
+                            builder.create().show();
+                        }
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -202,6 +227,17 @@ public class OrderInfo extends PinSupportNetworkActivity {
         };
 
         requester.execute();
+    }
+
+    //TODO:
+    private boolean isPackageInstalled(String packagename, Context context) {
+        PackageManager pm = context.getPackageManager();
+        try {
+            pm.getPackageInfo(packagename, PackageManager.GET_ACTIVITIES);
+            return true;
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
+        }
     }
 
     private void clearData() {
@@ -424,7 +460,7 @@ public class OrderInfo extends PinSupportNetworkActivity {
                 Intent intent = new Intent(getBaseContext(), UserInfo.class);
                 intent.putExtra("userId", userId);
                 intent.putExtra("userName", userName);
-                if(userId.equals("0")){
+                if (userId.equals("0")) {
                     try {
                         intent.putExtra("firstname", obj.getString("firstname"));
                         intent.putExtra("lastname", obj.getString("lastname"));
