@@ -8,41 +8,62 @@
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
+		<key>Pods-FXBlurView.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>9</integer>
 		</dict>
 		<key>Pods-ProgressHUD.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>3</integer>
 		</dict>
 		<key>Pods-REFormattedNumberField.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>4</integer>
 		</dict>
 		<key>Pods-RETableViewManager.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>5</integer>
 		</dict>
 		<key>Pods-REValidation.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>6</integer>
 		</dict>
 		<key>Pods-SVPullToRefresh.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>7</integer>
 		</dict>
 		<key>Pods-ZBarSDK.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>8</integer>
 		</dict>
 		<key>Pods.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>1</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
@@ -77,12 +98,32 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>3912090841794642862BF88F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>55B6BF49285D49F0850345DC</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>60AC616D1CA84C0695C244C3</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>69EC33EB2F0D4815B97634C1</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>6C74EACB3D4C473F9D5E44F4</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>73DBC37768934F0FABE0755F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -108,6 +149,16 @@
 			<true/>
 		</dict>
 		<key>CA4B93299F5C4E87AD52332F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E4753F0D829A413FAB28E3C7</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>FC4AB6443863441D93E28AD2</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -7,7 +7,6 @@
 //
 
 #import "QRWOrderInfoViewController.h"
-//#import "QRWOrderFormTableViewController.h"
 
 @interface QRWOrderInfoViewController ()
 
@@ -30,9 +29,41 @@
     [super viewDidLoad];
 }
 
-- (void)didReceiveMemoryWarning
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [super didReceiveMemoryWarning];
+    
+    
+}
+
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 100;
+}
+
+- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
+{
+    [cell setAccessoryType:UITableViewCellAccessoryNone];
+}
+
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 30)];
+    headerView.backgroundColor = kGreyColor;
+    
+    UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 1, 320, 29)];
+    nameLabel.font = [UIFont systemFontOfSize:15];
+    QRWReview *review = [self.dataArray objectAtIndex:section];
+    nameLabel.text = review.product;
+    nameLabel.textColor = kTextBlueColor;
+    nameLabel.adjustsFontSizeToFitWidth=YES;
+    nameLabel.minimumScaleFactor = 0.5;
+    nameLabel.backgroundColor = [UIColor whiteColor];
+    
+    [headerView addSubview:nameLabel];
+    
+    return headerView;
 }
 
 @end
