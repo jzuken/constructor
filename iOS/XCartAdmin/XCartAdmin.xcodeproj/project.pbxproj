@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3F448207192CCE0C00AC2BFF /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F448206192CCE0C00AC2BFF /* MainStoryboard.storyboard */; };
 		72E90A0FD5A24E7983C0F0F6 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43D05E16E2D64500ABFC66D8 /* libPods.a */; };
 		7F8173AB1884471400894E16 /* QRWDashboardViewControllerOld.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F8173AA1884471400894E16 /* QRWDashboardViewControllerOld.xib */; };
 		7F8173AD1884488C00894E16 /* QRWProductsViewControllerOld.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F8173AC1884488C00894E16 /* QRWProductsViewControllerOld.xib */; };
@@ -118,6 +119,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3F448206192CCE0C00AC2BFF /* MainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard.storyboard; sourceTree = "<group>"; };
 		43D05E16E2D64500ABFC66D8 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F8173AA1884471400894E16 /* QRWDashboardViewControllerOld.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRWDashboardViewControllerOld.xib; sourceTree = "<group>"; };
 		7F8173AC1884488C00894E16 /* QRWProductsViewControllerOld.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRWProductsViewControllerOld.xib; sourceTree = "<group>"; };
@@ -300,6 +302,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3F448208192CD2AB00AC2BFF /* DashboardCell */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = DashboardCell;
+			sourceTree = "<group>";
+		};
 		7F8173B61885659C00894E16 /* OrederInfo */ = {
 			isa = PBXGroup;
 			children = (
@@ -476,6 +485,7 @@
 		7F9F9A4F1815638500AB3EF5 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				3F448206192CCE0C00AC2BFF /* MainStoryboard.storyboard */,
 				96F4A0CA1920493F0059CE6B /* ReviewInfo */,
 				7FBCF2F0188414CC00594CCD /* EditPrice */,
 				9624FBBC1880D06D007A641D /* UserInfo */,
@@ -643,6 +653,7 @@
 		7FCFD3021869B84000F44547 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				3F448208192CD2AB00AC2BFF /* DashboardCell */,
 				9624FBD418849EFA007A641D /* QRWUserFormCell */,
 				9624FBC31880D37F007A641D /* Orders */,
 				7FBCF2D0187EA71A00594CCD /* Products */,
@@ -909,6 +920,7 @@
 				7FCFD3151869D1D300F44547 /* QRWUsersViewController.xib in Resources */,
 				969409DC182C504B00B0B343 /* button_dashboard3.png in Resources */,
 				7FBCF2CE187EA44800594CCD /* QRWProductsViewController.xib in Resources */,
+				3F448207192CCE0C00AC2BFF /* MainStoryboard.storyboard in Resources */,
 				9624FBD618849F24007A641D /* QRWUserFormCell.xib in Resources */,
 				969409DE182C505800B0B343 /* button_dashboard4.png in Resources */,
 				9624FBCD1883490A007A641D /* logo.png in Resources */,
