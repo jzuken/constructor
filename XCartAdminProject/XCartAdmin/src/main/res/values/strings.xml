@@ -168,5 +168,6 @@ Subscriptions expiring in the next %s days</string>
     <string name="dialog_process_by_paypal_here" >Process the order by PayPal Here?</string>
     <string name="process">Process</string>
     <string name="cancel">Cancel</string>
+    <string name="date">Date:</string>
 
 </resources>

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.text.InputType;
@@ -37,6 +38,10 @@ import com.xcart.admin.views.dialogs.CustomDialog;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 public class OrderInfo extends PinSupportNetworkActivity {
 
@@ -124,7 +129,22 @@ public class OrderInfo extends PinSupportNetworkActivity {
                         status.setTextColor(StatusConverter.getColorResourceBySymbol(getBaseContext(),
                                 OrderStatus.valueOf(statusSymbol)));
                         trackingNumber.setText(obj.getString("tracking"));
-                        paymentMethod.setText(obj.getString("payment_method"));
+
+                        String paymentMethodText = obj.getString("payment_method");
+                        paymentMethod.setText(paymentMethodText);
+                        if (paymentMethodText.equals("PayPal Here")) {
+                            paymentMethod.setOnClickListener(new OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    try {
+                                        proceessByPayPalHere(obj.getString("payment_method"), obj.getString("status"));
+                                    } catch (JSONException e) {
+                                        LOG.e(e.getMessage(), e);
+                                    }
+                                }
+                            });
+                        }
+
                         deliveryMethod.setText(obj.getString("shipping"));
                         String title = obj.getString("title");
                         if (!title.equals("false")) {
@@ -190,32 +210,22 @@ public class OrderInfo extends PinSupportNetworkActivity {
                             }
                         }
 
+
+                        //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        //String date = sdf.format(new Date(Long.parseLong(obj.getString("date"))));
+                        //((TextView) findViewById(R.id.date)).setText(date);
+
+                        final Calendar cal = Calendar.getInstance();
+                        cal.setTimeInMillis(Long.parseLong(obj.getString("date")));
+                        Date date = cal.getTime();
+                        ((TextView) findViewById(R.id.date)).setText(date.toString());
+
+
                         statusItem.setClickable(true);
                         trackingNumberItem.setClickable(true);
                         customerItem.setClickable(true);
 
-
-                        // PayPalHere
-                        String paymentMethod = obj.getString("payment_method");
-                        String paymentStatus = "Queued";//obj.getString("payment_status");
-                        if (true || (paymentMethod != null && paymentMethod.equals("PayPalHere")) && (paymentStatus != null && paymentStatus.equals("Queued"))) {
-                            AlertDialog.Builder builder = new AlertDialog.Builder(OrderInfo.this);
-                            builder.setMessage(R.string.dialog_process_by_paypal_here)
-                                    .setPositiveButton(R.string.process, new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            // FIRE ZE MISSILES!
-                                            boolean isInstaled = isPackageInstalled("com.paypal.here", OrderInfo.this);
-                                            Toast.makeText(OrderInfo.this, "is instaled " + isInstaled, Toast.LENGTH_LONG).show();
-                                        }
-                                    })
-                                    .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            // User cancelled the dialog
-                                        }
-                                    });
-                            builder.create().show();
-                        }
-
+                        proceessByPayPalHere(obj.getString("payment_method"), obj.getString("status"));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -228,6 +238,37 @@ public class OrderInfo extends PinSupportNetworkActivity {
 
         requester.execute();
     }
+
+    private void proceessByPayPalHere(String paymentMethod, String paymentStatus) {
+        if ((paymentMethod != null && paymentMethod.equals("PayPal Here")) && (paymentStatus != null && paymentStatus.equals("Q"))) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(OrderInfo.this);
+            builder.setMessage(R.string.dialog_process_by_paypal_here)
+                    .setPositiveButton(R.string.process, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            boolean isPayPalHereInstaled = isPackageInstalled("com.paypal.here", OrderInfo.this);
+                            if (isPayPalHereInstaled) {
+                                try {
+                                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(obj.getString("pph_url")));
+                                    startActivity(browserIntent);
+                                } catch (JSONException e) {
+                                    LOG.e(e.getMessage(), e);
+                                }
+                            } else {
+                                Intent intent = new Intent(Intent.ACTION_VIEW);
+                                intent.setData(Uri.parse("market://details?id=pname:com.paypal.here"));
+                                startActivity(intent);
+                            }
+                        }
+                    })
+                    .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            setNewStatus("D");
+                        }
+                    });
+            builder.create().show();
+        }
+    }
+
 
     //TODO:
     private boolean isPackageInstalled(String packagename, Context context) {
@@ -406,6 +447,40 @@ public class OrderInfo extends PinSupportNetworkActivity {
     }
 
     public void setNewStatus(final String selectedStatus) {
+        dialogManager.showProgressDialog(R.string.updating_status, PROGRESS_DIALOG);
+        try {
+            new Requester() {
+                @Override
+                protected String doInBackground(Void... params) {
+                    return new HttpManager(getBaseContext()).changeStatus(getIntent().getStringExtra("orderId"), selectedStatus);
+                }
+
+                @Override
+                protected void onPostExecute(String response) {
+                    super.onPostExecute(response);
+
+                    dialogManager.dismissDialog(PROGRESS_DIALOG);
+
+                    if (response != null) {
+                        Toast.makeText(getBaseContext(), getString(R.string.success), Toast.LENGTH_SHORT).show();
+                        status.setText(StatusConverter.getStatusBySymbol(OrderInfo.this, OrderStatus.valueOf(selectedStatus)));
+                        status.setTextColor(StatusConverter.getColorResourceBySymbol(getBaseContext(), OrderStatus.valueOf(selectedStatus)));
+                        Intent resultIntent = new Intent();
+                        resultIntent.putExtra("status", selectedStatus);
+                        setResult(CHANGE_STATUS_RESULT_CODE, resultIntent);
+                        statusSymbol = selectedStatus;
+                    } else {
+                        showConnectionErrorMessage();
+                    }
+                }
+            }.execute();
+        } catch (Exception e) {
+            dialogManager.dismissDialog(PROGRESS_DIALOG);
+            showConnectionErrorMessage();
+        }
+    }
+
+    public void setNewPaymentStatus(final String selectedStatus) {
         dialogManager.showProgressDialog(R.string.updating_status, PROGRESS_DIALOG);
         try {
             new Requester() {
