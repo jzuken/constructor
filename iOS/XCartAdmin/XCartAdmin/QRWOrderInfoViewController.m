@@ -15,19 +15,20 @@
 
 @implementation QRWOrderInfoViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 }
+
+- (void)setOrderInfo:(QRWOrderInfo *)orderInfo
+{
+    _orderInfo = orderInfo;
+    [self.tableView reloadData];
+}
+
+
+
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {

@@ -109,22 +109,24 @@
 }
 
 + (NSURLSessionDataTask *)sendOrderInfoRequestWithID:(NSInteger)orderID
-                                               block:(void (^)(id order, NSError *error))block
+                                               block:(void (^)(QRWOrderInfo *order, NSError *error))block
 {
     NSString *getURL = [NSString stringWithFormat:url_orderInfoURLappend, orderID, [QRWSettingsClient getSecurityKey]];
     
     return [self sendRequestWithURL:getURL
                             success:^(NSURLSessionDataTask *__unused task, id JSON) {
-                                    DLog(@"Json is: %@", JSON);
-
+                                DLog(@"Json is: %@", JSON);
+                                QRWOrderInfo *orderInfo = [QRWOrderInfo new];
+                                [orderInfo buildDataByJson:JSON];
+                                
                                 if (block) {
-                                    block(nil, nil);
+                                    block(orderInfo, nil);
                                 }
                             }
                             failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
                                 DLog(@"Error: %@", error);
                                 if (block) {
-                                    block([NSArray array], error);
+                                    block([QRWOrderInfo new], error);
                                 }
                             }];
 }

@@ -10,4 +10,6 @@
 
 @interface QRWOrderInfoViewController : QRWBaseViewControllerWithTableView
 
+@property (nonatomic, strong) QRWOrderInfo *orderInfo;
+
 @end

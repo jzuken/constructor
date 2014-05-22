@@ -15,6 +15,7 @@
 #import "QRWProductWithInfo.h"
 #import "QRWUserInfo.h"
 #import "QRWReview.h"
+#import "QRWOrderInfo.h"
 
 
 
@@ -95,7 +96,7 @@
                                                          block: (void (^)(NSArray *orders, NSError *error))block;
 
 + (NSURLSessionDataTask *)sendOrderInfoRequestWithID:(NSInteger)orderID
-                                               block:(void (^)(id order, NSError *error))block;
+                                               block:(void (^)(QRWOrderInfo *order, NSError *error))block;
 
 
 
