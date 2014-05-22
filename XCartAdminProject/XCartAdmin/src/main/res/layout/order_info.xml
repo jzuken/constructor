@@ -163,20 +163,20 @@
                     android:paddingTop="10dp">
 
                     <TextView
-                        android:id="@+id/date_label"
+                        android:id="@+id/delivery_method_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
-                        android:text="@string/date"
+                        android:text="@string/delivery_method"
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/date"
+                        android:id="@+id/delivery_method"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@id/date_label"
+                        android:layout_toRightOf="@id/delivery_method_label"
                         android:gravity="right"
                         android:paddingRight="17dp"
                         android:textColor="@color/blue" />
@@ -196,20 +196,20 @@
                     android:paddingTop="10dp">
 
                     <TextView
-                        android:id="@+id/delivery_method_label"
+                        android:id="@+id/date_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
-                        android:text="@string/delivery_method"
+                        android:text="@string/date"
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/delivery_method"
+                        android:id="@+id/date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@id/delivery_method_label"
+                        android:layout_toRightOf="@id/date_label"
                         android:gravity="right"
                         android:paddingRight="17dp"
                         android:textColor="@color/blue" />

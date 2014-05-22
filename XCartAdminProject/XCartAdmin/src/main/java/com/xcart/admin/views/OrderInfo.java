@@ -40,7 +40,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 public class OrderInfo extends PinSupportNetworkActivity {
@@ -211,14 +210,14 @@ public class OrderInfo extends PinSupportNetworkActivity {
                         }
 
 
-                        //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                        //String date = sdf.format(new Date(Long.parseLong(obj.getString("date"))));
-                        //((TextView) findViewById(R.id.date)).setText(date);
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        String date = sdf.format(new Date(Long.parseLong(obj.getString("date")) * 1000));
+                        ((TextView) findViewById(R.id.date)).setText(date);
 
-                        final Calendar cal = Calendar.getInstance();
-                        cal.setTimeInMillis(Long.parseLong(obj.getString("date")));
-                        Date date = cal.getTime();
-                        ((TextView) findViewById(R.id.date)).setText(date.toString());
+                        //final Calendar cal = Calendar.getInstance();
+                        //cal.setTimeInMillis(Long.parseLong(obj.getString("date")));
+                        //Date date = cal.getTime();
+                        //((TextView) findViewById(R.id.date)).setText(date.toString());
 
 
                         statusItem.setClickable(true);
