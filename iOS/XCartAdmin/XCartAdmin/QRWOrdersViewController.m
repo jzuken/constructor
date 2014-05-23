@@ -53,7 +53,8 @@
                                                fromPoint:asEmpty? 0 : self.dataArray.count
                                                  toPoint:kNumberOfLoadedItems
                                                   status:@""
-                                                    date:@"all" block:^(NSArray *orders, NSError *error) {
+                                                    date: self.datesTypeArray[self.ordersTypeSegmentedControl.selectedSegmentIndex]
+                                                   block:^(NSArray *orders, NSError *error) {
                                                         [self smartAddObjectToDataArrayAsNew:asEmpty withLoaddedArray:orders];
                                                     }];
 }
@@ -62,7 +63,14 @@
 
 - (void)segmentedControlValueDidChange
 {
-    
+    [QRWDataManager sendLastOrderRequestWithSearchString:self.requestSearchBar.text
+                                               fromPoint:YES
+                                                 toPoint:kNumberOfLoadedItems
+                                                  status:@""
+                                                    date: self.datesTypeArray[self.ordersTypeSegmentedControl.selectedSegmentIndex]
+                                                   block:^(NSArray *orders, NSError *error) {
+                                                       [self smartAddObjectToDataArrayAsNew:YES withLoaddedArray:orders];
+                                                   }];
 }
 
 

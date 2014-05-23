@@ -45,7 +45,6 @@
 		7F9F9A591815662100AB3EF5 /* QRWLoginScrinViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F9F9A571815662100AB3EF5 /* QRWLoginScrinViewController.xib */; };
 		7F9F9A5A1815662100AB3EF5 /* QRWLoginScrinViewControllerOld.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F9F9A581815662100AB3EF5 /* QRWLoginScrinViewControllerOld.xib */; };
 		7F9F9A5D18156CC400AB3EF5 /* QRWBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F9F9A5C18156CC400AB3EF5 /* QRWBaseViewController.m */; };
-		7F9F9A6918156D0C00AB3EF5 /* UIButton+Block.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F9F9A6418156D0B00AB3EF5 /* UIButton+Block.m */; };
 		7F9F9A6A18156D0C00AB3EF5 /* UIDevice+Resolutions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F9F9A6618156D0B00AB3EF5 /* UIDevice+Resolutions.m */; };
 		7F9F9A6B18156D0C00AB3EF5 /* UIColor+hex.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F9F9A6818156D0C00AB3EF5 /* UIColor+hex.m */; };
 		7F9F9A7318156F2E00AB3EF5 /* QRWDashboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F9F9A7118156F2E00AB3EF5 /* QRWDashboardViewController.m */; };
@@ -98,6 +97,8 @@
 		9624FBE31884BDC1007A641D /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9624FBE21884BDC1007A641D /* libiconv.dylib */; };
 		9624FBE51884C14A007A641D /* QRWUnlockViewControllerOld.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9624FBE41884C14A007A641D /* QRWUnlockViewControllerOld.xib */; };
 		9627FD86192D5E14001049B6 /* QRWOrderInfoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9627FD85192D5E14001049B6 /* QRWOrderInfoTableViewCell.m */; };
+		9627FD8D192EC627001049B6 /* QRWPayPalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9627FD8C192EC627001049B6 /* QRWPayPalViewController.m */; };
+		9627FD8F192EC70E001049B6 /* developer.png in Resources */ = {isa = PBXBuildFile; fileRef = 9627FD8E192EC70E001049B6 /* developer.png */; };
 		969409D8182C503600B0B343 /* button_dashboard1.png in Resources */ = {isa = PBXBuildFile; fileRef = 969409D7182C503600B0B343 /* button_dashboard1.png */; };
 		969409DA182C504100B0B343 /* button_dashboard2.png in Resources */ = {isa = PBXBuildFile; fileRef = 969409D9182C504100B0B343 /* button_dashboard2.png */; };
 		969409DC182C504B00B0B343 /* button_dashboard3.png in Resources */ = {isa = PBXBuildFile; fileRef = 969409DB182C504B00B0B343 /* button_dashboard3.png */; };
@@ -180,8 +181,6 @@
 		7F9F9A581815662100AB3EF5 /* QRWLoginScrinViewControllerOld.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRWLoginScrinViewControllerOld.xib; sourceTree = "<group>"; };
 		7F9F9A5B18156CC400AB3EF5 /* QRWBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRWBaseViewController.h; sourceTree = "<group>"; };
 		7F9F9A5C18156CC400AB3EF5 /* QRWBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRWBaseViewController.m; sourceTree = "<group>"; };
-		7F9F9A6318156D0B00AB3EF5 /* UIButton+Block.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+Block.h"; sourceTree = "<group>"; };
-		7F9F9A6418156D0B00AB3EF5 /* UIButton+Block.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+Block.m"; sourceTree = "<group>"; };
 		7F9F9A6518156D0B00AB3EF5 /* UIDevice+Resolutions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice+Resolutions.h"; sourceTree = "<group>"; };
 		7F9F9A6618156D0B00AB3EF5 /* UIDevice+Resolutions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+Resolutions.m"; sourceTree = "<group>"; };
 		7F9F9A6718156D0C00AB3EF5 /* UIColor+hex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+hex.h"; sourceTree = "<group>"; };
@@ -262,6 +261,9 @@
 		9624FBE81884C9A7007A641D /* icon120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon120.png; sourceTree = "<group>"; };
 		9627FD84192D5E14001049B6 /* QRWOrderInfoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRWOrderInfoTableViewCell.h; sourceTree = "<group>"; };
 		9627FD85192D5E14001049B6 /* QRWOrderInfoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRWOrderInfoTableViewCell.m; sourceTree = "<group>"; };
+		9627FD8B192EC627001049B6 /* QRWPayPalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRWPayPalViewController.h; sourceTree = "<group>"; };
+		9627FD8C192EC627001049B6 /* QRWPayPalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRWPayPalViewController.m; sourceTree = "<group>"; };
+		9627FD8E192EC70E001049B6 /* developer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = developer.png; sourceTree = "<group>"; };
 		969409D7182C503600B0B343 /* button_dashboard1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_dashboard1.png; sourceTree = "<group>"; };
 		969409D9182C504100B0B343 /* button_dashboard2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_dashboard2.png; sourceTree = "<group>"; };
 		969409DB182C504B00B0B343 /* button_dashboard3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_dashboard3.png; sourceTree = "<group>"; };
@@ -528,6 +530,7 @@
 		7F9F9A5E18156CD500AB3EF5 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				9627FD87192EC606001049B6 /* PayPal */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -535,8 +538,6 @@
 		7F9F9A6218156CFB00AB3EF5 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
-				7F9F9A6318156D0B00AB3EF5 /* UIButton+Block.h */,
-				7F9F9A6418156D0B00AB3EF5 /* UIButton+Block.m */,
 				7F9F9A6518156D0B00AB3EF5 /* UIDevice+Resolutions.h */,
 				7F9F9A6618156D0B00AB3EF5 /* UIDevice+Resolutions.m */,
 				7F9F9A6718156D0C00AB3EF5 /* UIColor+hex.h */,
@@ -791,9 +792,19 @@
 			name = OrderInfo;
 			sourceTree = "<group>";
 		};
+		9627FD87192EC606001049B6 /* PayPal */ = {
+			isa = PBXGroup;
+			children = (
+				9627FD8B192EC627001049B6 /* QRWPayPalViewController.h */,
+				9627FD8C192EC627001049B6 /* QRWPayPalViewController.m */,
+			);
+			name = PayPal;
+			sourceTree = "<group>";
+		};
 		969409D6182C502400B0B343 /* imgs */ = {
 			isa = PBXGroup;
 			children = (
+				9627FD8E192EC70E001049B6 /* developer.png */,
 				7FBCF2EE1883ECD500594CCD /* loading.gif */,
 				9624FBCE1883492E007A641D /* button_login.png */,
 				9624FBCC1883490A007A641D /* logo.png */,
@@ -940,6 +951,7 @@
 				9624FBCD1883490A007A641D /* logo.png in Resources */,
 				96F4A0C9192049390059CE6B /* QRWReviewInfoViewController.xib in Resources */,
 				7F8173B318844B4500894E16 /* QRWUsersViewControllerOld.xib in Resources */,
+				9627FD8F192EC70E001049B6 /* developer.png in Resources */,
 				7FCFD334187D684F00F44547 /* QRWReviewCell.xib in Resources */,
 				7F9F9A5A1815662100AB3EF5 /* QRWLoginScrinViewControllerOld.xib in Resources */,
 				969409E0182C50C700B0B343 /* title_dashboard.png in Resources */,
@@ -1012,7 +1024,6 @@
 				7F9F9A4A181562F200AB3EF5 /* QRWDiscount.m in Sources */,
 				7F9F9A031815604600AB3EF5 /* QRWAppDelegate.m in Sources */,
 				7FCFD30C1869BF1300F44547 /* QRWBaseEntety.m in Sources */,
-				7F9F9A6918156D0C00AB3EF5 /* UIButton+Block.m in Sources */,
 				7FBCF2F3188414F800594CCD /* QRWEditPriceView.m in Sources */,
 				7FCFD2C91869877200F44547 /* QRWHTTPClient.m in Sources */,
 				7FBCF2CD187EA44800594CCD /* QRWProductsViewController.m in Sources */,
@@ -1034,6 +1045,7 @@
 				7FCFD3081869BA4000F44547 /* QRWUserCell.m in Sources */,
 				7FCFD30118698F1800F44547 /* QRWSettingsClient.m in Sources */,
 				7FBCF2ED188014DE00594CCD /* QRWProductWithInfo.m in Sources */,
+				9627FD8D192EC627001049B6 /* QRWPayPalViewController.m in Sources */,
 				7F8173BB188565E700894E16 /* QRWOrderInfoViewController.m in Sources */,
 				7FCFD32D187D679000F44547 /* QRWReviewsViewController.m in Sources */,
 				7F9F9A5D18156CC400AB3EF5 /* QRWBaseViewController.m in Sources */,
@@ -1158,6 +1170,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E0041376838B4A02BAD72606 /* Pods.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Mobtekh OOO (2J3UD2G26R)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1165,6 +1178,7 @@
 				INFOPLIST_FILE = "XCartAdmin/XCartAdmin-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALID_ARCHS = "armv7 armv7s arm64";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1173,6 +1187,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E0041376838B4A02BAD72606 /* Pods.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Mobtekh OOO (2J3UD2G26R)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1180,6 +1195,7 @@
 				INFOPLIST_FILE = "XCartAdmin/XCartAdmin-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALID_ARCHS = "armv7 armv7s arm64";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

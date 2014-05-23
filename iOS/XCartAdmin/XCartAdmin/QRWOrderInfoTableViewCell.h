@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "QRWOrderInfo.h"
 
 @interface QRWOrderInfoTableViewCell : UITableViewCell
 
@@ -27,5 +28,14 @@
 
 //total
 @property(strong, nonatomic) IBOutlet UILabel *totalLabel;
+
+
+-(void)configurateAsItemCell:(QRWOrderInfoItem *)item;
+
+-(void)configurateAsCellWithKey:(NSString *)key value:(NSString *)value;
+
+-(void)configurateAsInfoCellWithKey:(NSString *)key value:(NSString *)value phone:(NSString *)phone;
+
+-(void)configurateAsTotalCellWithValue:(NSString *)value;
 
 @end

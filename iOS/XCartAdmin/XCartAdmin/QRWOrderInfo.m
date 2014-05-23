@@ -19,8 +19,7 @@
     self.paymentMethod  = [JSON objectForKey:@"payment_method"];
     self.shipping = [JSON objectForKey:@"shipping"];
     self.title = [JSON objectForKey:@"title"];
-    self.firstname  = [JSON objectForKey:@"firstname"];
-    self.lastname = [JSON objectForKey:@"lastname"];
+    self.customer  = [NSString stringWithFormat:@"%@ %@",JSON[@"firstname"], JSON[@"lastname"]];
     self.userid = [JSON objectForKey:@"userid"];
     
     
@@ -38,6 +37,9 @@
     self.couponDiscount  = [JSON objectForKey:@"coupon_discount"];
     self.shippingCost = [JSON objectForKey:@"shipping_cost"];
     self.total = [JSON objectForKey:@"total"];
+    self.paymentSurcharge = [JSON objectForKey:@"payment_surcharge"];
+    
+    self.notes = [JSON objectForKey:@"customer_notes"];
     
     NSArray *items = [JSON objectForKey:@"details"];
     NSMutableArray *itemsSet = [NSMutableArray new];
@@ -65,6 +67,7 @@
     self.price = [JSON objectForKey:@"price"];
     self.productid = [JSON objectForKey:@"productid"];
     self.product  = [JSON objectForKey:@"product"];
+    self.amount  = [JSON objectForKey:@"amount"];
 }
 
 @end

@@ -12,6 +12,7 @@
 #import "QRWReviewsViewController.h"
 #import "QRWProductsViewController.h"
 #import "QRWOrdersViewController.h"
+#import "QRWOrderInfoViewController.h"
 
 @interface QRWDashboardViewController ()
 
@@ -112,7 +113,15 @@
 }
 
 
-
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [QRWDataManager sendOrderInfoRequestWithID:[[(QRWOrder *)self.dataArray[indexPath.section] orderid] integerValue] block:^(QRWOrderInfo *order, NSError *error) {
+        QRWOrderInfoViewController *orderInfoViewController = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"QRWOrderInfoViewController"];
+        [self.navigationController pushViewController:orderInfoViewController animated:YES];
+        [orderInfoViewController setOrderInfo:order];
+    }];
+}
 
 #pragma mark - Buttons pressed
 

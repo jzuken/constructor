@@ -16,7 +16,7 @@ static NSString *const url_developmentGetShopURLappend = @"/AppServerListener/ap
 
 
 
-static NSString *const url_dashboardURLappend = @"request=dashboard&key=%@";
+static NSString *const url_dashboardURLappend = @"xcart/mobile_admin_api.php?request=dashboard&key=%@";
 
 static NSString *const url_usersURLappend = @"xcart/mobile_admin_api.php?request=users&from=%d&size=%d&key=%@&search=%@";
 static NSString *const url_userInfoURLappend = @"xcart/mobile_admin_api.php?request=user_info&id=%d&key=%@";

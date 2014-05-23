@@ -9,6 +9,7 @@
 #import "QRWUserInfoViewController.h"
 #import "QRWOrdersCell.h"
 #import "QRWUserFormCell.h"
+#import "QRWOrderInfoViewController.h"
 
 
 @interface QRWUserInfoViewController ()
@@ -91,6 +92,13 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (indexPath.section == 1) {
+        [QRWDataManager sendOrderInfoRequestWithID:[[(QRWOrder *)self.dataArray[indexPath.section] orderid] integerValue] block:^(QRWOrderInfo *order, NSError *error) {
+            QRWOrderInfoViewController *orderInfoViewController = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"QRWOrderInfoViewController"];
+            [self.navigationController pushViewController:orderInfoViewController animated:YES];
+            [orderInfoViewController setOrderInfo:order];
+        }];
+    }
 }
 
 

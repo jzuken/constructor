@@ -379,6 +379,7 @@
                                      success:(void (^)(NSURLSessionDataTask *task, id responseObject))success
                                      failure:(void (^)(NSURLSessionDataTask *task, NSError *error))failure
 {
+    DLog(@"URL is: %@", requestURL);
     return [[QRWHTTPClient sharedClient] GET:requestURL
                                   parameters:nil
                                      success:success
