@@ -36,7 +36,6 @@
 }
 
 
-
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
@@ -63,6 +62,7 @@
 
 - (void)segmentedControlValueDidChange
 {
+    [self startLoadingAnimation];
     [QRWDataManager sendLastOrderRequestWithSearchString:self.requestSearchBar.text
                                                fromPoint:YES
                                                  toPoint:kNumberOfLoadedItems

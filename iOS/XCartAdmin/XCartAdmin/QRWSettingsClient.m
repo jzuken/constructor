@@ -30,7 +30,7 @@
 
 + (NSString *)getSecurityKey
 {
-    return @"FQMTED8L";
+    return @"D7PMJ9SY";//@"FQMTED8L";
 }
 
 + (void)saveBaseUrl: (NSURL *) baseUrl
