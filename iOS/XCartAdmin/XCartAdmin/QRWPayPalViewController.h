@@ -24,6 +24,8 @@
 @property (weak, nonatomic) IBOutlet UITextField *quantityField;
 @property (weak, nonatomic) IBOutlet UITextField *descriptionField;
 
+@property (weak, nonatomic) IBOutlet UIScrollView *mainScroolView;
+
 @property (strong, nonatomic) id<QRWPayPalViewControllerDelegate> delegate;
 
 @end

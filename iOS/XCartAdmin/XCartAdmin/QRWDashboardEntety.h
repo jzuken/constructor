@@ -7,6 +7,7 @@
 //
 
 #import "QRWBaseEntety.h"
+#import "QRWOrder.h"
 
 @interface QRWDashboardEntety : QRWBaseEntety
 

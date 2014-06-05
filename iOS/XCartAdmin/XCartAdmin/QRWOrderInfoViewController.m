@@ -9,9 +9,12 @@
 #import "QRWOrderInfoViewController.h"
 #import "QRWOrderInfoTableViewCell.h"
 #import "QRWPayPalViewController.h"
+#import "QRWEditPriceView.h"
+#import "QRWUserInfoViewController.h"
 
-@interface QRWOrderInfoViewController ()<QRWPayPalViewControllerDelegate>
+@interface QRWOrderInfoViewController ()<QRWPayPalViewControllerDelegate, QRWEditPriceViewDelegate, UIAlertViewDelegate>
 
+@property (nonatomic, strong) QRWEditPriceView *editPriceView;
 
 @end
 
@@ -21,18 +24,30 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self addEditPriceView];
     self.tableView.showsInfiniteScrolling = NO;
     self.tableView.showsPullToRefresh = NO;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+    [self setNavigationBarColor:kRedColor title: QRWLoc(@"ORDER_INFO")];
 }
 
 - (void)setOrderInfo:(QRWOrderInfo *)orderInfo
 {
     _orderInfo = orderInfo;
-    _orderInfo.paymentMethod = @"PayPalHere";
-    _orderInfo.status = @"Q";
     [self.tableView reloadData];
 }
 
+- (void) addEditPriceView
+{
+    _editPriceView = [[QRWEditPriceView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, kheightOfEditPriceView)];
+    _editPriceView.delegate = self;
+    [self.view addSubview:_editPriceView];
+}
 
 #pragma mark - TableView
 
@@ -52,21 +67,26 @@
             case 0:{
                 cell = [tableView dequeueReusableCellWithIdentifier:@"QRWOrderInfoTableViewCellFixed"];
                 [cell configurateAsCellWithKey:@"Status" value:QRWLoc(_orderInfo.status)];
-                [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+                [cell setAccessoryType:UITableViewCellAccessoryNone];
             }
                 break;
                 
             case 1:{
                 cell = [tableView dequeueReusableCellWithIdentifier:@"QRWOrderInfoTableViewCellFixed"];
                 [cell configurateAsCellWithKey:@"Tracking number" value:_orderInfo.tracking];
-                [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+                if (![@"" isEqual:_orderInfo.tracking]) {
+                    [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+                } else {
+                    [cell setAccessoryType:UITableViewCellAccessoryNone];
+                }
+                
             }
                 break;
                 
             case 2:{
                 cell = [tableView dequeueReusableCellWithIdentifier:@"QRWOrderInfoTableViewCellFixed"];
                 [cell configurateAsCellWithKey:@"Payment method" value:_orderInfo.paymentMethod];
-                if ([_orderInfo.paymentMethod isEqual: @"PayPalHere"] && [_orderInfo.status isEqual:@"Q"]) {
+                if (_orderInfo.pphURLString) {
                     [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
                 } else {
                     [cell setAccessoryType:UITableViewCellAccessoryNone];
@@ -210,19 +230,17 @@
                 break;
                 
             case 1:{
+                if (![@"" isEqual:_orderInfo.tracking]) {
+                    [self changeTracking];
+                }
                 
             }
                 break;
                 
             case 2:{
 
-                if ([_orderInfo.paymentMethod isEqual: @"PayPalHere"] && [_orderInfo.status isEqual:@"Q"]) {
-                    QRWPayPalViewController *payPalViewController = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"QRWPayPalViewController"];
-                    payPalViewController.delegate = self;
-                    payPalViewController.priceField.text = NSMoneyString(@"$",_orderInfo.total);
-                    payPalViewController.taxField.text = NSMoneyString(@"$",_orderInfo.shippingCost);
-                    payPalViewController.nameField.text = _orderInfo.customer;
-                    [self presentViewController:payPalViewController animated:YES completion:nil];
+                if (_orderInfo.pphURLString) {
+                    [[[UIAlertView alloc] initWithTitle:QRWLoc(@"PAYPALHERE") message:QRWLoc(@"PAYPALHEREPROCESS") delegate:self cancelButtonTitle:QRWLoc(@"CANCEL") otherButtonTitles:QRWLoc(@"PROCESS"), nil] show];
                 }
             }
                 break;
@@ -233,6 +251,13 @@
                 break;
                 
             case 4:{
+                [self startLoadingAnimation];
+                [QRWDataManager sendUserInfoRequestWithID:[_orderInfo.orderid intValue]
+                                                    block:^(QRWUserInfo *userInfo, NSError *error) {
+                                                        [self stopLoadingAnimation];
+                                                        QRWUserInfoViewController *userInfoViewController = [[QRWUserInfoViewController alloc] initWithUserInfo:userInfo];
+                                                        [self.navigationController pushViewController:userInfoViewController animated:YES];
+                                                    }];
                 
             }
                 break;
@@ -288,6 +313,68 @@
         }
         [self.tableView reloadData];
     }];
+}
+
+
+
+#pragma mark - QRWEditTextView
+
+- (void) changeTracking
+{
+    [_editPriceView.priceTextField becomeFirstResponder];
+    [self moveEditPriceViewToHeight:self.tableView.frame.size.height - kheightOfEditPriceView];
+    [_editPriceView.priceTextField setText:_orderInfo.tracking];
+}
+
+- (void)saveButtonPressedWithPrice:(CGFloat)newPrice
+{
+    [self startLoadingAnimation];
+    [QRWDataManager sendOrderChangeTrackingNumberRequestWithID:[self.orderInfo.orderid intValue] trackingNumber:(int)newPrice block:^(BOOL isSuccess, NSError *error) {
+        [self stopLoadingAnimation];
+        [_editPriceView.priceTextField resignFirstResponder];
+        [self moveEditPriceViewToHeight: self.view.frame.size.height];
+        if (isSuccess){
+            _orderInfo.tracking = [[NSNumber numberWithFloat:newPrice] stringValue];
+            [self showSuccesView];
+        } else {
+            [self showErrorView];
+        }
+    }];
+}
+
+
+- (void) moveEditPriceViewToHeight:(CGFloat) height
+{
+    [UIView animateWithDuration:0.3 animations:^{
+        CGRect frame = _editPriceView.frame;
+        frame.origin.y = height;
+        _editPriceView.frame = frame;
+    }];
+}
+
+
+#pragma mark - PayPal alert
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == alertView.cancelButtonIndex) {
+        [QRWDataManager sendOrderChangeTrackingNumberRequestWithID:[self.orderInfo.orderid intValue] status:@"D" block:^(BOOL isSuccess, NSError *error) {
+            if (isSuccess){
+                _orderInfo.status = @"D";
+                [self showSuccesView];
+                [self.tableView reloadData];
+            } else {
+                [self showErrorView];
+            }
+        }];
+    } else {
+        UIApplication *application = [UIApplication sharedApplication];
+        if ([application canOpenURL:[NSURL URLWithString: _orderInfo.pphURLString]]){
+            [application openURL:[NSURL URLWithString: _orderInfo.pphURLString]];
+        } else {
+            NSURL *url = [NSURL URLWithString:@"itms://itunes.apple.com/us/app/paypal-here/id505911015?mt=8"];
+            [application openURL:url];
+        }
+    }
 }
 
 @end

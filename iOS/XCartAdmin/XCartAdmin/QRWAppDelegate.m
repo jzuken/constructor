@@ -9,6 +9,8 @@
 #import "QRWAppDelegate.h"
 #import "QRWLoginScrinViewController.h"
 #import "QRWUnlockViewController.h"
+#import "QRWDataManager.h"
+#import "QRWOrderInfoViewController.h"
 
 @implementation QRWAppDelegate
 
@@ -21,6 +23,10 @@
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
+     (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+
+    
     _firstEnterViewController = [[QRWLoginScrinViewController alloc] init];
     _appNavigationController = [[UINavigationController alloc] initWithRootViewController:_firstEnterViewController];
     
@@ -32,31 +38,53 @@
     return YES;
 }
 
-- (void)applicationWillResignActive:(UIApplication *)application
+- (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
 {
-    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-    // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+	DLog(@"My token is: %@", deviceToken);
+    
+    if (![[NSUserDefaults standardUserDefaults] objectForKey:@"isTokenWasSent"]) {
+        NSString *stringDeviceToken = [[[[deviceToken description]
+                                         stringByReplacingOccurrencesOfString: @"<" withString: @""]
+                                        stringByReplacingOccurrencesOfString: @">" withString: @""]
+                                       stringByReplacingOccurrencesOfString: @" " withString: @""];
+        
+        [QRWDataManager sendPushTokenAuthorization:stringDeviceToken
+                                            block:^(BOOL isAuth, NSError *error) {
+                                                if (isAuth) {
+                                                    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:@"isTokenWasSent"];
+                                                }
+                                            }];
+    }
 }
 
-- (void)applicationDidEnterBackground:(UIApplication *)application
+- (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
 {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+	DLog(@"Failed to get token, error: %@", error);
 }
 
-- (void)applicationWillEnterForeground:(UIApplication *)application
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-    [QRWUnlockViewController showUnlockView];
+    DLog(@"%@", userInfo);
+    NSDictionary *pushInfo = (NSDictionary *)[userInfo objectForKey:@"data"];
+    
+    NSArray *viewControllers = [(UINavigationController *)[self.window rootViewController] viewControllers];
+    
+    UIViewController *topViewController = [viewControllers lastObject];
+
+    if ([@"New order received" isEqual:[pushInfo objectForKey:@"message"]]) {
+        
+    }
+    [QRWDataManager sendOrderInfoRequestWithID:(int)[pushInfo objectForKey:@"data"] block:^(QRWOrderInfo *order, NSError *error) {
+        QRWOrderInfoViewController *orderInfoViewController = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"QRWOrderInfoViewController"];
+        [topViewController.navigationController pushViewController:orderInfoViewController animated:YES];
+        [orderInfoViewController setOrderInfo:order];
+    }];
 }
 
-- (void)applicationDidBecomeActive:(UIApplication *)application
-{
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-}
 
-- (void)applicationWillTerminate:(UIApplication *)application
-{
-    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-}
+
+
+
 
 @end

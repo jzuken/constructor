@@ -8,6 +8,9 @@
 
 #import "QRWPayPalViewController.h"
 
+CGSize keyboardSize;
+int keyboardHidden;      // 0 @ initialization, 1 if shown, 2 if hidden
+
 @interface QRWPayPalViewController ()
 
 @end
@@ -22,7 +25,36 @@
     self.quantityField.delegate = self;
     self.nameField.delegate = self;
     self.descriptionField.delegate = self;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(noticeShowKeyboard:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(noticeHideKeyboard:) name:UIKeyboardWillHideNotification object:nil];
 }
+
+
+-(void) noticeShowKeyboard:(NSNotification *)inNotification {
+    keyboardSize = [[[inNotification userInfo] objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    keyboardHidden = 1;
+    [self layoutSubviews];        // Not sure if it is called automatically, so I called it
+    
+    
+}
+-(void) noticeHideKeyboard:(NSNotification *)inNotification {
+    keyboardHidden = 2;
+    [self layoutSubviews];       // Not sure if it is called automatically, so I called it
+    
+}
+
+- (void) layoutSubviews
+{
+    UIScrollView *scrollview = self.mainScroolView;
+    if(keyboardHidden == 1) {
+        scrollview.frame = CGRectMake(scrollview.frame.origin.x, scrollview.frame.origin.y, scrollview.frame.size.width, scrollview.frame.size.height + keyboardSize.height);
+    }
+    else if(keyboardHidden == 2) {
+        scrollview.frame = CGRectMake(scrollview.frame.origin.x, scrollview.frame.origin.y, scrollview.frame.size.width, scrollview.frame.size.height - keyboardSize.height);
+    }
+}
+
 
 - (void)didReceiveMemoryWarning
 {

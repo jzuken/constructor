@@ -886,6 +886,9 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Ivan Afanasiev";
 				TargetAttributes = {
+					7F9F99EE1815604500AB3EF5 = {
+						DevelopmentTeam = 2J3UD2G26R;
+					};
 					7F9F9A091815604600AB3EF5 = {
 						TestTargetID = 7F9F99EE1815604500AB3EF5;
 					};
@@ -1172,12 +1175,14 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Mobtekh OOO (2J3UD2G26R)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "XCartAdmin/XCartAdmin-Prefix.pch";
 				INFOPLIST_FILE = "XCartAdmin/XCartAdmin-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				VALID_ARCHS = "armv7 armv7s arm64";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1189,12 +1194,14 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Mobtekh OOO (2J3UD2G26R)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "XCartAdmin/XCartAdmin-Prefix.pch";
 				INFOPLIST_FILE = "XCartAdmin/XCartAdmin-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				VALID_ARCHS = "armv7 armv7s arm64";
 				WRAPPER_EXTENSION = app;
 			};

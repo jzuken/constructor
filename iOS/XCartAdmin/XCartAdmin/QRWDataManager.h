@@ -27,6 +27,10 @@
                                                       block: (void (^)(BOOL isAuth, NSString *description, NSError *error))block;
 
 
++ (NSURLSessionDataTask *)sendPushTokenAuthorization:(NSString *)token
+                                               block:(void (^)(BOOL isAuth, NSError *error))block;
+
+
 //  ----------------- DASHBOARD --------------------------
 
 + (NSURLSessionDataTask *)sendDashboardRequestWithBlock: (void (^)(QRWDashboardEntety *dashboardEntety, NSError *error))block;
@@ -99,6 +103,14 @@
                                                block:(void (^)(QRWOrderInfo *order, NSError *error))block;
 
 
+
++ (NSURLSessionDataTask *)sendOrderChangeTrackingNumberRequestWithID:(NSInteger)orderID
+                                                      trackingNumber:(NSInteger)trackingNumber
+                                                               block:(void (^)(BOOL isSuccess, NSError *error))block;
+
++ (NSURLSessionDataTask *)sendOrderChangeTrackingNumberRequestWithID:(NSInteger)orderID
+                                                              status:(NSString *)status
+                                                               block:(void (^)(BOOL isSuccess, NSError *error))block;
 
 
 

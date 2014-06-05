@@ -535,7 +535,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AqM-4g-jYX">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AqM-4g-jYX">
                                 <rect key="frame" x="-20" y="64" width="360" height="517"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vrm-A5-Ih3">
@@ -692,6 +692,7 @@
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="descriptionField" destination="JUe-mG-TRr" id="Sbm-by-n5D"/>
+                        <outlet property="mainScroolView" destination="AqM-4g-jYX" id="eUi-43-wIB"/>
                         <outlet property="nameField" destination="614-dR-QOx" id="X6S-eB-r9g"/>
                         <outlet property="priceField" destination="4VS-Tl-tgY" id="NIT-Ab-Hxb"/>
                         <outlet property="quantityField" destination="nqU-3P-IQw" id="pqm-fr-IZ2"/>

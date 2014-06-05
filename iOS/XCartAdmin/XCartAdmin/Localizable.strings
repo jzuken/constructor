@@ -9,6 +9,7 @@
 //Common
 
 "CANCEL" = "Cancel";
+"PROCESS" = "Process";
 "NOT_CORRECT_UNLOCK_KEY_TITLE" = "PIN is not correct!";
 "NOT_CORRECT_UNLOCK_KEY_MESSAGE" = "Please try again";
 
@@ -16,6 +17,7 @@
 
 // Titles
 "ORDERS" = "Orders";
+"ORDER_INFO" = "Order info";
 "PRODUCT_INFO" = "Product info";
 "PRODUCTS" = "Products";
 "REVIEWS" = "Reviews";
@@ -27,6 +29,10 @@
 // Buttons
 "SHOW_FULL" = "Show full";
 "SHOW_SHORT" = "Show short";
+
+//paypal
+"PAYPALHERE" = "PayPal Here";
+"PAYPALHEREPROCESS" = "Process the order by PayPal Here?";
 
 
 //OrdersStatistic
@@ -55,3 +61,4 @@
 "ADDRESS" = "Address";
 "PHONE" = "Phone";
 "FAX" = "Fax";
+

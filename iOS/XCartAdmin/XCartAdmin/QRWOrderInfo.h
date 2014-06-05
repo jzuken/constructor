@@ -10,6 +10,8 @@
 
 @interface QRWOrderInfo : QRWBaseEntety
 
+@property(nonatomic, strong) NSNumber *orderid;
+
 @property(nonatomic, copy) NSArray *items;
 
 @property(nonatomic, copy) NSString *status;
@@ -36,6 +38,8 @@
 @property(nonatomic, copy) NSString *total;
 
 @property(nonatomic, copy) NSString *notes;
+
+@property(nonatomic, copy) NSString *pphURLString;
 
 @end
 

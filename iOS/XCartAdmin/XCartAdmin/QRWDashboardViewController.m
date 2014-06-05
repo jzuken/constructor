@@ -60,7 +60,7 @@
         
         _numberOfOrdersLable.text = [NSString stringWithFormat:@"(%d)", [[dashboardEntety todayOrdersCount] intValue]];
         
-        self.dataArray= [dashboardEntety todayOrders];
+        self.dataArray = [dashboardEntety todayOrders];
         [self.tableView reloadData];
         
         [self stopLoadingAnimation];
@@ -100,6 +100,18 @@
     return 0;
 }
 
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([self.baseCell class])];
+    if (cell == nil) {
+        cell = [[[self.baseCell class] alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:NSStringFromClass([self.baseCell class])];
+    }
+    
+    [self configureCell:cell atIndexPath:indexPath];
+    
+    return cell;
+}
+
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
@@ -109,7 +121,7 @@
     
     cell.textLabel.text = [NSString stringWithFormat:@"%@ %@ (#%d)", order.firstname, order.lastname, [order.orderid intValue]];
     cell.detailTextLabel.text = NSMoneyString(@"$", NSStringFromInt([order.total intValue]));
-
+    cell.detailTextLabel.textColor = kTextBlueColor;
 }
 
 

@@ -19,8 +19,18 @@
     _todayVisitors = [JSON objectForKey:@"today_visitors"];
     _todaySold = [JSON objectForKey:@"today_sold"];
     _reviewsToday = [JSON objectForKey:@"reviews_today"];
-//    [jsonData objectForKey:@"today_orders"];
     _todayOrdersCount = [JSON objectForKey:@"today_orders_count"];
+    
+    NSArray *items = [JSON objectForKey:@"today_orders"];
+    NSMutableArray *itemsSet = [NSMutableArray new];
+    
+    for (NSDictionary *itemDict in items) {
+        QRWOrder *item = [QRWOrder new];
+        [item buildDataByJson:itemDict];
+        [itemsSet addObject:item];
+    }
+    
+    _todayOrders = itemsSet;
     
 }
 

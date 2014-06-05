@@ -51,6 +51,26 @@
 }
 
 
++ (NSURLSessionDataTask *)sendPushTokenAuthorization:(NSString *)token
+                                               block:(void (^)(BOOL isAuth, NSError *error))block
+{
+    NSString *getShop = [NSString stringWithFormat:URL_pushAppend, [QRWSettingsClient getSecurityKey], token, [[UIDevice currentDevice] model], [[UIDevice currentDevice] systemVersion]];
+    
+    return [self sendRequestWithURL:getShop
+                            success:^(NSURLSessionDataTask *__unused task, id JSON) {
+                                DLog(@"Answer for registration is: %@", JSON);
+                                if (block) {
+                                    block(YES, nil);
+                                }
+                            }
+                            failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
+                                DLog(@"Error: %@", error);
+                                if (block) {
+                                    block(NO, error);
+                                }
+                            }];
+}
+
 #pragma mark - Dashboard
 
 
@@ -133,6 +153,49 @@
                             }];
 }
 
+
++ (NSURLSessionDataTask *)sendOrderChangeTrackingNumberRequestWithID:(NSInteger)orderID
+                                                      trackingNumber:(NSInteger)trackingNumber
+                                                               block:(void (^)(BOOL isSuccess, NSError *error))block
+    {
+        NSString *getURL = [NSString stringWithFormat:url_changeTrackingOrdersURLappend, orderID, trackingNumber, [QRWSettingsClient getSecurityKey]];
+        
+        return [self sendRequestWithURL:getURL
+                                success:^(NSURLSessionDataTask *__unused task, id JSON) {
+                                    DLog(@"Json is: %@", JSON);
+                                    if (block) {
+                                        block(YES, nil);
+                                    }
+                                }
+                                failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
+                                    DLog(@"Error: %@", error);
+                                    if (block) {
+                                        block(NO, error);
+                                    }
+                                }];
+}
+
+
++ (NSURLSessionDataTask *)sendOrderChangeTrackingNumberRequestWithID:(NSInteger)orderID
+                                                              status:(NSString *)status
+                                                               block:(void (^)(BOOL isSuccess, NSError *error))block
+{
+    NSString *getURL = [NSString stringWithFormat:url_changeStatusOrdersURLappend, orderID, status, [QRWSettingsClient getSecurityKey]];
+    
+    return [self sendRequestWithURL:getURL
+                            success:^(NSURLSessionDataTask *__unused task, id JSON) {
+                                DLog(@"Json is: %@", JSON);
+                                if (block) {
+                                    block(YES, nil);
+                                }
+                            }
+                            failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
+                                DLog(@"Error: %@", error);
+                                if (block) {
+                                    block(NO, error);
+                                }
+                            }];
+}
 
 #pragma mark - Products
 

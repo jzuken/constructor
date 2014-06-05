@@ -83,7 +83,6 @@
     NSArray *ver = [[UIDevice currentDevice].systemVersion componentsSeparatedByString:@"."];
     if ([[ver objectAtIndex:0] intValue] >= 7) {
         self.navigationController.navigationBar.barTintColor = color;
-        self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
         self.navigationController.navigationBar.translucent = NO;
         if ([kRedColor isEqual:color] || [kYellowColor isEqual:color]) {
             self.navigationController.navigationBar.tintColor = [UIColor blackColor];

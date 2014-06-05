@@ -14,6 +14,8 @@
 {
     [super buildDataByJson:JSON];
     
+    self.orderid = [JSON objectForKey:@"orderid"];
+    
     self.status = [JSON objectForKey:@"status"];
     self.tracking = [JSON objectForKey:@"tracking"];
     self.paymentMethod  = [JSON objectForKey:@"payment_method"];
@@ -40,6 +42,8 @@
     self.paymentSurcharge = [JSON objectForKey:@"payment_surcharge"];
     
     self.notes = [JSON objectForKey:@"customer_notes"];
+    
+    self.pphURLString = [[JSON objectForKey:@"pph_url"] isEqual:@""] ? nil:[JSON objectForKey:@"pph_url"];
     
     NSArray *items = [JSON objectForKey:@"details"];
     NSMutableArray *itemsSet = [NSMutableArray new];
