@@ -78,6 +78,51 @@ public class OrderInfo extends PinSupportNetworkActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        handlePassedData();
+    }
+
+    private void handlePassedData() {
+        Uri data = getIntent().getData();
+
+        if (data != null) {
+            String host = data.getHost();
+
+            if ("paymentResult".equals(host)) {
+                final String type = data.getQueryParameter("Type");
+                final String invoiceId = data.getQueryParameter("InvoiceId");
+
+                try {
+                    new Requester() {
+                        @Override
+                        protected String doInBackground(Void... params) {
+                            return new HttpManager(getBaseContext()).changeStatus(invoiceId, type);
+                        }
+
+                        @Override
+                        protected void onPostExecute(String response) {
+                            super.onPostExecute(response);
+
+                            if (response != null) {
+                                finish();
+                                startActivity(getIntent());
+                            } else {
+                                showConnectionErrorMessage();
+                            }
+                        }
+                    }.execute();
+                } catch (Exception e) {
+                    showConnectionErrorMessage();
+                }
+            }
+        }
+    }
+
+
+    ///
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.order_info, menu);
@@ -244,8 +289,8 @@ public class OrderInfo extends PinSupportNetworkActivity {
             builder.setMessage(R.string.dialog_process_by_paypal_here)
                     .setPositiveButton(R.string.process, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-                            boolean isPayPalHereInstaled = isPackageInstalled("com.paypal.here", OrderInfo.this);
-                            if (isPayPalHereInstaled) {
+                            boolean isPayPalHereInstalled = isPackageInstalled("com.paypal.here", OrderInfo.this);
+                            if (isPayPalHereInstalled) {
                                 try {
                                     Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(obj.getString("pph_url")));
                                     startActivity(browserIntent);

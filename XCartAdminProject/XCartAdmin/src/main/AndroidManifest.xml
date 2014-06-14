@@ -126,6 +126,12 @@
             android:name=".views.OrderInfo"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.XCartAppTheme.Orders">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <data
+                    android:host="paymentResult"
+                    android:scheme="xcartadmin" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".views.UserInfo"

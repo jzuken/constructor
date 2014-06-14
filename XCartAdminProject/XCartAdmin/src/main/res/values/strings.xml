@@ -165,7 +165,7 @@
 Subscriptions expiring in the next %s days</string>
     <string name="incorrect_key">Incorrect key</string>
     <string name="incorrect_shop_url">Incorrect shop url</string>
-    <string name="dialog_process_by_paypal_here" >Process the order by PayPal Here?</string>
+    <string name="dialog_process_by_paypal_here" >Process the order by PayPalHere?</string>
     <string name="process">Process</string>
     <string name="cancel">Cancel</string>
     <string name="date">Date</string>
