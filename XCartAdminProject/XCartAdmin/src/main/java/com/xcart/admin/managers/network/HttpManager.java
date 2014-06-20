@@ -84,6 +84,7 @@ public class HttpManager {
     private static final String IMEI = "imei";
     private static final String IMSI = "imsi";
     private static final String CFGS_ARRAY = "cfgs_array";
+    private static final String PPH_ORDER_DETAILS = "pph_order_details";
 
     // Dev server
     private static final String DEV_SERVER_URL = "http://vm-constructor.cloudapp.net";
@@ -238,6 +239,17 @@ public class HttpManager {
                 .appendQueryParameter(REQUEST, CHANGE_STATUS)
                 .appendQueryParameter(ORDER_ID, id)
                 .appendQueryParameter(STATUS, status)
+                .appendQueryParameter(KEY, key)
+                .build();
+        return get(uri);
+    }
+
+    public String changeStatusPPH(String id, String status, String pphOrderDetails) {
+        Uri uri = Uri.parse(serverUrl).buildUpon()
+                .appendQueryParameter(REQUEST, CHANGE_STATUS)
+                .appendQueryParameter(ORDER_ID, id)
+                .appendQueryParameter(STATUS, status)
+                .appendQueryParameter(PPH_ORDER_DETAILS, pphOrderDetails)
                 .appendQueryParameter(KEY, key)
                 .build();
         return get(uri);

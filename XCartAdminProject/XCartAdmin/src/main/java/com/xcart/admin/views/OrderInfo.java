@@ -41,6 +41,7 @@ import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Set;
 
 public class OrderInfo extends PinSupportNetworkActivity {
 
@@ -53,9 +54,14 @@ public class OrderInfo extends PinSupportNetworkActivity {
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         super.onCreate(savedInstanceState);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        setContentView(R.layout.order_info);
+
         orderIdValue = getIntent().getStringExtra("orderId");
-        setTitle(getResources().getString(R.string.order_id_number) + getIntent().getStringExtra("orderId"));
+        if (orderIdValue == null) {
+            orderIdValue = getIntent().getData().getQueryParameter("OrderNumber");
+        }
+
+        setContentView(R.layout.order_info);
+        setTitle(getResources().getString(R.string.order_id_number) + orderIdValue);
         paymentMethod = (TextView) findViewById(R.id.payment_method);
         deliveryMethod = (TextView) findViewById(R.id.delivery_method);
         billingInfo = (TextView) findViewById(R.id.billing_info);
@@ -90,14 +96,24 @@ public class OrderInfo extends PinSupportNetworkActivity {
             String host = data.getHost();
 
             if ("paymentResult".equals(host)) {
-                final String type = data.getQueryParameter("Type");
-                final String invoiceId = data.getQueryParameter("InvoiceId");
+                final String orderNumber = data.getQueryParameter("OrderNumber");
+
+                Set<String> params = data.getQueryParameterNames();
+                final JSONObject jsonObject = new JSONObject();
+
+                for (String name : params) {
+                    try {
+                        jsonObject.put(name, data.getQueryParameter(name));
+                    } catch (JSONException e) {
+                         e.printStackTrace();
+                    }
+                }
 
                 try {
                     new Requester() {
                         @Override
                         protected String doInBackground(Void... params) {
-                            return new HttpManager(getBaseContext()).changeStatus(invoiceId, type);
+                            return new HttpManager(getBaseContext()).changeStatusPPH(orderNumber, "Unknown", jsonObject.toString());
                         }
 
                         @Override
@@ -105,8 +121,7 @@ public class OrderInfo extends PinSupportNetworkActivity {
                             super.onPostExecute(response);
 
                             if (response != null) {
-                                finish();
-                                startActivity(getIntent());
+                                updateData();
                             } else {
                                 showConnectionErrorMessage();
                             }
@@ -153,7 +168,7 @@ public class OrderInfo extends PinSupportNetworkActivity {
 
     private void updateData() {
         setProgressBarIndeterminateVisibility(Boolean.TRUE);
-        final String orderId = getIntent().getStringExtra("orderId");
+        final String orderId = orderIdValue;
         requester = new Requester() {
 
             @Override
@@ -496,7 +511,7 @@ public class OrderInfo extends PinSupportNetworkActivity {
             new Requester() {
                 @Override
                 protected String doInBackground(Void... params) {
-                    return new HttpManager(getBaseContext()).changeStatus(getIntent().getStringExtra("orderId"), selectedStatus);
+                    return new HttpManager(getBaseContext()).changeStatus(orderIdValue, selectedStatus);
                 }
 
                 @Override
@@ -530,7 +545,7 @@ public class OrderInfo extends PinSupportNetworkActivity {
             new Requester() {
                 @Override
                 protected String doInBackground(Void... params) {
-                    return new HttpManager(getBaseContext()).changeStatus(getIntent().getStringExtra("orderId"), selectedStatus);
+                    return new HttpManager(getBaseContext()).changeStatus(orderIdValue, selectedStatus);
                 }
 
                 @Override
