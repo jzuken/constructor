@@ -57,7 +57,7 @@ public class OrderInfo extends PinSupportNetworkActivity {
 
         orderIdValue = getIntent().getStringExtra("orderId");
         if (orderIdValue == null) {
-            orderIdValue = getIntent().getData().getQueryParameter("OrderNumber");
+            orderIdValue = getIntent().getData().getQueryParameter("Number");
         }
 
         setContentView(R.layout.order_info);
@@ -81,6 +81,7 @@ public class OrderInfo extends PinSupportNetworkActivity {
         setupCustomerItem();
         setupStatusItem();
         setupTrackingNumberItem();
+        cameFromPPH = false;
     }
 
     @Override
@@ -96,8 +97,9 @@ public class OrderInfo extends PinSupportNetworkActivity {
             String host = data.getHost();
 
             if ("paymentResult".equals(host)) {
-                final String orderNumber = data.getQueryParameter("OrderNumber");
+                cameFromPPH = true;
 
+                final String orderNumber = data.getQueryParameter("Number");
                 Set<String> params = data.getQueryParameterNames();
                 final JSONObject jsonObject = new JSONObject();
 
@@ -299,7 +301,7 @@ public class OrderInfo extends PinSupportNetworkActivity {
     }
 
     private void proceessByPayPalHere(String paymentMethod, String paymentStatus) {
-        if ((paymentMethod != null && paymentMethod.equals("PayPal Here")) && (paymentStatus != null && paymentStatus.equals("Q"))) {
+        if (!cameFromPPH && (paymentMethod != null && paymentMethod.equals("PayPal Here")) && (paymentStatus != null && paymentStatus.equals("Q"))) {
             AlertDialog.Builder builder = new AlertDialog.Builder(OrderInfo.this);
             builder.setMessage(R.string.dialog_process_by_paypal_here)
                     .setPositiveButton(R.string.process, new DialogInterface.OnClickListener() {
@@ -326,6 +328,7 @@ public class OrderInfo extends PinSupportNetworkActivity {
                     });
             builder.create().show();
         }
+        cameFromPPH = false;
     }
 
 
@@ -642,4 +645,5 @@ public class OrderInfo extends PinSupportNetworkActivity {
     private String statusSymbol;
     private String userId;
     private String userName;
+    private Boolean cameFromPPH;
 }
