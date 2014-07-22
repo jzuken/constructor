@@ -16,22 +16,15 @@
 @implementation QRWUnlockViewController
 
 
-+(void)showUnlockView
++(void)showUnlockViewOnViewController:(UIViewController *)viewController
 {
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"QRW_PINenabled"]) {
         static QRWUnlockViewController *unlockViewController = nil;
         unlockViewController = [[QRWUnlockViewController alloc] init];
-        CGRect frame = unlockViewController.view.frame;
-        frame.origin.y = frame.size.height;
-        unlockViewController.view.frame = frame;
-        
-        [[[UIApplication sharedApplication] keyWindow] addSubview:unlockViewController.view];
-        
-        [UIView animateWithDuration:0.5 animations:^{
-            CGRect frame = unlockViewController.view.frame;
-            frame.origin.y -= frame.size.height;
-            unlockViewController.view.frame = frame;
-        }];
+
+        [viewController presentViewController:unlockViewController
+                                                         animated:YES
+                                                       completion:nil];
     }
 }
 
@@ -52,7 +45,7 @@
     }
     
     if ([[QRWSettingsClient getUnlockKey] isEqual:currentPIN]) {
-        [self dismissSelf];
+        [self dismissViewControllerAnimated:YES completion:nil];
     } else {
         [[[UIAlertView alloc] initWithTitle:QRWLoc(@"NOT_CORRECT_UNLOCK_KEY_TITLE")
                                     message:QRWLoc(@"NOT_CORRECT_UNLOCK_KEY_MESSAGE")
@@ -61,18 +54,6 @@
                           otherButtonTitles: nil]
          show];
     }
-}
-
-
--(void)dismissSelf
-{
-    [UIView animateWithDuration:0.5 animations:^{
-        CGRect frame = self.view.frame;
-        frame.origin.y = frame.size.height;
-        self.view.frame = frame;
-    } completion:^(BOOL finished) {
-        [self.view removeFromSuperview];
-    }];
 }
 
 

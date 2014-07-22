@@ -11,6 +11,7 @@
 #import "QRWUnlockViewController.h"
 #import "QRWDataManager.h"
 #import "QRWOrderInfoViewController.h"
+#import "QRWSettingsClient.h"
 
 @implementation QRWAppDelegate
 
@@ -22,6 +23,8 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
+    
+    [QRWSettingsClient saveUnlockKey:@"0000"];
     
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
      (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
@@ -82,9 +85,20 @@
     }];
 }
 
+- (void)applicationWillEnterForeground:(UIApplication *)application
+{
+    [QRWUnlockViewController showUnlockViewOnViewController:[QRWAppDelegate topMostController]];
+}
 
 
-
++ (UIViewController*)topMostController
+{
+    UIViewController *topController = [UIApplication sharedApplication].keyWindow.rootViewController;
+    while (topController.presentedViewController) {
+        topController = topController.presentedViewController;
+    }
+    return topController;
+}
 
 
 @end
