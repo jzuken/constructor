@@ -51,4 +51,22 @@
 }
 
 
+
++ (void)showConnectionErrorAlert
+{
+    [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"RELOGIN_ALERT_TITLE", nil)
+                                                    message:NSLocalizedString(@"RELOGIN_ALERT_MESSAGE", nil)
+                                                   delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil)
+                                          otherButtonTitles:nil, nil] show];
+}
+
+
++ (void)showAuthErrorAlert
+{
+    [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"AUTH_ERROR_ALERT_TITLE", nil)
+                                message:NSLocalizedString(@"AUTH_ERROR_ALERT_MESSAGE", nil)
+                               delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil)
+                      otherButtonTitles:nil, nil] show];
+}
+
 @end

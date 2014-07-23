@@ -8,6 +8,7 @@
 
 #import "QRWLoginScrinViewController.h"
 #import "QRWDashboardViewController.h"
+#import "QRWSettingsClient.h"
 
 #import <QuartzCore/QuartzCore.h>
 
@@ -71,10 +72,9 @@
 - (IBAction)scanQRInClick:(id)sender
 {
     DLog(@"Scanning..");
-//    _loginTextField.text = @"Scanning..";
     
     ZBarReaderViewController *codeReader = [ZBarReaderViewController new];
-    codeReader.readerDelegate=self;
+    codeReader.readerDelegate = self;
     codeReader.supportedOrientationsMask = ZBarOrientationMaskAll;
     
     ZBarImageScanner *scanner = codeReader.scanner;
@@ -126,23 +126,17 @@
 - (void)respondsForAuthRequest:(BOOL)isAccepted
 {
     [self stopLoadingAnimation];
-//    if (isAccepted) {
-//        [_loginTextField resignFirstResponder];
-//        [_passwordTextField resignFirstResponder];
-//        
-//        QRWDashboardViewController *dashboardViewController = [[QRWDashboardViewController alloc] init];
-//        [self.navigationController pushViewController:dashboardViewController animated:YES];
-//    } else {
-//        [_passwordTextField setText:@""];
-//        [_loginTextField setText:@""];
-//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"RELOGIN_ALERT_TITLE", nil)
-//                                                        message:NSLocalizedString(@"RELOGIN_ALERT_MESSAGE", nil)
-//                                                       delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil)
-//                                              otherButtonTitles:nil, nil];
-//        [alert show];
-//    }
-    QRWDashboardViewController *dashboardViewController = [[QRWDashboardViewController alloc] init];
-    [self.navigationController pushViewController:dashboardViewController animated:YES];
+    if (isAccepted) {
+        [_loginTextField resignFirstResponder];
+        [_passwordTextField resignFirstResponder];
+        
+        QRWDashboardViewController *dashboardViewController = [[QRWDashboardViewController alloc] init];
+        [self.navigationController pushViewController:dashboardViewController animated:YES];
+    } else {
+        [_passwordTextField setText:@""];
+        [_loginTextField setText:@""];
+        [QRWSettingsClient showAuthErrorAlert];
+    }
 }
 
 #pragma mark - Text Field

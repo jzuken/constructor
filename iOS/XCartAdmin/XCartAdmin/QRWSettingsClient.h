@@ -25,5 +25,8 @@
 + (void)saveUnlockKey:(NSString *)unlockKey;
 + (NSString *)getUnlockKey;
 
++ (void)showConnectionErrorAlert;
++ (void)showAuthErrorAlert;
+
 
 @end

@@ -62,3 +62,7 @@
 "PHONE" = "Phone";
 "FAX" = "Fax";
 
+"RELOGIN_ALERT_TITLE" = "Connection error";
+"RELOGIN_ALERT_MESSAGE" = "Please check you connection";
+"AUTH_ERROR_ALERT_TITLE" = "Auth error";
+"AUTH_ERROR_ALERT_MESSAGE" = "Please check your auth data";
