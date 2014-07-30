@@ -18,7 +18,7 @@ static const NSInteger kHeightOfListRows = 70;
 
 //static NSString *const kTestUsername = @"elengor91@gmail.com";
 static NSString *const kTestUsername = @"mobileadmin.x-cart.com";
-static NSString *const kTestPassword = @"D7PMJ9SY";
+static NSString *const kTestPassword = @"8WXE1NGH";//@"D7PMJ9SY";
 //static NSString *const kTestPassword = @"hgD4pH0";
 
 static const NSInteger kSideOfToolView = 140;

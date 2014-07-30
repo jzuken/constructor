@@ -26,8 +26,8 @@
     
     [QRWSettingsClient saveUnlockKey:@"0000"];
     
-    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
-     (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+//    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
+//     (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
 
     
     _firstEnterViewController = [[QRWLoginScrinViewController alloc] init];
