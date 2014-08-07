@@ -31,6 +31,8 @@
     [super viewDidLoad];
     
     self.baseCell = [QRWProductCell new];
+    self.noResultsText = QRWLoc(@"NORES_PRODUCTS");
+    
     [_productsTypeSegmentedControl addTarget:self action:@selector(segmentedControlTaped) forControlEvents:UIControlEventValueChanged];
 
     self.requestSearchBar.backgroundColor = kGreyColor;

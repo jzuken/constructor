@@ -22,6 +22,7 @@
 {
     [super viewDidLoad];
     self.baseCell = [QRWReviewCell new];
+    self.noResultsText = QRWLoc(@"NORES_REVIEWS");
     
     self.requestSearchBar.backgroundColor = kYellowColor;
 }

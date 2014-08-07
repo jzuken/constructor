@@ -11,6 +11,7 @@
 #import "QRWPayPalViewController.h"
 #import "QRWEditPriceView.h"
 #import "QRWUserInfoViewController.h"
+#import "QRWProductInfoViewController.h"
 
 @interface QRWOrderInfoViewController ()<QRWPayPalViewControllerDelegate, QRWEditPriceViewDelegate, UIAlertViewDelegate>
 
@@ -74,12 +75,7 @@
             case 1:{
                 cell = [tableView dequeueReusableCellWithIdentifier:@"QRWOrderInfoTableViewCellFixed"];
                 [cell configurateAsCellWithKey:@"Tracking number" value:_orderInfo.tracking];
-                if (![@"" isEqual:_orderInfo.tracking]) {
-                    [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
-                } else {
-                    [cell setAccessoryType:UITableViewCellAccessoryNone];
-                }
-                
+                [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
             }
                 break;
                 
@@ -230,10 +226,7 @@
                 break;
                 
             case 1:{
-                if (![@"" isEqual:_orderInfo.tracking]) {
-                    [self changeTracking];
-                }
-                
+                [self changeTracking];
             }
                 break;
                 
@@ -262,6 +255,15 @@
             }
                 break;
         }
+    } else if (indexPath.section == 1) {
+        [self startLoadingAnimation];
+        [QRWDataManager sendProductInfoRequestWithID:[[(QRWProduct *)self.dataArray[indexPath.section] productid] integerValue]
+                                               block:^(QRWProductWithInfo *product, NSError *error) {
+                                                   [self stopLoadingAnimation];
+                                                   QRWProductInfoViewController *productInfoViewController = [[QRWProductInfoViewController alloc] initWithProduct:product];
+                                                   [self.navigationController pushViewController:productInfoViewController animated:YES];
+                                               }];
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
     }
 }
 

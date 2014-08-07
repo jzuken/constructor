@@ -140,9 +140,7 @@
 
 - (IBAction)todaySalesClicked:(id)sender
 {
-    if (!_ordersViewController) {
-        _ordersViewController = [[QRWOrdersViewController alloc] init];
-    }
+    _ordersViewController = [[QRWOrdersViewController alloc] init];
     [self.navigationController pushViewController:_ordersViewController animated:YES];
 }
 

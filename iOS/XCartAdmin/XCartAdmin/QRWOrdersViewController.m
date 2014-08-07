@@ -23,6 +23,7 @@
 {
     [super viewDidLoad];
     self.baseCell = [QRWOrdersCell new];
+    self.noResultsText = QRWLoc(@"NORES_ORDERS");
     self.datesTypeArray = @[@"today", @"week", @"month", @"all"];
     
     self.requestSearchBar.backgroundColor = kRedColor;
@@ -106,7 +107,7 @@
     
     [(QRWOrdersCell *)cell nameLabel].text = [NSString stringWithFormat:@"%@ %@ (#%d)", order.firstname, order.lastname, [order.orderid intValue]];
     [(QRWOrdersCell *)cell dateLabel].text = [NSString stringWithFormat:@"%@\n%@", order.month, order.day];
-    [(QRWOrdersCell *)cell priceLabel].text = NSMoneyString(@"$", NSStringFromInt([order.total intValue]));
+    [(QRWOrdersCell *)cell priceLabel].text = NSMoneyString(@"$", NSStringFromFloat([order.total floatValue]));
     
     [(QRWOrdersCell *)cell statusLabel].text = QRWLoc(order.status);
     [(QRWOrdersCell *)cell statusLabel].textColor = [_statusColorsDictionary objectForKey: order.status];

@@ -10,6 +10,8 @@
 
 @interface QRWBaseViewControllerWithTableView ()
 
+@property (strong, nonatomic) UILabel *noResultsLabel;
+
 @end
 
 
@@ -59,6 +61,13 @@
     [self.tableView reloadData];
     [self stopAllAnimations];
     self.tableView.showsInfiniteScrolling = (array.count == kNumberOfLoadedItems);
+    
+    if (0 == array.count) {
+        [self addNoResultsLabel];
+    } else {
+        [self.noResultsLabel removeFromSuperview];
+        self.tableView.hidden = NO;
+    }
 }
 
 - (void)stopAllAnimations
@@ -66,6 +75,19 @@
     [self stopLoadingAnimation];
     [self.tableView.pullToRefreshView stopAnimating];
     [self.tableView.infiniteScrollingView stopAnimating];
+}
+
+- (void)addNoResultsLabel
+{
+    [self.noResultsLabel removeFromSuperview];
+    self.noResultsLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 150, 50)];
+    self.noResultsLabel.text = self.noResultsText;
+    self.noResultsLabel.numberOfLines = 0;
+    self.noResultsLabel.textAlignment = NSTextAlignmentCenter;
+    [self.noResultsLabel setCenter:self.view.center];
+    
+    self.tableView.hidden = YES;
+    [self.view addSubview:self.noResultsLabel];
 }
 
 #pragma mark - TableView methods

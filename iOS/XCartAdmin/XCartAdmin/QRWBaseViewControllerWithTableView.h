@@ -20,7 +20,9 @@
 
 @property (strong, nonatomic) IBOutlet UISearchBar *requestSearchBar;
 
-@property (nonatomic, strong) NSArray *dataArray;
+@property (nonatomic, copy) NSArray *dataArray;
+
+@property (nonatomic, copy) NSString *noResultsText;
 
 @property (nonatomic, strong) UITableViewCell *baseCell;
 

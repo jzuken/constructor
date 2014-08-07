@@ -13,6 +13,11 @@
 "NOT_CORRECT_UNLOCK_KEY_TITLE" = "PIN is not correct!";
 "NOT_CORRECT_UNLOCK_KEY_MESSAGE" = "Please try again";
 
+//NO RESULTS
+"NORES_ORDERS" = "No orders for selected period";
+"NORES_REVIEWS" = "No reviews";
+"NORES_VISITORS" = "No visitors today";
+"NORES_PRODUCTS" = "No products";
 
 
 // Titles

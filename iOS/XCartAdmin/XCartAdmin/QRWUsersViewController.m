@@ -23,6 +23,7 @@
     [super viewDidLoad];
     
     self.baseCell = [QRWUserCell new];
+    self.noResultsText = QRWLoc(@"NORES_VISITORS");
     
     self.requestSearchBar.backgroundColor = kBlueColor;
     
