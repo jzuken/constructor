@@ -15,7 +15,8 @@
 
 + (void)saveUnlockKey:(NSString *)unlockKey
 {
-    [[NSUserDefaults standardUserDefaults] setObject:unlockKey forKey:@"QRW_unlockKey"];
+    [[NSUserDefaults standardUserDefaults] setObject:unlockKey
+                                              forKey:@"QRW_unlockKey"];
 }
 
 + (NSString *)getUnlockKey
@@ -25,23 +26,26 @@
 
 + (void)saveSecurityKey:(NSString *)securityKey
 {
-    
+    [[NSUserDefaults standardUserDefaults] setObject:securityKey
+                                              forKey:@"QRW_securityKey"];
 }
 
 + (NSString *)getSecurityKey
 {
-    return @"8WXE1NGH";//@"D7PMJ9SY";//@"FQMTED8L";
+//    return @"8WXE1NGH";//@"D7PMJ9SY";//@"FQMTED8L";
+    return [[NSUserDefaults standardUserDefaults] objectForKey:@"QRW_securityKey"];
 }
 
-+ (void)saveBaseUrl: (NSURL *) baseUrl
++ (void)saveBaseUrl:(NSString *)baseUrl
 {
-    [[NSUserDefaults standardUserDefaults] setObject:baseUrl forKey:@"QRW_baseUrl"];
+    [[NSUserDefaults standardUserDefaults] setObject:[NSString stringWithFormat:@"https://%@/", baseUrl]
+                                              forKey:@"QRW_baseUrl"];
 }
 
 + (NSURL *)getBaseUrl
 {
-//    return [[NSUserDefaults standardUserDefaults] objectForKey:@"QRW_baseUrl"];
-    return [NSURL URLWithString:@"https://mobileadmin.x-cart.com/"];
+    return [NSURL URLWithString:[[NSUserDefaults standardUserDefaults] objectForKey:@"QRW_baseUrl"]];
+//    return [NSURL URLWithString:@"https://mobileadmin.x-cart.com/"];
 }
 
 

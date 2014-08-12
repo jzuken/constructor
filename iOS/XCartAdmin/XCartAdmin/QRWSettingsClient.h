@@ -15,7 +15,7 @@
 + (NSString *)getSecurityKey;
 
 
-+ (void)saveBaseUrl: (NSURL *) baseUrl;
++ (void)saveBaseUrl:(NSString *)baseUrl;
 + (NSURL *)getBaseUrl;
 
 

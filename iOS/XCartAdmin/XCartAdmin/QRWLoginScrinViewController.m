@@ -61,11 +61,12 @@
 - (IBAction)signInClick:(id)sender
 {
     [self startLoadingAnimation];
-    [QRWDataManager sendAuthorizationRequestWithLogin:_loginTextField.text
-                                          andPassowrd:_passwordTextField.text
-                                                block:^(BOOL isAuth, NSString *description, NSError *error) {
-                                                    [self respondsForAuthRequest:isAuth];
-    }];
+//    [QRWDataManager sendAuthorizationRequestWithLogin:_loginTextField.text
+//                                          andPassowrd:_passwordTextField.text
+//                                                block:^(BOOL isAuth, NSString *description, NSError *error) {
+//                                                    [self respondsForAuthRequest:isAuth error:error];
+//    }];
+    [self respondsForAuthRequest:YES error:nil];
 }
 
 
@@ -123,19 +124,26 @@
 
 #pragma mark - dataManager delegate
 
-- (void)respondsForAuthRequest:(BOOL)isAccepted
+- (void)respondsForAuthRequest:(BOOL)isAccepted error:(NSError *)error
 {
     [self stopLoadingAnimation];
     if (isAccepted) {
         [_loginTextField resignFirstResponder];
         [_passwordTextField resignFirstResponder];
         
+        [QRWSettingsClient saveBaseUrl:_loginTextField.text];
+        [QRWSettingsClient saveSecurityKey:_passwordTextField.text];
+        
         QRWDashboardViewController *dashboardViewController = [[QRWDashboardViewController alloc] init];
         [self.navigationController pushViewController:dashboardViewController animated:YES];
     } else {
         [_passwordTextField setText:@""];
         [_loginTextField setText:@""];
-        [QRWSettingsClient showAuthErrorAlert];
+        if (error) {
+            [QRWSettingsClient showConnectionErrorAlert];
+        } else {
+            [QRWSettingsClient showAuthErrorAlert];
+        }
     }
 }
 

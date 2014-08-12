@@ -321,7 +321,7 @@
 
 #pragma mark - QRWEditTextView
 
-- (void) changeTracking
+- (void)changeTracking
 {
     [_editPriceView.priceTextField becomeFirstResponder];
     [self moveEditPriceViewToHeight:self.tableView.frame.size.height - kheightOfEditPriceView];
@@ -337,6 +337,7 @@
         [self moveEditPriceViewToHeight: self.view.frame.size.height];
         if (isSuccess){
             _orderInfo.tracking = [[NSNumber numberWithFloat:newPrice] stringValue];
+            [self.tableView reloadData];
             [self showSuccesView];
         } else {
             [self showErrorView];
