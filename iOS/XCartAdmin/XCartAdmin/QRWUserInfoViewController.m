@@ -93,7 +93,7 @@
 {
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (indexPath.section == 1) {
-        [QRWDataManager sendOrderInfoRequestWithID:[[(QRWOrder *)self.dataArray[indexPath.section] orderid] integerValue] block:^(QRWOrderInfo *order, NSError *error) {
+        [QRWDataManager sendOrderInfoRequestWithID:[[(QRWOrder *)self.dataArray[indexPath.row] orderid] intValue] block:^(QRWOrderInfo *order, NSError *error) {
             QRWOrderInfoViewController *orderInfoViewController = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"QRWOrderInfoViewController"];
             [self.navigationController pushViewController:orderInfoViewController animated:YES];
             [orderInfoViewController setOrderInfo:order];
@@ -167,7 +167,7 @@
         
         [(QRWOrdersCell *)cell nameLabel].text = [NSString stringWithFormat:@"%@ %@ (#%d)", order.firstname, order.lastname, [order.orderid intValue]];
         [(QRWOrdersCell *)cell dateLabel].text = [NSString stringWithFormat:@"%@\n%@", order.month, order.day];
-        [(QRWOrdersCell *)cell priceLabel].text = NSMoneyString(@"$", NSStringFromInt([order.total intValue]));
+        [(QRWOrdersCell *)cell priceLabel].text = NSMoneyString(@"$", NSStringFromFloat([order.total floatValue]));
         
         [(QRWOrdersCell *)cell statusLabel].text = QRWLoc(order.status);
         [(QRWOrdersCell *)cell statusLabel].textColor = [_statusColorsDictionary objectForKey: order.status];

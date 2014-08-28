@@ -74,6 +74,11 @@
 {
     DLog(@"Scanning..");
     
+    if (_isKeyboardBeHide) {
+        [self animateloginBoxUp:NO];
+    }
+    
+    
     ZBarReaderViewController *codeReader = [ZBarReaderViewController new];
     codeReader.readerDelegate = self;
     codeReader.supportedOrientationsMask = ZBarOrientationMaskAll;
@@ -151,13 +156,7 @@
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
-    [UIView animateWithDuration:0.5 animations:^{
-        CGRect frame = self.signInBoxView.frame;
-        
-        frame.origin.y -= kLoginViewUpHeight;
-        
-        self.signInBoxView.frame = frame;
-    }];
+    [self animateloginBoxUp:YES];
     
     _isKeyboardBeHide = YES;
 }
@@ -174,17 +173,25 @@
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    [UIView animateWithDuration:0.5 animations:^{
-        CGRect frame = self.signInBoxView.frame;
-
-        frame.origin.y += kLoginViewUpHeight;
-        
-        self.signInBoxView.frame = frame;
-    }];
+    [self animateloginBoxUp:NO];
     [textField resignFirstResponder];
     _isKeyboardBeHide = NO;
     
     return YES;
+}
+
+- (void)animateloginBoxUp:(BOOL)isUp
+{
+    if (isUp && _isKeyboardBeHide) {
+        return;
+    }
+    [UIView animateWithDuration:0.5 animations:^{
+        CGRect frame = self.signInBoxView.frame;
+        
+        frame.origin.y += isUp? -kLoginViewUpHeight:kLoginViewUpHeight;
+        
+        self.signInBoxView.frame = frame;
+    }];
 }
 
 #pragma mark - GestureRecognizer delegate

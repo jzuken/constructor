@@ -28,15 +28,6 @@
 
 @implementation QRWDashboardViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (id)init
 {
     return [self initWithNibName:@"QRWDashboardViewController" oldNibName:@"QRWDashboardViewControllerOld"];
@@ -48,6 +39,16 @@
     [super viewDidLoad];
     
     self.baseCell = [UITableViewCell new];
+    
+    self.tableView.showsInfiniteScrolling = NO;
+    self.tableView.showsPullToRefresh = NO;
+}
+
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
     
     [self startLoadingAnimation];
     [QRWDataManager sendDashboardRequestWithBlock:^(QRWDashboardEntety *dashboardEntety, NSError *error) {
@@ -65,27 +66,7 @@
         
         [self stopLoadingAnimation];
     }];
-    
-    self.tableView.showsInfiniteScrolling = NO;
-    self.tableView.showsPullToRefresh = NO;
 }
-
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    [self.navigationController setNavigationBarHidden:YES animated:YES];
-}
-
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-}
-
-
-
-
 
 #pragma mark - TableView methods
 
@@ -120,7 +101,7 @@
     [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
     
     cell.textLabel.text = [NSString stringWithFormat:@"%@ %@ (#%d)", order.firstname, order.lastname, [order.orderid intValue]];
-    cell.detailTextLabel.text = NSMoneyString(@"$", NSStringFromInt([order.total intValue]));
+    cell.detailTextLabel.text = NSMoneyString(@"$",NSStringFromFloat([order.total floatValue]));
     cell.detailTextLabel.textColor = kTextBlueColor;
 }
 

@@ -40,6 +40,7 @@
 - (void)setOrderInfo:(QRWOrderInfo *)orderInfo
 {
     _orderInfo = orderInfo;
+    self.dataArray = self.orderInfo.items;
     [self.tableView reloadData];
 }
 
@@ -60,7 +61,7 @@
     
     if (indexPath.section == 1) {
         cell = [tableView dequeueReusableCellWithIdentifier:@"QRWOrderInfoTableViewCellItem"];
-        [cell configurateAsItemCell:_orderInfo.items[indexPath.row]];
+        [cell configurateAsItemCell:self.dataArray[indexPath.row]];
         [cell setAccessoryType:UITableViewCellAccessoryNone];
     }
     if (indexPath.section == 0) {
@@ -233,7 +234,11 @@
             case 2:{
 
                 if (_orderInfo.pphURLString) {
-                    [[[UIAlertView alloc] initWithTitle:QRWLoc(@"PAYPALHERE") message:QRWLoc(@"PAYPALHEREPROCESS") delegate:self cancelButtonTitle:QRWLoc(@"CANCEL") otherButtonTitles:QRWLoc(@"PROCESS"), nil] show];
+                    [[[UIAlertView alloc] initWithTitle:QRWLoc(@"PAYPALHERE")
+                                                message:QRWLoc(@"PAYPALHEREPROCESS")
+                                               delegate:self
+                                      cancelButtonTitle:QRWLoc(@"CANCEL")
+                                      otherButtonTitles:QRWLoc(@"PROCESS"), nil] show];
                 }
             }
                 break;
@@ -245,7 +250,7 @@
                 
             case 4:{
                 [self startLoadingAnimation];
-                [QRWDataManager sendUserInfoRequestWithID:[_orderInfo.orderid intValue]
+                [QRWDataManager sendUserInfoRequestWithID:[_orderInfo.userid intValue]
                                                     block:^(QRWUserInfo *userInfo, NSError *error) {
                                                         [self stopLoadingAnimation];
                                                         QRWUserInfoViewController *userInfoViewController = [[QRWUserInfoViewController alloc] initWithUserInfo:userInfo];
@@ -257,7 +262,7 @@
         }
     } else if (indexPath.section == 1) {
         [self startLoadingAnimation];
-        [QRWDataManager sendProductInfoRequestWithID:[[(QRWProduct *)self.dataArray[indexPath.section] productid] integerValue]
+        [QRWDataManager sendProductInfoRequestWithID:[[(QRWProduct *)self.dataArray[indexPath.row] productid] intValue]
                                                block:^(QRWProductWithInfo *product, NSError *error) {
                                                    [self stopLoadingAnimation];
                                                    QRWProductInfoViewController *productInfoViewController = [[QRWProductInfoViewController alloc] initWithProduct:product];

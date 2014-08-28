@@ -80,7 +80,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
-    [QRWDataManager sendOrderInfoRequestWithID:[[(QRWOrder *)self.dataArray[indexPath.row] orderid] integerValue] block:^(QRWOrderInfo *order, NSError *error) {
+//    DLog(@"Order id is: %@", [(QRWOrder *)self.dataArray[indexPath.row] orderid]);
+    [QRWDataManager sendOrderInfoRequestWithID:[[(QRWOrder *)self.dataArray[indexPath.section] orderid] intValue] block:^(QRWOrderInfo *order, NSError *error) {
         QRWOrderInfoViewController *orderInfoViewController = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"QRWOrderInfoViewController"];
         [self.navigationController pushViewController:orderInfoViewController animated:YES];
         [orderInfoViewController setOrderInfo:order];
