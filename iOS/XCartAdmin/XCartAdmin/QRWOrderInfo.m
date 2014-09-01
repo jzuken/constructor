@@ -23,6 +23,7 @@
     self.title = [JSON objectForKey:@"title"];
     self.customer  = [NSString stringWithFormat:@"%@ %@",JSON[@"firstname"], JSON[@"lastname"]];
     self.userid = [JSON objectForKey:@"userid"];
+    self.date = [JSON objectForKey:@"date"];
     
     
     self.bTitle  = [JSON objectForKey:@"b_title"];

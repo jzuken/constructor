@@ -73,4 +73,10 @@
                       otherButtonTitles:nil, nil] show];
 }
 
+
++ (NSString *)getUserTypeByKey:(NSString *)key
+{
+    NSDictionary *types = @{@"C": @"Customer", @"P": @"Administrator"};
+    return types[key];
+}
 @end

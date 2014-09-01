@@ -12,12 +12,14 @@
 #import "QRWEditPriceView.h"
 #import "QRWUserInfoViewController.h"
 #import "QRWProductInfoViewController.h"
+#import "QRWChoseSomethingViewController.h"
 
 @interface QRWOrderInfoViewController ()<QRWPayPalViewControllerDelegate, QRWEditPriceViewDelegate, UIAlertViewDelegate>
 
 @property (nonatomic, strong) QRWEditPriceView *editPriceView;
 
 @end
+
 
 @implementation QRWOrderInfoViewController
 
@@ -34,12 +36,13 @@
 {
     [super viewDidAppear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
-    [self setNavigationBarColor:kRedColor title: QRWLoc(@"ORDER_INFO")];
 }
 
 - (void)setOrderInfo:(QRWOrderInfo *)orderInfo
 {
     _orderInfo = orderInfo;
+    [self setNavigationBarColor:kRedColor
+                          title:[NSString stringWithFormat:@"%@ #%@", QRWLoc(@"ORDER"), self.orderInfo.orderid]];
     self.dataArray = self.orderInfo.items;
     [self.tableView reloadData];
 }
@@ -100,19 +103,30 @@
                 
             case 4:{
                 cell = [tableView dequeueReusableCellWithIdentifier:@"QRWOrderInfoTableViewCellFixed"];
+                NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+                [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss zzz"];
+                
+                [cell configurateAsCellWithKey:@"Date"
+                                         value:[formatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:[self.orderInfo.date doubleValue]]]];
+                [cell setAccessoryType:UITableViewCellAccessoryNone];
+            }
+                break;
+                
+            case 5:{
+                cell = [tableView dequeueReusableCellWithIdentifier:@"QRWOrderInfoTableViewCellFixed"];
                 [cell configurateAsCellWithKey:@"Customer" value:_orderInfo.customer];
                 [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
             }
                 break;
                 
-            case 5:{
+            case 6:{
                 cell = [tableView dequeueReusableCellWithIdentifier:@"QRWOrderInfoTableViewCellInfo"];
                 [cell configurateAsInfoCellWithKey:@"Billing info" value:_orderInfo.billingInfo phone:_orderInfo.bPhone];
                 [cell setAccessoryType:UITableViewCellAccessoryNone];
             }
                 break;
                 
-            case 6:{
+            case 7:{
                 cell = [tableView dequeueReusableCellWithIdentifier:@"QRWOrderInfoTableViewCellInfo"];
                 [cell configurateAsInfoCellWithKey:@"Shipping info" value:_orderInfo.shippingingInfo phone:_orderInfo.sPhone];
                 [cell setAccessoryType:UITableViewCellAccessoryNone];
@@ -198,7 +212,7 @@
 {
     switch (section) {
         case 0:
-            return 7;
+            return 8;
             break;
             
         case 1:
@@ -222,17 +236,37 @@
         switch (indexPath.row) {
 
             case 0:{
+                QRWChoseSomethingViewController *statusesOptionsViewController = [[QRWChoseSomethingViewController alloc] initWithOptionsDictionary:_statusColorsDictionary.allKeys selectedIndex: [_statusColorsDictionary.allKeys indexOfObject:self.orderInfo.status]
+                                                                                                                                  selectOptionBlock:^(NSString *selectedOption) {
+                    [QRWDataManager sendOrderChangeStatusRequestWithID:[self.orderInfo.orderid intValue]
+                                                                status:selectedOption
+                                                                 block:^(BOOL isSuccess, NSError *error) {
+                                                                        [self stopLoadingAnimation];
+                                                                        if (isSuccess){
+                                                                            [self.navigationController popToViewController:self animated:YES];
+                                                                            _orderInfo.status = selectedOption;
+                                                                            [self showSuccesView];
+                                                                            [self.tableView reloadData];
+                                                                        } else {
+                                                                            [self showErrorView];
+                                                                        }
+                    }];
+                }];
+                statusesOptionsViewController.view.frame = self.view.frame;
+                [self.navigationController pushViewController:statusesOptionsViewController animated:YES];
                 
             }
                 break;
                 
             case 1:{
-                [self changeTracking];
+                if (![_editPriceView.priceTextField isFirstResponder]){
+                    [self changeTracking];
+                }
+                
             }
                 break;
                 
             case 2:{
-
                 if (_orderInfo.pphURLString) {
                     [[[UIAlertView alloc] initWithTitle:QRWLoc(@"PAYPALHERE")
                                                 message:QRWLoc(@"PAYPALHEREPROCESS")
@@ -248,7 +282,7 @@
             }
                 break;
                 
-            case 4:{
+            case 5:{
                 [self startLoadingAnimation];
                 [QRWDataManager sendUserInfoRequestWithID:[_orderInfo.userid intValue]
                                                     block:^(QRWUserInfo *userInfo, NSError *error) {
@@ -362,10 +396,11 @@
 
 
 #pragma mark - PayPal alert
+
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == alertView.cancelButtonIndex) {
-        [QRWDataManager sendOrderChangeTrackingNumberRequestWithID:[self.orderInfo.orderid intValue] status:@"D" block:^(BOOL isSuccess, NSError *error) {
+        [QRWDataManager sendOrderChangeStatusRequestWithID:[self.orderInfo.orderid intValue] status:@"D" block:^(BOOL isSuccess, NSError *error) {
             if (isSuccess){
                 _orderInfo.status = @"D";
                 [self showSuccesView];

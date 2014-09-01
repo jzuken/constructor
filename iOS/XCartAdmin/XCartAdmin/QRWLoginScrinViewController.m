@@ -61,12 +61,12 @@
 - (IBAction)signInClick:(id)sender
 {
     [self startLoadingAnimation];
-//    [QRWDataManager sendAuthorizationRequestWithLogin:_loginTextField.text
-//                                          andPassowrd:_passwordTextField.text
-//                                                block:^(BOOL isAuth, NSString *description, NSError *error) {
-//                                                    [self respondsForAuthRequest:isAuth error:error];
-//    }];
-    [self respondsForAuthRequest:YES error:nil];
+    [QRWDataManager sendAuthorizationRequestWithLogin:_loginTextField.text
+                                          andPassowrd:_passwordTextField.text
+                                                block:^(BOOL isAuth, NSString *description, NSError *error) {
+                                                    [self respondsForAuthRequest:isAuth error:error];
+    }];
+//    [self respondsForAuthRequest:YES error:nil];
 }
 
 

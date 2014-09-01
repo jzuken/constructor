@@ -108,9 +108,11 @@
                                                       trackingNumber:(NSInteger)trackingNumber
                                                                block:(void (^)(BOOL isSuccess, NSError *error))block;
 
-+ (NSURLSessionDataTask *)sendOrderChangeTrackingNumberRequestWithID:(NSInteger)orderID
-                                                              status:(NSString *)status
-                                                               block:(void (^)(BOOL isSuccess, NSError *error))block;
++ (NSURLSessionDataTask *)sendOrderChangeStatusRequestWithID:(NSInteger)orderID
+                                                      status:(NSString *)status
+                                                       block:(void (^)(BOOL isSuccess, NSError *error))block;
+
+
 
 
 

@@ -42,9 +42,16 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     [self setNavigationBarColor:kYellowColor title: QRWLoc(@"REVIEWS")];
     [self loadObjectsWithSearchString:@"" asEmptyArray:0 == self.dataArray.count];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    self.dataArray = [NSArray array];
 }
 
 

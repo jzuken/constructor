@@ -28,5 +28,7 @@
 + (void)showConnectionErrorAlert;
 + (void)showAuthErrorAlert;
 
++ (NSString *)getUserTypeByKey:(NSString *)key;
+
 
 @end

@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		3F448207192CCE0C00AC2BFF /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F448206192CCE0C00AC2BFF /* MainStoryboard.storyboard */; };
 		3F448225192E13E100AC2BFF /* QRWOrderInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F448224192E13E100AC2BFF /* QRWOrderInfo.m */; };
+		3FA7588D19B3F2170071B3A3 /* QRWChoseSomethingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FA7588C19B3F2170071B3A3 /* QRWChoseSomethingViewController.m */; };
+		3FA7588F19B3F94F0071B3A3 /* QRWChoseSomethingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3FA7588E19B3F94F0071B3A3 /* QRWChoseSomethingViewController.xib */; };
+		3FA7589119B3F9BE0071B3A3 /* QRWChoseSomethingViewControllerOld.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3FA7589019B3F9BE0071B3A3 /* QRWChoseSomethingViewControllerOld.xib */; };
 		72E90A0FD5A24E7983C0F0F6 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43D05E16E2D64500ABFC66D8 /* libPods.a */; };
 		7F8173AB1884471400894E16 /* QRWDashboardViewControllerOld.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F8173AA1884471400894E16 /* QRWDashboardViewControllerOld.xib */; };
 		7F8173AD1884488C00894E16 /* QRWProductsViewControllerOld.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F8173AC1884488C00894E16 /* QRWProductsViewControllerOld.xib */; };
@@ -124,6 +127,10 @@
 		3F448206192CCE0C00AC2BFF /* MainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard.storyboard; sourceTree = "<group>"; };
 		3F448223192E13E100AC2BFF /* QRWOrderInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRWOrderInfo.h; sourceTree = "<group>"; };
 		3F448224192E13E100AC2BFF /* QRWOrderInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRWOrderInfo.m; sourceTree = "<group>"; };
+		3FA7588B19B3F2170071B3A3 /* QRWChoseSomethingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRWChoseSomethingViewController.h; sourceTree = "<group>"; };
+		3FA7588C19B3F2170071B3A3 /* QRWChoseSomethingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRWChoseSomethingViewController.m; sourceTree = "<group>"; };
+		3FA7588E19B3F94F0071B3A3 /* QRWChoseSomethingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRWChoseSomethingViewController.xib; sourceTree = "<group>"; };
+		3FA7589019B3F9BE0071B3A3 /* QRWChoseSomethingViewControllerOld.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRWChoseSomethingViewControllerOld.xib; sourceTree = "<group>"; };
 		43D05E16E2D64500ABFC66D8 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F8173AA1884471400894E16 /* QRWDashboardViewControllerOld.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRWDashboardViewControllerOld.xib; sourceTree = "<group>"; };
 		7F8173AC1884488C00894E16 /* QRWProductsViewControllerOld.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRWProductsViewControllerOld.xib; sourceTree = "<group>"; };
@@ -315,9 +322,21 @@
 			name = DashboardCell;
 			sourceTree = "<group>";
 		};
+		3FA7588A19B3DDC10071B3A3 /* QRWChoseSomethingController */ = {
+			isa = PBXGroup;
+			children = (
+				3FA7588B19B3F2170071B3A3 /* QRWChoseSomethingViewController.h */,
+				3FA7588C19B3F2170071B3A3 /* QRWChoseSomethingViewController.m */,
+				3FA7588E19B3F94F0071B3A3 /* QRWChoseSomethingViewController.xib */,
+				3FA7589019B3F9BE0071B3A3 /* QRWChoseSomethingViewControllerOld.xib */,
+			);
+			name = QRWChoseSomethingController;
+			sourceTree = "<group>";
+		};
 		7F8173B61885659C00894E16 /* OrederInfo */ = {
 			isa = PBXGroup;
 			children = (
+				3FA7588A19B3DDC10071B3A3 /* QRWChoseSomethingController */,
 				7F8173B8188565E700894E16 /* QRWOrderInfoViewController.h */,
 				7F8173B9188565E700894E16 /* QRWOrderInfoViewController.m */,
 			);
@@ -924,6 +943,7 @@
 				7F9F9A7418156F2E00AB3EF5 /* QRWDashboardViewController.xib in Resources */,
 				7FBCF2E91880001100594CCD /* QRWProductInfoViewController.xib in Resources */,
 				7FCFD3051869B8AD00F44547 /* QRWUserCell.xib in Resources */,
+				3FA7588F19B3F94F0071B3A3 /* QRWChoseSomethingViewController.xib in Resources */,
 				7F9F99FD1815604600AB3EF5 /* InfoPlist.strings in Resources */,
 				7F9F9A051815604600AB3EF5 /* Images.xcassets in Resources */,
 				7F9F9A591815662100AB3EF5 /* QRWLoginScrinViewController.xib in Resources */,
@@ -954,6 +974,7 @@
 				9624FBCD1883490A007A641D /* logo.png in Resources */,
 				96F4A0C9192049390059CE6B /* QRWReviewInfoViewController.xib in Resources */,
 				7F8173B318844B4500894E16 /* QRWUsersViewControllerOld.xib in Resources */,
+				3FA7589119B3F9BE0071B3A3 /* QRWChoseSomethingViewControllerOld.xib in Resources */,
 				9627FD8F192EC70E001049B6 /* developer.png in Resources */,
 				7FCFD334187D684F00F44547 /* QRWReviewCell.xib in Resources */,
 				7F9F9A5A1815662100AB3EF5 /* QRWLoginScrinViewControllerOld.xib in Resources */,
@@ -1048,6 +1069,7 @@
 				7FCFD3081869BA4000F44547 /* QRWUserCell.m in Sources */,
 				7FCFD30118698F1800F44547 /* QRWSettingsClient.m in Sources */,
 				7FBCF2ED188014DE00594CCD /* QRWProductWithInfo.m in Sources */,
+				3FA7588D19B3F2170071B3A3 /* QRWChoseSomethingViewController.m in Sources */,
 				9627FD8D192EC627001049B6 /* QRWPayPalViewController.m in Sources */,
 				7F8173BB188565E700894E16 /* QRWOrderInfoViewController.m in Sources */,
 				7FCFD32D187D679000F44547 /* QRWReviewsViewController.m in Sources */,
@@ -1174,6 +1196,7 @@
 			baseConfigurationReference = E0041376838B4A02BAD72606 /* Pods.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1193,6 +1216,7 @@
 			baseConfigurationReference = E0041376838B4A02BAD72606 /* Pods.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";

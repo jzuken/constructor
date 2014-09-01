@@ -21,6 +21,7 @@
 @property(nonatomic, copy) NSString *title;
 @property(nonatomic, copy) NSString *customer;
 @property(nonatomic, copy) NSString *userid;
+@property(nonatomic, strong) NSNumber *date;
 
 @property(nonatomic, copy) NSString *bTitle;
 @property(nonatomic, copy) NSString *billingInfo;

@@ -15,6 +15,7 @@
 
 @end
 
+
 @implementation QRWReviewInfoViewController
 
 
@@ -30,9 +31,6 @@
 {
     [super viewDidLoad];
     
-    [self.navigationController setNavigationBarHidden:NO animated:YES];
-    [self setNavigationBarColor:kYellowColor title: self.review.email];
-    
     [self.reviewWebView loadHTMLString:self.review.message baseURL:nil];
     
     [self.deleteButton addTarget:self action:@selector(deleteReview) forControlEvents:UIControlEventTouchUpInside];
@@ -46,6 +44,13 @@
     [[self.productButton layer] setBorderWidth:1.0f];
     [self.productButton.layer setCornerRadius:4.0];
     [self.productButton.layer setBorderColor:[kTextBlueColor CGColor]];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+    [self setNavigationBarColor:kYellowColor title: self.review.email];
 }
 
 

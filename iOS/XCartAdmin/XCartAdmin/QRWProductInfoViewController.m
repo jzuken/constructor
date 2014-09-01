@@ -45,6 +45,7 @@
     _inStock.text = NSStringFromInt([_product.available intValue]);
     
     [self setDescription];
+    [self.descriptionWebView.scrollView setScrollEnabled:NO];
     
     [_priceButton setTitle:NSMoneyString(@"$", NSStringFromFloat([_product.price floatValue])) forState:UIControlStateNormal];
     [[_priceButton layer] setBorderWidth:1.0f];

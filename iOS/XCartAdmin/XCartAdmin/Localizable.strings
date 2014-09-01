@@ -23,6 +23,7 @@
 // Titles
 "ORDERS" = "Orders";
 "ORDER_INFO" = "Order info";
+"ORDER" = "Order";
 "PRODUCT_INFO" = "Product info";
 "PRODUCTS" = "Products";
 "REVIEWS" = "Reviews";

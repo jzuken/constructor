@@ -9,6 +9,7 @@
 #import "QRWUsersViewController.h"
 #import "QRWUserInfoViewController.h"
 #import "QRWUserCell.h"
+#import "QRWSettingsClient.h"
 
 @interface QRWUsersViewController ()
 
@@ -30,10 +31,6 @@
     [self loadObjectsWithSearchString:@"" asEmptyArray:YES];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-}
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -85,7 +82,7 @@
 {
     QRWUser *user = [self.dataArray objectAtIndex:indexPath.section];
     [(QRWUserCell *)cell emailLabel].text = user.email;
-    [(QRWUserCell *)cell userTypeLabel].text = user.usertype;
+    [(QRWUserCell *)cell userTypeLabel].text = [QRWSettingsClient getUserTypeByKey:user.usertype];
     [(QRWUserCell *)cell lastLoginLabel].text = user.lastLogin;
 }
 
