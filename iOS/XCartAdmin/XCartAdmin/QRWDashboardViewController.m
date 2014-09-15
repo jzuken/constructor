@@ -13,6 +13,7 @@
 #import "QRWProductsViewController.h"
 #import "QRWOrdersViewController.h"
 #import "QRWOrderInfoViewController.h"
+#import "QRWInfoViewController.h"
 
 @interface QRWDashboardViewController ()
 
@@ -158,4 +159,10 @@
     [_productsViewController setIsLowStock:YES];
     [self.navigationController pushViewController:_productsViewController animated:YES];
 }
+
+- (IBAction)infoClicked:(id)sender
+{
+    [self.navigationController pushViewController:[[QRWInfoViewController alloc] init] animated:YES];
+}
+
 @end

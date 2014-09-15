@@ -80,6 +80,14 @@
 		7FCFD32E187D679000F44547 /* QRWReviewsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FCFD32C187D679000F44547 /* QRWReviewsViewController.xib */; };
 		7FCFD332187D682F00F44547 /* QRWReviewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FCFD331187D682F00F44547 /* QRWReviewCell.m */; };
 		7FCFD334187D684F00F44547 /* QRWReviewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FCFD333187D684F00F44547 /* QRWReviewCell.xib */; };
+		9621FEB819C79CEF0017FDCE /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 9621FEB719C79CEF0017FDCE /* settings.png */; };
+		9621FEBA19C79D660017FDCE /* infoIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9621FEB919C79D660017FDCE /* infoIcon.png */; };
+		9621FEBE19C7A0E70017FDCE /* world-globe03-512x512.png in Resources */ = {isa = PBXBuildFile; fileRef = 9621FEBB19C7A0E70017FDCE /* world-globe03-512x512.png */; };
+		9621FEBF19C7A0E70017FDCE /* USAIcon.ico in Resources */ = {isa = PBXBuildFile; fileRef = 9621FEBC19C7A0E70017FDCE /* USAIcon.ico */; };
+		9621FEC019C7A0E70017FDCE /* UKIcon.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 9621FEBD19C7A0E70017FDCE /* UKIcon.jpeg */; };
+		9621FEC319C7A2E60017FDCE /* facebook_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9621FEC119C7A2E60017FDCE /* facebook_icon.png */; };
+		9621FEC419C7A2E60017FDCE /* twitter_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9621FEC219C7A2E60017FDCE /* twitter_icon.png */; };
+		9621FEC819C7A3DF0017FDCE /* QRWInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9621FEC719C7A3DF0017FDCE /* QRWInfoViewController.m */; };
 		9624FBB91880A1EA007A641D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9624FBB81880A1EA007A641D /* Localizable.strings */; };
 		9624FBBB1880CF6B007A641D /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 9624FBBA1880CF6B007A641D /* Podfile */; };
 		9624FBC11880D0A9007A641D /* QRWUserInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9624FBBF1880D0A9007A641D /* QRWUserInfoViewController.m */; };
@@ -240,6 +248,15 @@
 		7FCFD330187D682F00F44547 /* QRWReviewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRWReviewCell.h; sourceTree = "<group>"; };
 		7FCFD331187D682F00F44547 /* QRWReviewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRWReviewCell.m; sourceTree = "<group>"; };
 		7FCFD333187D684F00F44547 /* QRWReviewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRWReviewCell.xib; sourceTree = "<group>"; };
+		9621FEB719C79CEF0017FDCE /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings.png; sourceTree = "<group>"; };
+		9621FEB919C79D660017FDCE /* infoIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = infoIcon.png; sourceTree = "<group>"; };
+		9621FEBB19C7A0E70017FDCE /* world-globe03-512x512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "world-globe03-512x512.png"; sourceTree = "<group>"; };
+		9621FEBC19C7A0E70017FDCE /* USAIcon.ico */ = {isa = PBXFileReference; lastKnownFileType = image.ico; path = USAIcon.ico; sourceTree = "<group>"; };
+		9621FEBD19C7A0E70017FDCE /* UKIcon.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = UKIcon.jpeg; sourceTree = "<group>"; };
+		9621FEC119C7A2E60017FDCE /* facebook_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = facebook_icon.png; sourceTree = "<group>"; };
+		9621FEC219C7A2E60017FDCE /* twitter_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = twitter_icon.png; sourceTree = "<group>"; };
+		9621FEC619C7A3DF0017FDCE /* QRWInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRWInfoViewController.h; sourceTree = "<group>"; };
+		9621FEC719C7A3DF0017FDCE /* QRWInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRWInfoViewController.m; sourceTree = "<group>"; };
 		9624FBB81880A1EA007A641D /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		9624FBBA1880CF6B007A641D /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9624FBBE1880D0A9007A641D /* QRWUserInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRWUserInfoViewController.h; sourceTree = "<group>"; };
@@ -489,6 +506,7 @@
 		7F9F9A4E1815636C00AB3EF5 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				9621FEC519C7A3B10017FDCE /* InfoController */,
 				96F4A0C4192049110059CE6B /* ReviewInfo */,
 				7F8173B61885659C00894E16 /* OrederInfo */,
 				9624FBBD1880D07D007A641D /* UserInfo */,
@@ -764,6 +782,15 @@
 			name = Review;
 			sourceTree = "<group>";
 		};
+		9621FEC519C7A3B10017FDCE /* InfoController */ = {
+			isa = PBXGroup;
+			children = (
+				9621FEC619C7A3DF0017FDCE /* QRWInfoViewController.h */,
+				9621FEC719C7A3DF0017FDCE /* QRWInfoViewController.m */,
+			);
+			name = InfoController;
+			sourceTree = "<group>";
+		};
 		9624FBBC1880D06D007A641D /* UserInfo */ = {
 			isa = PBXGroup;
 			children = (
@@ -823,6 +850,13 @@
 		969409D6182C502400B0B343 /* imgs */ = {
 			isa = PBXGroup;
 			children = (
+				9621FEC119C7A2E60017FDCE /* facebook_icon.png */,
+				9621FEC219C7A2E60017FDCE /* twitter_icon.png */,
+				9621FEBB19C7A0E70017FDCE /* world-globe03-512x512.png */,
+				9621FEBC19C7A0E70017FDCE /* USAIcon.ico */,
+				9621FEBD19C7A0E70017FDCE /* UKIcon.jpeg */,
+				9621FEB919C79D660017FDCE /* infoIcon.png */,
+				9621FEB719C79CEF0017FDCE /* settings.png */,
 				9627FD8E192EC70E001049B6 /* developer.png */,
 				7FBCF2EE1883ECD500594CCD /* loading.gif */,
 				9624FBCE1883492E007A641D /* button_login.png */,
@@ -940,6 +974,7 @@
 				9624FBD318849D57007A641D /* QRWUserInfoViewControllerOld.xib in Resources */,
 				7F8173B11884499500894E16 /* QRWProductInfoViewControllerOld.xib in Resources */,
 				9624FBCF1883492E007A641D /* button_login.png in Resources */,
+				9621FEC419C7A2E60017FDCE /* twitter_icon.png in Resources */,
 				7F9F9A7418156F2E00AB3EF5 /* QRWDashboardViewController.xib in Resources */,
 				7FBCF2E91880001100594CCD /* QRWProductInfoViewController.xib in Resources */,
 				7FCFD3051869B8AD00F44547 /* QRWUserCell.xib in Resources */,
@@ -947,8 +982,11 @@
 				7F9F99FD1815604600AB3EF5 /* InfoPlist.strings in Resources */,
 				7F9F9A051815604600AB3EF5 /* Images.xcassets in Resources */,
 				7F9F9A591815662100AB3EF5 /* QRWLoginScrinViewController.xib in Resources */,
+				9621FEBF19C7A0E70017FDCE /* USAIcon.ico in Resources */,
 				7F8173AD1884488C00894E16 /* QRWProductsViewControllerOld.xib in Resources */,
+				9621FEBA19C79D660017FDCE /* infoIcon.png in Resources */,
 				7FCFD32E187D679000F44547 /* QRWReviewsViewController.xib in Resources */,
+				9621FEC319C7A2E60017FDCE /* facebook_icon.png in Resources */,
 				969409D8182C503600B0B343 /* button_dashboard1.png in Resources */,
 				969409DA182C504100B0B343 /* button_dashboard2.png in Resources */,
 				9624FBBB1880CF6B007A641D /* Podfile in Resources */,
@@ -958,9 +996,11 @@
 				7F8173B518844C0F00894E16 /* QRWReviewsViewControllerOld.xib in Resources */,
 				7FBCF2D2187EA73900594CCD /* QRWProductCell.xib in Resources */,
 				96F4A0CC192052040059CE6B /* QRWReviewInfoViewControllerOld.xib in Resources */,
+				9621FEC019C7A0E70017FDCE /* UKIcon.jpeg in Resources */,
 				7FBCF2EF1883ECD500594CCD /* loading.gif in Resources */,
 				7FBCF2E2187FFBA200594CCD /* QRWUnlockViewController.xib in Resources */,
 				969409E2182C581900B0B343 /* active_button_dashboard1.png in Resources */,
+				9621FEBE19C7A0E70017FDCE /* world-globe03-512x512.png in Resources */,
 				9624FBC21880D0A9007A641D /* QRWUserInfoViewController.xib in Resources */,
 				9624FBE51884C14A007A641D /* QRWUnlockViewControllerOld.xib in Resources */,
 				7FBCF2F51884150C00594CCD /* QRWEditPriceView.xib in Resources */,
@@ -972,6 +1012,7 @@
 				9624FBD618849F24007A641D /* QRWUserFormCell.xib in Resources */,
 				969409DE182C505800B0B343 /* button_dashboard4.png in Resources */,
 				9624FBCD1883490A007A641D /* logo.png in Resources */,
+				9621FEB819C79CEF0017FDCE /* settings.png in Resources */,
 				96F4A0C9192049390059CE6B /* QRWReviewInfoViewController.xib in Resources */,
 				7F8173B318844B4500894E16 /* QRWUsersViewControllerOld.xib in Resources */,
 				3FA7589119B3F9BE0071B3A3 /* QRWChoseSomethingViewControllerOld.xib in Resources */,
@@ -1048,6 +1089,7 @@
 				7F9F9A4A181562F200AB3EF5 /* QRWDiscount.m in Sources */,
 				7F9F9A031815604600AB3EF5 /* QRWAppDelegate.m in Sources */,
 				7FCFD30C1869BF1300F44547 /* QRWBaseEntety.m in Sources */,
+				9621FEC819C7A3DF0017FDCE /* QRWInfoViewController.m in Sources */,
 				7FBCF2F3188414F800594CCD /* QRWEditPriceView.m in Sources */,
 				7FCFD2C91869877200F44547 /* QRWHTTPClient.m in Sources */,
 				7FBCF2CD187EA44800594CCD /* QRWProductsViewController.m in Sources */,
@@ -1206,7 +1248,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				VALID_ARCHS = "armv7 armv7s arm64";
+				VALID_ARCHS = "armv7 arm64 armv7s";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1226,7 +1268,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				VALID_ARCHS = "armv7 armv7s arm64";
+				VALID_ARCHS = "armv7 arm64 armv7s";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

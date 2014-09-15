@@ -51,6 +51,7 @@
 {
     _editPriceView = [[QRWEditPriceView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, kheightOfEditPriceView)];
     _editPriceView.delegate = self;
+    _editPriceView.priceTextField.keyboardType = UIKeyboardTypeDefault;
     [self.view addSubview:_editPriceView];
 }
 

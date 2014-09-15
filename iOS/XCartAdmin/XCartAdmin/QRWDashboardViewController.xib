@@ -200,6 +200,16 @@
                         <action selector="todaySalesClicked:" destination="-1" eventType="touchUpInside" id="IlR-9e-Hk5"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Nx-5e-qcT">
+                    <rect key="frame" x="6" y="25" width="30" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" image="infoIcon.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="infoClicked:" destination="-1" eventType="touchUpInside" id="gFe-XF-Gzz"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
@@ -211,6 +221,7 @@
         <image name="button_dashboard2.png" width="318" height="342"/>
         <image name="button_dashboard3.png" width="216" height="280"/>
         <image name="button_dashboard4.png" width="201" height="280"/>
+        <image name="infoIcon.png" width="256" height="256"/>
         <image name="title_dashboard.png" width="640" height="88"/>
     </resources>
 </document>
