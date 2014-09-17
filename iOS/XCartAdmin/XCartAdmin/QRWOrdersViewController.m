@@ -65,10 +65,10 @@
 {
     [self startLoadingAnimation];
     [QRWDataManager sendLastOrderRequestWithSearchString:self.requestSearchBar.text
-                                               fromPoint:YES
+                                               fromPoint:0
                                                  toPoint:kNumberOfLoadedItems
                                                   status:@""
-                                                    date: self.datesTypeArray[self.ordersTypeSegmentedControl.selectedSegmentIndex]
+                                                    date:self.datesTypeArray[self.ordersTypeSegmentedControl.selectedSegmentIndex]
                                                    block:^(NSArray *orders, NSError *error) {
                                                        [self smartAddObjectToDataArrayAsNew:YES withLoaddedArray:orders];
                                                    }];
