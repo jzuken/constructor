@@ -34,7 +34,7 @@ static NSString *const url_productChangeAvaliabilityURLappend = @"xcart_pph/mobi
 
 static NSString *const url_lastOrdersURLappend = @"xcart_pph/mobile_admin_api.php?request=last_orders&from=%d&size=%d&status=%@&date=%@&key=%@&search=%@";
 static NSString *const url_orderInfoURLappend = @"xcart_pph/mobile_admin_api.php?request=order_info&id=%d&key=%@";
-static NSString *const url_changeTrackingOrdersURLappend = @"xcart_pph/mobile_admin_api.php?request=change_tracking&order_id=%d&tracking_number=%d&key=%@";
+static NSString *const url_changeTrackingOrdersURLappend = @"xcart_pph/mobile_admin_api.php?request=change_tracking&order_id=%@&tracking_number=%d&key=%@";
 static NSString *const url_changeStatusOrdersURLappend = @"xcart_pph/mobile_admin_api.php?request=change_status&order_id=%d&status=%@&key=%@";
 
 static NSString *const URL_pushAppend = @"xcart_pph/mobile_admin_api.php?&request=register_apns&key=%@&regid=%@&model=%@&manufacturer=Apple&android_version=%@";

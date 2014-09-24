@@ -10,7 +10,7 @@
 
 @interface QRWOrderInfo : QRWBaseEntety
 
-@property(nonatomic, strong) NSNumber *orderid;
+@property(nonatomic, strong) NSString *orderid;
 
 @property(nonatomic, copy) NSArray *items;
 

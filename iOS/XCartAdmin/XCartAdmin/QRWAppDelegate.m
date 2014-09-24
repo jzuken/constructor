@@ -109,6 +109,9 @@
     NSLog(@"URL scheme:%@", [url scheme]);
     NSLog(@"URL query: %@", [url query]);
     
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES]
+                                              forKey:@"ChangePPHStatus"];
+    
     return YES;
 }
 
