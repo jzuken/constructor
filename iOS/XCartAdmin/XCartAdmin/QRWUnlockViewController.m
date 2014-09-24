@@ -18,14 +18,14 @@
 
 +(void)showUnlockViewOnViewController:(UIViewController *)viewController
 {
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"QRW_PINenabled"]) {
+    //if ([[NSUserDefaults standardUserDefaults] objectForKey:@"QRW_PINenabled"]) {
         static QRWUnlockViewController *unlockViewController = nil;
         unlockViewController = [[QRWUnlockViewController alloc] init];
 
         [viewController presentViewController:unlockViewController
                                                          animated:YES
                                                        completion:nil];
-    }
+    //}
 }
 
 

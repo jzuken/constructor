@@ -11,7 +11,7 @@
 @interface QRWUnlockViewController : QRWBaseViewController<UIPickerViewDataSource, UIPickerViewDelegate>
 
 
-+(void)showUnlockViewOnViewController:(UIViewController *)viewController;
++ (void)showUnlockViewOnViewController:(UIViewController *)viewController;
 
 
 @property (strong, nonatomic) IBOutlet UIPickerView *unlockPicker;
