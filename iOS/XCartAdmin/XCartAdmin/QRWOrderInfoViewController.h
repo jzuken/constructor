@@ -12,4 +12,6 @@
 
 @property (nonatomic, strong) QRWOrderInfo *orderInfo;
 
+- (void)changeOrderStatusAfterPayPalHere;
+
 @end

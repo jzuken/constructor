@@ -176,7 +176,7 @@
 }
 
 
-+ (NSURLSessionDataTask *)sendOrderChangeTrackingNumberRequestWithID:(NSInteger)orderID
++ (NSURLSessionDataTask *)sendOrderChangeTrackingNumberRequestWithID:(NSString *)orderID
                                                       trackingNumber:(NSInteger)trackingNumber
                                                                block:(void (^)(BOOL isSuccess, NSError *error))block
     {

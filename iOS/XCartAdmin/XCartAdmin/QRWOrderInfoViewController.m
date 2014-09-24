@@ -36,6 +36,10 @@
 {
     [super viewDidAppear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
+    
+    if (self.orderInfo && [[NSUserDefaults standardUserDefaults] objectForKey:@"ChangePPHStatus"]) {
+        [self changeOrderStatusAfterPayPalHere];
+    }
 }
 
 - (void)setOrderInfo:(QRWOrderInfo *)orderInfo
@@ -371,7 +375,7 @@
 - (void)saveButtonPressedWithPrice:(CGFloat)newPrice
 {
     [self startLoadingAnimation];
-    [QRWDataManager sendOrderChangeTrackingNumberRequestWithID:[self.orderInfo.orderid intValue] trackingNumber:(int)newPrice block:^(BOOL isSuccess, NSError *error) {
+    [QRWDataManager sendOrderChangeTrackingNumberRequestWithID:self.orderInfo.orderid trackingNumber:(int)newPrice block:^(BOOL isSuccess, NSError *error) {
         [self stopLoadingAnimation];
         [_editPriceView.priceTextField resignFirstResponder];
         [self moveEditPriceViewToHeight: self.view.frame.size.height];
@@ -398,18 +402,25 @@
 
 #pragma mark - PayPal alert
 
+- (void)changeOrderStatusAfterPayPalHere
+{
+    [QRWDataManager sendOrderChangeStatusRequestWithID:[self.orderInfo.orderid intValue] status:@"D" block:^(BOOL isSuccess, NSError *error) {
+        if (isSuccess){
+            _orderInfo.status = @"D";
+            [self showSuccesView];
+            [self.tableView reloadData];
+            [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:NO]
+                                                      forKey:self.orderInfo.orderid];
+        } else {
+            [self showErrorView];
+        }
+    }];
+}
+
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == alertView.cancelButtonIndex) {
-        [QRWDataManager sendOrderChangeStatusRequestWithID:[self.orderInfo.orderid intValue] status:@"D" block:^(BOOL isSuccess, NSError *error) {
-            if (isSuccess){
-                _orderInfo.status = @"D";
-                [self showSuccesView];
-                [self.tableView reloadData];
-            } else {
-                [self showErrorView];
-            }
-        }];
+        [self changeOrderStatusAfterPayPalHere];
     } else {
         UIApplication *application = [UIApplication sharedApplication];
         if ([application canOpenURL:[NSURL URLWithString: _orderInfo.pphURLString]]){
