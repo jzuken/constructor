@@ -39,7 +39,7 @@
                                                      NSDictionary *parsedObject = [NSJSONSerialization JSONObjectWithData:JSON options:0 error:&localError];
 
                                                      if (block) {
-                                                         [@"wrongKey" isEqual:[parsedObject objectForKey:@"api"]] ? block(NO, @"", nil) : block(YES, @"", nil);
+                                                         [@"wrongKey" isEqual:[parsedObject objectForKey:@"api"]] ? block(NO, @"", nil) : block(YES, [parsedObject objectForKey:@"url"], nil);
                                                      }
                                                  }
                                                 failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
@@ -48,6 +48,28 @@
                                                          block(NO, @"", error);
                                                      }
                                                  }];
+}
+
++ (NSURLSessionDataTask *)sendConfigRequestWithBlock:(void (^)(NSString *XCartVersion, NSError *error))block
+{
+    return [self sendRequestWithURL:[NSString stringWithFormat:url_configURLappend, [QRWSettingsClient getSecurityKey]]
+                            success:^(NSURLSessionDataTask *__unused task, id JSON) {
+                                DLog(@"JSON from dev server is: %@", JSON);
+                                DLog(@"dev server request is: %@", task.currentRequest.URL);
+                                NSError *localError = nil;
+                                NSDictionary *parsedObject = [NSJSONSerialization JSONObjectWithData:JSON options:0 error:&localError];
+                                
+                                if (block) {
+                                    block([parsedObject objectForKey:@"General:store_engine"], nil);
+                                }
+                            }
+                            failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
+                                DLog(@"Error: %@", error);
+                                DLog(@"dev server request is: %@", task.currentRequest.URL);
+                                if (block) {
+                                    block(@"", error);
+                                }
+                            }];
 }
 
 

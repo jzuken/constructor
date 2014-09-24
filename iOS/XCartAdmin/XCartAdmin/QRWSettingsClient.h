@@ -21,6 +21,8 @@
 
 + (NSURL *)getDevelopmentServerUrl;
 
++ (void)saveXCartVersion:(NSString *)xCartVersion;
++ (NSString *)getXCartVersion;
 
 + (void)saveUnlockKey:(NSString *)unlockKey;
 + (NSString *)getUnlockKey;

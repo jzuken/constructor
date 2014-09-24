@@ -64,7 +64,7 @@
     [QRWDataManager sendAuthorizationRequestWithLogin:_loginTextField.text
                                           andPassowrd:_passwordTextField.text
                                                 block:^(BOOL isAuth, NSString *description, NSError *error) {
-                                                    [self respondsForAuthRequest:isAuth error:error];
+                                                    [self respondsForAuthRequest:isAuth shopURL:description error:error];
     }];
 //    [self respondsForAuthRequest:YES error:nil];
 }
@@ -91,21 +91,15 @@
 
 - (void) imagePickerController: (UIImagePickerController*) reader didFinishPickingMediaWithInfo: (NSDictionary*) info
 {
-    //  get the decode results
     id<NSFastEnumeration> results = [info objectForKey: ZBarReaderControllerResults];
     
     ZBarSymbol *symbol = nil;
     for(symbol in results)
-        // just grab the first barcode
         break;
     
-    // showing the result on textview
-//    _loginTextField.text = symbol.data;
-    
-//    resultImageView.image = [info objectForKey: UIImagePickerControllerOriginalImage];
-    
-    // dismiss the controller
     [reader dismissViewControllerAnimated:YES completion:nil];
+    _passwordTextField.text = [symbol.data componentsSeparatedByString:@"?key="][1];
+    [self respondsForAuthRequest:YES shopURL:[symbol.data componentsSeparatedByString:@"?key="][0] error:nil];
 }
 
 
@@ -129,18 +123,26 @@
 
 #pragma mark - dataManager delegate
 
-- (void)respondsForAuthRequest:(BOOL)isAccepted error:(NSError *)error
+- (void)respondsForAuthRequest:(BOOL)isAccepted shopURL:(NSString *)url error:(NSError *)error
 {
     [self stopLoadingAnimation];
     if (isAccepted) {
         [_loginTextField resignFirstResponder];
         [_passwordTextField resignFirstResponder];
         
-        [QRWSettingsClient saveBaseUrl:_loginTextField.text];
+        [QRWSettingsClient saveBaseUrl:url];
         [QRWSettingsClient saveSecurityKey:_passwordTextField.text];
         
-        QRWDashboardViewController *dashboardViewController = [[QRWDashboardViewController alloc] init];
-        [self.navigationController pushViewController:dashboardViewController animated:YES];
+        [QRWDataManager sendConfigRequestWithBlock:^(NSString *XCartVersion, NSError *error) {
+            if (error) {
+                [QRWSettingsClient saveXCartVersion:@"XCart4"];
+            } else {
+                [QRWSettingsClient saveXCartVersion:XCartVersion];
+            }
+            
+            QRWDashboardViewController *dashboardViewController = [[QRWDashboardViewController alloc] init];
+            [self.navigationController pushViewController:dashboardViewController animated:YES];
+        }];
     } else {
         [_passwordTextField setText:@""];
         [_loginTextField setText:@""];

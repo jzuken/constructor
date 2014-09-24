@@ -38,7 +38,7 @@
 
 + (void)saveBaseUrl:(NSString *)baseUrl
 {
-    [[NSUserDefaults standardUserDefaults] setObject:[NSString stringWithFormat:@"https://%@/", baseUrl]
+    [[NSUserDefaults standardUserDefaults] setObject:baseUrl
                                               forKey:@"QRW_baseUrl"];
 }
 
@@ -55,13 +55,31 @@
 }
 
 
++ (void)saveXCartVersion:(NSString *)xCartVersion
+{
+    [[NSUserDefaults standardUserDefaults] setObject:xCartVersion
+                                              forKey:@"QRW_xCartVersion"];
+}
+
++ (NSString *)getXCartVersion
+{
+    return [[NSUserDefaults standardUserDefaults] objectForKey:@"QRW_xCartVersion"];
+}
+
++ (NSString *)getUserTypeByKey:(NSString *)key
+{
+    NSDictionary *types = @{@"C": @"Customer", @"P": @"Administrator"};
+    return types[key];
+}
+
+#pragma mark - alerts
 
 + (void)showConnectionErrorAlert
 {
     [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"RELOGIN_ALERT_TITLE", nil)
-                                                    message:NSLocalizedString(@"RELOGIN_ALERT_MESSAGE", nil)
-                                                   delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil)
-                                          otherButtonTitles:nil, nil] show];
+                                message:NSLocalizedString(@"RELOGIN_ALERT_MESSAGE", nil)
+                               delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil)
+                      otherButtonTitles:nil, nil] show];
 }
 
 
@@ -71,12 +89,5 @@
                                 message:NSLocalizedString(@"AUTH_ERROR_ALERT_MESSAGE", nil)
                                delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil)
                       otherButtonTitles:nil, nil] show];
-}
-
-
-+ (NSString *)getUserTypeByKey:(NSString *)key
-{
-    NSDictionary *types = @{@"C": @"Customer", @"P": @"Administrator"};
-    return types[key];
 }
 @end

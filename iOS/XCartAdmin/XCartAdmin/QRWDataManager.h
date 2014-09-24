@@ -26,6 +26,8 @@
                                                 andPassowrd: (NSString *)password
                                                       block: (void (^)(BOOL isAuth, NSString *description, NSError *error))block;
 
++ (NSURLSessionDataTask *)sendConfigRequestWithBlock:(void (^)(NSString *XCartVersion, NSError *error))block;
+
 
 + (NSURLSessionDataTask *)sendPushTokenAuthorization:(NSString *)token
                                                block:(void (^)(BOOL isAuth, NSError *error))block;
