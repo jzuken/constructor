@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2013 Related Code - http://relatedcode.com
+// Copyright (c) 2014 Related Code - http://relatedcode.com
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,7 +23,7 @@
 
 @implementation ProgressHUD
 
-@synthesize window, hud, spinner, image, label;
+@synthesize interaction, window, background, hud, spinner, image, label;
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 + (ProgressHUD *)shared
@@ -48,6 +48,15 @@
 + (void)show:(NSString *)status
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 {
+	[self shared].interaction = YES;
+	[[self shared] hudMake:status imgage:nil spin:YES hide:NO];
+}
+
+//-------------------------------------------------------------------------------------------------------------------------------------------------
++ (void)show:(NSString *)status Interaction:(BOOL)Interaction
+//-------------------------------------------------------------------------------------------------------------------------------------------------
+{
+	[self shared].interaction = Interaction;
 	[[self shared] hudMake:status imgage:nil spin:YES hide:NO];
 }
 
@@ -55,6 +64,15 @@
 + (void)showSuccess:(NSString *)status
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 {
+	[self shared].interaction = YES;
+	[[self shared] hudMake:status imgage:HUD_IMAGE_SUCCESS spin:NO hide:YES];
+}
+
+//-------------------------------------------------------------------------------------------------------------------------------------------------
++ (void)showSuccess:(NSString *)status Interaction:(BOOL)Interaction
+//-------------------------------------------------------------------------------------------------------------------------------------------------
+{
+	[self shared].interaction = Interaction;
 	[[self shared] hudMake:status imgage:HUD_IMAGE_SUCCESS spin:NO hide:YES];
 }
 
@@ -62,6 +80,15 @@
 + (void)showError:(NSString *)status
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 {
+	[self shared].interaction = YES;
+	[[self shared] hudMake:status imgage:HUD_IMAGE_ERROR spin:NO hide:YES];
+}
+
+//-------------------------------------------------------------------------------------------------------------------------------------------------
++ (void)showError:(NSString *)status Interaction:(BOOL)Interaction
+//-------------------------------------------------------------------------------------------------------------------------------------------------
+{
+	[self shared].interaction = Interaction;
 	[[self shared] hudMake:status imgage:HUD_IMAGE_ERROR spin:NO hide:YES];
 }
 
@@ -77,7 +104,7 @@
 		window = [delegate performSelector:@selector(window)];
 	else window = [[UIApplication sharedApplication] keyWindow];
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	hud = nil; spinner = nil; image = nil; label = nil;
+	background = nil; hud = nil; spinner = nil; image = nil; label = nil;
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	self.alpha = 0;
 	//---------------------------------------------------------------------------------------------------------------------------------------------
@@ -113,14 +140,26 @@
 	if (hud == nil)
 	{
 		hud = [[UIToolbar alloc] initWithFrame:CGRectZero];
-		hud.barTintColor = HUD_BACKGROUND_COLOR;
 		hud.translucent = YES;
+		hud.backgroundColor = HUD_BACKGROUND_COLOR;
 		hud.layer.cornerRadius = 10;
 		hud.layer.masksToBounds = YES;
 		//-----------------------------------------------------------------------------------------------------------------------------------------
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(rotate:) name:UIDeviceOrientationDidChangeNotification object:nil];
 	}
-	if (hud.superview == nil) [window addSubview:hud];
+	//---------------------------------------------------------------------------------------------------------------------------------------------
+	if (hud.superview == nil)
+	{
+		if (interaction == NO)
+		{
+			CGRect frame = CGRectMake(window.frame.origin.x, window.frame.origin.y, window.frame.size.width, window.frame.size.height);
+			background = [[UIView alloc] initWithFrame:frame];
+			background.backgroundColor = [UIColor clearColor];
+			[window addSubview:background];
+			[background addSubview:hud];
+		}
+		else [window addSubview:hud];
+	}
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	if (spinner == nil)
 	{
@@ -156,10 +195,11 @@
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:UIDeviceOrientationDidChangeNotification object:nil];
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	[label removeFromSuperview];	label = nil;
-	[image removeFromSuperview];	image = nil;
-	[spinner removeFromSuperview];	spinner = nil;
-	[hud removeFromSuperview];		hud = nil;
+	[label removeFromSuperview];		label = nil;
+	[image removeFromSuperview];		image = nil;
+	[spinner removeFromSuperview];		spinner = nil;
+	[hud removeFromSuperview];			hud = nil;
+	[background removeFromSuperview];	background = nil;
 }
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------
@@ -173,7 +213,7 @@
 - (void)hudOrient
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 {
-	CGFloat rotate;
+	CGFloat rotate = 0.0;
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	UIInterfaceOrientation orient = [[UIApplication sharedApplication] statusBarOrientation];
 	//---------------------------------------------------------------------------------------------------------------------------------------------

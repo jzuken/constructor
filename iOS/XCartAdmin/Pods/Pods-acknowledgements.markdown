@@ -3,7 +3,7 @@ This application makes use of the following third party libraries:
 
 ## AFNetworking
 
-Copyright (c) 2013 AFNetworking (http://afnetworking.com/)
+Copyright (c) 2013-2014 AFNetworking (http://afnetworking.com/)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -28,7 +28,7 @@ THE SOFTWARE.
 
 FXBlurView
 
-Version 1.6.1, April 28th, 2014
+Version 1.6.2, July 17th, 2014
 
 Copyright (C) 2013 Charcoal Design
 
@@ -51,7 +51,7 @@ freely, subject to the following restrictions:
 ## ProgressHUD
 
 
-Copyright (c) 2013 Related Code - http://relatedcode.com
+Copyright (c) 2014 Related Code - http://relatedcode.com
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

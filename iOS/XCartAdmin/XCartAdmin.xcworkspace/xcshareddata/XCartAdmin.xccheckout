@@ -10,6 +10,8 @@
 	<string>XCartAdmin</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
+		<key>ADEAB5C5E9FA7285A39D73909A70966087BEF738</key>
+		<string>https://github.com/jzuken/constructor.git</string>
 		<key>CE664A0D-8412-4497-9C2F-F3AA0D8FD68B</key>
 		<string>https://github.com/jzuken/constructor.git</string>
 	</dict>
@@ -17,17 +19,27 @@
 	<string>iOS/XCartAdmin/XCartAdmin.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>CE664A0D-8412-4497-9C2F-F3AA0D8FD68B</key>
+		<key>ADEAB5C5E9FA7285A39D73909A70966087BEF738</key>
 		<string>../../..</string>
+		<key>CE664A0D-8412-4497-9C2F-F3AA0D8FD68B</key>
+		<string>../../../../XCartAdmin</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/jzuken/constructor.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>CE664A0D-8412-4497-9C2F-F3AA0D8FD68B</string>
+	<string>ADEAB5C5E9FA7285A39D73909A70966087BEF738</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>ADEAB5C5E9FA7285A39D73909A70966087BEF738</string>
+			<key>IDESourceControlWCCName</key>
+			<string>%D0%A1onstructor</string>
+		</dict>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
