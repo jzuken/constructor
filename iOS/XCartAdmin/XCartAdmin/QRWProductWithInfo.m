@@ -15,7 +15,7 @@
 {
     [super buildDataByJson:JSON];
     
-    self.description = [JSON objectForKey:@"descr"];
+    self.productDescription = [JSON objectForKey:@"descr"];
     self.fullDescription = [JSON objectForKey:@"fulldescr"];
     self.imageURL = [JSON objectForKey:@"image_url"];
     self.productid = [JSON objectForKey:@"productid"];//[NSNumber numberWithLong:(long )[JSON objectForKey:@"productid"]];

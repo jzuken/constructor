@@ -133,16 +133,18 @@
         [QRWSettingsClient saveBaseUrl:url];
         [QRWSettingsClient saveSecurityKey:_passwordTextField.text];
         
-        [QRWDataManager sendConfigRequestWithBlock:^(NSString *XCartVersion, NSError *error) {
-            if (error) {
-                [QRWSettingsClient saveXCartVersion:@"XCart4"];
-            } else {
-                [QRWSettingsClient saveXCartVersion:XCartVersion];
-            }
-            
-            QRWDashboardViewController *dashboardViewController = [[QRWDashboardViewController alloc] init];
-            [self.navigationController pushViewController:dashboardViewController animated:YES];
-        }];
+//        [QRWDataManager sendConfigRequestWithBlock:^(NSString *XCartVersion, NSError *error) {
+//            if (error) {
+//                [QRWSettingsClient saveXCartVersion:@"XCart4"];
+//            } else {
+//                [QRWSettingsClient saveXCartVersion:XCartVersion];
+//            }
+//            
+//            QRWDashboardViewController *dashboardViewController = [[QRWDashboardViewController alloc] init];
+//            [self.navigationController pushViewController:dashboardViewController animated:YES];
+//        }];
+        QRWDashboardViewController *dashboardViewController = [[QRWDashboardViewController alloc] init];
+        [self.navigationController pushViewController:dashboardViewController animated:YES];
     } else {
         [_passwordTextField setText:@""];
         [_loginTextField setText:@""];

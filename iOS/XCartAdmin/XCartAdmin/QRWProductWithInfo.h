@@ -11,7 +11,7 @@
 @interface QRWProductWithInfo : QRWBaseProduct
 
 
-@property (nonatomic, strong) NSString *description;
+@property (nonatomic, strong) NSString *productDescription;
 @property (nonatomic, strong) NSString *fullDescription;
 @property (nonatomic, strong) NSString *imageURL;
 @property (nonatomic, strong) NSNumber *available;

@@ -87,18 +87,18 @@
 
 - (void) setDescription
 {
-    if ([@"" isEqual:_product.description]) {
+    if ([@"" isEqual:_product.productDescription]) {
         _isFullDescription = YES;
         _showFull.hidden = YES;
     }
-    if ([@"" isEqual:_product.fullDescription] || [_product.description isEqual:_product.fullDescription]) {
+    if ([@"" isEqual:_product.fullDescription] || [_product.productDescription isEqual:_product.fullDescription]) {
         _showFull.hidden = YES;
     }
     
     if (_isFullDescription) {
         [_descriptionWebView loadHTMLString:_product.fullDescription baseURL:nil];
     } else {
-        [_descriptionWebView loadHTMLString:_product.description baseURL:nil];
+        [_descriptionWebView loadHTMLString:_product.productDescription baseURL:nil];
     }
 }
 
