@@ -110,6 +110,7 @@
 		9627FD86192D5E14001049B6 /* QRWOrderInfoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9627FD85192D5E14001049B6 /* QRWOrderInfoTableViewCell.m */; };
 		9627FD8D192EC627001049B6 /* QRWPayPalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9627FD8C192EC627001049B6 /* QRWPayPalViewController.m */; };
 		9627FD8F192EC70E001049B6 /* developer.png in Resources */ = {isa = PBXBuildFile; fileRef = 9627FD8E192EC70E001049B6 /* developer.png */; };
+		96328DEE19D4D3CE000C1ADD /* QRWSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96328DED19D4D3CE000C1ADD /* QRWSettingsViewController.m */; };
 		969409D8182C503600B0B343 /* button_dashboard1.png in Resources */ = {isa = PBXBuildFile; fileRef = 969409D7182C503600B0B343 /* button_dashboard1.png */; };
 		969409DA182C504100B0B343 /* button_dashboard2.png in Resources */ = {isa = PBXBuildFile; fileRef = 969409D9182C504100B0B343 /* button_dashboard2.png */; };
 		969409DC182C504B00B0B343 /* button_dashboard3.png in Resources */ = {isa = PBXBuildFile; fileRef = 969409DB182C504B00B0B343 /* button_dashboard3.png */; };
@@ -288,6 +289,8 @@
 		9627FD8B192EC627001049B6 /* QRWPayPalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRWPayPalViewController.h; sourceTree = "<group>"; };
 		9627FD8C192EC627001049B6 /* QRWPayPalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRWPayPalViewController.m; sourceTree = "<group>"; };
 		9627FD8E192EC70E001049B6 /* developer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = developer.png; sourceTree = "<group>"; };
+		96328DEC19D4D3CE000C1ADD /* QRWSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRWSettingsViewController.h; sourceTree = "<group>"; };
+		96328DED19D4D3CE000C1ADD /* QRWSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRWSettingsViewController.m; sourceTree = "<group>"; };
 		969409D7182C503600B0B343 /* button_dashboard1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_dashboard1.png; sourceTree = "<group>"; };
 		969409D9182C504100B0B343 /* button_dashboard2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_dashboard2.png; sourceTree = "<group>"; };
 		969409DB182C504B00B0B343 /* button_dashboard3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_dashboard3.png; sourceTree = "<group>"; };
@@ -506,6 +509,7 @@
 		7F9F9A4E1815636C00AB3EF5 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				96328DEB19D4D2E8000C1ADD /* Settings */,
 				9621FEC519C7A3B10017FDCE /* InfoController */,
 				96F4A0C4192049110059CE6B /* ReviewInfo */,
 				7F8173B61885659C00894E16 /* OrederInfo */,
@@ -847,6 +851,15 @@
 			name = PayPal;
 			sourceTree = "<group>";
 		};
+		96328DEB19D4D2E8000C1ADD /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				96328DEC19D4D3CE000C1ADD /* QRWSettingsViewController.h */,
+				96328DED19D4D3CE000C1ADD /* QRWSettingsViewController.m */,
+			);
+			name = Settings;
+			sourceTree = "<group>";
+		};
 		969409D6182C502400B0B343 /* imgs */ = {
 			isa = PBXGroup;
 			children = (
@@ -1071,6 +1084,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				96328DEE19D4D3CE000C1ADD /* QRWSettingsViewController.m in Sources */,
 				7F9F9A6A18156D0C00AB3EF5 /* UIDevice+Resolutions.m in Sources */,
 				7F9F99FF1815604600AB3EF5 /* main.m in Sources */,
 				9624FBCB18814DC0007A641D /* QRWUserInfo.m in Sources */,

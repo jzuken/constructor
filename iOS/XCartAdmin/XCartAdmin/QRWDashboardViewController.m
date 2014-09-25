@@ -14,6 +14,7 @@
 #import "QRWOrdersViewController.h"
 #import "QRWOrderInfoViewController.h"
 #import "QRWInfoViewController.h"
+#import "QRWSettingsViewController.h"
 
 @interface QRWDashboardViewController ()
 
@@ -163,6 +164,11 @@
 - (IBAction)infoClicked:(id)sender
 {
     [self.navigationController pushViewController:[[QRWInfoViewController alloc] init] animated:YES];
+}
+
+- (IBAction)settingsClicked:(id)sender
+{
+    [self.navigationController pushViewController:[[QRWSettingsViewController alloc] init] animated:YES];
 }
 
 @end

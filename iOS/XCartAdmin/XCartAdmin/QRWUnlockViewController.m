@@ -11,6 +11,8 @@
 
 @interface QRWUnlockViewController ()
 
+@property(nonatomic) BOOL editPasswordMode;
+
 @end
 
 @implementation QRWUnlockViewController
@@ -18,16 +20,21 @@
 
 +(void)showUnlockViewOnViewController:(UIViewController *)viewController
 {
-    //if ([[NSUserDefaults standardUserDefaults] objectForKey:@"QRW_PINenabled"]) {
-        static QRWUnlockViewController *unlockViewController = nil;
-        unlockViewController = [[QRWUnlockViewController alloc] init];
-
-        [viewController presentViewController:unlockViewController
-                                                         animated:YES
-                                                       completion:nil];
-    //}
+    [QRWUnlockViewController showUnlockViewOnViewController:viewController editPasswordMode:NO];
 }
 
++ (void)showUnlockViewOnViewController:(UIViewController *)viewController editPasswordMode:(BOOL)editPasswordMode
+{
+    if ([(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:@"QRW_PINenabled"] boolValue]) {
+        static QRWUnlockViewController *unlockViewController = nil;
+        unlockViewController = [[QRWUnlockViewController alloc] init];
+        unlockViewController.editPasswordMode = editPasswordMode;
+
+        [viewController presentViewController:unlockViewController
+                                     animated:YES
+                                   completion:nil];
+    }
+}
 
 - (void)viewDidLoad
 {
@@ -44,15 +51,20 @@
         [currentPIN appendString:[self pickerView:_unlockPicker titleForRow:[_unlockPicker selectedRowInComponent:i] forComponent:i]];
     }
     
-    if ([[QRWSettingsClient getUnlockKey] isEqual:currentPIN]) {
+    if (self.editPasswordMode) {
+        [QRWSettingsClient saveUnlockKey:currentPIN];
         [self dismissViewControllerAnimated:YES completion:nil];
     } else {
-        [[[UIAlertView alloc] initWithTitle:QRWLoc(@"NOT_CORRECT_UNLOCK_KEY_TITLE")
-                                    message:QRWLoc(@"NOT_CORRECT_UNLOCK_KEY_MESSAGE")
-                                   delegate:nil
-                          cancelButtonTitle:QRWLoc(@"CANCEL")
-                          otherButtonTitles: nil]
-         show];
+        if ([[QRWSettingsClient getUnlockKey] isEqual:currentPIN]) {
+            [self dismissViewControllerAnimated:YES completion:nil];
+        } else {
+            [[[UIAlertView alloc] initWithTitle:QRWLoc(@"NOT_CORRECT_UNLOCK_KEY_TITLE")
+                                        message:QRWLoc(@"NOT_CORRECT_UNLOCK_KEY_MESSAGE")
+                                       delegate:nil
+                              cancelButtonTitle:QRWLoc(@"CANCEL")
+                              otherButtonTitles: nil]
+             show];
+        }
     }
 }
 

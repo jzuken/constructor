@@ -13,6 +13,8 @@
 
 + (void)showUnlockViewOnViewController:(UIViewController *)viewController;
 
++ (void)showUnlockViewOnViewController:(UIViewController *)viewController editPasswordMode:(BOOL)editPasswordMode;
+
 
 @property (strong, nonatomic) IBOutlet UIPickerView *unlockPicker;
 

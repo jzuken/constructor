@@ -25,7 +25,7 @@
 {
     [super viewDidLoad];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
-    [self setNavigationBarColor:kBlueColor title: QRWLoc(@"INFORMATION")];
+    [self setNavigationBarColor:kBlueColor title:QRWLoc(@"INFORMATION")];
 }
 
 - (void)openURLWithString:(NSString *)string

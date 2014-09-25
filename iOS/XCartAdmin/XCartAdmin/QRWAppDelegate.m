@@ -24,11 +24,7 @@
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     
-    [QRWSettingsClient saveUnlockKey:@"0000"];
-    
-//    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
-//     (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
-
+    [[UIApplication sharedApplication] registerForRemoteNotifications];
     
     _firstEnterViewController = [[QRWLoginScrinViewController alloc] init];
     _appNavigationController = [[UINavigationController alloc] initWithRootViewController:_firstEnterViewController];
