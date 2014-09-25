@@ -3,10 +3,10 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.9.+'
+        classpath 'com.android.tools.build:gradle:0.12.2'
     }
 }
-apply plugin: 'android'
+apply plugin: 'com.android.application'
 
 repositories {
     mavenCentral()
@@ -14,7 +14,8 @@ repositories {
 
 android {
     compileSdkVersion 19
-    buildToolsVersion '19.0.3'
+    buildToolsVersion '19.1.0'
+    useOldManifestMerger true
 
     defaultConfig {
         minSdkVersion 9
@@ -50,9 +51,9 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:19.+'
-    compile 'com.google.android.gms:play-services:4.+'
-    compile 'com.android.support:appcompat-v7:19.+'
+    compile 'com.android.support:support-v4:20.0.0'
+    compile 'com.google.android.gms:play-services:5.2.08'
+    compile 'com.android.support:appcompat-v7:20.0.0'
     compile project(':libraries:android-switch-backport')
     compile project(':libraries:wheel')
 }
