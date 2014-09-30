@@ -45,10 +45,10 @@ public class ShopAuthorization extends FragmentActivity {
         //authorizationKey.setText("MobileAdminApiKey");
         //shopUrl.setText("ec2-54-213-169-59.us-west-2.compute.amazonaws.com");
         //authorizationKey.setText("testKey");
+        shopUrl.setText("phoenix.qtmsoft.com");
+        authorizationKey.setText("RPFOTSBC");
         //shopUrl.setText("mobileadmin.x-cart.com");
-        //authorizationKey.setText("FQMTED8L");
-        shopUrl.setText("mobileadmin.x-cart.com");
-        authorizationKey.setText("D7PMJ9SY");
+        //authorizationKey.setText("D7PMJ9SY");
         LOG.d("onCreate");
     }
 
@@ -86,18 +86,32 @@ public class ShopAuthorization extends FragmentActivity {
 
                 try {
                     JSONObject obj = new JSONObject(response);
-                    String result = obj.getString("url");
-                    String currency = httpManager.getCurrencyType(result);
+                    String shop_url = obj.getString("url");
+
+                    // Getting currency type
+                    String currency = httpManager.getCurrencyType(shop_url);
                     if (currency != null) {
                         JSONObject currencyObj = new JSONObject(currency);
                         XCartApplication.getInstance().getPreferenceManager().saveCurrencyType(currencyObj.getString("General:currency_symbol"), currencyObj.getString("General:currency_format"));
                         LOG.d("currency " + currency);
                     }
+
+                    // Getting config
+                    String config = httpManager.getConfig(shop_url);
+                    if (config != null) {
+                        JSONObject configObj = new JSONObject(config);
+                        String version = configObj.getString("General:store_engine");
+                        XCartApplication.getInstance().getPreferenceManager().saveXCartVersion(version);
+                        XCartApplication.getInstance().getPreferenceManager().saveConfig(config);
+                        LOG.d("config " + config);
+                    }
+
                 } catch (JSONException e) {
                     LOG.e(e.getMessage(), e);
                 } catch (NullPointerException e) {
                     LOG.e(e.getMessage(), e);
                 }
+
 
                 return response;
             }
@@ -151,9 +165,9 @@ public class ShopAuthorization extends FragmentActivity {
 
     private void registerGcm() {
         if (gcmManager != null) {
-            String regid = gcmManager.getRegistrationId();
+            String regId = gcmManager.getRegistrationId();
 
-            if (isEmpty(regid)) {
+            if (isEmpty(regId)) {
                 gcmManager.registerInBackground();
             }
         }

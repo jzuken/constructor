@@ -18,8 +18,8 @@ android {
     useOldManifestMerger true
 
     defaultConfig {
-        minSdkVersion 9
-        targetSdkVersion 19
+        minSdkVersion 11
+        targetSdkVersion 20
     }
 
     lintOptions {

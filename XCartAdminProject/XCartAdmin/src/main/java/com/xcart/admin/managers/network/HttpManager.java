@@ -234,11 +234,11 @@ public class HttpManager {
         return get(uri);
     }
 
-    public String changeStatus(String id, String status) {
+    public String changeStatus(String id, String status, String statusType) {
         Uri uri = Uri.parse(serverUrl).buildUpon()
                 .appendQueryParameter(REQUEST, CHANGE_STATUS)
                 .appendQueryParameter(ORDER_ID, id)
-                .appendQueryParameter(STATUS, status)
+                .appendQueryParameter(statusType, status)
                 .appendQueryParameter(KEY, key)
                 .build();
         return get(uri);
@@ -338,6 +338,14 @@ public class HttpManager {
         Uri uri = Uri.parse(url).buildUpon()
                 .appendQueryParameter(REQUEST, GET_CONFIG)
                 .appendQueryParameter(CFGS_ARRAY, "a%3A2%3A%7Bi%3A0%3Bs%3A23%3A%22General%3Acurrency_symbol%22%3Bi%3A1%3Bs%3A23%3A%22General%3Acurrency_format%22%3B%7D")
+                .appendQueryParameter(KEY, key)
+                .build();
+        return get(uri);
+    }
+
+    public String getConfig(String url) {
+        Uri uri = Uri.parse(url).buildUpon()
+                .appendQueryParameter(REQUEST, GET_CONFIG)
                 .appendQueryParameter(KEY, key)
                 .build();
         return get(uri);

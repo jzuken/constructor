@@ -27,11 +27,10 @@ import android.widget.Toast;
 import com.xcart.admin.R;
 import com.xcart.admin.managers.DialogManager;
 import com.xcart.admin.managers.LogManager;
-import com.xcart.admin.managers.StatusConverter;
+import com.xcart.admin.managers.XCart5StatusConverter;
 import com.xcart.admin.managers.XCartApplication;
 import com.xcart.admin.managers.network.HttpManager;
 import com.xcart.admin.managers.network.Requester;
-import com.xcart.admin.model.OrderStatus;
 import com.xcart.admin.views.dialogs.ChangeStatusDialog;
 import com.xcart.admin.views.dialogs.CustomDialog;
 
@@ -40,6 +39,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Set;
 
@@ -107,7 +108,7 @@ public class OrderInfo extends PinSupportNetworkActivity {
                     try {
                         jsonObject.put(name, data.getQueryParameter(name));
                     } catch (JSONException e) {
-                         e.printStackTrace();
+                        e.printStackTrace();
                     }
                 }
 
@@ -184,21 +185,148 @@ public class OrderInfo extends PinSupportNetworkActivity {
                     try {
                         obj = new JSONObject(result);
 
-                        statusSymbol = obj.getString("status");
-                        status.setText(StatusConverter.getStatusBySymbol(getBaseContext(),
-                                OrderStatus.valueOf(statusSymbol)));
-                        status.setTextColor(StatusConverter.getColorResourceBySymbol(getBaseContext(),
-                                OrderStatus.valueOf(statusSymbol)));
+                        String config = XCartApplication.getInstance().getPreferenceManager().getConfig();
+                        JSONObject configObject = new JSONObject(config);
+
+                        //TODO:
+                        if (XCartApplication.getInstance().getPreferenceManager().getXCartVersion().equals("XCart4")) {
+                            statusSymbol = obj.getString("status");
+                            JSONArray statusesJsonArray = configObject.getJSONObject("Order:statuses").getJSONArray("status");
+                            final XCart5StatusConverter statusesConverter = new XCart5StatusConverter(statusesJsonArray);
+                            status.setText(statusesConverter.getStatusBySymbol(statusSymbol));
+
+                            ArrayList<String> availStatuses = new ArrayList<String>();
+                            int position = -1;
+                            for (int i = 0; i < statusesJsonArray.length(); i++) {
+                                JSONObject status = statusesJsonArray.getJSONObject(i);
+                                if (status.getBoolean("avail")) {
+                                    availStatuses.add(status.getString("name"));
+                                    if (status.getString("code").equals(statusSymbol)) {
+                                        position = i;
+                                    }
+                                }
+                            }
+
+                            String[] availStatusesArray = new String[availStatuses.size()];
+                            availStatusesArray = availStatuses.toArray(availStatusesArray);
+
+                            final int finalPosition = position;
+                            final String[] finalAvailStatusesArray = availStatusesArray;
+                            statusItem.setOnClickListener(new OnClickListener() {
+
+                                @Override
+                                public void onClick(View v) {
+                                    if (XCartApplication.getInstance().isExpired()) {
+                                        DialogManager dm = new DialogManager(OrderInfo.this.getSupportFragmentManager());
+                                        dm.showErrorDialog(R.string.subscription_expired);
+                                        return;
+                                    }
+                                    setNeedDownloadValue(false);
+
+                                    new DialogManager(OrderInfo.this.getSupportFragmentManager()).showStatusDialog(new ChangeStatusDialog.Callback() {
+                                        @Override
+                                        public void save(String selectedStatus) {
+                                            setNewStatus(selectedStatus, statusesConverter.getSymbolByStatus(selectedStatus), "status");
+                                        }
+                                    }, statusSymbol, finalAvailStatusesArray, finalPosition);
+                                }
+                            });
+                        } else {
+                            paymentStatusSymbol = obj.getString("payment_status");
+                            fulfilmentStatusSymbol = obj.getString("fulfilment_status");
+                            JSONArray paymentStatusesJsonArray = configObject.getJSONObject("Order:statuses").getJSONArray("payment_status");
+                            JSONArray fulfilmentStatusesJsonArray = configObject.getJSONObject("Order:statuses").getJSONArray("fulfilment_status");
+                            final XCart5StatusConverter paymentStatusesConverter = new XCart5StatusConverter(paymentStatusesJsonArray);
+                            final XCart5StatusConverter fulfilmentStatusesConverter = new XCart5StatusConverter(fulfilmentStatusesJsonArray);
+
+                            paymentStatus.setText(paymentStatusesConverter.getStatusBySymbol(paymentStatusSymbol));
+                            fulfilmentStatus.setText(fulfilmentStatusesConverter.getStatusBySymbol(fulfilmentStatusSymbol));
+
+                            ArrayList<String> availPaymentStatuses = new ArrayList<String>();
+                            int paymentPosition = -1;
+                            for (int i = 0; i < paymentStatusesJsonArray.length(); i++) {
+                                JSONObject status = paymentStatusesJsonArray.getJSONObject(i);
+                                if (status.getBoolean("avail")) {
+                                    availPaymentStatuses.add(status.getString("name"));
+                                    if (status.getString("code").equals(paymentStatusSymbol)) {
+                                        paymentPosition = i;
+                                    }
+                                }
+                            }
+
+                            String[] availPaymentStatusesArray = new String[availPaymentStatuses.size()];
+                            availPaymentStatusesArray = availPaymentStatuses.toArray(availPaymentStatusesArray);
+
+                            final int finalPaymentPosition = paymentPosition;
+                            final String[] finalAvailPaymentStatusesArray = availPaymentStatusesArray;
+                            paymentStatusItem.setOnClickListener(new OnClickListener() {
+
+                                @Override
+                                public void onClick(View v) {
+                                    if (XCartApplication.getInstance().isExpired()) {
+                                        DialogManager dm = new DialogManager(OrderInfo.this.getSupportFragmentManager());
+                                        dm.showErrorDialog(R.string.subscription_expired);
+                                        return;
+                                    }
+                                    setNeedDownloadValue(false);
+
+                                    new DialogManager(OrderInfo.this.getSupportFragmentManager()).showStatusDialog(new ChangeStatusDialog.Callback() {
+                                        @Override
+                                        public void save(String selectedStatus) {
+                                            setNewStatus(selectedStatus, paymentStatusesConverter.getSymbolByStatus(selectedStatus), "payment_status");
+                                        }
+                                    }, statusSymbol, finalAvailPaymentStatusesArray, finalPaymentPosition);
+                                }
+                            });
+
+                            ArrayList<String> availFulfilmentStatuses = new ArrayList<String>();
+                            int fulfilmentPosition = -1;
+                            for (int i = 0; i < fulfilmentStatusesJsonArray.length(); i++) {
+                                JSONObject status = fulfilmentStatusesJsonArray.getJSONObject(i);
+                                if (status.getBoolean("avail")) {
+                                    availFulfilmentStatuses.add(status.getString("name"));
+                                    if (status.getString("code").equals(fulfilmentStatusSymbol)) {
+                                        fulfilmentPosition = i;
+                                    }
+                                }
+                            }
+
+                            String[] availFulfilmentStatusesArray = new String[availFulfilmentStatuses.size()];
+                            availFulfilmentStatusesArray = availFulfilmentStatuses.toArray(availFulfilmentStatusesArray);
+
+                            final int finalFulfilmentPosition = fulfilmentPosition;
+                            final String[] finalAvailFulfilmentStatusesArray = availFulfilmentStatusesArray;
+                            fulfilmentStatusItem.setOnClickListener(new OnClickListener() {
+
+                                @Override
+                                public void onClick(View v) {
+                                    if (XCartApplication.getInstance().isExpired()) {
+                                        DialogManager dm = new DialogManager(OrderInfo.this.getSupportFragmentManager());
+                                        dm.showErrorDialog(R.string.subscription_expired);
+                                        return;
+                                    }
+                                    setNeedDownloadValue(false);
+
+                                    new DialogManager(OrderInfo.this.getSupportFragmentManager()).showStatusDialog(new ChangeStatusDialog.Callback() {
+                                        @Override
+                                        public void save(String selectedStatus) {
+                                            setNewStatus(selectedStatus, fulfilmentStatusesConverter.getSymbolByStatus(selectedStatus), "fulfilment_status");
+                                        }
+                                    }, statusSymbol, finalAvailFulfilmentStatusesArray, finalFulfilmentPosition);
+                                }
+                            });
+                        }
+
                         trackingNumber.setText(obj.getString("tracking"));
 
                         String paymentMethodText = obj.getString("payment_method");
                         paymentMethod.setText(paymentMethodText);
-                        if (paymentMethodText.equals("PayPal Here")) {
+                        if (paymentMethodText.equals("PayPal Here") && obj.has("pph_url")) {
                             paymentMethod.setOnClickListener(new OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     try {
-                                        proceessByPayPalHere(obj.getString("payment_method"), obj.getString("status"));
+                                        processByPayPalHere(obj.getString("payment_method"), obj.getString("status"));
                                     } catch (JSONException e) {
                                         LOG.e(e.getMessage(), e);
                                     }
@@ -286,7 +414,7 @@ public class OrderInfo extends PinSupportNetworkActivity {
                         trackingNumberItem.setClickable(true);
                         customerItem.setClickable(true);
 
-                        proceessByPayPalHere(obj.getString("payment_method"), obj.getString("status"));
+                        processByPayPalHere(obj.getString("payment_method"), obj.getString("status"));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -300,7 +428,7 @@ public class OrderInfo extends PinSupportNetworkActivity {
         requester.execute();
     }
 
-    private void proceessByPayPalHere(String paymentMethod, String paymentStatus) {
+    private void processByPayPalHere(String paymentMethod, String paymentStatus) {
         if (!cameFromPPH && (paymentMethod != null && paymentMethod.equals("PayPal Here")) && (paymentStatus != null && paymentStatus.equals("Q"))) {
             AlertDialog.Builder builder = new AlertDialog.Builder(OrderInfo.this);
             builder.setMessage(R.string.dialog_process_by_paypal_here)
@@ -323,7 +451,7 @@ public class OrderInfo extends PinSupportNetworkActivity {
                     })
                     .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-                            setNewStatus("D");
+                            setNewStatus("Declined", "D", "status");
                         }
                     });
             builder.create().show();
@@ -345,6 +473,8 @@ public class OrderInfo extends PinSupportNetworkActivity {
 
     private void clearData() {
         status.setText("");
+        paymentStatus.setText("");
+        fulfilmentStatus.setText("");
         trackingNumber.setText("");
         paymentMethod.setText("");
         deliveryMethod.setText("");
@@ -393,24 +523,73 @@ public class OrderInfo extends PinSupportNetworkActivity {
     private void setupStatusItem() {
         status = (TextView) findViewById(R.id.status);
         statusItem = (RelativeLayout) findViewById(R.id.status_item);
-        statusItem.setOnClickListener(new OnClickListener() {
+        paymentStatus = (TextView) findViewById(R.id.payment_status);
+        fulfilmentStatus = (TextView) findViewById(R.id.fulfilment_status);
+        paymentStatusItem = (RelativeLayout) findViewById(R.id.payment_status_item);
+        fulfilmentStatusItem = (RelativeLayout) findViewById(R.id.fulfilment_status_item);
 
-            @Override
-            public void onClick(View v) {
-                if (XCartApplication.getInstance().isExpired()) {
-                    DialogManager dm = new DialogManager(OrderInfo.this.getSupportFragmentManager());
-                    dm.showErrorDialog(R.string.subscription_expired);
-                    return;
-                }
-                setNeedDownloadValue(false);
-                new DialogManager(OrderInfo.this.getSupportFragmentManager()).showStatusDialog(new ChangeStatusDialog.Callback() {
+        try {
+            String config = XCartApplication.getInstance().getPreferenceManager().getConfig();
+            JSONObject configObject = new JSONObject(config);
+
+            if (XCartApplication.getInstance().getPreferenceManager().getXCartVersion().equals("XCart4")) {
+
+                /*
+                statusItem.setOnClickListener(new OnClickListener() {
+
                     @Override
-                    public void save(String selectedStatus) {
-                        setNewStatus(selectedStatus);
+                    public void onClick(View v) {
+                        if (XCartApplication.getInstance().isExpired()) {
+                            DialogManager dm = new DialogManager(OrderInfo.this.getSupportFragmentManager());
+                            dm.showErrorDialog(R.string.subscription_expired);
+                            return;
+                        }
+                        setNeedDownloadValue(false);
+                        new DialogManager(OrderInfo.this.getSupportFragmentManager()).showStatusDialog(new ChangeStatusDialog.Callback() {
+                            @Override
+                            public void save(String selectedStatus) {
+                                setNewStatus(selectedStatus);
+                            }
+                        }, statusSymbol);
                     }
-                }, statusSymbol);
+                });
+                */
+            } else {
+
+                findViewById(R.id.status_item).setVisibility(View.GONE);
+                findViewById(R.id.payment_status_item).setVisibility(View.VISIBLE);
+                findViewById(R.id.payment_status_separator).setVisibility(View.VISIBLE);
+                findViewById(R.id.fulfilment_status_item).setVisibility(View.VISIBLE);
+
+
+/*
+                paymentStatusItem.setOnClickListener(new OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        if (XCartApplication.getInstance().isExpired()) {
+                            DialogManager dm = new DialogManager(OrderInfo.this.getSupportFragmentManager());
+                            dm.showErrorDialog(R.string.subscription_expired);
+                            return;
+                        }
+                        setNeedDownloadValue(false);
+
+
+                        
+                        new DialogManager(OrderInfo.this.getSupportFragmentManager()).showStatusDialog(new ChangeStatusDialog.Callback() {
+                            @Override
+                            public void save(String selectedStatus) {
+                                setNewStatus(selectedStatus);
+                            }
+                        }, statusSymbol);
+                    }
+                });
+                */
             }
-        });
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private void setupTrackingNumberItem() {
@@ -508,13 +687,13 @@ public class OrderInfo extends PinSupportNetworkActivity {
         }
     }
 
-    public void setNewStatus(final String selectedStatus) {
+    public void setNewStatus(final String selectedStatus, final String statusCode, final String statusType) {
         dialogManager.showProgressDialog(R.string.updating_status, PROGRESS_DIALOG);
         try {
             new Requester() {
                 @Override
                 protected String doInBackground(Void... params) {
-                    return new HttpManager(getBaseContext()).changeStatus(orderIdValue, selectedStatus);
+                    return new HttpManager(getBaseContext()).changeStatus(orderIdValue, statusCode, statusType);
                 }
 
                 @Override
@@ -525,46 +704,19 @@ public class OrderInfo extends PinSupportNetworkActivity {
 
                     if (response != null) {
                         Toast.makeText(getBaseContext(), getString(R.string.success), Toast.LENGTH_SHORT).show();
-                        status.setText(StatusConverter.getStatusBySymbol(OrderInfo.this, OrderStatus.valueOf(selectedStatus)));
-                        status.setTextColor(StatusConverter.getColorResourceBySymbol(getBaseContext(), OrderStatus.valueOf(selectedStatus)));
-                        Intent resultIntent = new Intent();
-                        resultIntent.putExtra("status", selectedStatus);
-                        setResult(CHANGE_STATUS_RESULT_CODE, resultIntent);
-                        statusSymbol = selectedStatus;
-                    } else {
-                        showConnectionErrorMessage();
-                    }
-                }
-            }.execute();
-        } catch (Exception e) {
-            dialogManager.dismissDialog(PROGRESS_DIALOG);
-            showConnectionErrorMessage();
-        }
-    }
-
-    public void setNewPaymentStatus(final String selectedStatus) {
-        dialogManager.showProgressDialog(R.string.updating_status, PROGRESS_DIALOG);
-        try {
-            new Requester() {
-                @Override
-                protected String doInBackground(Void... params) {
-                    return new HttpManager(getBaseContext()).changeStatus(orderIdValue, selectedStatus);
-                }
-
-                @Override
-                protected void onPostExecute(String response) {
-                    super.onPostExecute(response);
-
-                    dialogManager.dismissDialog(PROGRESS_DIALOG);
-
-                    if (response != null) {
-                        Toast.makeText(getBaseContext(), getString(R.string.success), Toast.LENGTH_SHORT).show();
-                        status.setText(StatusConverter.getStatusBySymbol(OrderInfo.this, OrderStatus.valueOf(selectedStatus)));
-                        status.setTextColor(StatusConverter.getColorResourceBySymbol(getBaseContext(), OrderStatus.valueOf(selectedStatus)));
-                        Intent resultIntent = new Intent();
-                        resultIntent.putExtra("status", selectedStatus);
-                        setResult(CHANGE_STATUS_RESULT_CODE, resultIntent);
-                        statusSymbol = selectedStatus;
+                        if (statusType.equals("status")) {
+                            status.setText(selectedStatus);
+                        } else if (statusType.equals("payment_status")) {
+                            paymentStatus.setText(selectedStatus);
+                        } else if (statusType.equals("fulfilment_status")) {
+                            fulfilmentStatus.setText(selectedStatus);
+                        }
+                        if (!statusType.equals("fulfilment_status")) {
+                            Intent resultIntent = new Intent();
+                            resultIntent.putExtra("status", selectedStatus);
+                            setResult(CHANGE_STATUS_RESULT_CODE, resultIntent);
+                            statusSymbol = statusCode;
+                        }
                     } else {
                         showConnectionErrorMessage();
                     }
@@ -621,6 +773,8 @@ public class OrderInfo extends PinSupportNetworkActivity {
 
     private String orderIdValue = "";
     private TextView status;
+    private TextView paymentStatus;
+    private TextView fulfilmentStatus;
     private TextView trackingNumber;
     private TextView paymentMethod;
     private TextView deliveryMethod;
@@ -640,9 +794,13 @@ public class OrderInfo extends PinSupportNetworkActivity {
     private TextView paymentMethodSurcharge;
     private TextView total;
     private RelativeLayout statusItem;
+    private RelativeLayout paymentStatusItem;
+    private RelativeLayout fulfilmentStatusItem;
     private RelativeLayout trackingNumberItem;
     private RelativeLayout customerItem;
     private String statusSymbol;
+    private String paymentStatusSymbol;
+    private String fulfilmentStatusSymbol;
     private String userId;
     private String userName;
     private Boolean cameFromPPH;

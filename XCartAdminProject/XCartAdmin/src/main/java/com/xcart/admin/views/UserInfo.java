@@ -232,7 +232,12 @@ public class UserInfo extends PinSupportNetworkActivity {
                                 title += " ";
                             }
                             String name = title + obj.getString("firstname") + " " + obj.getString("lastname");
-                            String status = obj.getString("status");
+                            String status;
+                            if (XCartApplication.getInstance().getPreferenceManager().getXCartVersion().equals("XCart4")) {
+                                status = obj.getString("status");
+                            }else {
+                                status = obj.getString("payment_status");
+                            }
                             String date = obj.getString("month") + "\n" + obj.getString("day");
                             String paid = obj.getString("total");
                             addOrderToList(id, name, paid, status, date);

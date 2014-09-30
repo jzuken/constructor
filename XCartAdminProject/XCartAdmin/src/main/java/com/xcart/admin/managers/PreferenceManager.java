@@ -111,7 +111,7 @@ public class PreferenceManager {
         SharedPreferences.Editor editor = settingsData.edit();
         editor.putString("symbol", symbol);
         editor.putString("format", format.replace("x", "%s"));
-        editor.commit();
+        editor.apply();
     }
 
     public String getCurrencySymbol() {
@@ -122,4 +122,23 @@ public class PreferenceManager {
         return settingsData.getString("format", "$%s");
     }
 
+    public void saveXCartVersion(String version) {
+        SharedPreferences.Editor editor = settingsData.edit();
+        editor.putString("version", version);
+        editor.apply();
+    }
+
+    public String getXCartVersion() {
+        return settingsData.getString("version", "XCart4");
+    }
+
+    public void saveConfig(String config) {
+        SharedPreferences.Editor editor = settingsData.edit();
+        editor.putString("config", config);
+        editor.apply();
+    }
+
+    public String getConfig() {
+        return settingsData.getString("config", "");
+    }
 }
