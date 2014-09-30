@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.xcart.admin"
-    android:versionCode="7"
-    android:versionName="1.0.7">
+    android:versionCode="12"
+    android:versionName="1.1.2">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -42,10 +42,10 @@
         </activity>
         <activity
             android:name=".views.Unlock"
+            android:label="@string/unlock"
             android:launchMode="singleTop"
             android:noHistory="true"
             android:screenOrientation="portrait"
-            android:label="@string/unlock"
             android:theme="@style/Theme.XCartAppTheme.Settings" />
         <activity
             android:name=".views.ShopAuthorization"
@@ -59,35 +59,35 @@
             android:theme="@style/Theme.XCartAppTheme.Settings" />
         <activity
             android:name=".views.Products"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"
-            android:launchMode="singleTop"
             android:label="@string/products"
-            android:theme="@style/Theme.XCartAppTheme.Products">
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.XCartAppTheme.Products"
+            android:windowSoftInputMode="stateHidden">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".views.DashboardActivity" />
         </activity>
         <activity
             android:name=".views.DashboardActivity"
+            android:label="@string/dashboard"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:label="@string/dashboard"
             android:theme="@style/Theme.XCartAppTheme.Dashboard" />
         <activity
             android:name=".views.Users"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"
             android:label="@string/users"
-            android:theme="@style/Theme.XCartAppTheme.Users">
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.XCartAppTheme.Users"
+            android:windowSoftInputMode="stateHidden">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".views.DashboardActivity" />
         </activity>
         <activity
             android:name=".views.Reviews"
-            android:screenOrientation="portrait"
             android:label="@string/reviews"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.XCartAppTheme.Reviews">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -95,14 +95,13 @@
         </activity>
         <activity
             android:name=".views.Orders"
-            android:screenOrientation="portrait"
             android:label="@string/orders"
-            android:theme="@style/Theme.XCartAppTheme.Orders">
-        </activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.XCartAppTheme.Orders"></activity>
         <activity
             android:name=".views.Review"
-            android:screenOrientation="portrait"
             android:label="@string/review"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.XCartAppTheme.Reviews">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -110,8 +109,8 @@
         </activity>
         <activity
             android:name=".views.ProductInfo"
-            android:screenOrientation="portrait"
             android:label="@string/product_title"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.XCartAppTheme.Products">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -121,12 +120,21 @@
             android:name=".views.OrderInfo"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.XCartAppTheme.Orders">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="paymentResult"
+                    android:scheme="xcartadmin" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".views.UserInfo"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.XCartAppTheme.Users">
-        </activity>
+            android:theme="@style/Theme.XCartAppTheme.Users"></activity>
 
         <receiver
             android:name=".managers.gcm.GcmBroadcastReceiver"
