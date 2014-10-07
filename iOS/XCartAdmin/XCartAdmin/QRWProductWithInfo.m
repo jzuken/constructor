@@ -32,11 +32,11 @@
         }];
     }
     
-
     self.variants = itemsSet;
 }
 
 @end
+
 
 
 @implementation QRWProductVariant
@@ -60,6 +60,7 @@
 @end
 
 
+
 @implementation QRWProductVariantOption
 
 - (void)buildDataByJson:(NSDictionary *)JSON
@@ -67,9 +68,7 @@
     [super buildDataByJson:JSON];
     
     self.optionName = [JSON objectForKey:@"classtext"];
-    
     self.optionValue = [JSON objectForKey:@"option_name"];
-
 }
 
 @end

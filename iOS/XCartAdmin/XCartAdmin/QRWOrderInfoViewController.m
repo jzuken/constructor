@@ -70,14 +70,14 @@
     if (indexPath.section == 1) {
         cell = [tableView dequeueReusableCellWithIdentifier:@"QRWOrderInfoTableViewCellItem"];
         [cell configurateAsItemCell:self.dataArray[indexPath.row]];
-        [cell setAccessoryType:UITableViewCellAccessoryNone];
+        [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
     }
     if (indexPath.section == 0) {
         switch (indexPath.row) {
             case 0:{
                 cell = [tableView dequeueReusableCellWithIdentifier:@"QRWOrderInfoTableViewCellFixed"];
                 [cell configurateAsCellWithKey:@"Status" value:QRWLoc(_orderInfo.status)];
-                [cell setAccessoryType:UITableViewCellAccessoryNone];
+                [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
             }
                 break;
                 
@@ -193,13 +193,13 @@
 {
  
     if (indexPath.section == 1) {
-        return 60;
+        return 85;
     }
     if (indexPath.section == 0) {
         switch (indexPath.row) {
-            case 5:
-                return 90;
             case 6:
+                return 90;
+            case 7:
                 return 90;
             default:
                 return 44;
@@ -241,21 +241,25 @@
         switch (indexPath.row) {
 
             case 0:{
-                QRWChoseSomethingViewController *statusesOptionsViewController = [[QRWChoseSomethingViewController alloc] initWithOptionsDictionary:_statusColorsDictionary.allKeys selectedIndex: [_statusColorsDictionary.allKeys indexOfObject:self.orderInfo.status]
-                                                                                                                                  selectOptionBlock:^(NSString *selectedOption) {
-                    [QRWDataManager sendOrderChangeStatusRequestWithID:[self.orderInfo.orderid intValue]
-                                                                status:selectedOption
-                                                                 block:^(BOOL isSuccess, NSError *error) {
-                                                                        [self stopLoadingAnimation];
-                                                                        if (isSuccess){
-                                                                            [self.navigationController popToViewController:self animated:YES];
-                                                                            _orderInfo.status = selectedOption;
-                                                                            [self showSuccesView];
-                                                                            [self.tableView reloadData];
-                                                                        } else {
-                                                                            [self showErrorView];
-                                                                        }
-                    }];
+                QRWChoseSomethingViewController *statusesOptionsViewController =
+                [[QRWChoseSomethingViewController alloc] initWithOptionsDictionary:_statusColorsDictionary.allKeys
+                                                                     selectedIndex: [_statusColorsDictionary.allKeys indexOfObject:self.orderInfo.status]
+                                                                              type:QRWChoseSomethingViewControllerTypeStrings
+                                                                 selectOptionBlock:^(NSString *selectedOption) {
+                                                                     [self startLoadingAnimation];
+                                                                     [QRWDataManager sendOrderChangeStatusRequestWithID:[self.orderInfo.orderid intValue]
+                                                                                                                 status:selectedOption
+                                                                                                                  block:^(BOOL isSuccess, NSError *error) {
+                                                                                                                      [self stopLoadingAnimation];
+                                                                                                                      if (isSuccess){
+                                                                                                                          [self.navigationController popToViewController:self animated:YES];
+                                                                                                                          _orderInfo.status = selectedOption;
+                                                                                                                          [self showSuccesView];
+                                                                                                                          [self.tableView reloadData];
+                                                                                                                      } else {
+                                                                                                                          [self showErrorView];
+                                                                                                                      }
+                                                                                                                  }];
                 }];
                 statusesOptionsViewController.view.frame = self.view.frame;
                 [self.navigationController pushViewController:statusesOptionsViewController animated:YES];

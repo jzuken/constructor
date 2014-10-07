@@ -9,6 +9,8 @@
 #import "QRWProductInfoViewController.h"
 #import "UIImageView+AFNetworking.h"
 
+#import "QRWChoseSomethingViewController.h"
+
 @interface QRWProductInfoViewController ()
 {
     BOOL _isFullDescription;
@@ -22,6 +24,12 @@
 
 
 @implementation QRWProductInfoViewController
+
+- (id)init
+{
+    self = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"QRWProductInfoViewController"];
+    return self;
+}
 
 - (id)initWithProduct:(QRWProductWithInfo *)product
 {
@@ -60,6 +68,11 @@
     UITapGestureRecognizer *tapRecog = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(userTapOnScreen:)];
     [self.view addGestureRecognizer:tapRecog];
     tapRecog.delegate = self;
+    
+    if (self.product.variants.count > 1) {
+        UIBarButtonItem *variantsBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"properties.png"] style:UIBarButtonItemStylePlain target:self action:@selector(showVariantsScreen)];
+        self.navigationItem.rightBarButtonItem = variantsBarButtonItem;
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -80,6 +93,17 @@
     _editPriceView = [[QRWEditPriceView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, kheightOfEditPriceView)];
     _editPriceView.delegate = self;
     [self.view addSubview:_editPriceView];
+}
+
+- (void)showVariantsScreen
+{
+    [self.navigationController pushViewController:[[QRWChoseSomethingViewController alloc] initWithOptionsDictionary:self.product.variants
+                                                                                                       selectedIndex:0
+                                                                                                                type:QRWChoseSomethingViewControllerTypeOptions
+                                                                                                   selectOptionBlock:^(NSString *selectedOption) {
+        
+                                                                                                   }]
+                                         animated:YES];
 }
 
 #pragma mark - Description
@@ -150,9 +174,7 @@
 }
 
 
--(BOOL)webView:(UIWebView *)inWeb
-shouldStartLoadWithRequest:(NSURLRequest *)inRequest
-navigationType:(UIWebViewNavigationType)inType
+-(BOOL)webView:(UIWebView *)inWeb shouldStartLoadWithRequest:(NSURLRequest *)inRequest navigationType:(UIWebViewNavigationType)inType
 {
     if ( inType == UIWebViewNavigationTypeLinkClicked ) {
         [[UIApplication sharedApplication] openURL:[inRequest URL]];

@@ -10,13 +10,10 @@
 		3F448207192CCE0C00AC2BFF /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F448206192CCE0C00AC2BFF /* MainStoryboard.storyboard */; };
 		3F448225192E13E100AC2BFF /* QRWOrderInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F448224192E13E100AC2BFF /* QRWOrderInfo.m */; };
 		3FA7588D19B3F2170071B3A3 /* QRWChoseSomethingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FA7588C19B3F2170071B3A3 /* QRWChoseSomethingViewController.m */; };
-		3FA7588F19B3F94F0071B3A3 /* QRWChoseSomethingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3FA7588E19B3F94F0071B3A3 /* QRWChoseSomethingViewController.xib */; };
-		3FA7589119B3F9BE0071B3A3 /* QRWChoseSomethingViewControllerOld.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3FA7589019B3F9BE0071B3A3 /* QRWChoseSomethingViewControllerOld.xib */; };
 		72E90A0FD5A24E7983C0F0F6 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43D05E16E2D64500ABFC66D8 /* libPods.a */; };
 		7F8173AB1884471400894E16 /* QRWDashboardViewControllerOld.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F8173AA1884471400894E16 /* QRWDashboardViewControllerOld.xib */; };
 		7F8173AD1884488C00894E16 /* QRWProductsViewControllerOld.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F8173AC1884488C00894E16 /* QRWProductsViewControllerOld.xib */; };
 		7F8173AF188448F300894E16 /* QRWOrdersViewControllerOld.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F8173AE188448F300894E16 /* QRWOrdersViewControllerOld.xib */; };
-		7F8173B11884499500894E16 /* QRWProductInfoViewControllerOld.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F8173B01884499500894E16 /* QRWProductInfoViewControllerOld.xib */; };
 		7F8173B318844B4500894E16 /* QRWUsersViewControllerOld.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F8173B218844B4500894E16 /* QRWUsersViewControllerOld.xib */; };
 		7F8173B518844C0F00894E16 /* QRWReviewsViewControllerOld.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F8173B418844C0F00894E16 /* QRWReviewsViewControllerOld.xib */; };
 		7F8173BB188565E700894E16 /* QRWOrderInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F8173B9188565E700894E16 /* QRWOrderInfoViewController.m */; };
@@ -62,7 +59,6 @@
 		7FBCF2E1187FFBA200594CCD /* QRWUnlockViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FBCF2DF187FFBA100594CCD /* QRWUnlockViewController.m */; };
 		7FBCF2E2187FFBA200594CCD /* QRWUnlockViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FBCF2E0187FFBA100594CCD /* QRWUnlockViewController.xib */; };
 		7FBCF2E81880001100594CCD /* QRWProductInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FBCF2E61880001100594CCD /* QRWProductInfoViewController.m */; };
-		7FBCF2E91880001100594CCD /* QRWProductInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FBCF2E71880001100594CCD /* QRWProductInfoViewController.xib */; };
 		7FBCF2ED188014DE00594CCD /* QRWProductWithInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FBCF2EC188014DE00594CCD /* QRWProductWithInfo.m */; };
 		7FBCF2EF1883ECD500594CCD /* loading.gif in Resources */ = {isa = PBXBuildFile; fileRef = 7FBCF2EE1883ECD500594CCD /* loading.gif */; };
 		7FBCF2F3188414F800594CCD /* QRWEditPriceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FBCF2F2188414F800594CCD /* QRWEditPriceView.m */; };
@@ -117,6 +113,8 @@
 		969409DE182C505800B0B343 /* button_dashboard4.png in Resources */ = {isa = PBXBuildFile; fileRef = 969409DD182C505800B0B343 /* button_dashboard4.png */; };
 		969409E0182C50C700B0B343 /* title_dashboard.png in Resources */ = {isa = PBXBuildFile; fileRef = 969409DF182C50C700B0B343 /* title_dashboard.png */; };
 		969409E2182C581900B0B343 /* active_button_dashboard1.png in Resources */ = {isa = PBXBuildFile; fileRef = 969409E1182C581900B0B343 /* active_button_dashboard1.png */; };
+		96ACD96F19E4A4E90096C421 /* properties.png in Resources */ = {isa = PBXBuildFile; fileRef = 96ACD96E19E4A4E90096C421 /* properties.png */; };
+		96ACD97519E4A66A0096C421 /* QRWChoseOptionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 96ACD97419E4A66A0096C421 /* QRWChoseOptionTableViewCell.m */; };
 		96F4A0C8192049390059CE6B /* QRWReviewInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96F4A0C6192049390059CE6B /* QRWReviewInfoViewController.m */; };
 		96F4A0C9192049390059CE6B /* QRWReviewInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 96F4A0C7192049390059CE6B /* QRWReviewInfoViewController.xib */; };
 		96F4A0CC192052040059CE6B /* QRWReviewInfoViewControllerOld.xib in Resources */ = {isa = PBXBuildFile; fileRef = 96F4A0CB192052040059CE6B /* QRWReviewInfoViewControllerOld.xib */; };
@@ -138,13 +136,10 @@
 		3F448224192E13E100AC2BFF /* QRWOrderInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRWOrderInfo.m; sourceTree = "<group>"; };
 		3FA7588B19B3F2170071B3A3 /* QRWChoseSomethingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRWChoseSomethingViewController.h; sourceTree = "<group>"; };
 		3FA7588C19B3F2170071B3A3 /* QRWChoseSomethingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRWChoseSomethingViewController.m; sourceTree = "<group>"; };
-		3FA7588E19B3F94F0071B3A3 /* QRWChoseSomethingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRWChoseSomethingViewController.xib; sourceTree = "<group>"; };
-		3FA7589019B3F9BE0071B3A3 /* QRWChoseSomethingViewControllerOld.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRWChoseSomethingViewControllerOld.xib; sourceTree = "<group>"; };
 		43D05E16E2D64500ABFC66D8 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F8173AA1884471400894E16 /* QRWDashboardViewControllerOld.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRWDashboardViewControllerOld.xib; sourceTree = "<group>"; };
 		7F8173AC1884488C00894E16 /* QRWProductsViewControllerOld.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRWProductsViewControllerOld.xib; sourceTree = "<group>"; };
 		7F8173AE188448F300894E16 /* QRWOrdersViewControllerOld.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRWOrdersViewControllerOld.xib; sourceTree = "<group>"; };
-		7F8173B01884499500894E16 /* QRWProductInfoViewControllerOld.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRWProductInfoViewControllerOld.xib; sourceTree = "<group>"; };
 		7F8173B218844B4500894E16 /* QRWUsersViewControllerOld.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRWUsersViewControllerOld.xib; sourceTree = "<group>"; };
 		7F8173B418844C0F00894E16 /* QRWReviewsViewControllerOld.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRWReviewsViewControllerOld.xib; sourceTree = "<group>"; };
 		7F8173B8188565E700894E16 /* QRWOrderInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRWOrderInfoViewController.h; sourceTree = "<group>"; };
@@ -220,7 +215,6 @@
 		7FBCF2E0187FFBA100594CCD /* QRWUnlockViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRWUnlockViewController.xib; sourceTree = "<group>"; };
 		7FBCF2E51880001100594CCD /* QRWProductInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRWProductInfoViewController.h; sourceTree = "<group>"; };
 		7FBCF2E61880001100594CCD /* QRWProductInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRWProductInfoViewController.m; sourceTree = "<group>"; };
-		7FBCF2E71880001100594CCD /* QRWProductInfoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRWProductInfoViewController.xib; sourceTree = "<group>"; };
 		7FBCF2EB188014DE00594CCD /* QRWProductWithInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRWProductWithInfo.h; sourceTree = "<group>"; };
 		7FBCF2EC188014DE00594CCD /* QRWProductWithInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRWProductWithInfo.m; sourceTree = "<group>"; };
 		7FBCF2EE1883ECD500594CCD /* loading.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = loading.gif; sourceTree = "<group>"; };
@@ -297,6 +291,9 @@
 		969409DD182C505800B0B343 /* button_dashboard4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_dashboard4.png; sourceTree = "<group>"; };
 		969409DF182C50C700B0B343 /* title_dashboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = title_dashboard.png; sourceTree = "<group>"; };
 		969409E1182C581900B0B343 /* active_button_dashboard1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = active_button_dashboard1.png; sourceTree = "<group>"; };
+		96ACD96E19E4A4E90096C421 /* properties.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = properties.png; sourceTree = "<group>"; };
+		96ACD97319E4A66A0096C421 /* QRWChoseOptionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRWChoseOptionTableViewCell.h; sourceTree = "<group>"; };
+		96ACD97419E4A66A0096C421 /* QRWChoseOptionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRWChoseOptionTableViewCell.m; sourceTree = "<group>"; };
 		96F4A0C5192049390059CE6B /* QRWReviewInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRWReviewInfoViewController.h; sourceTree = "<group>"; };
 		96F4A0C6192049390059CE6B /* QRWReviewInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRWReviewInfoViewController.m; sourceTree = "<group>"; };
 		96F4A0C7192049390059CE6B /* QRWReviewInfoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRWReviewInfoViewController.xib; sourceTree = "<group>"; };
@@ -347,8 +344,8 @@
 			children = (
 				3FA7588B19B3F2170071B3A3 /* QRWChoseSomethingViewController.h */,
 				3FA7588C19B3F2170071B3A3 /* QRWChoseSomethingViewController.m */,
-				3FA7588E19B3F94F0071B3A3 /* QRWChoseSomethingViewController.xib */,
-				3FA7589019B3F9BE0071B3A3 /* QRWChoseSomethingViewControllerOld.xib */,
+				96ACD97319E4A66A0096C421 /* QRWChoseOptionTableViewCell.h */,
+				96ACD97419E4A66A0096C421 /* QRWChoseOptionTableViewCell.m */,
 			);
 			name = QRWChoseSomethingController;
 			sourceTree = "<group>";
@@ -356,7 +353,6 @@
 		7F8173B61885659C00894E16 /* OrederInfo */ = {
 			isa = PBXGroup;
 			children = (
-				3FA7588A19B3DDC10071B3A3 /* QRWChoseSomethingController */,
 				7F8173B8188565E700894E16 /* QRWOrderInfoViewController.h */,
 				7F8173B9188565E700894E16 /* QRWOrderInfoViewController.m */,
 			);
@@ -509,6 +505,7 @@
 		7F9F9A4E1815636C00AB3EF5 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				3FA7588A19B3DDC10071B3A3 /* QRWChoseSomethingController */,
 				96328DEB19D4D2E8000C1ADD /* Settings */,
 				9621FEC519C7A3B10017FDCE /* InfoController */,
 				96F4A0C4192049110059CE6B /* ReviewInfo */,
@@ -537,7 +534,6 @@
 				96F4A0CA1920493F0059CE6B /* ReviewInfo */,
 				7FBCF2F0188414CC00594CCD /* EditPrice */,
 				9624FBBC1880D06D007A641D /* UserInfo */,
-				7FBCF2EA1880001F00594CCD /* ProductInfo */,
 				7FBCF2E3187FFBAE00594CCD /* Unlock */,
 				7FBCF2DC187EC99700594CCD /* Orders */,
 				7FBCF2CF187EA45800594CCD /* Products */,
@@ -674,15 +670,6 @@
 			children = (
 				7FBCF2E51880001100594CCD /* QRWProductInfoViewController.h */,
 				7FBCF2E61880001100594CCD /* QRWProductInfoViewController.m */,
-			);
-			name = ProductInfo;
-			sourceTree = "<group>";
-		};
-		7FBCF2EA1880001F00594CCD /* ProductInfo */ = {
-			isa = PBXGroup;
-			children = (
-				7FBCF2E71880001100594CCD /* QRWProductInfoViewController.xib */,
-				7F8173B01884499500894E16 /* QRWProductInfoViewControllerOld.xib */,
 			);
 			name = ProductInfo;
 			sourceTree = "<group>";
@@ -863,6 +850,7 @@
 		969409D6182C502400B0B343 /* imgs */ = {
 			isa = PBXGroup;
 			children = (
+				96ACD96E19E4A4E90096C421 /* properties.png */,
 				9621FEC119C7A2E60017FDCE /* facebook_icon.png */,
 				9621FEC219C7A2E60017FDCE /* twitter_icon.png */,
 				9621FEBB19C7A0E70017FDCE /* world-globe03-512x512.png */,
@@ -985,13 +973,11 @@
 			files = (
 				7FBCF2DB187EC99000594CCD /* QRWOrdersViewController.xib in Resources */,
 				9624FBD318849D57007A641D /* QRWUserInfoViewControllerOld.xib in Resources */,
-				7F8173B11884499500894E16 /* QRWProductInfoViewControllerOld.xib in Resources */,
 				9624FBCF1883492E007A641D /* button_login.png in Resources */,
+				96ACD96F19E4A4E90096C421 /* properties.png in Resources */,
 				9621FEC419C7A2E60017FDCE /* twitter_icon.png in Resources */,
 				7F9F9A7418156F2E00AB3EF5 /* QRWDashboardViewController.xib in Resources */,
-				7FBCF2E91880001100594CCD /* QRWProductInfoViewController.xib in Resources */,
 				7FCFD3051869B8AD00F44547 /* QRWUserCell.xib in Resources */,
-				3FA7588F19B3F94F0071B3A3 /* QRWChoseSomethingViewController.xib in Resources */,
 				7F9F99FD1815604600AB3EF5 /* InfoPlist.strings in Resources */,
 				7F9F9A051815604600AB3EF5 /* Images.xcassets in Resources */,
 				7F9F9A591815662100AB3EF5 /* QRWLoginScrinViewController.xib in Resources */,
@@ -1028,7 +1014,6 @@
 				9621FEB819C79CEF0017FDCE /* settings.png in Resources */,
 				96F4A0C9192049390059CE6B /* QRWReviewInfoViewController.xib in Resources */,
 				7F8173B318844B4500894E16 /* QRWUsersViewControllerOld.xib in Resources */,
-				3FA7589119B3F9BE0071B3A3 /* QRWChoseSomethingViewControllerOld.xib in Resources */,
 				9627FD8F192EC70E001049B6 /* developer.png in Resources */,
 				7FCFD334187D684F00F44547 /* QRWReviewCell.xib in Resources */,
 				7F9F9A5A1815662100AB3EF5 /* QRWLoginScrinViewControllerOld.xib in Resources */,
@@ -1107,6 +1092,7 @@
 				7FBCF2F3188414F800594CCD /* QRWEditPriceView.m in Sources */,
 				7FCFD2C91869877200F44547 /* QRWHTTPClient.m in Sources */,
 				7FBCF2CD187EA44800594CCD /* QRWProductsViewController.m in Sources */,
+				96ACD97519E4A66A0096C421 /* QRWChoseOptionTableViewCell.m in Sources */,
 				7F9F9A42181562F200AB3EF5 /* QRWOrder.m in Sources */,
 				7FCFD30F1869C1E600F44547 /* QRWDashboardEntety.m in Sources */,
 				7FCFD3141869D1D300F44547 /* QRWUsersViewController.m in Sources */,

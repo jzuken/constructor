@@ -51,5 +51,6 @@
 @property(nonatomic, copy) NSString *product;
 @property(nonatomic, copy) NSString *price;
 @property(nonatomic, copy) NSString *amount;
+@property(nonatomic, copy) NSString *optionsString;
 
 @end

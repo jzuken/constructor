@@ -15,6 +15,7 @@
 @property(strong, nonatomic) IBOutlet UILabel *itemNameLabel;
 @property(strong, nonatomic) IBOutlet UILabel *itemAmountLabel;
 @property(strong, nonatomic) IBOutlet UILabel *itemCostLabel;
+@property(strong, nonatomic) IBOutlet UILabel *itemOptionsLabel;
 
 
 //fixed fields

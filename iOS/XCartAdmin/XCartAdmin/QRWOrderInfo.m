@@ -73,6 +73,15 @@
     self.productid = [JSON objectForKey:@"productid"];
     self.product  = [JSON objectForKey:@"product"];
     self.amount  = [JSON objectForKey:@"amount"];
+    
+    NSArray *options = [[JSON objectForKey:@"product_options"] isEqual:@""] ? [NSArray new] : [JSON objectForKey:@"product_options"];
+    NSMutableString *optionsString = [@"" mutableCopy];
+    
+    [options enumerateObjectsUsingBlock:^(NSDictionary *option, NSUInteger idx, BOOL *stop) {
+        [optionsString appendString:[NSString stringWithFormat:@"%@: %@ \n", [option objectForKey:@"classtext"], [option objectForKey:@"option_name"]]];
+    }];
+
+    self.optionsString = optionsString;
 }
 
 @end
