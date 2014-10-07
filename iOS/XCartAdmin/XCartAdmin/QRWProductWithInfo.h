@@ -11,10 +11,27 @@
 @interface QRWProductWithInfo : QRWBaseProduct
 
 
-@property (nonatomic, strong) NSString *productDescription;
-@property (nonatomic, strong) NSString *fullDescription;
-@property (nonatomic, strong) NSString *imageURL;
+@property (nonatomic, copy) NSString *productDescription;
+@property (nonatomic, copy) NSString *fullDescription;
+@property (nonatomic, copy) NSString *imageURL;
 @property (nonatomic, strong) NSNumber *available;
-@property (nonatomic, strong) NSString *forSale;
+@property (nonatomic, copy) NSString *forSale;
+@property (nonatomic, copy) NSArray *variants;
+
+@end
+
+
+@interface QRWProductVariant : QRWBaseEntety
+
+@property (nonatomic, copy) NSString *SKUOfVariant;
+@property (nonatomic, copy) NSArray *options;
+
+@end
+
+
+@interface QRWProductVariantOption : QRWBaseEntety
+
+@property (nonatomic, copy) NSString *optionName;
+@property (nonatomic, copy) NSString *optionValue;
 
 @end

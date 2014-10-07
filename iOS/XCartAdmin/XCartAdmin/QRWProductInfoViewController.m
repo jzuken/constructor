@@ -9,22 +9,21 @@
 #import "QRWProductInfoViewController.h"
 #import "UIImageView+AFNetworking.h"
 
-
 @interface QRWProductInfoViewController ()
 {
     BOOL _isFullDescription;
 }
 
 @property (nonatomic, strong) QRWEditPriceView *editPriceView;
-
 @property (nonatomic, strong) QRWProductWithInfo *product;
-
 
 @end
 
+
+
 @implementation QRWProductInfoViewController
 
-- (id) initWithProduct:(QRWProductWithInfo *)product
+- (id)initWithProduct:(QRWProductWithInfo *)product
 {
     self = [self init];
     _product = product;
@@ -76,7 +75,7 @@
 }
 
 
-- (void) addEditPriceView
+- (void)addEditPriceView
 {
     _editPriceView = [[QRWEditPriceView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, kheightOfEditPriceView)];
     _editPriceView.delegate = self;
@@ -85,7 +84,7 @@
 
 #pragma mark - Description
 
-- (void) setDescription
+- (void)setDescription
 {
     if ([@"" isEqual:_product.productDescription]) {
         _isFullDescription = YES;
@@ -111,7 +110,7 @@
     [self setDescription];
 }
 
-- (void) changeAvaliability
+- (void)changeAvaliability
 {
     [self startLoadingAnimation];
     [QRWDataManager sendProductChangeAvaliabilityRequestWithID:[_product.productid integerValue]
@@ -128,7 +127,7 @@
 
 
 
-- (void) changePrice
+- (void)changePrice
 {
     [_editPriceView.priceTextField becomeFirstResponder];
     [self moveEditPriceViewToHeight:_scrollView.frame.size.height - kheightOfEditPriceView];
@@ -151,7 +150,10 @@
 }
 
 
--(BOOL) webView:(UIWebView *)inWeb shouldStartLoadWithRequest:(NSURLRequest *)inRequest navigationType:(UIWebViewNavigationType)inType {
+-(BOOL)webView:(UIWebView *)inWeb
+shouldStartLoadWithRequest:(NSURLRequest *)inRequest
+navigationType:(UIWebViewNavigationType)inType
+{
     if ( inType == UIWebViewNavigationTypeLinkClicked ) {
         [[UIApplication sharedApplication] openURL:[inRequest URL]];
         return NO;
@@ -184,7 +186,7 @@
 }
 
 
-- (void) moveEditPriceViewToHeight:(CGFloat) height
+- (void)moveEditPriceViewToHeight:(CGFloat) height
 {
     [UIView animateWithDuration:0.3 animations:^{
         CGRect frame = _editPriceView.frame;
@@ -196,7 +198,7 @@
 #pragma mark - Keyboard appears/disappear methods
 
 
-- (void) changeTheTableViewHeight: (CGFloat) heightChange
+- (void)changeTheTableViewHeight: (CGFloat) heightChange
 {
     [UIView animateWithDuration:0.2 animations:^{
         CGRect frame = self.scrollView.frame;
