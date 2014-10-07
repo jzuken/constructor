@@ -372,15 +372,17 @@
     [_editPriceView.priceTextField setText:_orderInfo.tracking];
 }
 
-- (void)saveButtonPressedWithPrice:(CGFloat)newPrice
+- (void)saveButtonPressedWithPrice:(NSString *)newPrice
 {
     [self startLoadingAnimation];
-    [QRWDataManager sendOrderChangeTrackingNumberRequestWithID:self.orderInfo.orderid trackingNumber:(int)newPrice block:^(BOOL isSuccess, NSError *error) {
+    [QRWDataManager sendOrderChangeTrackingNumberRequestWithID:self.orderInfo.orderid
+                                                trackingNumber:newPrice
+                                                         block:^(BOOL isSuccess, NSError *error) {
         [self stopLoadingAnimation];
         [_editPriceView.priceTextField resignFirstResponder];
         [self moveEditPriceViewToHeight: self.view.frame.size.height];
         if (isSuccess){
-            _orderInfo.tracking = [[NSNumber numberWithFloat:newPrice] stringValue];
+            _orderInfo.tracking = newPrice;
             [self.tableView reloadData];
             [self showSuccesView];
         } else {

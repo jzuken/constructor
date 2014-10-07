@@ -128,7 +128,7 @@
                                                           date: (NSString *)date
                                                          block: (void (^)(NSArray *orders, NSError *error))block
 {
-    NSString *getURL = [NSString stringWithFormat:url_lastOrdersURLappend, startPoint, finishPoint, status, date, [QRWSettingsClient getSecurityKey], searchString];
+    NSString *getURL = [NSString stringWithFormat:url_lastOrdersURLappend, (int)startPoint, (int)finishPoint, status, date, [QRWSettingsClient getSecurityKey], searchString];
     
     return [self sendRequestWithURL:getURL
                             success:^(NSURLSessionDataTask *__unused task, id JSON) {
@@ -155,7 +155,7 @@
 + (NSURLSessionDataTask *)sendOrderInfoRequestWithID:(NSInteger)orderID
                                                block:(void (^)(QRWOrderInfo *order, NSError *error))block
 {
-    NSString *getURL = [NSString stringWithFormat:url_orderInfoURLappend, orderID, [QRWSettingsClient getSecurityKey]];
+    NSString *getURL = [NSString stringWithFormat:url_orderInfoURLappend, (int)orderID, [QRWSettingsClient getSecurityKey]];
     
     return [self sendRequestWithURL:getURL
                             success:^(NSURLSessionDataTask *__unused task, id JSON) {
@@ -177,7 +177,7 @@
 
 
 + (NSURLSessionDataTask *)sendOrderChangeTrackingNumberRequestWithID:(NSString *)orderID
-                                                      trackingNumber:(NSInteger)trackingNumber
+                                                      trackingNumber:(NSString *)trackingNumber
                                                                block:(void (^)(BOOL isSuccess, NSError *error))block
     {
         NSString *getURL = [NSString stringWithFormat:url_changeTrackingOrdersURLappend, orderID, trackingNumber, [QRWSettingsClient getSecurityKey]];
@@ -202,7 +202,7 @@
                                                               status:(NSString *)status
                                                                block:(void (^)(BOOL isSuccess, NSError *error))block
 {
-    NSString *getURL = [NSString stringWithFormat:url_changeStatusOrdersURLappend, orderID, status, [QRWSettingsClient getSecurityKey]];
+    NSString *getURL = [NSString stringWithFormat:url_changeStatusOrdersURLappend, (int)orderID, status, [QRWSettingsClient getSecurityKey]];
     
     return [self sendRequestWithURL:getURL
                             success:^(NSURLSessionDataTask *__unused task, id JSON) {
@@ -226,7 +226,7 @@
                                                          isAvaliable: (BOOL) isAvaliable
                                                                block: (void (^)(BOOL isSuccess, NSError *error))block
 {
-    NSString *getURL = [NSString stringWithFormat:url_productChangeAvaliabilityURLappend, productID, isAvaliable ? 1: 2, [QRWSettingsClient getSecurityKey]];
+    NSString *getURL = [NSString stringWithFormat:url_productChangeAvaliabilityURLappend, (int)productID, isAvaliable ? 1: 2, [QRWSettingsClient getSecurityKey]];
     
     return [self sendRequestWithURL:getURL
                             success:^(NSURLSessionDataTask *__unused task, id JSON) {
@@ -243,11 +243,11 @@
                             }];
 }
 
-+ (NSURLSessionDataTask *)sendProductChangePriceRequestWithID: (NSInteger)productID
-                                                     newPrice:(CGFloat)newPrice
++ (NSURLSessionDataTask *)sendProductChangePriceRequestWithID:(NSInteger)productID
+                                                     newPrice:(NSString *)newPrice
                                                         block:(void (^)(BOOL, NSError *))block
 {
-    NSString *getURL = [NSString stringWithFormat:url_productChangePriceURLappend, productID, newPrice, [QRWSettingsClient getSecurityKey]];
+    NSString *getURL = [NSString stringWithFormat:url_productChangePriceURLappend, (int)productID, newPrice, [QRWSettingsClient getSecurityKey]];
     
     return [self sendRequestWithURL:getURL
                             success:^(NSURLSessionDataTask *__unused task, id JSON) {
@@ -271,7 +271,9 @@
                                                      lowStock:(BOOL)isLowStock
                                                         block:(void (^)(NSArray *products, NSError *error))block;
 {
-    NSString *getURL = [NSString stringWithFormat:(isLowStock ? url_productsLowStockURLappend : url_productsURLappend), startPoint, finishPoint, [QRWSettingsClient getSecurityKey], searchString];
+    NSString *getURL = [NSString stringWithFormat:(isLowStock ? url_productsLowStockURLappend : url_productsURLappend),
+                        (int)startPoint, (int)finishPoint,
+                        [QRWSettingsClient getSecurityKey], searchString];
 
     return [self sendRequestWithURL:getURL
                             success:^(NSURLSessionDataTask *__unused task, id JSON) {
@@ -298,7 +300,7 @@
 + (NSURLSessionDataTask *)sendProductInfoRequestWithID:(NSInteger)productID
                                                block:(void (^)(QRWProductWithInfo *product, NSError *error))block
 {
-    NSString *getURL = [NSString stringWithFormat:url_productInfoURLappend, productID, [QRWSettingsClient getSecurityKey]];
+    NSString *getURL = [NSString stringWithFormat:url_productInfoURLappend, (int)productID, [QRWSettingsClient getSecurityKey]];
     
     return [self sendRequestWithURL:getURL
                             success:^(NSURLSessionDataTask *__unused task, id JSON) {
@@ -326,7 +328,7 @@
                                                   toPoint:(NSInteger)finishPoint
                                                     block:(void (^)(NSArray *users, NSError *error))block
 {
-    NSString *getURL = [NSString stringWithFormat:url_usersURLappend, startPoint, finishPoint, [QRWSettingsClient getSecurityKey], searchString];
+    NSString *getURL = [NSString stringWithFormat:url_usersURLappend, (int)startPoint, (int)finishPoint, [QRWSettingsClient getSecurityKey], searchString];
 
     return [self sendRequestWithURL:getURL
                             success:^(NSURLSessionDataTask *__unused task, id JSON) {
@@ -354,7 +356,7 @@
 + (NSURLSessionDataTask *)sendUserInfoRequestWithID:(NSInteger)userID
                                               block: (void (^)(QRWUserInfo *userInfo, NSError *error))block;
 {
-    NSString *getURL = [NSString stringWithFormat:url_userInfoURLappend, userID, [QRWSettingsClient getSecurityKey]];
+    NSString *getURL = [NSString stringWithFormat:url_userInfoURLappend, (int)userID, [QRWSettingsClient getSecurityKey]];
 
     return [self sendRequestWithURL:getURL
                             success:^(NSURLSessionDataTask *__unused task, id JSON) {
@@ -380,7 +382,7 @@
                                                  toPoint: (NSInteger)finishPoint
                                                    block: (void (^)(NSArray *orders, NSError *error))block
 {
-    NSString *getURL = [NSString stringWithFormat:url_userOrdersURLappend, userID , startPoint, finishPoint, [QRWSettingsClient getSecurityKey]];
+    NSString *getURL = [NSString stringWithFormat:url_userOrdersURLappend, (int)userID, (int)startPoint, (int)finishPoint, [QRWSettingsClient getSecurityKey]];
     
     return [self sendRequestWithURL:getURL
                             success:^(NSURLSessionDataTask *__unused task, id JSON) {
@@ -411,7 +413,7 @@
                                               toPoint:(NSInteger)finishPoint
                                                 block:(void (^)(NSArray *reviews, NSError *error))block
 {
-    NSString *getURL = [NSString stringWithFormat:url_reviewsURLappend, startPoint, finishPoint, [QRWSettingsClient getSecurityKey]];
+    NSString *getURL = [NSString stringWithFormat:url_reviewsURLappend, (int)startPoint, (int)finishPoint, [QRWSettingsClient getSecurityKey]];
 
     return [self sendRequestWithURL:getURL
                             success:^(NSURLSessionDataTask *__unused task, id JSON) {
@@ -438,7 +440,7 @@
 + (NSURLSessionDataTask *)sendDeleteReviewRequestWithID:(NSInteger)reviewID
                                                   block:(void (^)(BOOL isSuccess, NSError *))block
 {
-    NSString *getURL = [NSString stringWithFormat:url_deleteReviewURLappend, reviewID, [QRWSettingsClient getSecurityKey]];
+    NSString *getURL = [NSString stringWithFormat:url_deleteReviewURLappend, (int)reviewID, [QRWSettingsClient getSecurityKey]];
     
     return [self sendRequestWithURL:getURL
                             success:^(NSURLSessionDataTask *__unused task, id JSON) {

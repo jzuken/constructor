@@ -32,8 +32,6 @@
     [self.ordersTypeSegmentedControl addTarget:self action:@selector(segmentedControlValueDidChange) forControlEvents:UIControlEventValueChanged];
     
     self.tableView.separatorColor = kRedColor;
-    
-    [self loadObjectsWithSearchString:@"" asEmptyArray:YES];
 }
 
 
@@ -42,6 +40,8 @@
     [super viewDidAppear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     [self setNavigationBarColor:kRedColor title: QRWLoc(@"ORDERS")];
+    
+    [self loadObjectsWithSearchString:@"" asEmptyArray:YES];
 }
 
 

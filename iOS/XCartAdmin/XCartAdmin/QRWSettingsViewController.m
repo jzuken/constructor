@@ -11,6 +11,10 @@
 
 @interface QRWSettingsViewController ()
 
+@property(nonatomic, weak) IBOutlet UISwitch *passwordSwitch;
+
+@property(nonatomic, weak) IBOutlet UISwitch *pushNotificationsSwitch;
+
 @end
 
 @implementation QRWSettingsViewController
@@ -27,6 +31,9 @@
     [super viewDidLoad];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     [self setNavigationBarColor:kBlueColor title:QRWLoc(@"SETTINGS")];
+    
+    [self.passwordSwitch setOn:[(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:@"QRW_PINenabled"] boolValue]];
+    [self.pushNotificationsSwitch setOn:[[UIApplication sharedApplication] isRegisteredForRemoteNotifications]];
 }
 
 - (IBAction)passwordSwitchAction:(UISwitch *)passwordSwitch
@@ -34,7 +41,7 @@
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:passwordSwitch.isOn] forKey:@"QRW_PINenabled"];
     
     if (passwordSwitch.isOn) {
-        [QRWUnlockViewController showUnlockViewOnViewController:self editPasswordMode:YES];
+        [[QRWUnlockViewController sharedInstance] showUnlockViewOnViewController:self editPasswordMode:YES];
     }
 }
 

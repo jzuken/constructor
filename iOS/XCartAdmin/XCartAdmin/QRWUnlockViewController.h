@@ -10,10 +10,11 @@
 
 @interface QRWUnlockViewController : QRWBaseViewController<UIPickerViewDataSource, UIPickerViewDelegate>
 
++ (instancetype)sharedInstance;
 
-+ (void)showUnlockViewOnViewController:(UIViewController *)viewController;
+- (void)showUnlockViewOnViewController:(UIViewController *)viewController;
 
-+ (void)showUnlockViewOnViewController:(UIViewController *)viewController editPasswordMode:(BOOL)editPasswordMode;
+- (void)showUnlockViewOnViewController:(UIViewController *)viewController editPasswordMode:(BOOL)editPasswordMode;
 
 
 @property (strong, nonatomic) IBOutlet UIPickerView *unlockPicker;

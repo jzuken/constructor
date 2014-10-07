@@ -34,7 +34,7 @@ static NSString *const kUserDefaults_isLogOutObject = @"Login=NO";
 static const NSInteger kNumberOfLoadedItems = 10;
 
 
-#define NSStringFromInt(int_val)  [NSString stringWithFormat: @"%d", int_val]
+#define NSStringFromInt(int_val)  [NSString stringWithFormat: @"%d", (int)int_val]
 #define NSStringFromFloat(float_val)  [NSString stringWithFormat: @"%.2f", float_val]
 
 #define RGB(r, g, b) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1]

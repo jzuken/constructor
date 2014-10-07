@@ -10,16 +10,12 @@
 
 @interface QRWDashboardViewController : QRWBaseViewControllerWithTableView
 
-
-//@property (nonatomic, strong) IBOutlet UITableView *todayOrderTableView;
-@property (nonatomic, strong) IBOutlet UILabel *numberOfOrdersLable;
-
-
-@property (strong, nonatomic) IBOutlet UILabel *todaySalesLabel;
-@property (strong, nonatomic) IBOutlet UILabel *visitorsToday;
-@property (strong, nonatomic) IBOutlet UILabel *productsSoldTodayLabel;
-@property (strong, nonatomic) IBOutlet UILabel *reviewsTodayLabel;
-@property (strong, nonatomic) IBOutlet UILabel *lowStockProducts;
+@property (weak, nonatomic) IBOutlet UILabel *numberOfOrdersLable;
+@property (weak, nonatomic) IBOutlet UILabel *todaySalesLabel;
+@property (weak, nonatomic) IBOutlet UILabel *visitorsToday;
+@property (weak, nonatomic) IBOutlet UILabel *productsSoldTodayLabel;
+@property (weak, nonatomic) IBOutlet UILabel *reviewsTodayLabel;
+@property (weak, nonatomic) IBOutlet UILabel *lowStockProducts;
 
 
 - (IBAction)todaySalesClicked:(id)sender;

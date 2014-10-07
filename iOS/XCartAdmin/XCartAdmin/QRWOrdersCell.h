@@ -11,10 +11,10 @@
 @interface QRWOrdersCell : UITableViewCell
 
 
-@property (nonatomic, strong) IBOutlet UILabel *dateLabel;
-@property (nonatomic, strong) IBOutlet UILabel *nameLabel;
-@property (nonatomic, strong) IBOutlet UILabel *priceLabel;
-@property (nonatomic, strong) IBOutlet UILabel *statusLabel;
+@property (nonatomic, weak) IBOutlet UILabel *dateLabel;
+@property (nonatomic, weak) IBOutlet UILabel *nameLabel;
+@property (nonatomic, weak) IBOutlet UILabel *priceLabel;
+@property (nonatomic, weak) IBOutlet UILabel *statusLabel;
 
 
 @end

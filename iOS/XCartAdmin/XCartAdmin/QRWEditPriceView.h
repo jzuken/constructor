@@ -10,15 +10,15 @@
 
 @protocol QRWEditPriceViewDelegate<NSObject>
 
-- (void) saveButtonPressedWithPrice: (CGFloat) newPrice;
+- (void)saveButtonPressedWithPrice:(NSString *)newPrice;
 
 @end
 
 @interface QRWEditPriceView : UIView<UITextFieldDelegate>
 
-@property (nonatomic, retain) IBOutlet UIView *view;
-@property (nonatomic, strong) IBOutlet UITextField *priceTextField;
-@property (nonatomic, strong) IBOutlet UIButton *saveButton;
+@property (nonatomic, weak) IBOutlet UIView *view;
+@property (nonatomic, weak) IBOutlet UITextField *priceTextField;
+@property (nonatomic, weak) IBOutlet UIButton *saveButton;
 
 @property (nonatomic, strong) id<QRWEditPriceViewDelegate> delegate;
 

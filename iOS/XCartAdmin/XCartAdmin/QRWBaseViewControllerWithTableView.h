@@ -16,9 +16,9 @@
 }
 
 
-@property (nonatomic, strong) IBOutlet UITableView *tableView;
+@property (nonatomic, weak) IBOutlet UITableView *tableView;
 
-@property (strong, nonatomic) IBOutlet UISearchBar *requestSearchBar;
+@property (nonatomic, weak) IBOutlet UISearchBar *requestSearchBar;
 
 @property (nonatomic, copy) NSArray *dataArray;
 

@@ -13,35 +13,42 @@
 
 @property(nonatomic) BOOL editPasswordMode;
 
+@property(nonatomic) BOOL isPresent;
+
 @end
+
+
 
 @implementation QRWUnlockViewController
 
 
-+(void)showUnlockViewOnViewController:(UIViewController *)viewController
++ (instancetype)sharedInstance
 {
-    [QRWUnlockViewController showUnlockViewOnViewController:viewController editPasswordMode:NO];
+    static id sharedInstance = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedInstance = [[self alloc] init];
+    });
+    return  sharedInstance;
 }
 
-+ (void)showUnlockViewOnViewController:(UIViewController *)viewController editPasswordMode:(BOOL)editPasswordMode
+- (void)showUnlockViewOnViewController:(UIViewController *)viewController
 {
-    if ([(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:@"QRW_PINenabled"] boolValue]) {
-        static QRWUnlockViewController *unlockViewController = nil;
-        unlockViewController = [[QRWUnlockViewController alloc] init];
-        unlockViewController.editPasswordMode = editPasswordMode;
+    [self showUnlockViewOnViewController:viewController editPasswordMode:NO];
+}
 
-        [viewController presentViewController:unlockViewController
+- (void)showUnlockViewOnViewController:(UIViewController *)viewController editPasswordMode:(BOOL)editPasswordMode
+{
+    if (!self.isPresent &&
+        [(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:@"QRW_PINenabled"] boolValue]) {
+        self.editPasswordMode = editPasswordMode;
+        self.isPresent = YES;
+        [self setPickerStartPosition];
+        [viewController presentViewController:self
                                      animated:YES
                                    completion:nil];
     }
 }
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    [self setPickerStartPosition];
-}
-
 
 - (IBAction)enterButton:(id)sender
 {
@@ -53,9 +60,11 @@
     
     if (self.editPasswordMode) {
         [QRWSettingsClient saveUnlockKey:currentPIN];
+        self.isPresent = NO;
         [self dismissViewControllerAnimated:YES completion:nil];
     } else {
         if ([[QRWSettingsClient getUnlockKey] isEqual:currentPIN]) {
+            self.isPresent = NO;
             [self dismissViewControllerAnimated:YES completion:nil];
         } else {
             [[[UIAlertView alloc] initWithTitle:QRWLoc(@"NOT_CORRECT_UNLOCK_KEY_TITLE")
@@ -69,7 +78,7 @@
 }
 
 
--(void) setPickerStartPosition
+- (void)setPickerStartPosition
 {
     for (int i = 0; i < _unlockPicker.numberOfComponents; i++) {
         [_unlockPicker selectRow:50250 inComponent:i animated:NO];

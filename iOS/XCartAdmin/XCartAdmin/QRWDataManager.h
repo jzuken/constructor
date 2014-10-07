@@ -71,7 +71,7 @@
 
 
 + (NSURLSessionDataTask *)sendProductChangePriceRequestWithID: (NSInteger)productID
-                                                     newPrice: (CGFloat) newPrice
+                                                     newPrice: (NSString *)newPrice
                                                         block: (void (^)(BOOL isSuccess, NSError *error))block;
 
 
@@ -107,7 +107,7 @@
 
 
 + (NSURLSessionDataTask *)sendOrderChangeTrackingNumberRequestWithID:(NSString *)orderID
-                                                      trackingNumber:(NSInteger)trackingNumber
+                                                      trackingNumber:(NSString *)trackingNumber
                                                                block:(void (^)(BOOL isSuccess, NSError *error))block;
 
 + (NSURLSessionDataTask *)sendOrderChangeStatusRequestWithID:(NSInteger)orderID

@@ -83,7 +83,7 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
-    [QRWUnlockViewController showUnlockViewOnViewController:[QRWAppDelegate topMostController]];
+    [[QRWUnlockViewController sharedInstance] showUnlockViewOnViewController:[QRWAppDelegate topMostController]];
 }
 
 

@@ -50,7 +50,7 @@
 - (IBAction)saveButtonClicked:(id)sender
 {
     if ([_delegate respondsToSelector:@selector(saveButtonPressedWithPrice:)]) {
-        [_delegate saveButtonPressedWithPrice:[_priceTextField.text floatValue]];
+        [_delegate saveButtonPressedWithPrice:_priceTextField.text];
     }
 }
 @end

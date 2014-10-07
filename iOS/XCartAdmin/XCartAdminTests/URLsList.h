@@ -28,13 +28,13 @@ static NSString *const url_deleteReviewURLappend = @"?request=delete_review&id=%
 static NSString *const url_productsLowStockURLappend = @"?request=products&from=%d&size=%d&low_stock=1&key=%@&search=%@";
 static NSString *const url_productsURLappend = @"?request=products&from=%d&size=%d&key=%@&search=%@";
 static NSString *const url_productInfoURLappend = @"?request=product_info&id=%d&key=%@";
-static NSString *const url_productChangePriceURLappend = @"?request=update_product_price&id=%d&price=%.2f&key=%@";
+static NSString *const url_productChangePriceURLappend = @"?request=update_product_price&id=%d&price=%@f&key=%@";
 static NSString *const url_productChangeAvaliabilityURLappend = @"?request=change_available&product_id=%d&available=%d$&key=%@";
 
 
 static NSString *const url_lastOrdersURLappend = @"?request=last_orders&from=%d&size=%d&status=%@&date=%@&key=%@&search=%@";
 static NSString *const url_orderInfoURLappend = @"?request=order_info&id=%d&key=%@";
-static NSString *const url_changeTrackingOrdersURLappend = @"?request=change_tracking&order_id=%d&tracking_number=%d&key=%@";
+static NSString *const url_changeTrackingOrdersURLappend = @"?request=change_tracking&order_id=%@&tracking_number=%@&key=%@";
 static NSString *const url_changeStatusOrdersURLappend = @"?request=change_status&order_id=%d&status=%@&key=%@";
 
 static NSString *const URL_pushAppend = @"?&request=register_apns&key=%@&regid=%@&model=%@&manufacturer=Apple&android_version=%@";

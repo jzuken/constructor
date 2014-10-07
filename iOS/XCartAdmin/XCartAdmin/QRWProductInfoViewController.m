@@ -164,15 +164,17 @@
 
 
 
-- (void)saveButtonPressedWithPrice:(CGFloat)newPrice
+- (void)saveButtonPressedWithPrice:(NSString *)newPrice
 {
     [self startLoadingAnimation];
-    [QRWDataManager sendProductChangePriceRequestWithID:[_product.productid intValue] newPrice:newPrice block:^(BOOL isSuccess, NSError *error) {
+    [QRWDataManager sendProductChangePriceRequestWithID:[_product.productid intValue]
+                                               newPrice:newPrice
+                                                  block:^(BOOL isSuccess, NSError *error) {
         [self stopLoadingAnimation];
         [_editPriceView.priceTextField resignFirstResponder];
         [self moveEditPriceViewToHeight: _scrollView.frame.size.height];
         if (isSuccess){
-            _product.price = [NSNumber numberWithFloat:newPrice];
+            _product.price = [NSNumber numberWithFloat:[newPrice floatValue]];
             [_priceButton setTitle:NSMoneyString(@"$", NSStringFromFloat([_product.price floatValue])) forState:UIControlStateNormal];
             [self showSuccesView];
         } else {
