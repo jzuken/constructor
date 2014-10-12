@@ -21,8 +21,6 @@
 
 @interface QRWBaseViewController : UIViewController
 
-
-
 - (void) startLoadingAnimation;
 - (void) stopLoadingAnimation;
 - (void) showSuccesView;

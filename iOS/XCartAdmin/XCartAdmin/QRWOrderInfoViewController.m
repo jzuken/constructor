@@ -372,8 +372,8 @@
 - (void)changeTracking
 {
     [_editPriceView.priceTextField becomeFirstResponder];
-    [self moveEditPriceViewToHeight:self.tableView.frame.size.height - kheightOfEditPriceView];
     [_editPriceView.priceTextField setText:_orderInfo.tracking];
+    [self moveEditPriceViewToHeight:self.tableView.frame.size.height - kheightOfEditPriceView];
 }
 
 - (void)saveButtonPressedWithPrice:(NSString *)newPrice
@@ -422,6 +422,7 @@
         }
     }];
 }
+
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {

@@ -153,8 +153,8 @@
 - (void)changePrice
 {
     [_editPriceView.priceTextField becomeFirstResponder];
-    [self moveEditPriceViewToHeight:_scrollView.frame.size.height - kheightOfEditPriceView];
     [_editPriceView.priceTextField setText:[NSString stringWithFormat:@"%.2f", [_product.price floatValue]]];
+    [self moveEditPriceViewToHeight:_scrollView.frame.size.height];
 }
 
 
@@ -221,11 +221,10 @@
 
 - (void)changeTheTableViewHeight:(CGFloat)heightChange
 {
-    [UIView animateWithDuration:0.2 animations:^{
-        CGRect frame = self.scrollView.frame;
-        frame.size.height += heightChange;
-        self.scrollView.frame = frame;
-    }];
+    CGRect frame = self.scrollView.frame;
+    frame.size.height += heightChange;
+    frame.size.height += (heightChange < 0) ? - kheightOfEditPriceView : kheightOfEditPriceView;
+    self.scrollView.frame = frame;
     
     [_scrollView scrollRectToVisible:_priceButton.frame animated:YES];
 }

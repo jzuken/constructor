@@ -19,7 +19,6 @@
         [[NSBundle mainBundle] loadNibNamed:@"QRWEditPriceView" owner:self options:nil];
         [self addSubview:self.view];
         self.view.backgroundColor = kGreyColor;
-        _priceTextField.keyboardType = UIKeyboardTypeDecimalPad;
         _priceTextField.delegate = self;
         
         [_saveButton.layer setBorderWidth:1.0f];

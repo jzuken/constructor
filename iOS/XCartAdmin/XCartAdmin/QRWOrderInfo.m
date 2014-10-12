@@ -78,7 +78,7 @@
     NSMutableString *optionsString = [@"" mutableCopy];
     
     [options enumerateObjectsUsingBlock:^(NSDictionary *option, NSUInteger idx, BOOL *stop) {
-        [optionsString appendString:[NSString stringWithFormat:@"%@: %@ \n", [option objectForKey:@"classtext"], [option objectForKey:@"option_name"]]];
+        [optionsString appendString:[NSString stringWithFormat:@"%@: %@  ", [option objectForKey:@"classtext"], [option objectForKey:@"option_name"]]];
     }];
 
     self.optionsString = optionsString;

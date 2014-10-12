@@ -15,6 +15,8 @@
 @property (nonatomic, strong) UIActivityIndicatorView *loadingActivityIndicator;
 @property (nonatomic, strong) UIView *backgroundLoadingView;
 
+@property (nonatomic, assign) BOOL keyboardIsHide;
+
 @end
 
 @implementation QRWBaseViewController
@@ -101,11 +103,15 @@
 
 - (void) keyboardDidDisappear:(NSNotification *)notification
 {
+    self.keyboardIsHide = NO;
     [self changeTheTableViewHeight:[[[notification userInfo] objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size.height];
 }
 
 - (void) keyboardDidAppear:(NSNotification *)notification
 {
+    if (self.keyboardIsHide) return;
+    
+    self.keyboardIsHide = YES;
     [self changeTheTableViewHeight:-[[[notification userInfo] objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size.height];
 }
 
