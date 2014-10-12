@@ -100,14 +100,14 @@
                 break;
                 
             case 3:{
-                cell = [tableView dequeueReusableCellWithIdentifier:@"QRWOrderInfoTableViewCellFixed"];
+                cell = [tableView dequeueReusableCellWithIdentifier:@"QRWOrderInfoTableViewCellStatic"];
                 [cell configurateAsCellWithKey:@"Delivery method" value:_orderInfo.shipping];
                 [cell setAccessoryType:UITableViewCellAccessoryNone];
             }
                 break;
                 
             case 4:{
-                cell = [tableView dequeueReusableCellWithIdentifier:@"QRWOrderInfoTableViewCellFixed"];
+                cell = [tableView dequeueReusableCellWithIdentifier:@"QRWOrderInfoTableViewCellStatic"];
                 NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
                 [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss zzz"];
                 
@@ -142,35 +142,35 @@
     if (indexPath.section == 2) {
         switch (indexPath.row) {
             case 0:{
-                cell = [tableView dequeueReusableCellWithIdentifier:@"QRWOrderInfoTableViewCellFixed"];
+                cell = [tableView dequeueReusableCellWithIdentifier:@"QRWOrderInfoTableViewCellStatic"];
                 [cell configurateAsCellWithKey:@"Subtotal" value:NSMoneyString(@"$",_orderInfo.subtotal)];
                 [cell setAccessoryType:UITableViewCellAccessoryNone];
             }
                 break;
                 
             case 1:{
-                cell = [tableView dequeueReusableCellWithIdentifier:@"QRWOrderInfoTableViewCellFixed"];
+                cell = [tableView dequeueReusableCellWithIdentifier:@"QRWOrderInfoTableViewCellStatic"];
                 [cell configurateAsCellWithKey:@"Discount" value:NSMoneyString(@"$",_orderInfo.discount)];
                 [cell setAccessoryType:UITableViewCellAccessoryNone];
             }
                 break;
                 
             case 2:{
-                cell = [tableView dequeueReusableCellWithIdentifier:@"QRWOrderInfoTableViewCellFixed"];
+                cell = [tableView dequeueReusableCellWithIdentifier:@"QRWOrderInfoTableViewCellStatic"];
                 [cell configurateAsCellWithKey:@"Coupon saving" value:NSMoneyString(@"$",_orderInfo.couponDiscount)];
                 [cell setAccessoryType:UITableViewCellAccessoryNone];
             }
                 break;
                 
             case 3:{
-                cell = [tableView dequeueReusableCellWithIdentifier:@"QRWOrderInfoTableViewCellFixed"];
+                cell = [tableView dequeueReusableCellWithIdentifier:@"QRWOrderInfoTableViewCellStatic"];
                 [cell configurateAsCellWithKey:@"Payment metod surcharge" value:NSMoneyString(@"$",_orderInfo.paymentSurcharge)];
                 [cell setAccessoryType:UITableViewCellAccessoryNone];
             }
                 break;
                 
             case 4:{
-                cell = [tableView dequeueReusableCellWithIdentifier:@"QRWOrderInfoTableViewCellFixed"];
+                cell = [tableView dequeueReusableCellWithIdentifier:@"QRWOrderInfoTableViewCellStatic"];
                 [cell configurateAsCellWithKey:@"Shipping cost" value:NSMoneyString(@"$",_orderInfo.shippingCost)];
                 [cell setAccessoryType:UITableViewCellAccessoryNone];
             }

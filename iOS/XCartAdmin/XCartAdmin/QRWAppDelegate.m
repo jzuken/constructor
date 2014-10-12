@@ -7,7 +7,7 @@
 //
 
 #import "QRWAppDelegate.h"
-#import "QRWLoginScrinViewController.h"
+#import "QRWDashboardViewController.h"
 #import "QRWUnlockViewController.h"
 #import "QRWDataManager.h"
 #import "QRWOrderInfoViewController.h"
@@ -26,8 +26,8 @@
     
     [[UIApplication sharedApplication] registerForRemoteNotifications];
     
-    _firstEnterViewController = [[QRWLoginScrinViewController alloc] init];
-    _appNavigationController = [[UINavigationController alloc] initWithRootViewController:_firstEnterViewController];
+    _mainViewController = [[QRWDashboardViewController alloc] init];
+    _appNavigationController = [[UINavigationController alloc] initWithRootViewController:_mainViewController];
     
     [self.window setRootViewController:_appNavigationController];
     _appNavigationController.navigationBarHidden = YES;
@@ -102,6 +102,8 @@
          annotation:(id)annotation
 {
     NSLog(@"Calling Application Bundle ID: %@", sourceApplication);
+    NSLog(@"URL:%@", url);
+
     NSLog(@"URL scheme:%@", [url scheme]);
     NSLog(@"URL query: %@", [url query]);
     

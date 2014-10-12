@@ -15,6 +15,7 @@
 #import "QRWOrderInfoViewController.h"
 #import "QRWInfoViewController.h"
 #import "QRWSettingsViewController.h"
+#import "QRWLoginScrinViewController.h"
 
 @interface QRWDashboardViewController ()
 
@@ -44,6 +45,12 @@
     
     self.tableView.showsInfiniteScrolling = NO;
     self.tableView.showsPullToRefresh = NO;
+    
+    if (![[NSUserDefaults standardUserDefaults] objectForKey:@"QRW_isLogIn"]) {
+        [self presentViewController:[[QRWLoginScrinViewController alloc] init]
+                           animated:NO
+                         completion:nil];
+    }
 }
 
 

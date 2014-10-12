@@ -150,7 +150,6 @@
 }
 
 
-
 - (void)changePrice
 {
     [_editPriceView.priceTextField becomeFirstResponder];
@@ -208,7 +207,7 @@
 }
 
 
-- (void)moveEditPriceViewToHeight:(CGFloat) height
+- (void)moveEditPriceViewToHeight:(CGFloat)height
 {
     [UIView animateWithDuration:0.3 animations:^{
         CGRect frame = _editPriceView.frame;
@@ -220,7 +219,7 @@
 #pragma mark - Keyboard appears/disappear methods
 
 
-- (void)changeTheTableViewHeight: (CGFloat) heightChange
+- (void)changeTheTableViewHeight:(CGFloat)heightChange
 {
     [UIView animateWithDuration:0.2 animations:^{
         CGRect frame = self.scrollView.frame;

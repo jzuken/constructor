@@ -143,8 +143,8 @@
 //            QRWDashboardViewController *dashboardViewController = [[QRWDashboardViewController alloc] init];
 //            [self.navigationController pushViewController:dashboardViewController animated:YES];
 //        }];
-        QRWDashboardViewController *dashboardViewController = [[QRWDashboardViewController alloc] init];
-        [self.navigationController pushViewController:dashboardViewController animated:YES];
+        [[NSUserDefaults standardUserDefaults]setObject:[NSNumber numberWithBool:YES] forKey:@"QRW_isLogIn"];
+        [self dismissViewControllerAnimated:YES completion:nil];
     } else {
         [_passwordTextField setText:@""];
         [_loginTextField setText:@""];

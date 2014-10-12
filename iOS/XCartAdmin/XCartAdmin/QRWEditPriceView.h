@@ -14,6 +14,8 @@
 
 @end
 
+
+
 @interface QRWEditPriceView : UIView<UITextFieldDelegate>
 
 @property (nonatomic, weak) IBOutlet UIView *view;

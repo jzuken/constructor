@@ -8,14 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-@class QRWLoginScrinViewController;
+@class QRWDashboardViewController;
 
 
 @interface QRWAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 
-@property (strong, nonatomic) QRWLoginScrinViewController *firstEnterViewController;
+@property (strong, nonatomic) QRWDashboardViewController *mainViewController;
 
 @property (strong, nonatomic) UINavigationController *appNavigationController;
 

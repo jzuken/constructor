@@ -37,7 +37,7 @@ static NSString *const url_orderInfoURLappend = @"?request=order_info&id=%d&key=
 static NSString *const url_changeTrackingOrdersURLappend = @"?request=change_tracking&order_id=%@&tracking_number=%@&key=%@";
 static NSString *const url_changeStatusOrdersURLappend = @"?request=change_status&order_id=%d&status=%@&key=%@";
 
-static NSString *const URL_pushAppend = @"?&request=register_apns&key=%@&regid=%@&model=%@&manufacturer=Apple&android_version=%@";
+static NSString *const URL_pushAppend = @"?request=register_apns&key=%@&regid=%@&model=%@&manufacturer=Apple&android_version=%@";
 
 
 

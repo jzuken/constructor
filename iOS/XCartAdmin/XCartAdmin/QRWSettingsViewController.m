@@ -34,6 +34,12 @@
     
     [self.passwordSwitch setOn:[(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:@"QRW_PINenabled"] boolValue]];
     [self.pushNotificationsSwitch setOn:[[UIApplication sharedApplication] isRegisteredForRemoteNotifications]];
+    
+    UIBarButtonItem *logOutItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"logout.png"]
+                                                                   style:UIBarButtonItemStylePlain
+                                                                  target:self
+                                                                  action:@selector(logOutAction)];
+    self.navigationItem.rightBarButtonItem = logOutItem;
 }
 
 - (IBAction)passwordSwitchAction:(UISwitch *)passwordSwitch
@@ -48,6 +54,11 @@
 - (IBAction)pushNotificationsSwitchAction:(UISwitch *)pushNotificationsSwitch
 {
     pushNotificationsSwitch.isOn ? [[UIApplication sharedApplication] registerForRemoteNotifications] : [[UIApplication sharedApplication] unregisterForRemoteNotifications];
+}
+
+- (void)logOutAction
+{
+   
 }
 
 @end
