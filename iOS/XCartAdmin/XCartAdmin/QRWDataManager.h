@@ -71,6 +71,7 @@
 
 
 + (NSURLSessionDataTask *)sendProductChangePriceRequestWithID: (NSInteger)productID
+                                                    variantID: (NSString *)variantID
                                                      newPrice: (NSString *)newPrice
                                                         block: (void (^)(BOOL isSuccess, NSError *error))block;
 

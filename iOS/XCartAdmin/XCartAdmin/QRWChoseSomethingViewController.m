@@ -13,7 +13,7 @@
 
 @interface QRWChoseSomethingViewController ()
 
-@property (nonatomic, copy) void (^selectOption)(NSString *selectedOption);
+@property (nonatomic, copy) void (^selectOption)(id selectedOption);
 @property (nonatomic, assign) QRWChoseSomethingViewControllerType type;
 
 @end
@@ -29,7 +29,7 @@
 - (id)initWithOptionsDictionary:(NSArray *)options
                   selectedIndex:(NSUInteger)selectedIndex
                            type:(QRWChoseSomethingViewControllerType)type
-              selectOptionBlock:(void(^)(NSString *selectedOption))selectOptionBlock;
+              selectOptionBlock:(void(^)(id selectedOption))selectOptionBlock;
 {
     self = [self init];
     if (self) {
@@ -119,6 +119,8 @@
     if (self.selectOption) {
         self.selectOption(self.dataArray[indexPath.section]);
     }
+
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end

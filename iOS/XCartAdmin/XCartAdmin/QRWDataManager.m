@@ -244,10 +244,13 @@
 }
 
 + (NSURLSessionDataTask *)sendProductChangePriceRequestWithID:(NSInteger)productID
+                                                    variantID:(NSString *)variantID
                                                      newPrice:(NSString *)newPrice
                                                         block:(void (^)(BOOL, NSError *))block
 {
-    NSString *getURL = [NSString stringWithFormat:url_productChangePriceURLappend, (int)productID, newPrice, [QRWSettingsClient getSecurityKey]];
+    NSString *getURL = variantID ?
+    [NSString stringWithFormat:url_productChangeVariantPriceURLappend, (int)productID, newPrice, [QRWSettingsClient getSecurityKey], variantID]:
+    [NSString stringWithFormat:url_productChangePriceURLappend, (int)productID, newPrice, [QRWSettingsClient getSecurityKey]];
     
     return [self sendRequestWithURL:getURL
                             success:^(NSURLSessionDataTask *__unused task, id JSON) {

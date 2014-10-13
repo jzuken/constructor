@@ -39,7 +39,7 @@
 
 - (void)showUnlockViewOnViewController:(UIViewController *)viewController editPasswordMode:(BOOL)editPasswordMode
 {
-    if (!self.isPresent &&
+    if (!self.isPresent && [(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:@"QRW_isLogIn"] boolValue] &&
         [(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:@"QRW_PINenabled"] boolValue]) {
         self.editPasswordMode = editPasswordMode;
         self.isPresent = YES;

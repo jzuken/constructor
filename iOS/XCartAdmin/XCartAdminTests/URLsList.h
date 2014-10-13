@@ -29,6 +29,7 @@ static NSString *const url_productsLowStockURLappend = @"?request=products&from=
 static NSString *const url_productsURLappend = @"?request=products&from=%d&size=%d&key=%@&search=%@";
 static NSString *const url_productInfoURLappend = @"?request=product_info&id=%d&key=%@";
 static NSString *const url_productChangePriceURLappend = @"?request=update_product_price&id=%d&price=%@f&key=%@";
+static NSString *const url_productChangeVariantPriceURLappend = @"?request=update_product_price&id=%d&price=%@f&key=%@&variantid=%@";
 static NSString *const url_productChangeAvaliabilityURLappend = @"?request=change_available&product_id=%d&available=%d$&key=%@";
 
 

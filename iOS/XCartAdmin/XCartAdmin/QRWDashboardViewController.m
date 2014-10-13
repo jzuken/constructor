@@ -16,6 +16,7 @@
 #import "QRWInfoViewController.h"
 #import "QRWSettingsViewController.h"
 #import "QRWLoginScrinViewController.h"
+#import "QRWUnlockViewController.h"
 
 @interface QRWDashboardViewController ()
 
@@ -46,10 +47,12 @@
     self.tableView.showsInfiniteScrolling = NO;
     self.tableView.showsPullToRefresh = NO;
     
-    if (![[NSUserDefaults standardUserDefaults] objectForKey:@"QRW_isLogIn"]) {
+    if (![(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:@"QRW_isLogIn"] boolValue]) {
         [self presentViewController:[[QRWLoginScrinViewController alloc] init]
                            animated:NO
                          completion:nil];
+    } else if ([(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:@"QRW_PINenabled"] boolValue]){
+        [[QRWUnlockViewController sharedInstance] showUnlockViewOnViewController:self editPasswordMode:NO];
     }
 }
 

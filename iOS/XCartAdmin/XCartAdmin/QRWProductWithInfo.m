@@ -7,6 +7,7 @@
 //
 
 #import "QRWProductWithInfo.h"
+#import "QRWSettingsClient.h"
 
 @implementation QRWProductWithInfo
 
@@ -46,6 +47,9 @@
     [super buildDataByJson:JSON];
     
     self.SKUOfVariant = [JSON objectForKey:@"productcode"];
+    self.variantid = [[JSON objectForKey:@"variant_id"] stringValue];
+    self.price = [JSON objectForKey:@"price"];
+    self.imageURL = [JSON objectForKey:@"image_path_W"];
 
     NSArray *items = [JSON objectForKey:@"options_arr"];
     NSMutableArray *itemsSet = [NSMutableArray new];

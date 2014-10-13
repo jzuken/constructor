@@ -9,6 +9,7 @@
 #import "QRWLoginScrinViewController.h"
 #import "QRWDashboardViewController.h"
 #import "QRWSettingsClient.h"
+#import "QRWAppDelegate.h"
 
 #import <QuartzCore/QuartzCore.h>
 
@@ -130,21 +131,21 @@
         [_loginTextField resignFirstResponder];
         [_passwordTextField resignFirstResponder];
         
-        [QRWSettingsClient saveBaseUrl:url];
-        [QRWSettingsClient saveSecurityKey:_passwordTextField.text];
+        [QRWDataManager sendConfigRequestWithBlock:^(NSString *XCartVersion, NSError *error) {
+            if (error) {
+                [QRWSettingsClient saveXCartVersion:@"XCart4"];
+            } else {
+                [QRWSettingsClient saveXCartVersion:XCartVersion];
+            }
+            
+            [QRWSettingsClient saveBaseUrl:url];
+            [QRWSettingsClient saveSecurityKey:_passwordTextField.text];
+            [QRWAppDelegate registerOnPushNotifications];
+            
+            [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:@"QRW_isLogIn"];
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }];
         
-//        [QRWDataManager sendConfigRequestWithBlock:^(NSString *XCartVersion, NSError *error) {
-//            if (error) {
-//                [QRWSettingsClient saveXCartVersion:@"XCart4"];
-//            } else {
-//                [QRWSettingsClient saveXCartVersion:XCartVersion];
-//            }
-//            
-//            QRWDashboardViewController *dashboardViewController = [[QRWDashboardViewController alloc] init];
-//            [self.navigationController pushViewController:dashboardViewController animated:YES];
-//        }];
-        [[NSUserDefaults standardUserDefaults]setObject:[NSNumber numberWithBool:YES] forKey:@"QRW_isLogIn"];
-        [self dismissViewControllerAnimated:YES completion:nil];
     } else {
         [_passwordTextField setText:@""];
         [_loginTextField setText:@""];

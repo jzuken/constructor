@@ -8,14 +8,16 @@
 
 #import "QRWSettingsViewController.h"
 #import "QRWUnlockViewController.h"
+#import "QRWLoginScrinViewController.h"
+#import "QRWAppDelegate.h"
 
 @interface QRWSettingsViewController ()
 
 @property(nonatomic, weak) IBOutlet UISwitch *passwordSwitch;
-
 @property(nonatomic, weak) IBOutlet UISwitch *pushNotificationsSwitch;
 
 @end
+
 
 @implementation QRWSettingsViewController
 
@@ -53,12 +55,18 @@
 
 - (IBAction)pushNotificationsSwitchAction:(UISwitch *)pushNotificationsSwitch
 {
-    pushNotificationsSwitch.isOn ? [[UIApplication sharedApplication] registerForRemoteNotifications] : [[UIApplication sharedApplication] unregisterForRemoteNotifications];
+    pushNotificationsSwitch.isOn ? [QRWAppDelegate registerOnPushNotifications] : [[UIApplication sharedApplication] unregisterForRemoteNotifications];
 }
 
 - (void)logOutAction
 {
-   
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:NO] forKey:@"QRW_isLogIn"];
+    
+    if (![(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:@"QRW_isLogIn"] boolValue]) {
+        [self presentViewController:[[QRWLoginScrinViewController alloc] init]
+                           animated:NO
+                         completion:nil];
+    }
 }
 
 @end

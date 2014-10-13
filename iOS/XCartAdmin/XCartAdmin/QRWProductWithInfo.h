@@ -24,6 +24,9 @@
 @interface QRWProductVariant : QRWBaseEntety
 
 @property (nonatomic, copy) NSString *SKUOfVariant;
+@property (nonatomic, copy) NSString *variantid;
+@property (nonatomic, copy) NSString *imageURL;
+@property (nonatomic, strong) NSNumber *price;
 @property (nonatomic, copy) NSArray *options;
 
 @end

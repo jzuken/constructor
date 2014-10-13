@@ -237,30 +237,32 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    __weak QRWOrderInfoViewController *weakSelf = self;
+    
     if (indexPath.section == 0) {
         switch (indexPath.row) {
 
             case 0:{
                 QRWChoseSomethingViewController *statusesOptionsViewController =
-                [[QRWChoseSomethingViewController alloc] initWithOptionsDictionary:_statusColorsDictionary.allKeys
-                                                                     selectedIndex: [_statusColorsDictionary.allKeys indexOfObject:self.orderInfo.status]
-                                                                              type:QRWChoseSomethingViewControllerTypeStrings
-                                                                 selectOptionBlock:^(NSString *selectedOption) {
-                                                                     [self startLoadingAnimation];
-                                                                     [QRWDataManager sendOrderChangeStatusRequestWithID:[self.orderInfo.orderid intValue]
-                                                                                                                 status:selectedOption
-                                                                                                                  block:^(BOOL isSuccess, NSError *error) {
-                                                                                                                      [self stopLoadingAnimation];
-                                                                                                                      if (isSuccess){
-                                                                                                                          [self.navigationController popToViewController:self animated:YES];
-                                                                                                                          _orderInfo.status = selectedOption;
-                                                                                                                          [self showSuccesView];
-                                                                                                                          [self.tableView reloadData];
-                                                                                                                      } else {
-                                                                                                                          [self showErrorView];
-                                                                                                                      }
-                                                                                                                  }];
-                }];
+                [[QRWChoseSomethingViewController alloc]
+                 initWithOptionsDictionary:_statusColorsDictionary.allKeys
+                 selectedIndex: [_statusColorsDictionary.allKeys indexOfObject:self.orderInfo.status]
+                 type:QRWChoseSomethingViewControllerTypeStrings
+                 selectOptionBlock:^(NSString *selectedOption) {
+                     [self startLoadingAnimation];
+                     [QRWDataManager sendOrderChangeStatusRequestWithID:[self.orderInfo.orderid intValue]
+                                                                 status:selectedOption
+                                                                  block:^(BOOL isSuccess, NSError *error) {
+                                                                      [weakSelf stopLoadingAnimation];
+                                                                      if (isSuccess){
+                                                                          _orderInfo.status = selectedOption;
+                                                                          [weakSelf showSuccesView];
+                                                                          [weakSelf.tableView reloadData];
+                                                                      } else {
+                                                                          [weakSelf showErrorView];
+                                                                      }
+                                                                  }];
+                 }];
                 statusesOptionsViewController.view.frame = self.view.frame;
                 [self.navigationController pushViewController:statusesOptionsViewController animated:YES];
                 

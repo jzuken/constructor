@@ -19,6 +19,8 @@
 @property (nonatomic, strong) QRWEditPriceView *editPriceView;
 @property (nonatomic, strong) QRWProductWithInfo *product;
 
+@property (nonatomic, strong) QRWProductVariant *currentVariant;
+
 @end
 
 
@@ -54,13 +56,11 @@
     [self setDescription];
     [self.descriptionWebView.scrollView setScrollEnabled:NO];
     
-    [_priceButton setTitle:NSMoneyString(@"$", NSStringFromFloat([_product.price floatValue])) forState:UIControlStateNormal];
     [[_priceButton layer] setBorderWidth:1.0f];
     [_priceButton.layer setCornerRadius:4.0];
     [_priceButton.layer setBorderColor:[kTextBlueColor CGColor]];
     
-    [_imageImageView setImageWithURL:[NSURL URLWithString:_product.imageURL] placeholderImage:[UIImage imageNamed:@"loading.gif"]];
-    
+    [self showVariantData];
     
     [_showFull addTarget:self action:@selector(showDescription) forControlEvents:UIControlEventTouchUpInside];
     [_priceButton addTarget:self action:@selector(changePrice) forControlEvents:UIControlEventTouchUpInside];
@@ -73,6 +73,15 @@
         UIBarButtonItem *variantsBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"properties.png"] style:UIBarButtonItemStylePlain target:self action:@selector(showVariantsScreen)];
         self.navigationItem.rightBarButtonItem = variantsBarButtonItem;
     }
+}
+
+- (void)showVariantData
+{
+    CGFloat price = self.currentVariant ? [self.currentVariant.price floatValue]:[_product.price floatValue];
+    NSURL *imageURL = [NSURL URLWithString:self.currentVariant ? self.currentVariant.imageURL: _product.imageURL];
+    
+    [_priceButton setTitle:NSMoneyString(@"$", NSStringFromFloat(price)) forState:UIControlStateNormal];
+    [_imageImageView setImageWithURL:imageURL placeholderImage:[UIImage imageNamed:@"loading.gif"]];
 }
 
 - (void)didReceiveMemoryWarning
@@ -97,12 +106,15 @@
 
 - (void)showVariantsScreen
 {
-    [self.navigationController pushViewController:[[QRWChoseSomethingViewController alloc] initWithOptionsDictionary:self.product.variants
-                                                                                                       selectedIndex:0
-                                                                                                                type:QRWChoseSomethingViewControllerTypeOptions
-                                                                                                   selectOptionBlock:^(NSString *selectedOption) {
-        
-                                                                                                   }]
+    __weak QRWProductInfoViewController *weakSelf = self;
+    [self.navigationController pushViewController:
+     [[QRWChoseSomethingViewController alloc] initWithOptionsDictionary:self.product.variants
+                                                          selectedIndex:0
+                                                                   type:QRWChoseSomethingViewControllerTypeOptions
+                                                      selectOptionBlock:^(id selectedOption) {
+                                                          weakSelf.currentVariant = selectedOption;
+                                                          [weakSelf showVariantData];
+                                                      }]
                                          animated:YES];
 }
 
@@ -191,6 +203,7 @@
 {
     [self startLoadingAnimation];
     [QRWDataManager sendProductChangePriceRequestWithID:[_product.productid intValue]
+                                              variantID:self.currentVariant.variantid
                                                newPrice:newPrice
                                                   block:^(BOOL isSuccess, NSError *error) {
         [self stopLoadingAnimation];

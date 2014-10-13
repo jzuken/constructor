@@ -20,6 +20,6 @@ typedef NS_ENUM(NSUInteger, QRWChoseSomethingViewControllerType) {
 - (id)initWithOptionsDictionary:(NSArray *)options
                   selectedIndex:(NSUInteger)selectedIndex
                            type:(QRWChoseSomethingViewControllerType)type
-              selectOptionBlock:(void(^)(NSString *selectedOption))selectOptionBlock;
+              selectOptionBlock:(void(^)(id selectedOption))selectOptionBlock;
 
 @end
