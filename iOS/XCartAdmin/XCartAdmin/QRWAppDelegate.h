@@ -21,5 +21,6 @@
 
 
 + (void)registerOnPushNotifications;
++ (void)unregisterForPushNotifications;
 
 @end

@@ -55,7 +55,7 @@
 
 - (IBAction)pushNotificationsSwitchAction:(UISwitch *)pushNotificationsSwitch
 {
-    pushNotificationsSwitch.isOn ? [QRWAppDelegate registerOnPushNotifications] : [[UIApplication sharedApplication] unregisterForRemoteNotifications];
+    pushNotificationsSwitch.isOn ? [QRWAppDelegate registerOnPushNotifications] : [QRWAppDelegate unregisterForPushNotifications];
 }
 
 - (void)logOutAction
@@ -63,6 +63,8 @@
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:NO] forKey:@"QRW_isLogIn"];
     
     if (![(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:@"QRW_isLogIn"] boolValue]) {
+        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:NO] forKey:@"QRW_PINenabled"];
+        [QRWAppDelegate unregisterForPushNotifications];
         [self presentViewController:[[QRWLoginScrinViewController alloc] init]
                            animated:NO
                          completion:nil];

@@ -55,12 +55,11 @@
     return [self sendRequestWithURL:[NSString stringWithFormat:url_configURLappend, [QRWSettingsClient getSecurityKey]]
                             success:^(NSURLSessionDataTask *__unused task, id JSON) {
                                 DLog(@"JSON from dev server is: %@", JSON);
-                                DLog(@"dev server request is: %@", task.currentRequest.URL);
-                                NSError *localError = nil;
-                                NSDictionary *parsedObject = [NSJSONSerialization JSONObjectWithData:JSON options:0 error:&localError];
+                                DLog(@"Registration server request is: %@", task.currentRequest.URL);
+//                                NSError *localError = nil;
                                 
                                 if (block) {
-                                    block([parsedObject objectForKey:@"General:store_engine"], nil);
+                                    block([JSON objectForKey:@"General:store_engine"], nil);
                                 }
                             }
                             failure:^(NSURLSessionDataTask *__unused task, NSError *error) {

@@ -53,7 +53,7 @@
 
 - (void) addEditPriceView
 {
-    _editPriceView = [[QRWEditPriceView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, kheightOfEditPriceView)];
+    _editPriceView = [[QRWEditPriceView alloc] initWithFrame:CGRectMake(0, -kheightOfEditPriceView, self.view.frame.size.width, kheightOfEditPriceView)];
     _editPriceView.delegate = self;
     _editPriceView.priceTextField.keyboardType = UIKeyboardTypeDefault;
     [self.view addSubview:_editPriceView];
@@ -375,8 +375,8 @@
 {
     [_editPriceView.priceTextField becomeFirstResponder];
     [_editPriceView.priceTextField setText:_orderInfo.tracking];
-    [self moveEditPriceViewToHeight:self.tableView.frame.size.height - kheightOfEditPriceView];
 }
+
 
 - (void)saveButtonPressedWithPrice:(NSString *)newPrice
 {
@@ -405,6 +405,18 @@
         frame.origin.y = height;
         _editPriceView.frame = frame;
     }];
+}
+
+#pragma mark - Keyboard appears/disappear methods
+
+
+- (void)changeTheTableViewHeight:(CGFloat)heightChange
+{
+    CGRect frame = self.tableView.frame;
+    frame.size.height += heightChange;
+    self.tableView.frame = frame;
+    
+    [self moveEditPriceViewToHeight:(heightChange < 0) ? 0 : - kheightOfEditPriceView];
 }
 
 

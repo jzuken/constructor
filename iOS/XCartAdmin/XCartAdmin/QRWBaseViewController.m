@@ -109,9 +109,9 @@
 
 - (void) keyboardDidAppear:(NSNotification *)notification
 {
-    if (self.keyboardIsHide) return;
-    
-    self.keyboardIsHide = YES;
+//    if (self.keyboardIsHide) return;
+//    
+//    self.keyboardIsHide = YES;
     [self changeTheTableViewHeight:-[[[notification userInfo] objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size.height];
 }
 
