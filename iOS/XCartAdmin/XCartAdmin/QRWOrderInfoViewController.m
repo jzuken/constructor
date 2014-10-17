@@ -36,10 +36,6 @@
 {
     [super viewDidAppear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
-    
-    if (self.orderInfo && [[NSUserDefaults standardUserDefaults] objectForKey:@"ChangePPHStatus"]) {
-        [self changeOrderStatusAfterPayPalHere];
-    }
 }
 
 - (void)setOrderInfo:(QRWOrderInfo *)orderInfo
@@ -58,6 +54,7 @@
     _editPriceView.priceTextField.keyboardType = UIKeyboardTypeDefault;
     [self.view addSubview:_editPriceView];
 }
+
 
 #pragma mark - TableView
 
@@ -443,6 +440,8 @@
     if (buttonIndex == alertView.cancelButtonIndex) {
         [self changeOrderStatusAfterPayPalHere];
     } else {
+        [[NSUserDefaults standardUserDefaults] setObject:self.orderInfo.orderid forKey:@"ChangePPHStatusID"];
+        
         UIApplication *application = [UIApplication sharedApplication];
         if ([application canOpenURL:[NSURL URLWithString: _orderInfo.pphURLString]]){
             [application openURL:[NSURL URLWithString: _orderInfo.pphURLString]];
@@ -450,6 +449,8 @@
             NSURL *url = [NSURL URLWithString:@"itms://itunes.apple.com/us/app/paypal-here/id505911015?mt=8"];
             [application openURL:url];
         }
+        
+        [self.navigationController popViewControllerAnimated:NO];
     }
 }
 

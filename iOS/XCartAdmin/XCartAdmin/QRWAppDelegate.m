@@ -142,14 +142,9 @@ forRemoteNotification:(NSDictionary *)userInfo
   sourceApplication:(NSString *)sourceApplication
          annotation:(id)annotation
 {
-    NSLog(@"Calling Application Bundle ID: %@", sourceApplication);
-    NSLog(@"URL:%@", url);
-
-    NSLog(@"URL scheme:%@", [url scheme]);
-    NSLog(@"URL query: %@", [url query]);
+    NSString *orderID = [[NSUserDefaults standardUserDefaults] objectForKey:@"ChangePPHStatusID"];
     
-    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES]
-                                              forKey:@"ChangePPHStatus"];
+    [QRWDataManager sendOrderChangeStatusRequestWithID:[orderID intValue] status:@"C" block:nil];
     
     return YES;
 }

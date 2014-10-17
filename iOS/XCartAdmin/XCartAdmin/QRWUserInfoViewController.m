@@ -62,6 +62,10 @@
                                          fromPoint:asEmpty? 0 : self.dataArray.count
                                            toPoint:kNumberOfLoadedItems
                                              block:^(NSArray *orders, NSError *error) {
+                                                 if (orders.count == 0) {
+                                                     self.tableView.showsInfiniteScrolling = NO;
+                                                     return;
+                                                 }
                                                  [self smartAddObjectToDataArrayAsNew:asEmpty withLoaddedArray:orders];
                                              }];
 }
