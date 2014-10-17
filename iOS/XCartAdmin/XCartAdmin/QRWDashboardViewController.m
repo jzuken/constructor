@@ -52,9 +52,9 @@
                            animated:NO
                          completion:nil];
     }
-//    else if ([(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:@"QRW_PINenabled"] boolValue]){
-//        [[QRWUnlockViewController sharedInstance] showUnlockViewOnViewController:self editPasswordMode:NO];
-//    }
+    else if ([(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:@"QRW_PINenabled"] boolValue]){
+        [[QRWUnlockViewController sharedInstance] showUnlockViewOnViewController:self editPasswordMode:NO];
+    }
 }
 
 
