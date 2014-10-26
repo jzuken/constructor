@@ -35,96 +35,6 @@
     return YES;
 }
 
-+ (void)registerOnPushNotifications
-{
-//#ifdef __IPHONE_8_0
-//    UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:(UIRemoteNotificationTypeBadge
-//                                                                                         |UIRemoteNotificationTypeSound
-//                                                                                         |UIRemoteNotificationTypeAlert) categories:nil];
-//    [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
-//#else
-//    UIRemoteNotificationType myTypes = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound;
-//    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:myTypes];
-//#endif
-    
-    [[UIApplication sharedApplication] registerForRemoteNotificationTypes: UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert];
-}
-
-
-+ (void)unregisterForPushNotifications
-{
-    [[UIApplication sharedApplication] unregisterForRemoteNotifications];
-//#ifdef __IPHONE_8_0
-//    UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeNone categories:nil];
-//    [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
-//#endif
-}
-
-- (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
-{
-	DLog(@"My token is: %@", deviceToken);
-    
-    if (![[NSUserDefaults standardUserDefaults] objectForKey:@"isTokenWasSent"]) {
-        NSString *stringDeviceToken = [[[[deviceToken description]
-                                         stringByReplacingOccurrencesOfString: @"<" withString: @""]
-                                        stringByReplacingOccurrencesOfString: @">" withString: @""]
-                                       stringByReplacingOccurrencesOfString: @" " withString: @""];
-        
-        [QRWDataManager sendPushTokenAuthorization:stringDeviceToken
-                                            block:^(BOOL isAuth, NSError *error) {
-                                                if (isAuth) {
-                                                    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:@"isTokenWasSent"];
-                                                }
-                                            }];
-    }
-}
-
-
-
-#ifdef __IPHONE_8_0
-- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings
-{
-    //register to receive notifications
-    [application registerForRemoteNotifications];
-}
-
-- (void)application:(UIApplication *)application
-handleActionWithIdentifier:(NSString *)identifier
-forRemoteNotification:(NSDictionary *)userInfo
-  completionHandler:(void(^)())completionHandler
-{
-    //handle the actions
-    if ([identifier isEqualToString:@"declineAction"]){
-    }
-    else if ([identifier isEqualToString:@"answerAction"]){
-    }
-}
-#endif
-
-- (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
-{
-	DLog(@"Failed to get token, error: %@", error);
-}
-
-
-- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
-{
-    DLog(@"%@", userInfo);
-    NSDictionary *pushInfo = (NSDictionary *)[userInfo objectForKey:@"data"];
-    
-    NSArray *viewControllers = [(UINavigationController *)[self.window rootViewController] viewControllers];
-    
-    UIViewController *topViewController = [viewControllers lastObject];
-
-    if ([@"New order received" isEqual:[pushInfo objectForKey:@"message"]]) {
-        
-    }
-    [QRWDataManager sendOrderInfoRequestWithID:(int)[pushInfo objectForKey:@"data"] block:^(QRWOrderInfo *order, NSError *error) {
-        QRWOrderInfoViewController *orderInfoViewController = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"QRWOrderInfoViewController"];
-        [topViewController.navigationController pushViewController:orderInfoViewController animated:YES];
-        [orderInfoViewController setOrderInfo:order];
-    }];
-}
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
@@ -154,6 +64,78 @@ forRemoteNotification:(NSDictionary *)userInfo
                                                  block:nil];
     
     return YES;
+}
+
+#pragma mark - Push Notifications
+
++ (void)registerOnPushNotifications
+{
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_8_0
+    if ([[UIApplication sharedApplication] respondsToSelector:@selector(registerUserNotificationSettings:)]) {
+        UIUserNotificationSettings* notificationSettings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound categories:nil];
+        [[UIApplication sharedApplication] registerUserNotificationSettings:notificationSettings];
+        [[UIApplication sharedApplication] registerForRemoteNotifications];
+    } else {
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes: (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+    }
+#else
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes: (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+#endif
+}
+
+
++ (void)unregisterForPushNotifications
+{
+    [[UIApplication sharedApplication] unregisterForRemoteNotifications];
+#ifdef __IPHONE_8_0
+    UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeNone categories:nil];
+    [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+#endif
+}
+
+- (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
+{
+    DLog(@"My token is: %@", deviceToken);
+    
+    if (![[NSUserDefaults standardUserDefaults] objectForKey:@"isTokenWasSent"]) {
+        NSString *stringDeviceToken = [[[[deviceToken description]
+                                         stringByReplacingOccurrencesOfString: @"<" withString: @""]
+                                        stringByReplacingOccurrencesOfString: @">" withString: @""]
+                                       stringByReplacingOccurrencesOfString: @" " withString: @""];
+        
+        [QRWDataManager sendPushTokenAuthorization:stringDeviceToken
+                                             block:^(BOOL isAuth, NSError *error) {
+                                                 if (isAuth) {
+                                                     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:@"isTokenWasSent"];
+                                                 }
+                                             }];
+    }
+}
+
+
+- (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
+{
+    DLog(@"Failed to get token, error: %@", error);
+}
+
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+    DLog(@"%@", userInfo);
+    NSDictionary *pushInfo = (NSDictionary *)[userInfo objectForKey:@"data"];
+    
+    NSArray *viewControllers = [(UINavigationController *)[self.window rootViewController] viewControllers];
+    
+    UIViewController *topViewController = [viewControllers lastObject];
+    
+    if ([@"New order received" isEqual:[pushInfo objectForKey:@"message"]]) {
+        
+    }
+    [QRWDataManager sendOrderInfoRequestWithID:(int)[pushInfo objectForKey:@"data"] block:^(QRWOrderInfo *order, NSError *error) {
+        QRWOrderInfoViewController *orderInfoViewController = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"QRWOrderInfoViewController"];
+        [topViewController.navigationController pushViewController:orderInfoViewController animated:YES];
+        [orderInfoViewController setOrderInfo:order];
+    }];
 }
 
 
