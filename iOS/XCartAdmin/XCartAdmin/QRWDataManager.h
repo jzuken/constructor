@@ -112,6 +112,7 @@
                                                                block:(void (^)(BOOL isSuccess, NSError *error))block;
 
 + (NSURLSessionDataTask *)sendOrderChangeStatusRequestWithID:(NSInteger)orderID
+                                                  pphDetails:(NSString *)pphDetails
                                                       status:(NSString *)status
                                                        block:(void (^)(BOOL isSuccess, NSError *error))block;
 

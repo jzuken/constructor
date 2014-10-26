@@ -198,10 +198,11 @@
 
 
 + (NSURLSessionDataTask *)sendOrderChangeStatusRequestWithID:(NSInteger)orderID
-                                                              status:(NSString *)status
-                                                               block:(void (^)(BOOL isSuccess, NSError *error))block
+                                                  pphDetails:(NSString *)pphDetails
+                                                      status:(NSString *)status
+                                                       block:(void (^)(BOOL isSuccess, NSError *error))block
 {
-    NSString *getURL = [NSString stringWithFormat:url_changeStatusOrdersURLappend, (int)orderID, status, [QRWSettingsClient getSecurityKey]];
+    NSString *getURL = [NSString stringWithFormat:url_changeStatusOrdersURLappend, (int)orderID, pphDetails, status, [QRWSettingsClient getSecurityKey]];
     
     return [self sendRequestWithURL:getURL
                             success:^(NSURLSessionDataTask *__unused task, id JSON) {

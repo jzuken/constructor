@@ -12,6 +12,8 @@
 #import "QRWDataManager.h"
 #import "QRWOrderInfoViewController.h"
 #import "QRWSettingsClient.h"
+#import <SAMCategories/NSURL+SAMAdditions.h>
+#import <SAMCategories/NSDictionary+SAMAdditions.h>
 
 @implementation QRWAppDelegate
 
@@ -35,25 +37,27 @@
 
 + (void)registerOnPushNotifications
 {
-#ifdef __IPHONE_8_0
-    UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:(UIRemoteNotificationTypeBadge
-                                                                                         |UIRemoteNotificationTypeSound
-                                                                                         |UIRemoteNotificationTypeAlert) categories:nil];
-    [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
-#else
-    UIRemoteNotificationType myTypes = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound;
-    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:myTypes];
-#endif
+//#ifdef __IPHONE_8_0
+//    UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:(UIRemoteNotificationTypeBadge
+//                                                                                         |UIRemoteNotificationTypeSound
+//                                                                                         |UIRemoteNotificationTypeAlert) categories:nil];
+//    [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+//#else
+//    UIRemoteNotificationType myTypes = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound;
+//    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:myTypes];
+//#endif
+    
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes: UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert];
 }
 
 
 + (void)unregisterForPushNotifications
 {
     [[UIApplication sharedApplication] unregisterForRemoteNotifications];
-#ifdef __IPHONE_8_0
-    UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeNone categories:nil];
-    [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
-#endif
+//#ifdef __IPHONE_8_0
+//    UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeNone categories:nil];
+//    [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+//#endif
 }
 
 - (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
@@ -142,9 +146,12 @@ forRemoteNotification:(NSDictionary *)userInfo
   sourceApplication:(NSString *)sourceApplication
          annotation:(id)annotation
 {
-    NSString *orderID = [[NSUserDefaults standardUserDefaults] objectForKey:@"ChangePPHStatusID"];
+    DLog(@"URL:%@", url);
     
-    [QRWDataManager sendOrderChangeStatusRequestWithID:[orderID intValue] status:@"C" block:nil];
+    [QRWDataManager sendOrderChangeStatusRequestWithID:[[[url sam_queryDictionary] objectForKey:@"oid"] integerValue]
+                                            pphDetails:[[url sam_queryDictionary] sam_stringWithFormEncodedComponents]
+                                                status:[[url sam_queryDictionary] objectForKey:@"Type"]
+                                                 block:nil];
     
     return YES;
 }

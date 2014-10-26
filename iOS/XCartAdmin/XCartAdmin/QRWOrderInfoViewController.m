@@ -248,6 +248,7 @@
                  selectOptionBlock:^(NSString *selectedOption) {
                      [self startLoadingAnimation];
                      [QRWDataManager sendOrderChangeStatusRequestWithID:[self.orderInfo.orderid intValue]
+                                                             pphDetails:nil
                                                                  status:selectedOption
                                                                   block:^(BOOL isSuccess, NSError *error) {
                                                                       [weakSelf stopLoadingAnimation];
@@ -421,7 +422,10 @@
 
 - (void)changeOrderStatusAfterPayPalHere
 {
-    [QRWDataManager sendOrderChangeStatusRequestWithID:[self.orderInfo.orderid intValue] status:@"D" block:^(BOOL isSuccess, NSError *error) {
+    [QRWDataManager sendOrderChangeStatusRequestWithID:[self.orderInfo.orderid intValue]
+                                            pphDetails:nil
+                                                status:@"D"
+                                                 block:^(BOOL isSuccess, NSError *error) {
         if (isSuccess){
             _orderInfo.status = @"D";
             [self showSuccesView];
@@ -440,8 +444,6 @@
     if (buttonIndex == alertView.cancelButtonIndex) {
         [self changeOrderStatusAfterPayPalHere];
     } else {
-        [[NSUserDefaults standardUserDefaults] setObject:self.orderInfo.orderid forKey:@"ChangePPHStatusID"];
-        
         UIApplication *application = [UIApplication sharedApplication];
         if ([application canOpenURL:[NSURL URLWithString: _orderInfo.pphURLString]]){
             [application openURL:[NSURL URLWithString: _orderInfo.pphURLString]];
