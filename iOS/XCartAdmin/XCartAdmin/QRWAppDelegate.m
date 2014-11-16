@@ -60,7 +60,9 @@
     
     [QRWDataManager sendOrderChangeStatusRequestWithID:[[[url sam_queryDictionary] objectForKey:@"oid"] integerValue]
                                             pphDetails:[[url sam_queryDictionary] sam_stringWithFormEncodedComponents]
-                                                status:[[url sam_queryDictionary] objectForKey:@"Type"]
+                                                status:[[QRWSettingsClient getXCartVersion] isEqual:@"XCart4"] ? [[url sam_queryDictionary] objectForKey:@"Type"] : @""
+                                         paymentStatus:![[QRWSettingsClient getXCartVersion] isEqual:@"XCart4"] ? [[url sam_queryDictionary] objectForKey:@"Type"] : @""
+                                        shippingStatus:@""
                                                  block:nil];
     
     return YES;

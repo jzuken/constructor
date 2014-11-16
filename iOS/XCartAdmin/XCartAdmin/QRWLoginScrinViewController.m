@@ -67,7 +67,6 @@
                                                 block:^(BOOL isAuth, NSString *description, NSError *error) {
                                                     [self respondsForAuthRequest:isAuth shopURL:description error:error];
     }];
-//    [self respondsForAuthRequest:YES error:nil];
 }
 
 
@@ -131,19 +130,30 @@
         [_loginTextField resignFirstResponder];
         [_passwordTextField resignFirstResponder];
         
-        [QRWDataManager sendConfigRequestWithBlock:^(NSString *XCartVersion, NSError *error) {
-            if (error) {
-                [QRWSettingsClient saveXCartVersion:@"XCart4"];
+        [QRWSettingsClient saveBaseUrl:url];
+        [QRWSettingsClient saveSecurityKey:_passwordTextField.text];
+        
+        [QRWDataManager checkTheSubscriptionStatusWithSuccessBlock:^(NSString *status) {
+            if ([status isEqual:@"expired"]) {
+                [QRWSettingsClient saveSubscriptionStatus:QRWSubscriptionStatusExpired];
+            } else if ([status isEqual:@"active"]) {
+                [QRWSettingsClient saveSubscriptionStatus:QRWSubscriptionStatusSuccess];
             } else {
-                [QRWSettingsClient saveXCartVersion:XCartVersion];
+                [QRWSettingsClient saveSubscriptionStatus:QRWSubscriptionStatusTrial];
             }
             
-            [QRWSettingsClient saveBaseUrl:url];
-            [QRWSettingsClient saveSecurityKey:_passwordTextField.text];
-            [QRWAppDelegate registerOnPushNotifications];
-            
-            [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:@"QRW_isLogIn"];
-            [self dismissViewControllerAnimated:YES completion:nil];
+            [QRWDataManager sendConfigRequestWithBlock:^(NSString *XCartVersion, NSError *error) {
+                if (error) {
+                    [QRWSettingsClient saveXCartVersion:@"XCart4"];
+                } else {
+                    [QRWSettingsClient saveXCartVersion:XCartVersion];
+                }
+                
+                [QRWAppDelegate registerOnPushNotifications];
+                
+                [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:@"QRW_isLogIn"];
+                [self dismissViewControllerAnimated:YES completion:nil];
+            }];
         }];
         
     } else {

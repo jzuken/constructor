@@ -12,6 +12,64 @@
 
 @implementation QRWSettingsClient
 
+#pragma mark - order statuses
+
++ (NSArray *)paymentStatuses
+{
+    return [[NSUserDefaults standardUserDefaults] arrayForKey:@"QRW_paymentStatuses"];
+}
+
++ (NSArray *)shippingStatuses
+{
+    return [[NSUserDefaults standardUserDefaults] arrayForKey:@"QRW_shippingStatuses"];
+}
+
++ (void)setPaymentStatuses:(NSArray *)paymentStatuses
+{
+    [[NSUserDefaults standardUserDefaults] setObject:paymentStatuses forKey:@"QRW_paymentStatuses"];
+}
+
++ (void)setShippingStatuses:(NSArray *)shippingStatuses
+{
+    [[NSUserDefaults standardUserDefaults] setObject:shippingStatuses forKey:@"QRW_shippingStatuses"];
+}
+
+#pragma mark - 
+
++ (BOOL)checkSubscriptionStatusesWithSuccessBlock:(void(^)(void))successBlock
+{
+    if ([QRWSettingsClient getSubscriptionStatus] == QRWSubscriptionStatusExpired) {
+        [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"SUBSCRIPTION_EXPIRED", nil)
+                                    message:NSLocalizedString(@"SUBSCRIPTION_EXPIRED_MESSAGE", nil)
+                                   delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil)
+                          otherButtonTitles:nil, nil] show];
+    } else if ([QRWSettingsClient getSubscriptionStatus] == QRWSubscriptionStatusTrial){
+        [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"TRIAL_VERSION", nil)
+                                    message:NSLocalizedString(@"TRIAL_VERSION_MESSAGE", nil)
+                                   delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil)
+                          otherButtonTitles:nil, nil] show];
+    } else {
+        if (successBlock) {
+            successBlock();
+            return YES;
+        }
+    }
+    return NO;
+}
+
+
++ (void)saveSubscriptionStatus:(QRWSubscriptionStatus)subscriptionStatus
+{
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInteger:subscriptionStatus]
+                                              forKey:@"QRW_subscriptionStatus"];
+    
+}
+
++ (QRWSubscriptionStatus)getSubscriptionStatus
+{
+    return [(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:@"QRW_subscriptionStatus"] integerValue];
+}
+
 
 + (void)saveUnlockKey:(NSString *)unlockKey
 {
@@ -45,7 +103,11 @@
 + (NSURL *)getBaseUrl
 {
     return [NSURL URLWithString:[[NSUserDefaults standardUserDefaults] objectForKey:@"QRW_baseUrl"]];
-//    return [NSURL URLWithString:@"https://mobileadmin.x-cart.com/"];
+}
+
++ (NSString *)getURLLogin
+{
+    return [[NSUserDefaults standardUserDefaults] objectForKey:@"QRW_baseUrl"];
 }
 
 

@@ -71,7 +71,13 @@
 "PHONE" = "Phone";
 "FAX" = "Fax";
 
+// Alerts
 "RELOGIN_ALERT_TITLE" = "Connection error";
 "RELOGIN_ALERT_MESSAGE" = "Please check you connection";
 "AUTH_ERROR_ALERT_TITLE" = "Auth error";
 "AUTH_ERROR_ALERT_MESSAGE" = "Please check your auth data";
+
+"TRIAL_VERSION" = "Trial version";
+"TRIAL_VERSION_MESSAGE" = "You use a trial version of the app and can not do this";
+"SUBSCRIPTION_EXPIRED" = "Subscribtion expired";
+"SUBSCRIPTION_EXPIRED_MESSAGE" = "Your subscribtion expired and you can not do this";

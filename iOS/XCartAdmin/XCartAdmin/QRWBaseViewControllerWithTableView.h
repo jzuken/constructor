@@ -15,7 +15,6 @@
    NSDictionary *_statusColorsDictionary;
 }
 
-
 @property (nonatomic, weak) IBOutlet UITableView *tableView;
 
 @property (nonatomic, weak) IBOutlet UISearchBar *requestSearchBar;

@@ -63,17 +63,29 @@
         self.isPresent = NO;
         [self dismissViewControllerAnimated:YES completion:nil];
     } else {
-        if ([[QRWSettingsClient getUnlockKey] isEqual:currentPIN]) {
-            self.isPresent = NO;
-            [self dismissViewControllerAnimated:YES completion:nil];
-        } else {
-            [[[UIAlertView alloc] initWithTitle:QRWLoc(@"NOT_CORRECT_UNLOCK_KEY_TITLE")
-                                        message:QRWLoc(@"NOT_CORRECT_UNLOCK_KEY_MESSAGE")
-                                       delegate:nil
-                              cancelButtonTitle:QRWLoc(@"CANCEL")
-                              otherButtonTitles: nil]
-             show];
-        }
+        [self startLoadingAnimation];
+        [QRWDataManager checkTheSubscriptionStatusWithSuccessBlock:^(NSString *status) {
+            [self stopLoadingAnimation];
+            if ([status isEqual:@"expired"]) {
+                [QRWSettingsClient saveSubscriptionStatus:QRWSubscriptionStatusExpired];
+            } else if ([status isEqual:@"active"]) {
+                [QRWSettingsClient saveSubscriptionStatus:QRWSubscriptionStatusSuccess];
+            } else {
+                [QRWSettingsClient saveSubscriptionStatus:QRWSubscriptionStatusTrial];
+            }
+            
+            if ([[QRWSettingsClient getUnlockKey] isEqual:currentPIN]) {
+                self.isPresent = NO;
+                [self dismissViewControllerAnimated:YES completion:nil];
+            } else {
+                [[[UIAlertView alloc] initWithTitle:QRWLoc(@"NOT_CORRECT_UNLOCK_KEY_TITLE")
+                                            message:QRWLoc(@"NOT_CORRECT_UNLOCK_KEY_MESSAGE")
+                                           delegate:nil
+                                  cancelButtonTitle:QRWLoc(@"CANCEL")
+                                  otherButtonTitles: nil]
+                 show];
+            }
+        }];
     }
 }
 

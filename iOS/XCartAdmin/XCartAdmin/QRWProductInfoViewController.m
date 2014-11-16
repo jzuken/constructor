@@ -8,7 +8,7 @@
 
 #import "QRWProductInfoViewController.h"
 #import "UIImageView+AFNetworking.h"
-
+#import "QRWSettingsClient.h"
 #import "QRWChoseSomethingViewController.h"
 
 @interface QRWProductInfoViewController ()
@@ -148,24 +148,31 @@
 
 - (void)changeAvaliability
 {
-    [self startLoadingAnimation];
-    [QRWDataManager sendProductChangeAvaliabilityRequestWithID:[_product.productid integerValue]
-                                                   isAvaliable:_availiabilitySwitcher.on
-                                                         block:^(BOOL isSuccess, NSError *error) {
-                                                             [self stopLoadingAnimation];
-                                                             if (isSuccess) {
-                                                                 [self showSuccesView];
-                                                             } else {
-                                                                 [self showErrorView];
-                                                             }
-                                                         }];
+    BOOL isSuccess = [QRWSettingsClient checkSubscriptionStatusesWithSuccessBlock:^{
+        [self startLoadingAnimation];
+        [QRWDataManager sendProductChangeAvaliabilityRequestWithID:[_product.productid integerValue]
+                                                       isAvaliable:_availiabilitySwitcher.on
+                                                             block:^(BOOL isSuccess, NSError *error) {
+                                                                 [self stopLoadingAnimation];
+                                                                 if (isSuccess) {
+                                                                     [self showSuccesView];
+                                                                 } else {
+                                                                     [self showErrorView];
+                                                                 }
+                                                             }];
+    }];
+    if(!isSuccess){
+        [self.availiabilitySwitcher setOn:!self.availiabilitySwitcher.on animated:YES];
+    }
 }
 
 
 - (void)changePrice
 {
-    [_editPriceView.priceTextField becomeFirstResponder];
-    [_editPriceView.priceTextField setText:[NSString stringWithFormat:@"%.2f", [_product.price floatValue]]];
+    [QRWSettingsClient checkSubscriptionStatusesWithSuccessBlock:^{
+        [_editPriceView.priceTextField becomeFirstResponder];
+        [_editPriceView.priceTextField setText:[NSString stringWithFormat:@"%.2f", [_product.price floatValue]]];
+    }];
 }
 
 

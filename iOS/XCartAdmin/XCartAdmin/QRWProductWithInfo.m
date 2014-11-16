@@ -47,7 +47,9 @@
     [super buildDataByJson:JSON];
     
     self.SKUOfVariant = [JSON objectForKey:@"productcode"];
-    self.variantid = [[JSON objectForKey:@"variant_id"] stringValue];
+    self.variantid = [[JSON objectForKey:@"variant_id"] isKindOfClass:[NSString class]] ?
+        [JSON objectForKey:@"variant_id"]:
+        [[JSON objectForKey:@"variant_id"] stringValue];
     self.price = [JSON objectForKey:@"price"];
     self.imageURL = [JSON objectForKey:@"image_path_W"];
 

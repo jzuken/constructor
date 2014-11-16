@@ -13,6 +13,7 @@ static NSString *const url_XCarApiURlappend = @"xcart/mobile_admin_api.php?";
 static NSString *const url_developmentBaseURL = @"https://vm-constructor.cloudapp.net/";
 
 static NSString *const url_developmentGetShopURLappend = @"/AppServerListener/api/shops/%@/ApiURL?key=%@";
+static NSString *const url_developmentGetChecksubscription = @"/AppServerListener/api/shops/%@/checksubscription";
 
 static NSString *const url_configURLappend = @"?request=get_config&key=%@";
 
@@ -36,7 +37,8 @@ static NSString *const url_productChangeAvaliabilityURLappend = @"?request=chang
 static NSString *const url_lastOrdersURLappend = @"?request=last_orders&from=%d&size=%d&status=%@&date=%@&key=%@&search=%@";
 static NSString *const url_orderInfoURLappend = @"?request=order_info&id=%d&key=%@";
 static NSString *const url_changeTrackingOrdersURLappend = @"?request=change_tracking&order_id=%@&tracking_number=%@&key=%@";
-static NSString *const url_changeStatusOrdersURLappend = @"?request=change_status&order_id=%d&pph_order_details=%@&status=%@&key=%@";
+static NSString *const url_changeStatusOrdersURLappend =
+@"?request=change_status&order_id=%d&pph_order_details=%@&status=%@&key=%@&payment_status=%@&fulfilment_status=%@";
 
 static NSString *const URL_pushAppend = @"?request=register_apns&key=%@&regid=%@&model=%@&manufacturer=Apple&android_version=%@";
 

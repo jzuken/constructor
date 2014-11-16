@@ -15,6 +15,7 @@
 @property(nonatomic, copy) NSArray *items;
 
 @property(nonatomic, copy) NSString *status;
+@property(nonatomic, copy) NSString *shippingStatus;
 @property(nonatomic, copy) NSString *tracking;
 @property(nonatomic, copy) NSString *paymentMethod;
 @property(nonatomic, copy) NSString *shipping;

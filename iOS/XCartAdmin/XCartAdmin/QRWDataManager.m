@@ -9,16 +9,9 @@
 #import "QRWDataManager.h"
 #import "QRWHTTPClient.h"
 #import "QRWSettingsClient.h"
-
 #import "constants.h"
 #import "URLsList.h"
-
 #import "QRWBaseViewController.h"
-
-@interface QRWDataManager ()
-
-
-@end
 
 
 @implementation QRWDataManager
@@ -50,16 +43,48 @@
                                                  }];
 }
 
+
++ (NSURLSessionDataTask *)checkTheSubscriptionStatusWithSuccessBlock:(void (^)(NSString *status))successBlock
+{
+    NSString *getShop = [NSString stringWithFormat:url_developmentGetChecksubscription, [QRWSettingsClient getURLLogin]];
+    
+    return [[QRWHTTPClient sharedDevelopmentClient] GET:getShop
+                                             parameters:nil
+                                                success:^(NSURLSessionDataTask *__unused task, id JSON) {
+                                                    DLog(@"JSON from dev server is: %@", JSON);
+                                                    DLog(@"dev server request is: %@", task.currentRequest.URL);
+                                                    NSError *localError = nil;
+                                                    NSDictionary *parsedObject = [NSJSONSerialization JSONObjectWithData:JSON options:0 error:&localError];
+                                                    
+                                                    if (successBlock) {
+                                                        successBlock([parsedObject objectForKey:@"subscribed"]);
+                                                    }
+                                                }
+                                                failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
+                                                    DLog(@"Error: %@", error);
+                                                    if (successBlock) {
+                                                        successBlock(nil);
+                                                    }
+                                                }];
+}
+
 + (NSURLSessionDataTask *)sendConfigRequestWithBlock:(void (^)(NSString *XCartVersion, NSError *error))block
 {
     return [self sendRequestWithURL:[NSString stringWithFormat:url_configURLappend, [QRWSettingsClient getSecurityKey]]
                             success:^(NSURLSessionDataTask *__unused task, id JSON) {
                                 DLog(@"JSON from dev server is: %@", JSON);
                                 DLog(@"Registration server request is: %@", task.currentRequest.URL);
-//                                NSError *localError = nil;
                                 
                                 if (block) {
                                     block([JSON objectForKey:@"General:store_engine"], nil);
+                                }
+                                
+                                NSDictionary *allStatuses = [JSON objectForKey:@"Order:statuses"] ;
+                                if ([[JSON objectForKey:@"General:store_engine"] isEqual:@"XCart4"]) {
+                                    [QRWSettingsClient setPaymentStatuses:[[allStatuses objectForKey:@"status"] valueForKey:@"name"]];
+                                } else {
+                                    [QRWSettingsClient setPaymentStatuses:[[allStatuses objectForKey:@"payment_status"] valueForKey:@"name"]];
+                                    [QRWSettingsClient setShippingStatuses:[[allStatuses objectForKey:@"fulfilment_status"] valueForKey:@"name"]];
                                 }
                             }
                             failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
@@ -200,9 +225,11 @@
 + (NSURLSessionDataTask *)sendOrderChangeStatusRequestWithID:(NSInteger)orderID
                                                   pphDetails:(NSString *)pphDetails
                                                       status:(NSString *)status
+                                               paymentStatus:(NSString *)paymentStatus
+                                              shippingStatus:(NSString *)shippingStatus
                                                        block:(void (^)(BOOL isSuccess, NSError *error))block
 {
-    NSString *getURL = [NSString stringWithFormat:url_changeStatusOrdersURLappend, (int)orderID, pphDetails, status, [QRWSettingsClient getSecurityKey]];
+    NSString *getURL = [NSString stringWithFormat:url_changeStatusOrdersURLappend, (int)orderID, pphDetails, status, [QRWSettingsClient getSecurityKey], paymentStatus, shippingStatus];
     
     return [self sendRequestWithURL:getURL
                             success:^(NSURLSessionDataTask *__unused task, id JSON) {
@@ -460,10 +487,6 @@
                             }];
 }
 
-
-
-
-
 #pragma mark - private methods
 
 
@@ -472,7 +495,9 @@
                                      failure:(void (^)(NSURLSessionDataTask *task, NSError *error))failure
 {
     DLog(@"URL is: %@", requestURL);
-    return [[QRWHTTPClient sharedClient] GET:requestURL
+    NSArray *words = [requestURL componentsSeparatedByCharactersInSet :[NSCharacterSet whitespaceCharacterSet]];
+    NSString *nospacesRequestURL = [words componentsJoinedByString:@""];
+    return [[QRWHTTPClient sharedClient] GET:nospacesRequestURL
                                   parameters:nil
                                      success:success
                                      failure:failure];

@@ -7,6 +7,7 @@
 //
 
 #import "QRWOrderInfo.h"
+#import "QRWSettingsClient.h"
 
 @implementation QRWOrderInfo
 
@@ -16,7 +17,13 @@
     
     self.orderid = [JSON objectForKey:@"orderid"];
     
-    self.status = [JSON objectForKey:@"status"];
+    if ([[QRWSettingsClient getXCartVersion] isEqual:@"XCart4"]) {
+        self.status = [JSON objectForKey:@"status"];
+    } else {
+        self.status = [JSON objectForKey:@"payment_status"];
+        self.shippingStatus = [JSON objectForKey:@"fulfilment_status"];
+    }
+    
     self.tracking = [JSON objectForKey:@"tracking"];
     self.paymentMethod  = [JSON objectForKey:@"payment_method"];
     self.shipping = [JSON objectForKey:@"shipping"];

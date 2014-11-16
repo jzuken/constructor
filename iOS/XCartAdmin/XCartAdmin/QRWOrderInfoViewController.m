@@ -13,12 +13,14 @@
 #import "QRWUserInfoViewController.h"
 #import "QRWProductInfoViewController.h"
 #import "QRWChoseSomethingViewController.h"
+#import "QRWSettingsClient.h"
 
 @interface QRWOrderInfoViewController ()<QRWPayPalViewControllerDelegate, QRWEditPriceViewDelegate, UIAlertViewDelegate>
 
 @property (nonatomic, strong) QRWEditPriceView *editPriceView;
 
 @end
+
 
 
 @implementation QRWOrderInfoViewController
@@ -71,21 +73,15 @@
     }
     if (indexPath.section == 0) {
         switch (indexPath.row) {
-            case 0:{
-                cell = [tableView dequeueReusableCellWithIdentifier:@"QRWOrderInfoTableViewCellFixed"];
-                [cell configurateAsCellWithKey:@"Status" value:QRWLoc(_orderInfo.status)];
-                [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
-            }
-                break;
                 
-            case 1:{
+            case 0:{
                 cell = [tableView dequeueReusableCellWithIdentifier:@"QRWOrderInfoTableViewCellFixed"];
                 [cell configurateAsCellWithKey:@"Tracking number" value:_orderInfo.tracking];
                 [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
             }
                 break;
                 
-            case 2:{
+            case 1:{
                 cell = [tableView dequeueReusableCellWithIdentifier:@"QRWOrderInfoTableViewCellFixed"];
                 [cell configurateAsCellWithKey:@"Payment method" value:_orderInfo.paymentMethod];
                 if (_orderInfo.pphURLString) {
@@ -96,14 +92,14 @@
             }
                 break;
                 
-            case 3:{
+            case 2:{
                 cell = [tableView dequeueReusableCellWithIdentifier:@"QRWOrderInfoTableViewCellStatic"];
                 [cell configurateAsCellWithKey:@"Delivery method" value:_orderInfo.shipping];
                 [cell setAccessoryType:UITableViewCellAccessoryNone];
             }
                 break;
                 
-            case 4:{
+            case 3:{
                 cell = [tableView dequeueReusableCellWithIdentifier:@"QRWOrderInfoTableViewCellStatic"];
                 NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
                 [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss zzz"];
@@ -114,24 +110,42 @@
             }
                 break;
                 
-            case 5:{
+            case 4:{
                 cell = [tableView dequeueReusableCellWithIdentifier:@"QRWOrderInfoTableViewCellFixed"];
                 [cell configurateAsCellWithKey:@"Customer" value:_orderInfo.customer];
                 [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
             }
                 break;
                 
-            case 6:{
+            case 5:{
                 cell = [tableView dequeueReusableCellWithIdentifier:@"QRWOrderInfoTableViewCellInfo"];
                 [cell configurateAsInfoCellWithKey:@"Billing info" value:_orderInfo.billingInfo phone:_orderInfo.bPhone];
                 [cell setAccessoryType:UITableViewCellAccessoryNone];
             }
                 break;
                 
-            case 7:{
+            case 6:{
                 cell = [tableView dequeueReusableCellWithIdentifier:@"QRWOrderInfoTableViewCellInfo"];
                 [cell configurateAsInfoCellWithKey:@"Shipping info" value:_orderInfo.shippingingInfo phone:_orderInfo.sPhone];
                 [cell setAccessoryType:UITableViewCellAccessoryNone];
+            }
+                break;
+                
+            case 7:{
+                cell = [tableView dequeueReusableCellWithIdentifier:@"QRWOrderInfoTableViewCellFixed"];
+                if ([[QRWSettingsClient getXCartVersion] isEqual:@"XCart4"]) {
+                    [cell configurateAsCellWithKey:@"Status" value:QRWLoc(_orderInfo.status)];
+                } else {
+                    [cell configurateAsCellWithKey:@"Payment status" value:QRWLoc(_orderInfo.status)];
+                }
+                [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+            }
+                break;
+                
+            case 8:{
+                cell = [tableView dequeueReusableCellWithIdentifier:@"QRWOrderInfoTableViewCellFixed"];
+                [cell configurateAsCellWithKey:@"Shipping status" value:QRWLoc(_orderInfo.status)];
+                [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
             }
                 break;
         }
@@ -194,9 +208,9 @@
     }
     if (indexPath.section == 0) {
         switch (indexPath.row) {
-            case 6:
+            case 5:
                 return 90;
-            case 7:
+            case 6:
                 return 90;
             default:
                 return 44;
@@ -214,7 +228,7 @@
 {
     switch (section) {
         case 0:
-            return 8;
+            return [[QRWSettingsClient getXCartVersion] isEqual:@"XCart4"] ? 8 : 9;
             break;
             
         case 1:
@@ -238,60 +252,30 @@
     
     if (indexPath.section == 0) {
         switch (indexPath.row) {
-
-            case 0:{
-                QRWChoseSomethingViewController *statusesOptionsViewController =
-                [[QRWChoseSomethingViewController alloc]
-                 initWithOptionsDictionary:_statusColorsDictionary.allKeys
-                 selectedIndex: [_statusColorsDictionary.allKeys indexOfObject:self.orderInfo.status]
-                 type:QRWChoseSomethingViewControllerTypeStrings
-                 selectOptionBlock:^(NSString *selectedOption) {
-                     [self startLoadingAnimation];
-                     [QRWDataManager sendOrderChangeStatusRequestWithID:[self.orderInfo.orderid intValue]
-                                                             pphDetails:nil
-                                                                 status:selectedOption
-                                                                  block:^(BOOL isSuccess, NSError *error) {
-                                                                      [weakSelf stopLoadingAnimation];
-                                                                      if (isSuccess){
-                                                                          _orderInfo.status = selectedOption;
-                                                                          [weakSelf showSuccesView];
-                                                                          [weakSelf.tableView reloadData];
-                                                                      } else {
-                                                                          [weakSelf showErrorView];
-                                                                      }
-                                                                  }];
-                 }];
-                statusesOptionsViewController.view.frame = self.view.frame;
-                [self.navigationController pushViewController:statusesOptionsViewController animated:YES];
                 
+            case 0:{
+                [QRWSettingsClient checkSubscriptionStatusesWithSuccessBlock:^{
+                    if (![_editPriceView.priceTextField isFirstResponder]){
+                        [self changeTracking];
+                    }
+                }];
             }
                 break;
                 
             case 1:{
-                if (![_editPriceView.priceTextField isFirstResponder]){
-                    [self changeTracking];
-                }
-                
+                [QRWSettingsClient checkSubscriptionStatusesWithSuccessBlock:^{
+                    if (_orderInfo.pphURLString) {
+                        [[[UIAlertView alloc] initWithTitle:QRWLoc(@"PAYPALHERE")
+                                                    message:QRWLoc(@"PAYPALHEREPROCESS")
+                                                   delegate:self
+                                          cancelButtonTitle:QRWLoc(@"CANCEL")
+                                          otherButtonTitles:QRWLoc(@"PROCESS"), nil] show];
+                    }
+                }];
             }
                 break;
                 
-            case 2:{
-                if (_orderInfo.pphURLString) {
-                    [[[UIAlertView alloc] initWithTitle:QRWLoc(@"PAYPALHERE")
-                                                message:QRWLoc(@"PAYPALHEREPROCESS")
-                                               delegate:self
-                                      cancelButtonTitle:QRWLoc(@"CANCEL")
-                                      otherButtonTitles:QRWLoc(@"PROCESS"), nil] show];
-                }
-            }
-                break;
-                
-            case 3:{
-                
-            }
-                break;
-                
-            case 5:{
+            case 4:{
                 [self startLoadingAnimation];
                 [QRWDataManager sendUserInfoRequestWithID:[_orderInfo.userid intValue]
                                                     block:^(QRWUserInfo *userInfo, NSError *error) {
@@ -300,6 +284,68 @@
                                                         [self.navigationController pushViewController:userInfoViewController animated:YES];
                                                     }];
                 
+            }
+                break;
+                
+            case 7:{
+                [QRWSettingsClient checkSubscriptionStatusesWithSuccessBlock:^{
+                    QRWChoseSomethingViewController *statusesOptionsViewController =
+                    [[QRWChoseSomethingViewController alloc]
+                     initWithOptionsDictionary:[QRWSettingsClient paymentStatuses]
+                     selectedIndex: [[QRWSettingsClient paymentStatuses] indexOfObject:self.orderInfo.status]
+                     type:QRWChoseSomethingViewControllerTypeStrings
+                     selectOptionBlock:^(NSString *selectedOption) {
+                         [self startLoadingAnimation];
+                         [QRWDataManager sendOrderChangeStatusRequestWithID:[self.orderInfo.orderid intValue]
+                                                                 pphDetails:nil
+                                                                     status:[[QRWSettingsClient getXCartVersion] isEqual:@"XCart4"] ? selectedOption : @""
+                                                              paymentStatus:![[QRWSettingsClient getXCartVersion] isEqual:@"XCart4"] ? selectedOption : @""
+                                                             shippingStatus:@""
+                                                                      block:^(BOOL isSuccess, NSError *error) {
+                                                                          [weakSelf stopLoadingAnimation];
+                                                                          if (isSuccess){
+                                                                              _orderInfo.status = selectedOption;
+                                                                              [weakSelf showSuccesView];
+                                                                              [weakSelf.tableView reloadData];
+                                                                          } else {
+                                                                              [weakSelf showErrorView];
+                                                                          }
+                                                                      }];
+                     }];
+                    statusesOptionsViewController.view.frame = self.view.frame;
+                    [self.navigationController pushViewController:statusesOptionsViewController animated:YES];
+                }];
+            }
+                break;
+                
+            case 8:{
+                [QRWSettingsClient checkSubscriptionStatusesWithSuccessBlock:^{
+                    QRWChoseSomethingViewController *statusesOptionsViewController =
+                    [[QRWChoseSomethingViewController alloc]
+                     initWithOptionsDictionary:[QRWSettingsClient shippingStatuses]
+                     selectedIndex: [[QRWSettingsClient shippingStatuses] indexOfObject:self.orderInfo.shippingStatus]
+                     type:QRWChoseSomethingViewControllerTypeStrings
+                     selectOptionBlock:^(NSString *selectedOption) {
+                         [self startLoadingAnimation];
+                         [QRWDataManager sendOrderChangeStatusRequestWithID:[self.orderInfo.orderid intValue]
+                                                                 pphDetails:nil
+                                                                     status:@""
+                                                              paymentStatus:@""
+                                                             shippingStatus:selectedOption
+                                                                      block:^(BOOL isSuccess, NSError *error) {
+                                                                          [weakSelf stopLoadingAnimation];
+                                                                          if (isSuccess){
+                                                                              _orderInfo.shippingStatus = selectedOption;
+                                                                              [weakSelf showSuccesView];
+                                                                              [weakSelf.tableView reloadData];
+                                                                          } else {
+                                                                              [weakSelf showErrorView];
+                                                                          }
+                                                                      }];
+                     }];
+                    statusesOptionsViewController.view.frame = self.view.frame;
+                    [self.navigationController pushViewController:statusesOptionsViewController animated:YES];
+                }];
             }
                 break;
         }
@@ -424,7 +470,9 @@
 {
     [QRWDataManager sendOrderChangeStatusRequestWithID:[self.orderInfo.orderid intValue]
                                             pphDetails:nil
-                                                status:@"D"
+                                                status:[[QRWSettingsClient getXCartVersion] isEqual:@"XCart4"] ? @"D" : @""
+                                         paymentStatus:![[QRWSettingsClient getXCartVersion] isEqual:@"XCart4"] ? @"D" : @""
+                                        shippingStatus:@""
                                                  block:^(BOOL isSuccess, NSError *error) {
         if (isSuccess){
             _orderInfo.status = @"D";

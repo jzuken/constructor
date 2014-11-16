@@ -26,6 +26,8 @@
                                                 andPassowrd: (NSString *)password
                                                       block: (void (^)(BOOL isAuth, NSString *description, NSError *error))block;
 
++ (NSURLSessionDataTask *)checkTheSubscriptionStatusWithSuccessBlock:(void (^)(NSString *status))successBlock;
+
 + (NSURLSessionDataTask *)sendConfigRequestWithBlock:(void (^)(NSString *XCartVersion, NSError *error))block;
 
 
@@ -114,6 +116,8 @@
 + (NSURLSessionDataTask *)sendOrderChangeStatusRequestWithID:(NSInteger)orderID
                                                   pphDetails:(NSString *)pphDetails
                                                       status:(NSString *)status
+                                               paymentStatus:(NSString *)paymentStatus
+                                              shippingStatus:(NSString *)shippingStatus
                                                        block:(void (^)(BOOL isSuccess, NSError *error))block;
 
 
