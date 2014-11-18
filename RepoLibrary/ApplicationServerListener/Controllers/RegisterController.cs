@@ -59,6 +59,7 @@ namespace ApplicationServerListener.Controllers
             project.trialEndDate = trialExpirationDate.ToString();
             project.firstExpiredLogin = "Never";
             WebClient client = new WebClient();
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls;
             string returnCode = client.DownloadString("https://secure.x-cart.com/service.php?target=recurring_plans&password=pmh6_2lGTENNqewuhd&url=" + shopUrl);
             string expDate = "";
             string startDate = "";
