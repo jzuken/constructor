@@ -131,7 +131,8 @@
         [_passwordTextField resignFirstResponder];
         
         [QRWSettingsClient saveBaseUrl:url];
-        [QRWSettingsClient saveSecurityKey:_passwordTextField.text];
+        [QRWSettingsClient saveLogin:self.loginTextField.text];
+        [QRWSettingsClient saveSecurityKey:self.passwordTextField.text];
         
         [QRWDataManager checkTheSubscriptionStatusWithSuccessBlock:^(NSString *status) {
             if ([status isEqual:@"expired"]) {

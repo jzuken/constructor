@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3F2EF4EA1A253798003F3EDC /* NSDictionary+QRWSwap.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F2EF4E91A253798003F3EDC /* NSDictionary+QRWSwap.m */; };
 		3F448207192CCE0C00AC2BFF /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F448206192CCE0C00AC2BFF /* MainStoryboard.storyboard */; };
 		3F448225192E13E100AC2BFF /* QRWOrderInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F448224192E13E100AC2BFF /* QRWOrderInfo.m */; };
 		3FA7588D19B3F2170071B3A3 /* QRWChoseSomethingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FA7588C19B3F2170071B3A3 /* QRWChoseSomethingViewController.m */; };
@@ -133,6 +134,8 @@
 
 /* Begin PBXFileReference section */
 		30DE87BCDDD9B648973BC217 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		3F2EF4E81A253798003F3EDC /* NSDictionary+QRWSwap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+QRWSwap.h"; sourceTree = "<group>"; };
+		3F2EF4E91A253798003F3EDC /* NSDictionary+QRWSwap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+QRWSwap.m"; sourceTree = "<group>"; };
 		3F448206192CCE0C00AC2BFF /* MainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard.storyboard; sourceTree = "<group>"; };
 		3F448223192E13E100AC2BFF /* QRWOrderInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRWOrderInfo.h; sourceTree = "<group>"; };
 		3F448224192E13E100AC2BFF /* QRWOrderInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRWOrderInfo.m; sourceTree = "<group>"; };
@@ -591,6 +594,8 @@
 				7F9F9A6618156D0B00AB3EF5 /* UIDevice+Resolutions.m */,
 				7F9F9A6718156D0C00AB3EF5 /* UIColor+hex.h */,
 				7F9F9A6818156D0C00AB3EF5 /* UIColor+hex.m */,
+				3F2EF4E81A253798003F3EDC /* NSDictionary+QRWSwap.h */,
+				3F2EF4E91A253798003F3EDC /* NSDictionary+QRWSwap.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -1103,6 +1108,7 @@
 				7F9F9A031815604600AB3EF5 /* QRWAppDelegate.m in Sources */,
 				7FCFD30C1869BF1300F44547 /* QRWBaseEntety.m in Sources */,
 				9621FEC819C7A3DF0017FDCE /* QRWInfoViewController.m in Sources */,
+				3F2EF4EA1A253798003F3EDC /* NSDictionary+QRWSwap.m in Sources */,
 				7FBCF2F3188414F800594CCD /* QRWEditPriceView.m in Sources */,
 				7FCFD2C91869877200F44547 /* QRWHTTPClient.m in Sources */,
 				7FBCF2CD187EA44800594CCD /* QRWProductsViewController.m in Sources */,

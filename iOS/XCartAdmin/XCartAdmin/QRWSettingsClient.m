@@ -24,17 +24,31 @@
     return [[NSUserDefaults standardUserDefaults] arrayForKey:@"QRW_shippingStatuses"];
 }
 
-+ (void)setPaymentStatuses:(NSArray *)paymentStatuses
++ (NSDictionary *)paymentStatusesCodeDictionary
+{
+    return [[NSUserDefaults standardUserDefaults] dictionaryForKey:@"QRW_paymentStatusesCode"];
+}
+
++ (NSDictionary *)shippingStatusesCodeDictionary
+{
+    return [[NSUserDefaults standardUserDefaults] dictionaryForKey:@"QRW_shippingStatusesCode"];
+}
+
++ (void)setPaymentStatuses:(NSArray *)paymentStatuses codes:(NSArray *)codes
 {
     [[NSUserDefaults standardUserDefaults] setObject:paymentStatuses forKey:@"QRW_paymentStatuses"];
+    NSDictionary *statusesDictionary = [NSDictionary dictionaryWithObjects:codes forKeys:paymentStatuses];
+    [[NSUserDefaults standardUserDefaults] setObject:statusesDictionary forKey:@"QRW_paymentStatusesCode"];
 }
 
-+ (void)setShippingStatuses:(NSArray *)shippingStatuses
++ (void)setShippingStatuses:(NSArray *)shippingStatuses codes:(NSArray *)codes
 {
     [[NSUserDefaults standardUserDefaults] setObject:shippingStatuses forKey:@"QRW_shippingStatuses"];
+    NSDictionary *shippingStatusesDictionary = [NSDictionary dictionaryWithObjects:codes forKeys:shippingStatuses];
+    [[NSUserDefaults standardUserDefaults] setObject:shippingStatusesDictionary forKey:@"QRW_shippingStatusesCode"];
 }
 
-#pragma mark - 
+#pragma mark - Subscription
 
 + (BOOL)checkSubscriptionStatusesWithSuccessBlock:(void(^)(void))successBlock
 {
@@ -70,6 +84,7 @@
     return [(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:@"QRW_subscriptionStatus"] integerValue];
 }
 
+#pragma mark - login and connection key
 
 + (void)saveUnlockKey:(NSString *)unlockKey
 {
@@ -105,6 +120,17 @@
     return [NSURL URLWithString:[[NSUserDefaults standardUserDefaults] objectForKey:@"QRW_baseUrl"]];
 }
 
++ (void)saveLogin:(NSString *)login
+{
+    [[NSUserDefaults standardUserDefaults] setObject:login
+                                              forKey:@"QRW_login"];
+}
+
++ (NSURL *)getLogin
+{
+    return [NSURL URLWithString:[[NSUserDefaults standardUserDefaults] objectForKey:@"QRW_login"]];
+}
+
 + (NSString *)getURLLogin
 {
     return [[NSUserDefaults standardUserDefaults] objectForKey:@"QRW_baseUrl"];
@@ -116,6 +142,7 @@
     return [NSURL URLWithString:url_developmentBaseURL];
 }
 
+#pragma mark - XCart version
 
 + (void)saveXCartVersion:(NSString *)xCartVersion
 {

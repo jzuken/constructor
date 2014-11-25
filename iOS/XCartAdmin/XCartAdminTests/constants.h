@@ -16,12 +16,12 @@ static const NSInteger kLoginViewUpHeight = 200;
 static const NSInteger kHeightOfListRows = 70;
 
 //XCart5
-//static NSString *const kTestUsername = @"phoenix.qtmsoft.com";
-//static NSString *const kTestPassword = @"M24Y8NOV";
+static NSString *const kTestUsername = @"phoenix.qtmsoft.com";
+static NSString *const kTestPassword = @"Q7J50DYP";
 
 //XCart4
-static NSString *const kTestUsername = @"mobileadmin.x-cart.com";
-static NSString *const kTestPassword = @"8WXE1NGH";
+//static NSString *const kTestUsername = @"mobileadmin.x-cart.com";
+//static NSString *const kTestPassword = @"8WXE1NGH";
 
 static const NSInteger kSideOfToolView = 140;
 static const NSInteger kheightOfEditPriceView = 36;

@@ -14,6 +14,7 @@
 #import "QRWProductInfoViewController.h"
 #import "QRWChoseSomethingViewController.h"
 #import "QRWSettingsClient.h"
+#import "NSDictionary+QRWSwap.h"
 
 @interface QRWOrderInfoViewController ()<QRWPayPalViewControllerDelegate, QRWEditPriceViewDelegate, UIAlertViewDelegate>
 
@@ -134,9 +135,11 @@
             case 7:{
                 cell = [tableView dequeueReusableCellWithIdentifier:@"QRWOrderInfoTableViewCellFixed"];
                 if ([[QRWSettingsClient getXCartVersion] isEqual:@"XCart4"]) {
-                    [cell configurateAsCellWithKey:@"Status" value:QRWLoc(_orderInfo.status)];
+                    [cell configurateAsCellWithKey:@"Status"
+                                             value:[[QRWSettingsClient paymentStatusesCodeDictionary] qrw_swapKeyValue][self.orderInfo.status]];
                 } else {
-                    [cell configurateAsCellWithKey:@"Payment status" value:QRWLoc(_orderInfo.status)];
+                    [cell configurateAsCellWithKey:@"Payment status"
+                                             value:[[QRWSettingsClient paymentStatusesCodeDictionary] qrw_swapKeyValue][self.orderInfo.status]];
                 }
                 [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
             }
@@ -144,7 +147,8 @@
                 
             case 8:{
                 cell = [tableView dequeueReusableCellWithIdentifier:@"QRWOrderInfoTableViewCellFixed"];
-                [cell configurateAsCellWithKey:@"Shipping status" value:QRWLoc(_orderInfo.status)];
+                [cell configurateAsCellWithKey:@"Shipping status"
+                                         value:[[QRWSettingsClient shippingStatusesCodeDictionary] qrw_swapKeyValue][self.orderInfo.shippingStatus]];
                 [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
             }
                 break;
@@ -304,7 +308,7 @@
                                                                       block:^(BOOL isSuccess, NSError *error) {
                                                                           [weakSelf stopLoadingAnimation];
                                                                           if (isSuccess){
-                                                                              _orderInfo.status = selectedOption;
+                                                                              _orderInfo.status = [QRWSettingsClient paymentStatusesCodeDictionary][selectedOption];
                                                                               [weakSelf showSuccesView];
                                                                               [weakSelf.tableView reloadData];
                                                                           } else {
@@ -335,7 +339,8 @@
                                                                       block:^(BOOL isSuccess, NSError *error) {
                                                                           [weakSelf stopLoadingAnimation];
                                                                           if (isSuccess){
-                                                                              _orderInfo.shippingStatus = selectedOption;
+                                                                              _orderInfo.shippingStatus =
+                                                                              [QRWSettingsClient shippingStatusesCodeDictionary][selectedOption];
                                                                               [weakSelf showSuccesView];
                                                                               [weakSelf.tableView reloadData];
                                                                           } else {

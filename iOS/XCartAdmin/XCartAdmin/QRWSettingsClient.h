@@ -20,8 +20,11 @@ typedef enum QRWSubscriptionStatus : NSUInteger {
 + (NSArray *)paymentStatuses;
 + (NSArray *)shippingStatuses;
 
-+ (void)setPaymentStatuses:(NSArray *)paymentStatuses;
-+ (void)setShippingStatuses:(NSArray *)shippingStatuses;
++ (NSDictionary *)paymentStatusesCodeDictionary;
++ (NSDictionary *)shippingStatusesCodeDictionary;
+
++ (void)setPaymentStatuses:(NSArray *)paymentStatuses codes:(NSArray *)codes;
++ (void)setShippingStatuses:(NSArray *)shippingStatuses codes:(NSArray *)codes;
 
 
 + (BOOL)checkSubscriptionStatusesWithSuccessBlock:(void(^)(void))successBlock;
@@ -37,6 +40,8 @@ typedef enum QRWSubscriptionStatus : NSUInteger {
 + (NSURL *)getBaseUrl;
 + (NSString *)getURLLogin;
 
++ (void)saveLogin:(NSString *)login;
++ (NSURL *)getLogin;
 
 + (NSURL *)getDevelopmentServerUrl;
 

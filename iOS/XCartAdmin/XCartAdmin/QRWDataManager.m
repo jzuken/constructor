@@ -46,7 +46,7 @@
 
 + (NSURLSessionDataTask *)checkTheSubscriptionStatusWithSuccessBlock:(void (^)(NSString *status))successBlock
 {
-    NSString *getShop = [NSString stringWithFormat:url_developmentGetChecksubscription, [QRWSettingsClient getURLLogin]];
+    NSString *getShop = [NSString stringWithFormat:url_developmentGetChecksubscription, [QRWSettingsClient getLogin]];
     
     return [[QRWHTTPClient sharedDevelopmentClient] GET:getShop
                                              parameters:nil
@@ -81,10 +81,11 @@
                                 
                                 NSDictionary *allStatuses = [JSON objectForKey:@"Order:statuses"] ;
                                 if ([[JSON objectForKey:@"General:store_engine"] isEqual:@"XCart4"]) {
-                                    [QRWSettingsClient setPaymentStatuses:[[allStatuses objectForKey:@"status"] valueForKey:@"name"]];
+                                    [QRWSettingsClient setPaymentStatuses:[[allStatuses objectForKey:@"status"] valueForKey:@"name"]
+                                     codes:[[allStatuses objectForKey:@"status"] valueForKey:@"code"]];
                                 } else {
-                                    [QRWSettingsClient setPaymentStatuses:[[allStatuses objectForKey:@"payment_status"] valueForKey:@"name"]];
-                                    [QRWSettingsClient setShippingStatuses:[[allStatuses objectForKey:@"fulfilment_status"] valueForKey:@"name"]];
+                                    [QRWSettingsClient setPaymentStatuses:[[allStatuses objectForKey:@"payment_status"] valueForKey:@"name"] codes:[[allStatuses objectForKey:@"payment_status"] valueForKey:@"code"]];
+                                    [QRWSettingsClient setShippingStatuses:[[allStatuses objectForKey:@"fulfilment_status"] valueForKey:@"name"] codes:[[allStatuses objectForKey:@"fulfilment_status"] valueForKey:@"code"]];
                                 }
                             }
                             failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
@@ -229,7 +230,13 @@
                                               shippingStatus:(NSString *)shippingStatus
                                                        block:(void (^)(BOOL isSuccess, NSError *error))block
 {
-    NSString *getURL = [NSString stringWithFormat:url_changeStatusOrdersURLappend, (int)orderID, pphDetails, status, [QRWSettingsClient getSecurityKey], paymentStatus, shippingStatus];
+    NSString *getURL = [NSString stringWithFormat:url_changeStatusOrdersURLappend,
+                        (int)orderID,
+                        pphDetails,
+                        [QRWSettingsClient paymentStatusesCodeDictionary][status],
+                        [QRWSettingsClient getSecurityKey],
+                        [QRWSettingsClient paymentStatusesCodeDictionary][paymentStatus],
+                        [QRWSettingsClient shippingStatusesCodeDictionary][shippingStatus]];
     
     return [self sendRequestWithURL:getURL
                             success:^(NSURLSessionDataTask *__unused task, id JSON) {
