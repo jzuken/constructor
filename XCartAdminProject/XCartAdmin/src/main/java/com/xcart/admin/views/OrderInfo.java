@@ -326,7 +326,7 @@ public class OrderInfo extends PinSupportNetworkActivity {
                                 @Override
                                 public void onClick(View v) {
                                     try {
-                                        processByPayPalHere(obj.getString("payment_method"), obj.getString("status"));
+                                        processByPayPalHere(obj.getString("payment_method"), obj.getString("payment_status"));
                                     } catch (JSONException e) {
                                         LOG.e(e.getMessage(), e);
                                     }
@@ -414,7 +414,7 @@ public class OrderInfo extends PinSupportNetworkActivity {
                         trackingNumberItem.setClickable(true);
                         customerItem.setClickable(true);
 
-                        processByPayPalHere(obj.getString("payment_method"), obj.getString("status"));
+                        processByPayPalHere(obj.getString("payment_method"), obj.getString("payment_status"));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -429,7 +429,8 @@ public class OrderInfo extends PinSupportNetworkActivity {
     }
 
     private void processByPayPalHere(String paymentMethod, String paymentStatus) {
-        if (!cameFromPPH && (paymentMethod != null && paymentMethod.equals("PayPal Here")) && (paymentStatus != null && paymentStatus.equals("Q"))) {
+        boolean isStatusOk = paymentStatus != null && paymentStatus.equals("Q");
+        if (!cameFromPPH && (paymentMethod != null && paymentMethod.equals("PayPal Here")) && isStatusOk) {
             AlertDialog.Builder builder = new AlertDialog.Builder(OrderInfo.this);
             builder.setMessage(R.string.dialog_process_by_paypal_here)
                     .setPositiveButton(R.string.process, new DialogInterface.OnClickListener() {
@@ -451,7 +452,11 @@ public class OrderInfo extends PinSupportNetworkActivity {
                     })
                     .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-                            setNewStatus("Declined", "D", "status");
+                            if (XCartApplication.getInstance().getPreferenceManager().getXCartVersion().equals("XCart4")) {
+                                setNewStatus("Declined", "D", "status");
+                            } else {
+                                setNewStatus("Declined", "D", "payment_status");
+                            }
                         }
                     });
             builder.create().show();

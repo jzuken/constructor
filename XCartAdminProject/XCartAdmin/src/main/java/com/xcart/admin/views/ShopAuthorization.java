@@ -46,7 +46,7 @@ public class ShopAuthorization extends FragmentActivity {
         //shopUrl.setText("ec2-54-213-169-59.us-west-2.compute.amazonaws.com");
         //authorizationKey.setText("testKey");
         shopUrl.setText("phoenix.qtmsoft.com");
-        authorizationKey.setText("RPFOTSBC");
+        authorizationKey.setText("G7J0AO5Y");
         //shopUrl.setText("mobileadmin.x-cart.com");
         //authorizationKey.setText("D7PMJ9SY");
         LOG.d("onCreate");
