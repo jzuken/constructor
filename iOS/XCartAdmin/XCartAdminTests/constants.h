@@ -17,7 +17,7 @@ static const NSInteger kHeightOfListRows = 70;
 
 //XCart5
 static NSString *const kTestUsername = @"phoenix.qtmsoft.com";
-static NSString *const kTestPassword = @"Q7J50DYP";
+static NSString *const kTestPassword = @"G7J0AO5Y";
 
 //XCart4
 //static NSString *const kTestUsername = @"mobileadmin.x-cart.com";

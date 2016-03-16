@@ -11,9 +11,6 @@
 
 
 @interface QRWBaseViewControllerWithTableView : QRWBaseViewController<UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate>
-{
-   NSDictionary *_statusColorsDictionary;
-}
 
 @property (nonatomic, weak) IBOutlet UITableView *tableView;
 

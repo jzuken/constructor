@@ -23,16 +23,6 @@
 {
     [super viewDidLoad];
     
-    _statusColorsDictionary = @{@"I": [UIColor redColor],
-                                @"D": [UIColor redColor],
-                                @"F": [UIColor redColor],
-                                @"Q": [UIColor blueColor],
-                                @"B": [UIColor blueColor],
-                                @"P": kTextBlueColor,
-                                @"C": [UIColor greenColor],
-                                @"A": [UIColor blueColor],
-                                };
-    
     __weak typeof(self) weakSelf = self;
     
     [self.tableView addPullToRefreshWithActionHandler:^{

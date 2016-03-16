@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "ADEAB5C5E9FA7285A39D73909A70966087BEF738",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "CE664A0D-8412-4497-9C2F-F3AA0D8FD68B" : 0,
+    "ADEAB5C5E9FA7285A39D73909A70966087BEF738" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "2F936A54-94C4-42D7-960A-9D0DE5765EB6",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "CE664A0D-8412-4497-9C2F-F3AA0D8FD68B" : "XCartAdmin",
+    "ADEAB5C5E9FA7285A39D73909A70966087BEF738" : "%D0%A1onstructor"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "XCartAdmin",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "iOS\/XCartAdmin\/XCartAdmin.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/jzuken\/constructor.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "ADEAB5C5E9FA7285A39D73909A70966087BEF738"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/jzuken\/constructor.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "CE664A0D-8412-4497-9C2F-F3AA0D8FD68B"
+    }
+  ]
+}

@@ -80,7 +80,7 @@
     CGFloat price = self.currentVariant ? [self.currentVariant.price floatValue]:[_product.price floatValue];
     NSURL *imageURL = [NSURL URLWithString:self.currentVariant ? self.currentVariant.imageURL: _product.imageURL];
     
-    [_priceButton setTitle:NSMoneyString(@"$", NSStringFromFloat(price)) forState:UIControlStateNormal];
+    [_priceButton setTitle:NSMoneyString([QRWSettingsClient getCurrency], NSStringFromFloat(price)) forState:UIControlStateNormal];
     [_imageImageView setImageWithURL:imageURL placeholderImage:[UIImage imageNamed:@"loading.gif"]];
 }
 
@@ -217,7 +217,7 @@
         [self moveEditPriceViewToHeight: _scrollView.frame.size.height];
         if (isSuccess){
             _product.price = [NSNumber numberWithFloat:[newPrice floatValue]];
-            [_priceButton setTitle:NSMoneyString(@"$", NSStringFromFloat([_product.price floatValue])) forState:UIControlStateNormal];
+            [_priceButton setTitle:NSMoneyString([QRWSettingsClient getCurrency], NSStringFromFloat([_product.price floatValue])) forState:UIControlStateNormal];
             [self showSuccesView];
         } else {
             [self showErrorView];

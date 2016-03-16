@@ -8,6 +8,7 @@
 
 #import "QRWSettingsClient.h"
 #import "URLsList.h"
+#import "constants.h"
 
 
 @implementation QRWSettingsClient
@@ -48,6 +49,21 @@
     [[NSUserDefaults standardUserDefaults] setObject:shippingStatusesDictionary forKey:@"QRW_shippingStatusesCode"];
 }
 
++ (NSDictionary *)statusesColors
+{
+    return @{@"I": [UIColor redColor],
+             @"D": [UIColor redColor],
+             @"F": [UIColor redColor],
+             @"Q": [UIColor blueColor],
+             @"B": [UIColor blueColor],
+             @"P": kTextBlueColor,
+             @"C": [UIColor greenColor],
+             @"A": [UIColor blueColor],
+             @"PP": kTextBlueColor,
+             @"R": kTextBlueColor,
+             };
+}
+
 #pragma mark - Subscription
 
 + (BOOL)checkSubscriptionStatusesWithSuccessBlock:(void(^)(void))successBlock
@@ -82,6 +98,18 @@
 + (QRWSubscriptionStatus)getSubscriptionStatus
 {
     return [(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:@"QRW_subscriptionStatus"] integerValue];
+}
+
+#pragma mark - login and connection key
+
++ (void)saveCurrency:(NSString *)currency
+{
+    [[NSUserDefaults standardUserDefaults] setObject:currency forKey:@"QRW_currentCurrency"];
+}
+
++ (NSString *)getCurrency
+{
+    return [[NSUserDefaults standardUserDefaults] stringForKey:@"QRW_currentCurrency"] ? : @"";
 }
 
 #pragma mark - login and connection key

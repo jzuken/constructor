@@ -106,7 +106,7 @@
     QRWProduct *product = [self.dataArray objectAtIndex:indexPath.section];
     [(QRWProductCell *)cell SKULabel].text = product.productcode;
     [(QRWProductCell *)cell inStockTypeLabel].text = NSStringFromInt([product.available intValue]);
-    [(QRWProductCell *)cell priceLabel].text = NSMoneyString(@"$", NSStringFromFloat([product.price floatValue]));
+    [(QRWProductCell *)cell priceLabel].text = NSMoneyString([QRWSettingsClient getCurrency], NSStringFromFloat([product.price floatValue]));
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section

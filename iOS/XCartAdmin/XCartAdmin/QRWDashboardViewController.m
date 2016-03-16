@@ -114,7 +114,7 @@
     [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
     
     cell.textLabel.text = [NSString stringWithFormat:@"%@ %@ (#%d)", order.firstname, order.lastname, [order.orderid intValue]];
-    cell.detailTextLabel.text = NSMoneyString(@"$",NSStringFromFloat([order.total floatValue]));
+    cell.detailTextLabel.text = NSMoneyString([QRWSettingsClient getCurrency],NSStringFromFloat([order.total floatValue]));
     cell.detailTextLabel.textColor = kTextBlueColor;
 }
 

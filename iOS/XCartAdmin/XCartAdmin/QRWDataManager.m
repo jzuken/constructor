@@ -87,6 +87,8 @@
                                     [QRWSettingsClient setPaymentStatuses:[[allStatuses objectForKey:@"payment_status"] valueForKey:@"name"] codes:[[allStatuses objectForKey:@"payment_status"] valueForKey:@"code"]];
                                     [QRWSettingsClient setShippingStatuses:[[allStatuses objectForKey:@"fulfilment_status"] valueForKey:@"name"] codes:[[allStatuses objectForKey:@"fulfilment_status"] valueForKey:@"code"]];
                                 }
+                                
+                                NSString *currencySymble = [JSON objectForKey:@"General:currency_symbol"];
                             }
                             failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
                                 DLog(@"Error: %@", error);

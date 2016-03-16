@@ -10,6 +10,8 @@
 #import "QRWOrdersCell.h"
 #import "QRWUserFormCell.h"
 #import "QRWOrderInfoViewController.h"
+#import "QRWSettingsClient.h"
+#import "NSDictionary+QRWSwap.h"
 
 
 @interface QRWUserInfoViewController ()
@@ -171,10 +173,10 @@
         
         [(QRWOrdersCell *)cell nameLabel].text = [NSString stringWithFormat:@"%@ %@ (#%d)", order.firstname, order.lastname, [order.orderid intValue]];
         [(QRWOrdersCell *)cell dateLabel].text = [NSString stringWithFormat:@"%@\n%@", order.month, order.day];
-        [(QRWOrdersCell *)cell priceLabel].text = NSMoneyString(@"$", NSStringFromFloat([order.total floatValue]));
+        [(QRWOrdersCell *)cell priceLabel].text = NSMoneyString([QRWSettingsClient getCurrency], NSStringFromFloat([order.total floatValue]));
         
-        [(QRWOrdersCell *)cell statusLabel].text = QRWLoc(order.status);
-        [(QRWOrdersCell *)cell statusLabel].textColor = [_statusColorsDictionary objectForKey: order.status];
+        [(QRWOrdersCell *)cell statusLabel].text = [[QRWSettingsClient paymentStatusesCodeDictionary] qrw_swapKeyValue][order.status];
+        [(QRWOrdersCell *)cell statusLabel].textColor = [[QRWSettingsClient statusesColors] objectForKey:order.status];
     }
 }
 

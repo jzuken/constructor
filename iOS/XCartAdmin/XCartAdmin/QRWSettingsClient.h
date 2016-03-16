@@ -23,6 +23,8 @@ typedef enum QRWSubscriptionStatus : NSUInteger {
 + (NSDictionary *)paymentStatusesCodeDictionary;
 + (NSDictionary *)shippingStatusesCodeDictionary;
 
++ (NSDictionary *)statusesColors;
+
 + (void)setPaymentStatuses:(NSArray *)paymentStatuses codes:(NSArray *)codes;
 + (void)setShippingStatuses:(NSArray *)shippingStatuses codes:(NSArray *)codes;
 
@@ -35,6 +37,8 @@ typedef enum QRWSubscriptionStatus : NSUInteger {
 + (void)saveSecurityKey:(NSString *)securityKey;
 + (NSString *)getSecurityKey;
 
++ (void)saveCurrency:(NSString *)currency;
++ (NSString *)getCurrency;
 
 + (void)saveBaseUrl:(NSString *)baseUrl;
 + (NSURL *)getBaseUrl;
