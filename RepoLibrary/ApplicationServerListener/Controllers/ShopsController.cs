@@ -59,9 +59,13 @@ namespace ApplicationServerListener.Controllers
             }
             else
             {
-                string expirationDate = project.ExpirationDate;
+                //string expirationDate = project.ExpirationDate;
                 DateTime todate = DateTime.Today;
-                DateTime expiring;
+                DateTime expiring = todate.AddYears(10);
+                return new HttpResponseMessage() { Content = new StringContent("{\"subscribed\": \"active\", \"startDate\": \"" + todate.ToString() + 
+                    "\", \"endDate\": \"" + expiring.ToString() + "\"}") };
+                
+                /* now all subscriptions are valid. because why not.
                 bool parsed = DateTime.TryParse(expirationDate, out expiring);
                 if (parsed)
                 {
@@ -84,7 +88,7 @@ namespace ApplicationServerListener.Controllers
                     }
                 }
                 return new HttpResponseMessage() { Content = new StringContent("{\"subscribed\": \"expired\"}") };
-
+                */
             }
         }
 

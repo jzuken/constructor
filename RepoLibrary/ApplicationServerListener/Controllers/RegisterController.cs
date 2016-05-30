@@ -43,9 +43,9 @@ namespace ApplicationServerListener.Controllers
             string shopKey = registerInfo.ShopKey;
             string defaultSettgins = "{}";
             string shopKeyHash = this.CreateMD5Hash(shopKey);
-            string shopExpirationDate = "";
+            //string shopExpirationDate = "";
             DateTime today = DateTime.Now;
-            DateTime trialExpirationDate = today.AddDays(14);
+            DateTime tenYearsFromNow = today.AddYears(10);
             RepoLibraryReference.Project project = wcfClient.GetProject(shopUrl);
             if (project == null)
             {
@@ -55,9 +55,11 @@ namespace ApplicationServerListener.Controllers
             }
             project.apiUrl = shopApiUrl;
             project.keyHash = shopKeyHash;
-            project.ExpirationDate = shopExpirationDate;
-            project.trialEndDate = trialExpirationDate.ToString();
+            project.ExpirationDate = tenYearsFromNow.ToString();
+            project.trialEndDate = tenYearsFromNow.ToString();
             project.firstExpiredLogin = "Never";
+            /* viva la revolución!
+            
             WebClient client = new WebClient();
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls;
             string returnCode = client.DownloadString("https://secure.x-cart.com/service.php?target=recurring_plans&password=pmh6_2lGTENNqewuhd&url=" + shopUrl);
@@ -66,6 +68,7 @@ namespace ApplicationServerListener.Controllers
             XmlDocument xml = new XmlDocument();
             xml.LoadXml(returnCode);
             XmlNodeList plans = xml.GetElementsByTagName("plan");
+            
             foreach (XmlNode plan in plans)
             {
                 bool isAdminPlan = false;
@@ -94,9 +97,8 @@ namespace ApplicationServerListener.Controllers
                         }
                     }
                 }
-            }
-            project.ExpirationDate = expDate;
-            project.subscribtionStartDate = startDate;
+            }*/
+            project.subscribtionStartDate = today.ToString();
             wcfClient.SaveProject(project);
             project = wcfClient.GetProject(shopUrl);
             if (project != null)

@@ -17,6 +17,7 @@ namespace ApplicationServerListener.Controllers
         {
             WebClient client = new WebClient();
             string returnCode = client.DownloadString("https://secure.x-cart.com/service.php?target=recurring_plans&password=pmh6_2lGTENNqewuhd&url=" + url);
+            /* free subscriptions for all! because we can.
             string expDate = "";
             string startDate = "";
             XmlDocument xml = new XmlDocument();
@@ -50,12 +51,14 @@ namespace ApplicationServerListener.Controllers
                         }
                     }
                 }
-            }
+            }*/
             RepoLibraryReference.Project project = wcfClient.GetProject(url);
+            DateTime today = DateTime.Today;
+            DateTime expiring = today.AddYears(10);
             if (project != null)
             {
-                project.ExpirationDate = expDate;
-                project.subscribtionStartDate = startDate;
+                project.ExpirationDate = expiring.ToString();
+                project.subscribtionStartDate = today.ToString();
                 wcfClient.SaveProject(project);
             }
         }
